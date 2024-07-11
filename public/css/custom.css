@@ -1,0 +1,27 @@
+.infoBox {
+    font-size:0.7em;
+    font-weight:400;
+    padding:2px 4px 2px 4px;
+    background-color:#acacac;
+    color:#fff;
+}
+
+.redlabel {
+    background-color:#F00;
+}
+.orangelabel {
+    background-color:#ffc000;
+}
+.yellowlabel {
+    background-color:#ffff00;
+    color:black;
+}
+.greenlabel {
+    background-color:#00b050;
+}
+.purplelabel {
+    background-color:purple;
+}
+.blacklabel {
+    background-color:black;
+}
