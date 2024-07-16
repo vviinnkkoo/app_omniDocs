@@ -149,13 +149,11 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="year">Redni broj računa:</label>
+                  <label for="year">Godina računa:</label>
                   <select class="form-select searchable-select-modal" id="year" name="year">
-                    <option>2023</option>
-                    <option selected>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                    <option>2027</option>
+                    @foreach ($workYears as $workYear)
+                      <option {{ $loop->last ? 'selected' : '' }}>{{ $workYear->year }}</option>
+                    @endforeach
                   </select>
                 </div>
 

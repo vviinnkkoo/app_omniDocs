@@ -114,14 +114,14 @@ class DoomPDFController extends Controller
         return $pdf->stream();
     }
 
-    public static function labelItemTotal($order_id) {
+    public static function labelItemTotal($order_id, $omnicontrol, $orderItemListController) {
 
         $receipt = Receipt::where('order_id', $order_id)->firstOrFail();
         $order = Order::where('id', $order_id)->firstOrFail();
         $deliveryService = DeliveryService::where('id', Order::find($order_id)->delivery_service_id)->firstOrFail();
 
-        $hp_cod_modifier = $this->omnicontrol->hpCodModifierCheck($order->id); // only for company with id "1"
-        $subtotal = $this->orderItemListController->sumOrderItemList($id);
+        $hp_cod_modifier = $omnicontrol->hpCodModifierCheck($order_id); // only for company with id "1"
+        $subtotal = $orderItemListController->sumOrderItemList($order_id);
 
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $deliveryCost = $deliveryCost - $hp_cod_modifier;

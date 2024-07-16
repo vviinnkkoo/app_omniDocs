@@ -99,26 +99,26 @@
 
                 <tr>
                     <td></td>
-                    <td style="padding-top:56px; font-size:20px;">Omnius Art</td>
+                    <td style="padding-top:56px; font-size:20px;">{{$appSettings['company_name']}}</td>
                     <td></td>
                 </tr>
 
                 <tr>
                     <td></td>
-                    <td style="padding-top:8px; font-size:20px;">Vladimira Nazora 83</td>
+                    <td style="padding-top:8px; font-size:20px;">{{$appSettings['address']}}</td>
                     <td></td>
                 </tr>
 
                 <tr>
                     <td></td>
-                    <td style="padding-top:9px; font-size:20px; letter-spacing: 8px;">31542</td>
-                    <td style="font-size:20px;">Šljivoševci</td>
+                    <td style="padding-top:9px; font-size:20px; letter-spacing: 8px;">{{$appSettings['address_postal']}}</td>
+                    <td style="font-size:20px;">{{$appSettings['address_city']}}</td>
                 </tr>
 
                 <tr>
                     <td></td>
                     <td></td>
-                    <td style="padding-top:15px; font-size:20px;">0989050340</td>
+                    <td style="padding-top:15px; font-size:20px;">{{$appSettings['contact_phone']}}</td>
                 </tr>
 
                 <tr>
@@ -154,7 +154,7 @@
 
                     <td style="padding-top:86px; font-size:20px; padding-left:145px;">
                         @if ( $order->payment_type_id == 2 )
-                            {{ App\Http\Controllers\DoomPDFController::labelItemTotal($order->id) }} €
+                            {{ App\Http\Controllers\DoomPDFController::labelItemTotal( $order->id, app( 'App\Http\Controllers\Omnicontrol' ), app( 'App\Http\Controllers\OrderItemListController' ) ) }} €
                         @endif
                     </td>
 

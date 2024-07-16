@@ -36,7 +36,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Omnius Art
+                {{ $appSettings['company_name']}}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -56,7 +56,8 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/kupci"><i class="bi bi-person-add"></i>&nbsp;&nbsp;Kupci</a>
                                     <a class="dropdown-item" href="/dostavne-sluzbe"><i class="bi bi-box2"></i>&nbsp;&nbsp;Dostavne službe</a>
-                                    <a class="dropdown-item" href="/nacin-placanja"><i class="bi bi-cash-coin"></i> Način plaćanja</a>                          
+                                    <a class="dropdown-item" href="/nacin-placanja"><i class="bi bi-cash-coin"></i> Način plaćanja</a>
+                                    <a class="dropdown-item" href="/radne-godine"><i class="bi bi-server"></i> Radne godine</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/kanali-prodaje"><i class="bi bi-funnel"></i> Kanali prodaje</a>
                                     <a class="dropdown-item" href="/drzave-poslovanja"><i class="bi bi-geo-alt-fill"></i> Države poslovanja</a>
@@ -90,8 +91,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/racuni/2023"><i class="bi bi-receipt"></i> 2023</a>
-                                    <a class="dropdown-item" href="/racuni/2024"><i class="bi bi-receipt"></i> 2024</a>
+                                    @foreach ($workYears as $workYear)
+                                        <a class="dropdown-item" href="/racuni/{{ $workYear->year}}"><i class="bi bi-receipt"></i> {{ $workYear->year}}</a>
+                                    @endforeach
                                 </div>
                             </li>
 
@@ -101,8 +103,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/knjiga-prometa/2023"><i class="bi bi-receipt"></i> 2023</a>
-                                    <a class="dropdown-item" href="/knjiga-prometa/2024"><i class="bi bi-receipt"></i> 2024</a>
+                                    @foreach ($workYears as $workYear)
+                                    <a class="dropdown-item" href="/knjiga-prometa/{{ $workYear->year}}"><i class="bi bi-receipt"></i> {{ $workYear->year}}</a>
+                                    @endforeach                            
                                 </div>
                             </li>
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\DeliveryServiceController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SourceController;
+use App\Http\Controllers\WorkYearsController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ColorController;
@@ -58,6 +59,12 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/kanali-prodaje', [SourceController::class, 'save']);
     Route::put('/update-source/{id}', [SourceController::class, 'update']);
     Route::delete('/delete-source/{id}', [SourceController::class, 'destroy'])->name('delete.row');
+
+    // Work years //
+    Route::get('/radne-godine', [WorkYearsController::class, 'show']);
+    Route::post('/radne-godine', [WorkYearsController::class, 'save']);
+    Route::put('/update-work-year/{id}', [WorkYearsController::class, 'update']);
+    Route::delete('/delete-work-year/{id}', [WorkYearsController::class, 'destroy'])->name('delete.row');
 
 
     // Countries //

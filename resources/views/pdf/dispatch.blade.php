@@ -16,7 +16,7 @@
         <table class="w-full" style="border-bottom: solid 1px black">
             <tr>
                 <td class="col">
-                    <img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" width="200" />
+                    <img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" height="54" />
                 </td>
                 <td class="col-6">
                     <h3>Otpremnica kupcu br: <span class="gray-overlay">{{ $order->id }} - {{ \Carbon\Carbon::parse($order->date_ordered)->format('Y') }}</span></h3>
@@ -27,8 +27,8 @@
 
     <footer>
         <div class="center footer-content">
-            <div><b>Omnius Art</b>, obrt za proizvodnju i usluge, vl. Martina Vinkešević | Adresa vlasnika: <b>Vladimira Nazora 83, Šljivoševci</b> | OIB: <b>69219061360</b></div>
-            <div>Porezni broj: <b>HR69219061360</b> | Žiro račun IBAN: <b>HR6523400091160738307</b> otvoren u: <b>Privredna Banka Zagreb</b></div>
+            <div><b>{{$appSettings['company_name']}}</b>, {{$appSettings['company_extra_info']}} | Adresa vlasnika: <b>{{$appSettings['address']}}, {{$appSettings['address_city']}}</b> | OIB: <b>{{$appSettings['company_oib']}}</b></div>
+            <div>Porezni broj: <b>{{$appSettings['company_vat_id']}}</b> | Žiro račun IBAN: <b>{{$appSettings['company_iban']}}</b> otvoren u: <b>{{$appSettings['company_bank']}}</b></div>
         </div>
     </footer>
 
@@ -48,8 +48,8 @@
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>
-                    <div><b>Email:</b> info@omnius.hr</div>
-                    <div><b>Mob:</b> 098 905 03 40</div>
+                    <div><b>Email:</b> {{$appSettings['contact_email']}}</div>
+                    <div><b>Mob:</b> {{$appSettings['contact_phone']}}</div>
                 </td>
             </tr>
         </table>

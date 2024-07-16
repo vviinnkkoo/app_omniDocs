@@ -118,20 +118,12 @@ a
                     <td class="title">Šalje:</td>
                     <td><img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" height="50" class="logo" /></td>
                     <td></td>
-                    <td>Br. narudžbe: {{ $item->order_id }}</td>
+                    <td><span style="font-size: 70%;">Br. narudžbe: {{ $item->order_id }}</span></td>
                 </tr>
 
                 <tr>
                     <td></td>
-                    <td>Omnius Art</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td>Vladimira Nazora 83</td>
+                    <td>{{$appSettings['company_name']}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -139,7 +131,7 @@ a
 
                 <tr>
                     <td></td>
-                    <td>31542, Šljivoševci</td>
+                    <td>{{$appSettings['address']}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -147,7 +139,15 @@ a
 
                 <tr>
                     <td></td>
+                    <td>{{$appSettings['address_postal']}}, {{$appSettings['address_city']}}</td>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>{{$appSettings['contact_phone']}}</td>
                     <td></td>
                     <td class="title">Prima:</td>
                     <td></td>
@@ -165,7 +165,7 @@ a
                     <td></td>
                     <td>
                         @if ( App\Models\Order::find($item->order_id)->payment_type_id == 2 )
-                            <span class="otk">OTK: {{ App\Http\Controllers\DoomPDFController::labelItemTotal($item->order_id) }} €</span>
+                            <span class="otk">OTK: {{ App\Http\Controllers\DoomPDFController::labelItemTotal($item->order_id, app( 'App\Http\Controllers\Omnicontrol' ), app( 'App\Http\Controllers\OrderItemListController' ) ) }} €</span>
                         @endif
                     </td>
                     <td></td>
