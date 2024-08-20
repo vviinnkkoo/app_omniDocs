@@ -46,6 +46,7 @@
                     <div>{{ $order->delivery_address }}</div>
                     <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
                     <div>{{ App\Models\Country::find($order->delivery_country_id)->country_name }}</div>
+                    <div style="margin-top:10px"><b>OIB: </b>{{ App\Models\Customer::find($order->customer_id)->oib }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum i vrijeme izdavanja:</h4></div>
