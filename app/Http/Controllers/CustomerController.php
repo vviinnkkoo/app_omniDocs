@@ -50,7 +50,8 @@ class CustomerController extends Controller
 
 
     // POST function for saving new stuff
-    public function save (Request $request, $ref) {
+    public function save (Request $request, $ref)
+    {
         $validator = Validator::make($request->all(), [
         'name' => 'required',
         'country_id' => 'required'

@@ -14,9 +14,16 @@
                 <div class="card-body">
 
                   <!-- Button to trigger the pop-up -->
-                  <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Novi proizvod</button>
+                  <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Novi proizvod</button>
 
-                  @include('parts.tablesearch')
+                  {{-- @include('parts.tablesearch') --}}
+
+                  <form method="GET" action="/proizvodi" class="mb-3">
+                    <div class="input-group w-25 float-end">
+                        <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">Pretraži</button>
+                    </div>
+                  </form>
 
                     <table class="table table-hover">
                       <thead class="table-dark">
@@ -64,6 +71,12 @@
                         @endforeach
                       </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center">
+                      {{ $products->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>

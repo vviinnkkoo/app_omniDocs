@@ -21,20 +21,32 @@ class ProductController extends Controller
     
     // GET function for displaying purposes
     //
-    public function show() {
-        $products = Product::get()->sortBy('id');
+    public function show(Request $request)
+    {
+        $search = $request->input('search');
+        $query = Product::query();
+
+        if ($search) {
+            $query->where(function($query) use ($search) {
+                $query->where('product_name', 'like', "%{$search}%");
+            });
+        }
+
+        $products = $query->orderBy('id')->paginate(25);
         $productTypes = ProductType::get()->sortBy('id');
         
         return view('products', [
             'products' => $products,
-            'productTypes' => $productTypes
+            'productTypes' => $productTypes,
+            'search' => $search
             ]);
     }
 
 
     // POST function for saving new stuff
     //
-    public function save (Request $request) {
+    public function save (Request $request)
+    {
         $validator = Validator::make($request->all(), [
         'product_name' => 'required',
         'product_type_id' => 'required',
