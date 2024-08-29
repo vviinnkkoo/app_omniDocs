@@ -458,8 +458,11 @@
                   <label for="product_id">Vrsta proizvoda:</label><br>
                   <select class="form-select searchable-select-modal" id="product_id" name="product_id">
                       <option selected>Odaberi proizvod...</option>
-                      @foreach ($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->product_name }} - {{$product->default_price}} €</option>                                  
+                      @foreach ($productTypes as $productType)
+                        <optgroup label="{{ $productType->type_name }}">
+                          @foreach ($productType->product as $product)
+                            <option value="{{ $product->id }}">{{ $product->product_name }} :: {{ $product->default_price }} €</option>
+                          @endforeach
                       @endforeach
                   </select>
                 </div>

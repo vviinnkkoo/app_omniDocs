@@ -13,6 +13,7 @@ use App\Models\PaymentType;
 use App\Models\Country;
 use App\Models\OrderItemList;
 use App\Models\Product;
+use App\Models\ProductType;
 use App\Models\Color;
 use App\Models\Expense;
 use App\Models\ExpenseType;
@@ -88,7 +89,8 @@ class OrderController extends Controller
         $countries = Country::get()->sortBy('id');
         $productList = OrderItemList::where('order_id', $order_id)->get();
         $expenseList = Expense::where('order_id', $order_id)->get();
-        $products = Product::get()->sortBy('id');
+        $products = Product::get()->sortBy('name');
+        $productTypes = ProductType::get()->sortBy('id');
         $colors = Color::get()->sortBy('id');
         $expenseTypes = ExpenseType::get()->sortBy('id');
         $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
@@ -114,6 +116,7 @@ class OrderController extends Controller
             'productList' => $productList,
             'expenseList' => $expenseList,
             'products' => $products,
+            'productTypes' => $productTypes,
             'colors' => $colors,
             'expenseTypes' => $expenseTypes,
             'orderSum' => $orderSum,
