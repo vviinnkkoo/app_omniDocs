@@ -28,11 +28,14 @@ class ProductController extends Controller
 
         if ($search) {
             $query->where(function($query) use ($search) {
-                $query->where('product_name', 'like', "%{$search}%");
+                $query->where('product_name', 'like', "%{$search}%")
+                      ->orWhereHas('productType', function($query) use ($search) {
+                        $query->where('type_name', 'like', "%{$search}%");
+                      });
             });
         }
 
-        $products = $query->orderBy('id')->paginate(25);
+        $products = $query->orderBy('product_name')->paginate(25);
         $productTypes = ProductType::get()->sortBy('id');
         
         return view('products', [

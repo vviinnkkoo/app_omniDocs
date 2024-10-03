@@ -159,6 +159,6 @@ class OrderItemListController extends Controller
     }
 
     public static function sumSingleItem($id) {
-        return number_format( ( OrderItemList::where( 'id', $id )->sum( \DB::raw('amount * price * ( ( 100 - discount ) / 100 )' ) ) ), 2, ',');
+        return number_format( ( OrderItemList::where( 'id', $id )->sum( \DB::raw('amount * price * ( ( 100 - discount ) / 100 )' ) ) ), 2, ',', '.');
     }
 }

@@ -36,9 +36,9 @@ class DoomPDFController extends Controller
 
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $deliveryCost = $deliveryCost - $hp_cod_modifier;
-        $deliveryCostFormated = number_format($deliveryCost, 2, ',');
+        $deliveryCostFormated = number_format($deliveryCost, 2, ',', '.');
 
-        $total = number_format(($subtotal + $deliveryCost), 2, ',');
+        $total = number_format(($subtotal + $deliveryCost), 2, ',', '.');
         
         $date = date("dmY-Gis"); // Date for name
 
@@ -67,9 +67,9 @@ class DoomPDFController extends Controller
 
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $deliveryCost = $deliveryCost - $hp_cod_modifier;
-        $deliveryCostFormated = number_format($deliveryCost, 2, ',');
+        $deliveryCostFormated = number_format($deliveryCost, 2, ',', '.');
 
-        $total = number_format(($subtotal + $deliveryCost), 2, ',');
+        $total = number_format(($subtotal + $deliveryCost), 2, ',', '.');
 
 
         $date = date("dmY-Gis"); // Date for name 
@@ -126,7 +126,7 @@ class DoomPDFController extends Controller
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $deliveryCost = $deliveryCost - $hp_cod_modifier;
         
-        return number_format(($subtotal + $deliveryCost), 2, ',');
+        return number_format(($subtotal + $deliveryCost), 2, ',', '.');
     }
 
 }

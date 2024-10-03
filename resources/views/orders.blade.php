@@ -61,7 +61,7 @@
                                     <td class="align-middle text-right">{{ \Carbon\Carbon::parse($order->date_ordered)->format('d. m. Y') }}</td>
                                     <td class="align-middle text-right">{{ App\Models\Source::find($order->source_id)->name }}</td>
                                     <td class="align-middle text-right">{{ $order->delivery_postal }}</td>
-                                    <td class="align-middle text-right">{{ App\Models\DeliveryService::find($order->delivery_service_id)->name }}</td>
+                                    <td class="align-middle text-right">{{ App\Models\DeliveryCompany::find(App\Models\DeliveryService::find($order->delivery_service_id)->delivery_company_id)->name }} - {{ App\Models\DeliveryService::find($order->delivery_service_id)->name }}</td>
                                     <td class="align-middle text-right">{{ App\Models\PaymentType::find($order->payment_type_id)->type_name }}</td>
 
                                     {{-- Status --}}

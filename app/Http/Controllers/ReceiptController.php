@@ -138,7 +138,7 @@ class ReceiptController extends Controller
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $deliveryCost = $deliveryCost - $if_postal_delivery_reduction;
 
-        $total = number_format(($subtotal + $deliveryCost), 2, ',');
+        $total = number_format(($subtotal + $deliveryCost), 2, ',', '.');
 
         return $total;
     }
@@ -179,7 +179,7 @@ class ReceiptController extends Controller
             $totalSum += ($subtotal + $deliveryCost);
         }
     
-        return number_format(($totalSum), 2, ',');
+        return number_format(($totalSum), 2, ',', '.');
     }
 
 

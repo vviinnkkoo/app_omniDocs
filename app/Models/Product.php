@@ -24,4 +24,9 @@ class Product extends Model
         $this->attributes['default_price'] = is_null($value) ? null : str_replace(',', '.', $value);
 
     }
+
+    public function productType()
+    {
+        return $this->belongsTo(ProductType::class, 'product_type_id');
+    }
 }

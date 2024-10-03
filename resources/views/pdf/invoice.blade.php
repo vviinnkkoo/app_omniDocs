@@ -96,7 +96,7 @@
                         @endif
                     </td>
 
-                    <td class="center">{{ $item->price }} €</td>
+                    <td class="center">{{ number_format(str_replace(',', '.', $item->price), 2, ',', '.') }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
                     <td class="center">{{ App\Http\Controllers\OrderItemListController::sumSingleItem($item->id) }} €</td>                
                 </tr>

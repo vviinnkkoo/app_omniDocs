@@ -124,7 +124,7 @@ class KprController extends Controller
     // RETURN total payments per given year
     public static function getTotalPayments($year) {
 
-        return number_format(( Kpr::whereYear('date', $year)->sum(\DB::raw('amount')) ), 2, ',');
+        return number_format(( Kpr::whereYear('date', $year)->sum(\DB::raw('amount')) ), 2, ',', '.');
     }
 
 
@@ -143,11 +143,11 @@ class KprController extends Controller
         $totalSum = 0;
         foreach ($currentKprItemList as $item) {
             $itemReceiptSum = ReceiptController::getReceiptTotal(Receipt::where('id', $item->receipt_id)->limit(1)->value('order_id'));
-            $convertedCost = str_replace(',', '.', $itemReceiptSum);
+            $convertedCost = str_replace(['.', ','], ['', '.'], $itemReceiptSum);
             $totalSum += $convertedCost;
         }
 
-        return number_format(($totalSum), 2, ',');
+        return number_format(($totalSum), 2, ',', '.');
     }
 
         
