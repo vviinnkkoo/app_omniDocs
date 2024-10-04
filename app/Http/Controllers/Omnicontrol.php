@@ -33,12 +33,12 @@ class Omnicontrol extends Controller
         })->sum(\DB::raw('amount * price')), 2, ',');
 
         $earningCurrentMonth = number_format(OrderItemList::whereHas('order', function ($q2) {
-            $q2->whereMonth('date_ordered', Carbon::now()->month);
+            $q2->whereYear('date_ordered', Carbon::now()->year)->whereMonth('date_ordered', Carbon::now()->month);
         })->sum(\DB::raw('amount * price')), 2, ',');
         
         $countOrders = Order::all()->count();
         $countUndeliveredOrders = Order::whereNull('date_sent')->count();
-        $countThisMonthOrders = Order::whereMonth('date_ordered', Carbon::now()->month)->count();
+        $countThisMonthOrders = Order::whereYear('date_ordered', Carbon::now()->year)->whereMonth('date_ordered', Carbon::now()->month)->count();
         
         return view('home', [
             'earningTotal' => $earningTotal,

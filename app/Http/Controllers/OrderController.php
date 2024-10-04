@@ -40,20 +40,31 @@ class OrderController extends Controller
     // GET function for displaying purposes
     //
 
-        public function showOrders($mode) {
+        public function showOrders(Request $request, $mode) {
+
+        $search = $request->input('search');
+        $query = Order::query();
+
+        if ($search) {
+            $query->where(function($query) use ($search) {
+                $query->where('tracking_code', 'like', "%{$search}%")
+                      ->orWhere('delivery_postal', 'like', "%{$search}%")
+                      ->orWhere('delivery_city', 'like', "%{$search}%");
+            });
+        }
 
         // Show ALL orders
         if ($mode === '1') {
-            $orders = Order::get()->sortBy('id');
+            $orders = $query->orderBy('id')->paginate(25);
         // Show SENT orders
         } elseif ($mode === '2') {
-            $orders = Order::whereNotNull('date_sent')->whereNull('date_delivered')->whereNull('date_cancelled')->get()->sortBy('id');
+            $orders = $query->whereNotNull('date_sent')->whereNull('date_delivered')->whereNull('date_cancelled')->orderBy('id')->paginate(25);
         // Show UNFINISHED orders
         } elseif ($mode === '3') {
-            $orders = Order::whereNull('date_sent')->whereNull('date_cancelled')->get()->sortBy('id');
+            $orders = $query->whereNull('date_sent')->whereNull('date_cancelled')->orderBy('id')->paginate(25);
         // Show CANCELLED orders
         } elseif ($mode === '4') {
-            $orders = Order::whereNotNull('date_cancelled')->get()->sortBy('id');
+            $orders = $query->whereNotNull('date_cancelled')->orderBy('id')->paginate(25);
         } else {
             return;
         }

@@ -14,11 +14,18 @@
                 <div class="card-body">
 
                   <!-- Button to trigger the pop-up -->
-                  <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova narudžba</button>
+                  <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova narudžba</button>
 
-                  <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px; margin-left:10px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
+                  <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px; margin-left:10px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
 
-                  @include('parts.tablesearch')
+                  {{-- @include('parts.tablesearch') --}}
+
+                  <form method="GET" action="/narudzbe/1" class="mb-3">
+                    <div class="input-group w-25 float-end">
+                        <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">Pretraži</button>
+                    </div>
+                  </form>
 
                     <table class="table table-hover">
                       <thead class="table-dark">
@@ -136,6 +143,12 @@
                         @endforeach
                       </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center">
+                      {{ $orders->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>
