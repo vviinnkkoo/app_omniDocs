@@ -49,7 +49,13 @@ class OrderController extends Controller
             $query->where(function($query) use ($search) {
                 $query->where('tracking_code', 'like', "%{$search}%")
                       ->orWhere('delivery_postal', 'like', "%{$search}%")
-                      ->orWhere('delivery_city', 'like', "%{$search}%");
+                      ->orWhere('delivery_city', 'like', "%{$search}%")
+                      ->orWhereHas('paymentType', function($query) use ($search) {
+                        $query->where('type_name', 'like', "%{$search}%");
+                      })
+                      ->orWhereHas('deliveryService.deliveryCompany', function($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                      });
             });
         }
 

@@ -30,6 +30,16 @@ class Order extends Model
         return $this->hasMany(OrderItemList::class);
     }
 
+    public function paymentType()
+    {
+        return $this->belongsTo(PaymentType::class, 'payment_type_id');
+    }
+
+    public function deliveryService()
+    {
+        return $this->belongsTo(DeliveryService::class, 'delivery_service_id');
+    }
+
     public function isOrderDone()
 {
     return $this->orderItemList->every(function ($item) {
