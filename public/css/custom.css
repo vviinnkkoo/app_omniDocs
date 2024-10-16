@@ -25,3 +25,193 @@
 .blacklabel {
     background-color:black;
 }
+
+/* Styles for the pop-up */
+.popup {
+    display: none; /* Hide the pop-up by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7); /* Semi-transparent background */
+    z-index: 1;
+    overflow-y: auto; /* Add a vertical scrollbar if pop-up content overflows */
+    max-height: 100%; /* Constrain the maximum height to screen height */
+}
+
+.popup-content {
+    position: absolute;
+    width: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*padding: 20px;*/
+    box-shadow: 0px 0px 30px rgba(0,0,0,0.6);
+    max-height: 90%; /* Adjust this value as needed to fit your design */
+}
+
+/* Style the close button (x) */
+.close {
+    position: absolute;
+    top: -12px;
+    right: 12px;
+    font-size: 40px;
+    cursor: pointer;
+    font-weight: 900;
+    color:gray;
+}
+
+/* Button fixes 
+.btn {
+    margin-top:5px;
+    margin-bottom:5px;
+    color:white;
+}*/
+.btn:hover{
+    opacity: 0.7;
+}
+
+.confirmation-dialog {
+    position: absolute;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    /*padding: 20px;*/
+    box-shadow: 0px 0px 30px rgba(0,0,0,0.3);
+    max-height: 90%; /* Adjust this value as needed to fit your design */
+}
+
+.select2-container {
+    width: 100% !important; /* Set your desired width */
+}
+
+.select2-selection--single, .select2-search__field, .select2-dropdown{
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+}
+
+.gray-mark {
+    background-color: gray;
+    color: white;
+    padding: 2px 10px 2px 10px;
+    border-radius: 5px;
+    font-weight: bold;    
+    text-decoration: none;
+}
+
+.gray-mark-extra {
+    background-color: gray;
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    font-weight: bold;    
+    text-decoration: none;
+}
+
+.gray-mark-extra:hover {
+    opacity: 0.7;
+}
+
+.green-mark {
+    background-color: green;
+    color: white;
+    padding: 2px 10px 2px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.orange-mark {
+    background-color: orange;
+    color: white;
+    padding: 2px 10px 2px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.blue-mark {
+    background-color: #0d6efd;
+    color: white;
+    padding: 2px 10px 2px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.blue-mark:hover{
+    opacity: 0.7; 
+}
+
+.btn-gls {
+    background-color: #061ab1;
+    border: solid #061ab1;
+    color: white;
+    font-weight: bold;
+}
+.btn-gls:hover {
+    background-color: #061ab1;
+    border: solid #061ab1;
+    color: white;
+    opacity: 0.7;
+}
+
+.btn-hposta {
+    background-color: #ffd100;
+    border: solid #ffd100;
+    color: #333;
+    font-weight: bold;
+}
+.btn-hposta:hover {
+    background-color: #ffd100;
+    border: solid #ffd100;
+    color: #333;
+    opacity: 0.7;
+}
+.btn-boxnow {
+    background-color: #6cd04d;
+    border: solid #6cd04d;
+    color: white;
+    font-weight: bold;
+}
+.btn-boxnow:hover {    
+    background-color: #6cd04d;
+    border: solid #6cd04d;
+    color: white;
+    opacity: 0.7;
+}
+.btn-tisak {
+    background-color: #ed1b24;
+    border: solid #ed1b24;
+    color: #ffca08;
+    font-weight: bold;
+}
+.btn-tisak:hover {
+    background-color: #ed1b24;
+    border: solid #ed1b24;
+    color: #ffca08;
+    opacity: 0.7;
+}
+
+.cancelled-order td {
+    background-color:rgb(255, 223, 223);
+}
+
+.kpr-has-receipt td {
+    background-color:rgb(216, 255, 219);
+}
+
+.kpr-no-receipt td {
+    background-color:rgb(255, 250, 208);
+}
+
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+  }
+
+  .page-break{
+    page-break-before: always;
+  }

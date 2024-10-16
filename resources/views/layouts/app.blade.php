@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('build/assets/app-f2018de5.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="{{ asset('build/assets/app-f163c3af.js') }}" defer></script>
