@@ -14,7 +14,13 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css']) --}}
+
+    <!-- Styles -->
+    <link href="{{ asset('build/assets/app-f2018de5.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="{{ asset('build/assets/app-f163c3af.js') }}" defer></script>
     
     <!-- Jquery JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

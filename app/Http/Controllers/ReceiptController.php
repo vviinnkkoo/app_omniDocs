@@ -25,7 +25,7 @@ class ReceiptController extends Controller
     //
     public function show($year) {
 
-        $receipts = Receipt::where('year', $year)->orderBy('number')->get();
+        $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
         $orders = Order::whereNull('date_cancelled')->get()->sortBy('id');
         $latest = (Receipt::where('year', $year)->orderBy('number', 'desc')->limit(1)->value('number')) + 1;
         

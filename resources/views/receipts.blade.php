@@ -105,6 +105,12 @@
                         @endforeach
                       </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center">
+                      {{ $receipts->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                    </div>
+                    
                 </div>
             </div>
         </div>
