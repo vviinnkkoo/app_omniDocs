@@ -2,6 +2,12 @@
     @page {
         margin: 100px 60px;
     }
+    @font-face {
+        font-family: 'Open Sans';
+        src: url('/webfonts/open-sans.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
     header {
         position: fixed;
         top: -60px;
@@ -23,7 +29,8 @@
         font-size: 0.5rem;
     }
     body {
-        /*font-family: 'Helvetica';*/
+        /*font-family: 'DejaVu Sans';*/
+        font-family: 'Open Sans', sans-serif;
     }
     h4 {
         margin: 0;

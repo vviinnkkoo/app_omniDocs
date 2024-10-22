@@ -10,8 +10,6 @@ use App\Models\PrintLabel;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class DoomPDFController extends Controller
 {
@@ -27,30 +25,6 @@ class DoomPDFController extends Controller
     protected $omnicontrol;
     
     public function invoice($id) {
-
-        $options = new Dompdf\Options();
-        $options->set('isRemoteEnabled', true);  // Omogućuje korištenje vanjskih resursa
-
-        $dompdf = new Dompdf\Dompdf($options);
-
-        // Postavi putanju do fonta
-        $dompdf->set_option('defaultFont', 'Open Sans');
-
-        $customFontPath = public_path('webfonts/open-sans.ttf');
-
-        // Učitaj font u PDF koristeći CSS
-        $css = "
-        @font-face {
-            font-family: 'Open Sans';
-            src: url('$customFontPath') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-        ";
 
         $receipt = Receipt::where('id', $id)->firstOrFail();
         $order = Order::where('id', $receipt->order_id)->firstOrFail();
