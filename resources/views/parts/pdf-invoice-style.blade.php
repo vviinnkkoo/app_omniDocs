@@ -4,7 +4,9 @@
     }
     @font-face {
         font-family: 'Open Sans';
-        src: url('/webfonts/open-sans.ttf') format('truetype');
+        /*src: url('/webfonts/open-sans.ttf') format('truetype');*/
+        src: url('https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-U1Ug.woff2') format('woff2');
+
         font-weight: normal;
         font-style: normal;
     }
