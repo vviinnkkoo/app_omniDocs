@@ -10,6 +10,8 @@ use App\Models\PrintLabel;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class DoomPDFController extends Controller
 {
