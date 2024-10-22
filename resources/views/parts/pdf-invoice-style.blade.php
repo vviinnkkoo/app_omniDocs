@@ -23,7 +23,7 @@
         font-size: 0.5rem;
     }
     body {
-        font-family: 'Open Sans';
+        font-family: 'DejaVu Sans';
     }
     h4 {
         margin: 0;
