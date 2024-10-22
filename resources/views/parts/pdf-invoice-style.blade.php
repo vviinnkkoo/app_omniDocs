@@ -2,14 +2,6 @@
     @page {
         margin: 100px 60px;
     }
-    @font-face {
-        font-family: 'Open Sans';
-        /*src: url('/webfonts/open-sans.ttf') format('truetype');*/
-        src: url('https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-U1Ug.woff2') format('woff2');
-
-        font-weight: normal;
-        font-style: normal;
-    }
     header {
         position: fixed;
         top: -60px;
@@ -32,7 +24,8 @@
     }
     body {
         /*font-family: 'DejaVu Sans';*/
-        font-family: 'Open Sans', sans-serif;
+        /*font-family: 'Open Sans', sans-serif;*/
+        font-family: 'DejaVu Sans', 'sans-serif';
     }
     h4 {
         margin: 0;
