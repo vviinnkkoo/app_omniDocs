@@ -23,7 +23,7 @@
         font-size: 0.5rem;
     }
     body {
-        font-family: 'Nunito';
+        font-family: 'Helvetica';
     }
     h4 {
         margin: 0;
