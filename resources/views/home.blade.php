@@ -8,7 +8,7 @@
     <div class="container">
 
       <div class="row">
-        <h1>Status naruđbi</h1>
+        <h1>Status narudžbi</h1>
         <div class="col-sm">
               <div class="card text-white bg-success mb-3">
                 <div class="card-header">Sveukupno naručeno: <span class="badge text-bg-warning rounded-pill">{{ $countOrders }}</span></div>
