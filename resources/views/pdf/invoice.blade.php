@@ -17,7 +17,8 @@
         <table class="w-full" style="border-bottom: solid 1px black">
             <tr>
                 <td class="w-half">
-                    <img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" height="54" />
+                    {{--<img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" height="54" />--}}
+                    <img src="{{ asset($appSettings['invoice_logo']) }}" alt="Omnius Art" height="54" />
                 </td>
                 <td class="w-half">
                     <h2>RAČUN br: <span class="gray-overlay">{{$receipt->number}}-1-1</span></h2>
