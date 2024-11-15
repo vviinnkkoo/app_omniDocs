@@ -119,7 +119,7 @@
     }
     .signature-image {
         position: absolute;
-        top:-30px;
+        top:-50px;
         left: 50%;
         transform: translateX(-50%); /* Center within the cell */
     }
