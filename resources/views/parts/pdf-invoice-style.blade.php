@@ -108,7 +108,7 @@
         padding-right: 0.5rem;
         border-radius: 0.2rem;
     }
-    .signature-section {
+    .relative-section {
         position: relative;
     }
     .mp-image {

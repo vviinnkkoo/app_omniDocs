@@ -133,16 +133,16 @@
         <p><b>Broj narudžbe:</b> {{$order->id}}</p>
     </div>
 
-    <div class="margin-first signature-section">
+    <div class="margin-first">
         <table class="w-full info">
             <tr>
                 <td class="w-tri">
                 </td>
-                <td class="w-tri center">
+                <td class="w-tri center relative-section">
                     M.P.
                     <img src="{{ asset($appSettings['invoice_stamp']) }}" alt="Omnius Art" height="30" class="mp-image" />
                 </td>
-                <td class="w-tri center">
+                <td class="w-tri center relative-section">
                     <div style="border-top: solid 1px black;">Potpis</div>
                     <img src="{{ asset($appSettings['invoice_signature']) }}" alt="Omnius Art" height="30" class="signature-image" />
                 </td>
