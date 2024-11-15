@@ -113,13 +113,13 @@
     }
     .mp-image {
         position: absolute;
-        top: 0px;
+        top: -30px;
         left: 50%;
         transform: translateX(-50%); /* Center within the cell */
     }
     .signature-image {
         position: absolute;
-        top:0px;
+        top:-30px;
         left: 50%;
         transform: translateX(-50%); /* Center within the cell */
     }
