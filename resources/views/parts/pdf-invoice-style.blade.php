@@ -108,4 +108,17 @@
         padding-right: 0.5rem;
         border-radius: 0.2rem;
     }
+    .signature-section {
+        position: relative;
+    }
+    .mp-image {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* Center within the cell */
+    }
+    .signature-image {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* Center within the cell */
+    }
 </style>
