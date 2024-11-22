@@ -37,7 +37,7 @@ class KprController extends Controller
                       ->orWhere('amount', 'like', "%{$search}%")
                       ->orWhere('origin', 'like', "%{$search}%")
                       ->orWhere('date', 'like', "%{$search}%")
-                      ->orWhere('info', 'like', "%{$search}%")
+                      ->orWhere('info', 'like', "%{$search}%");
             });
         }
 
