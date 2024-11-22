@@ -31,6 +31,16 @@ class KprController extends Controller
         $search = $request->input('search');
         $query = Kpr::query();
 
+        if ($search) {
+            $query->where(function($query) use ($search) {
+                $query->where('payer', 'like', "%{$search}%")
+                      ->orWhere('amount', 'like', "%{$search}%")
+                      ->orWhere('origin', 'like', "%{$search}%")
+                      ->orWhere('date', 'like', "%{$search}%")
+                      ->orWhere('info', 'like', "%{$search}%")
+            });
+        }
+
         $kprs = $query->whereYear('date', $year)->orderBy('date')->paginate(25);
         $paymentMethods = KprPaymentType::get();
         
