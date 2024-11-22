@@ -98,7 +98,7 @@
 
                     <!-- Pagination Links -->
                     <div class="d-flex justify-content-center">
-                      {{ $orders->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                      {{ $kprs->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
                     </div>
 
                 </div>
