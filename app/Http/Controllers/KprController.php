@@ -26,16 +26,19 @@ class KprController extends Controller
     
 
     // GET function for displaying purposes
-    public function show($year) {
+    public function show(Request $request, $year) {
 
-    $kprs = Kpr::whereYear('date', $year)->orderBy('date')->get();
-    $paymentMethods = KprPaymentType::get();
+        $search = $request->input('search');
+        $query = Kpr::query();
+
+        $kprs = $query->whereYear('date', $year)->orderBy('date')->paginate(25);
+        $paymentMethods = KprPaymentType::get();
         
-    return view('kpr-view', [
-        'kprs' => $kprs,
-        'year' => $year,
-        'paymentMethods' => $paymentMethods
-        ]);
+        return view('kpr-view', [
+            'kprs' => $kprs,
+            'year' => $year,
+            'paymentMethods' => $paymentMethods
+            ]);
     }
 
     // EDIT function for displaying single KPR item
