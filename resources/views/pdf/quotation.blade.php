@@ -21,7 +21,7 @@
                     <img src="{{ asset($appSettings['invoice_logo']) }}" height="54" />
                 </td>
                 <td class="w-half">
-                    <h2>RAČUN br: <span class="gray-overlay">{{$receipt->number}}-1-1</span></h2>
+                    <h2>PONUDA br: <span class="gray-overlay">{{$order->id}}</span></h2>
                 </td>
             </tr>
         </table>
@@ -53,7 +53,6 @@
                     <div>{{$appSettings['address_city']}}</div>
                     <div>{{ \Carbon\Carbon::parse($receipt->created_at)->format('d.m.Y') }}</div>
                     <div>u {{ \Carbon\Carbon::parse($receipt->created_at)->format('H:i') }}</div>
-                    <div style="margin-top:10px"><b>Datum isporuke: </b>{{ \Carbon\Carbon::parse($order->date_sent)->format('d.m.Y') }}</div>
                     <div><b>Datum dospijeća: </b>{{ \Carbon\Carbon::parse($receipt->created_at)->addDays(14)->format('d.m.Y') }}</div>
                 </td>
                 <td class="w-tri">

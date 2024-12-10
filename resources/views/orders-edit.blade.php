@@ -16,7 +16,7 @@
       {{-- ////////// --}}
 
       <div class="card-header" style="font-weight: 900;"><a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
-        Naružba: {{$order->id}}
+        Narudžba: {{$order->id}}
         <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
         <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
         <span style="font-size:100%; margin-left:15px;" >>></span>
