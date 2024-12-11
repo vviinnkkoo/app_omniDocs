@@ -118,7 +118,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
     // PDF render //
     Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);
-    Route::get('/dokument/{id}/{mode}', [DoomPDFController::class, 'generalDocs']);
+    Route::get('/dokument/{mode}/{id}', [DoomPDFController::class, 'documents']);
     Route::get('/etikete', [DoomPDFController::class, 'shippingLabels']);
     Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
 

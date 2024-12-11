@@ -62,7 +62,7 @@ class DoomPDFController extends Controller
 
 
 
-    public function generalDocs($id, $mode) {
+    public function documents($mode, $id) {
 
         $order = Order::where('id', $id)->firstOrFail();
         $orderItemList = OrderItemList::where('order_id', $id)->get();
@@ -80,16 +80,43 @@ class DoomPDFController extends Controller
 
         $date = date("dmY-Gis"); // Date for name 
 
-        $pdf = Pdf::loadView('pdf.dispatch', [
-            'order' => $order,
-            'orderItemList' => $orderItemList,
-            'deliveryService' => $deliveryService,
-            'total' => $total,
-            'subtotal' => $subtotal,
-            'deliveryCost' => $deliveryCostFormated
-        ]);
+        switch ($mode) {
 
-        return $pdf->stream('otpremnica-' . $id . '-' . $date . '.pdf');                
+            case 'otpremnica':
+
+                $pdf = Pdf::loadView('pdf.dispatch', [
+                    'order' => $order,
+                    'orderItemList' => $orderItemList,
+                    'deliveryService' => $deliveryService,
+                    'total' => $total,
+                    'subtotal' => $subtotal,
+                    'deliveryCost' => $deliveryCostFormated
+                ]);
+    
+                return $pdf->stream('otpremnica-' . $id . '-' . $date . '.pdf');
+            
+            case 'ponuda':
+
+                    $pdf = Pdf::loadView('pdf.quotation', [
+                        'order' => $order,
+                        'orderItemList' => $orderItemList,
+                        'deliveryService' => $deliveryService,
+                        'total' => $total,
+                        'subtotal' => $subtotal,
+                        'deliveryCost' => $deliveryCostFormated
+                    ]);
+
+                    return $pdf->stream('ponuda-' . $id . '-' . $date . '.pdf');
+                
+            default:
+
+                return redirect('/');
+                
+        }
+
+            
+        
+
     }
 
 
