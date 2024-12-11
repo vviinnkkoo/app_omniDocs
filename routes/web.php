@@ -23,6 +23,7 @@ use App\Http\Controllers\KprItemListController;
 use App\Http\Controllers\ExpenseController;
 
 Auth::routes();
+Auth::routes(['register' => false]); // Disable registration
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
 
 
@@ -117,7 +118,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
     // PDF render //
     Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);
-    Route::get('/otpremnica/{id}', [DoomPDFController::class, 'dispatch']);
+    Route::get('/dokument/{id}/{mode}', [DoomPDFController::class, 'generalDocs']);
     Route::get('/etikete', [DoomPDFController::class, 'shippingLabels']);
     Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
 

@@ -21,9 +21,13 @@ class DoomPDFController extends Controller
         $this->omnicontrol = $omnicontrol;
     }
 
+
+
     protected $orderItemListController;
     protected $omnicontrol;
     
+
+
     public function invoice($id) {
 
         $receipt = Receipt::where('id', $id)->firstOrFail();
@@ -56,7 +60,9 @@ class DoomPDFController extends Controller
 
     }
 
-    public function dispatch($id) {
+
+
+    public function generalDocs($id, $mode) {
 
         $order = Order::where('id', $id)->firstOrFail();
         $orderItemList = OrderItemList::where('order_id', $id)->get();
@@ -86,6 +92,8 @@ class DoomPDFController extends Controller
         return $pdf->stream('otpremnica-' . $id . '-' . $date . '.pdf');                
     }
 
+
+
     public function shippingLabels() {
         $shippingLabels = PrintLabel::where('label_type', 'shipping')->get();
         
@@ -95,6 +103,8 @@ class DoomPDFController extends Controller
      
         return $pdf->stream();
     }
+
+
 
     public function p10mLabels($id) {
 
@@ -113,6 +123,8 @@ class DoomPDFController extends Controller
      
         return $pdf->stream();
     }
+
+
 
     public static function labelItemTotal($order_id, $omnicontrol, $orderItemListController) {
 
