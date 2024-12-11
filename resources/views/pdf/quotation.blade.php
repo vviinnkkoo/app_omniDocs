@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Račun</title>
+    <title>Ponuda br: {{$order->id}}</title>
 
     @include('parts.pdf-invoice-style')
 
@@ -49,7 +49,7 @@
                     <div style="margin-top:10px"><b>OIB: </b>{{ App\Models\Customer::find($order->customer_id)->oib }}</div>
                 </td>
                 <td class="w-tri">
-                    <div><h4>Datum i vrijeme ponde:</h4></div>
+                    <div><h4>Datum i vrijeme izdavanja:</h4></div>
                     <div>{{$appSettings['address_city']}}</div>
                     <div>{{ \Carbon\Carbon::parse($order->created_at)->format('d.m.Y') }}</div>
                     <div>u {{ \Carbon\Carbon::parse($order->created_at)->format('H:i') }}</div>
