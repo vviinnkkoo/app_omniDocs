@@ -359,7 +359,7 @@
 </div>
 
 
-{{-- Modal for expenses --}}
+{{-- Modal for notes --}}
 <div class="modal fade" id="expensesModal" tabindex="-1" aria-labelledby="expensesModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -374,8 +374,8 @@
               <div class="form-group">
 
                 <div class="mb-3">
-                  <label for="expenseNote">Napomena:</label>
-                  <textarea class="form-control" placeholder="Unesi dodatni opis..." id="expenseNote" name="expenseNote" rows="3">- - -</textarea>
+                  <label for="note">Napomena:</label>
+                  <textarea class="form-control" placeholder="Unesi dodatni opis..." id="note" name="note" rows="3">- - -</textarea>
                 </div>
 
               </div>
