@@ -40,7 +40,6 @@
                           <th scope="col">Status</th>
                           <th scope="col">Broj pošiljke</th>
                           <th scope="col">Iznos</th>
-                          <th scope="col">Trošak</th>
                           <th scope="col">Račun</th>
                         </tr>
                       </thead>
@@ -115,12 +114,6 @@
                                       <td></td>
                                     @else
                                     <td class="align-middle text-right">{{ number_format($itemsAmount, 2, ',') }} €</td>
-                                    @endif
-
-                                    @if (($expensesAmount = App\Http\Controllers\ExpenseController::sumSingleOrderExpense($order->id)) == 0)
-                                      <td></td>
-                                    @else
-                                    <td class="align-middle text-right">{{ $expensesAmount }} €</td>
                                     @endif
                                     
                                     {{-- Has invoice --}}
