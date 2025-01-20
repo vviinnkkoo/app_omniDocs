@@ -35,7 +35,7 @@ class OrderNoteController extends Controller
         $orderNote = new OrderNote;
         $orderNote->note = $request->note;
         $orderNote->order_id = $id;
-        $expense->save();
+        $orderNote->save();
     
         return redirect('/uredi-narudzbu/' . $id);
     }
@@ -70,5 +70,5 @@ class OrderNoteController extends Controller
 
         return response()->json(['message' => 'Error deleting the record'], 500);
     }
-    
+
 }
