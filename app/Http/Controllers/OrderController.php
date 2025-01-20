@@ -105,11 +105,10 @@ class OrderController extends Controller
         $paymentTypes = PaymentType::get()->sortBy('id');
         $countries = Country::get()->sortBy('id');
         $productList = OrderItemList::where('order_id', $order_id)->get();
-        $expenseList = Expense::where('order_id', $order_id)->get();
+        $orderNotes = OrderNote::where('order_id', $order_id)->get(); // was Expense
         $products = Product::get()->sortBy('name');
         $productTypes = ProductType::get()->sortBy('id');
         $colors = Color::get()->sortBy('id');
-        $expenseTypes = ExpenseType::get()->sortBy('id');
         $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
         $deliveryService = DeliveryService::where('id', $order->delivery_service_id)->firstOrFail();
 
@@ -131,11 +130,10 @@ class OrderController extends Controller
             'paymentTypes' => $paymentTypes,
             'countries' => $countries,
             'productList' => $productList,
-            'expenseList' => $expenseList,
+            'orderNotes' => $orderNotes,
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
-            'expenseTypes' => $expenseTypes,
             'orderSum' => $orderSum,
             'deliveryCost' => $deliveryCost,
             'orderTotal' => $orderTotal

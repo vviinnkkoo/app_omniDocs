@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 
-use App\Models\Expense;
+use App\Models\OrderNote;
 
-class ExpenseController extends Controller
+class OrderNoteController extends Controller
 {
     // Protect all functions and redirect to login if necessary
     public function __construct()
@@ -23,9 +23,7 @@ class ExpenseController extends Controller
     // POST function for saving new stuff
     public function add (Request $request, $id) {
         $validator = Validator::make($request->all(), [
-        'type_id' => 'required',
-        'expenseDate' => 'required',
-        'expenseAmount' => 'required'
+        'note' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -34,12 +32,9 @@ class ExpenseController extends Controller
                 ->withErrors($validator);
         }
 
-        $expense = new Expense;
-        $expense->amount = $request->expenseAmount;
-        $expense->order_id = $id;
-        $expense->type_id = $request->type_id;
-        $expense->date = $request->expenseDate;
-        $expense->note = $request->expenseNote;
+        $orderNote = new OrderNote;
+        $orderNote->note = $request->note;
+        $orderNote->order_id = $id;
         $expense->save();
     
         return redirect('/uredi-narudzbu/' . $id);
@@ -49,7 +44,7 @@ class ExpenseController extends Controller
     // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
-        $record = Expense::findOrFail($id);
+        $record = OrderNote::findOrFail($id);
 
         $field = $request->input('field');
         $newValue = $request->input('newValue');
@@ -64,7 +59,7 @@ class ExpenseController extends Controller
     // DELETE function (Ajax version)
     public function destroy(Request $request, $id): JsonResponse
     {
-        $record = Expense::findOrFail($id);
+        $record = OrderNote::findOrFail($id);
         if (!$record) {
             return response()->json(['message' => 'Record not found'], 404);
         }
@@ -75,10 +70,5 @@ class ExpenseController extends Controller
 
         return response()->json(['message' => 'Error deleting the record'], 500);
     }
-     
-
-    public static function sumSingleOrderExpense($order_id) {
-        $expenses = Expense::where('order_id', $order_id)->sum('amount');
-        return number_format(($expenses), 2, ',');
-    }
+    
 }

@@ -300,7 +300,7 @@
       </div>
 
       {{-- //////////////////// --}}
-      {{-- Expenses list part   --}}
+      {{-- Notes part   --}}
       {{-- //////////////////// --}}
       <div class="col-xl-12">
         <div class="card" style="margin-top: 30px;">
@@ -317,8 +317,6 @@
                         <thead class="table-secondary">
                           <tr>                          
                             <th scope="col">#</th>
-                            <th scope="col">Vrsta troška</th>
-                            <th scope="col">Iznos</th>
                             <th scope="col">Datum</th>
                             <th scope="col">Napomena</th>
                             <th></th>
@@ -326,35 +324,14 @@
                         </thead>
                         <tbody>
                           @php ($count = 1)
-                          @foreach ($expenseList as $item)
+                          @foreach ($orderNotes as $item)
                                   <tr>
                                       {{-- # --}}
                                       <td class="align-middle text-right">{{ $count++ }}</td>
   
-                                      {{-- Vrsta troška --}}
-                                      <td class="align-middle text-right">
-                                        <div class="editable-select" data-id="{{ $item->id }}" data-field="type_id" data-model="expense">
-                                          <!-- Display the selected value -->
-                                          <span>{{ App\Models\ExpenseType::find($item->type_id)->name }}</span>
-                                          
-                                          <!-- Hidden select element with options -->
-                                          <select class="edit-select form-select" style="display: none !important">
-                                            <option value="" selected>Odaberi vrstu troška...</option>
-                                              @foreach ($expenseTypes as $type)
-                                              <option value="{{ $type->id }}">{{ $type->name }}</option>                                  
-                                              @endforeach 
-                                          </select>
-                                        </div>
-                                      </td>
-  
-                                      {{-- Iznos --}}
-                                      <td class="align-middle text-right">
-                                        <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="expense">{{ $item->amount }}</span> €
-                                      </td>
-  
                                       {{-- Datum --}}
                                       <td class="align-middle text-right">
-                                        <div class="editable-date" data-id="{{ $item->id }}" data-field="date" data-model="expense">
+                                        <div class="editable-date" data-id="{{ $item->id }}" data-field="date" data-model="order-note">
                                           <input type="date" class="form-control" style="width:50%" value="{{ $item->date }}">
                                         </div>
                                       </td>
@@ -366,7 +343,7 @@
   
                                       {{-- Delete button --}}
                                       <td>
-                                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="expense"><i class="bi bi-x-lg"></i></button>
+                                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-note"><i class="bi bi-x-lg"></i></button>
                                       </td>
                                   <tr>
                           @endforeach
