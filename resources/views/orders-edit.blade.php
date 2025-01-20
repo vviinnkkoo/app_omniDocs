@@ -305,7 +305,7 @@
       <div class="col-xl-12">
         <div class="card" style="margin-top: 30px;">
     
-          <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">Troškovi narudžbe</div>
+          <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">Napomene</div>
   
           <div class="card-body" style=" border: solid 4px #ffc10711">
               <!-- Button to trigger the pop-up -->
@@ -331,19 +331,19 @@
   
                                       {{-- Datum --}}
                                       <td class="align-middle text-right">
-                                        <div class="editable-date" data-id="{{ $item->id }}" data-field="date" data-model="order-note">
+                                        <div class="editable-date" data-id="{{ $item->id }}" data-field="date" data-model="note">
                                           <input type="date" class="form-control" style="width:50%" value="{{ $item->date }}">
                                         </div>
                                       </td>
   
                                       {{-- Napomena --}}
                                       <td class="align-middle text-right">
-                                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="expense">{{ $item->note }}</span>
+                                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="note">{{ $item->note }}</span>
                                       </td>
   
                                       {{-- Delete button --}}
                                       <td>
-                                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-note"><i class="bi bi-x-lg"></i></button>
+                                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="note"><i class="bi bi-x-lg"></i></button>
                                       </td>
                                   <tr>
                           @endforeach
@@ -364,12 +364,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="expensesModalLabel">Dodaj novi trošak</h5>
+        <h5 class="modal-title" id="expensesModalLabel">Dodaj novu napomenu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- popup content --}}
-        <form method="POST" action="/add-note/{{ $order->id}}" id="expenseForOrderSubmission">
+        <form method="POST" action="/add-note/{{ $order->id}}" id="noteForOrderSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 
@@ -383,7 +383,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-        <button type="submit" class="btn btn-primary" form="expenseForOrderSubmission">Spremi</button>
+        <button type="submit" class="btn btn-primary" form="noteForOrderSubmission">Spremi</button>
       </div>
     </div>
   </div>

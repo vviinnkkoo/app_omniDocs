@@ -20,7 +20,7 @@ use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\PrintLabelController;
 use App\Http\Controllers\KprController;
 use App\Http\Controllers\KprItemListController;
-use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\OrderNoteController;
 
 Auth::routes();
 Auth::routes(['register' => false]); // Disable registration
@@ -152,7 +152,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::delete('/delete-kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
 
 
-    // Expense list edits //
-    Route::post('add-expense/{id}', [ExpenseController::class, 'add']);
-    Route::put('/update-expense/{id}', [ExpenseController::class, 'update']);
-    Route::delete('/delete-expense/{id}', [ExpenseController::class, 'destroy'])->name('delete.row');
+    // Order note edits //
+    Route::post('add-note/{id}', [OrderNoteController::class, 'add']);
+    Route::put('/update-note/{id}', [OrderNoteController::class, 'update']);
+    Route::delete('/delete-note/{id}', [OrderNoteController::class, 'destroy'])->name('delete.row');
