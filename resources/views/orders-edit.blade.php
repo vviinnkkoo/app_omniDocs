@@ -161,13 +161,6 @@
                 </div>
               </div>
 
-              <div class="mb-3">                
-                <div>Težina paketa:</div>
-                <div>
-                  <span class="editable gray-mark" data-id="{{ $order->id }}" data-field="delivery_weight" data-model="order">{{ $order->delivery_weight }}</span><span> g</span> 
-                </div>
-              </div>
-
             </div>
 
             <div class="col">
