@@ -15,8 +15,7 @@ use App\Models\OrderItemList;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Color;
-use App\Models\Expense;
-use App\Models\ExpenseType;
+use App\Models\OrderNote;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
