@@ -309,7 +309,7 @@
   
           <div class="card-body" style=" border: solid 4px #ffc10711">
               <!-- Button to trigger the pop-up -->
-              <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal"><i class="bi bi-file-earmark-plus"></i> Dodaj trošak</button>
+              <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal"><i class="bi bi-file-earmark-plus"></i> Dodaj napomenu</button>
   
               {{-- @include('parts.tablesearch') --}}
   
