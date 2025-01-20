@@ -332,7 +332,7 @@
                                       {{-- Datum --}}
                                       <td class="align-middle text-right">
                                         <div class="editable-date" data-id="{{ $item->id }}" data-field="created_at" data-model="note">
-                                          <input type="date" class="form-control" style="width:50%" value="{{ $item->created_at }}">
+                                          <input type="date" class="form-control" style="width:50%" value="{{ $item->created_at->format('Y-m-d') }}">
                                         </div>
                                       </td>
   
