@@ -369,32 +369,12 @@
       </div>
       <div class="modal-body">
         {{-- popup content --}}
-        <form method="POST" action="/add-expense/{{ $order->id}}" id="expenseForOrderSubmission">
+        <form method="POST" action="/add-note/{{ $order->id}}" id="expenseForOrderSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 
                 <div class="mb-3">
-                  <label for="type_id">Vrsta troška:</label><br>
-                  <select class="form-select searchable-select-modal2" id="type_id" name="type_id">
-                      <option selected>Odaberi vrstu troška...</option>
-                      @foreach ($expenseTypes as $type)
-                          <option value="{{ $type->id }}">{{ $type->name }}</option>                                    
-                      @endforeach
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label for="expenseAmount">Iznos troška:</label>
-                  <input type="number" class="form-control" placeholder="Unesi iznos troška..." id="expenseAmount" name="expenseAmount" step=".01">
-                </div>
-
-                <div class="mb-3">
-                  <label for="expenseDate">Datum troška:</label>
-                  <input type="date" class="form-control" id="expenseDate" name="expenseDate">
-                </div>
-
-                <div class="mb-3">
-                  <label for="expenseNote">Komentar / opis:</label>
+                  <label for="expenseNote">Napomena:</label>
                   <textarea class="form-control" placeholder="Unesi dodatni opis..." id="expenseNote" name="expenseNote" rows="3">- - -</textarea>
                 </div>
 
