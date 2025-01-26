@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Otpremnica kupcu</title>
     
-    @include('parts.pdf-invoice-style')
+    @include('parts.pdf.style')
 
 </head>
 <body>
 
-    @include('parts.pdf-header')
+    @include('parts.pdf.dispatch-header')
 
     {{-- PDF content - START --}}
 

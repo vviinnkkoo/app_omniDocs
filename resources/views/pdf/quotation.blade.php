@@ -7,12 +7,12 @@
 
     <title>Ponuda br: {{$order->id}}</title>
 
-    @include('parts.pdf-invoice-style')
+    @include('parts.pdf.style')
 
 </head>
 <body>
 
-    @include('parts.pdf-header')
+    @include('parts.pdf.quotation-header')
 
     {{-- PDF content - START --}}
 
@@ -112,7 +112,7 @@
 
     {{-- PDF content - START --}}
 
-    @include('parts.pdf-signature-stamp')
+    @include('parts.pdf.signature-stamp')
 
 </body>
 </html>
