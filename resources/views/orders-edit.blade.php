@@ -11,23 +11,32 @@
     <div class="col-xl-12">
       <div class="card">
 
-      {{-- ////////// --}}
-      {{-- Order info --}}
-      {{-- ////////// --}}
-
-      <div class="card-header" style="font-weight: 900;"><a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
-        Narudžba: {{$order->id}}
-        <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
-        <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
-        <span style="font-size:100%; margin-left:15px;" >>></span>
-        <span style="font-size:100%; margin-left:15px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
+        {{-- Order info --}}
+        <div class="card-header" style="font-weight: 900;">
+          {{-- Header left side --}}
+          <a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
+          Narudžba: {{$order->id}}
+          <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
+          <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
+          <span style="font-size:100%; margin-left:15px;" >>></span>
+          <span style="font-size:100%; margin-left:15px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
+          {{-- Header right side --}}
+          <a class="badge bg-secondary float-right" style="margin-right:15px;" href="/dokument/ponuda/{{$order->id}}"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          <a class="badge bg-secondary float-right" href="/dokument/otpremnica/{{$order->id}}"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
+
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <div><h5>Kupac:</h5></div>
-              <div><h6 style="font-weight: 900">{{ App\Models\Customer::find($order->customer_id)->name }}</h6></div>
-              
+
+              <div>
+                <h5>Kupac:</h5>
+              </div>
+
+              <div>
+                <h6 style="font-weight: 900">{{ App\Models\Customer::find($order->customer_id)->name }}</h6>
+              </div>
+
               <div>
                 <span class="editable" data-id="{{ $order->id }}" data-field="delivery_address" data-model="order">{{ $order->delivery_address }}</span>
               </div>
@@ -39,11 +48,8 @@
 
 
               <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_country_id" data-model="order">
-
-
                 <!-- Display the selected value -->
                 <span>{{ App\Models\Country::find($order->delivery_country_id)->country_name }}</span>
-
                 <!-- Hidden select element with options -->
                 <select class="edit-select form-select" style="display: none !important">
                   <option value="" selected>Odaberi državu...</option>
@@ -135,7 +141,7 @@
                     <select class="edit-select form-select" style="display: none !important">
 
                       <option selected>Odaberi dostavnu službu...</option>
-  
+
                       @foreach ($deliveryCompanies as $company)
                         <optgroup label="{{ $company->name }}">
                           @foreach ($company->deliveryService as $service)
@@ -144,7 +150,7 @@
                             @endif
                           @endforeach
                       @endforeach
-  
+
                     </select>
 
                     
@@ -184,18 +190,15 @@
             
           </div>
 
-          </div>
         </div>
-
       </div>
 
-      @include("common.errors")
+    </div>
 
-      {{-- //////////////////// --}}
-      {{-- Order item list part --}}
-      {{-- //////////////////// --}}
+    @include("common.errors")
 
-      <div class="col-xl-12">
+    {{-- Order item list part --}}
+    <div class="col-xl-12">
       <div class="card" style="margin-top: 30px;">
   
         <div class="card-header" style="font-weight: 900; background-color: #19875411">Proizvodi</div>
@@ -204,156 +207,145 @@
             <!-- Button to trigger the pop-up -->
             <button id="popupButton" class="btn btn-success" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Dodaj proizvod</button>
 
-            {{-- @include('parts.tablesearch') --}}
+              <table class="table table-hover">
+                <thead class="table-secondary">
+                  <tr>                          
+                    <th scope="col">#</th>
+                    <th scope="col">Proizvod</th>
+                    <th scope="col">Boja</th>
+                    <th scope="col">Količina</th>
+                    <th scope="col">Cijena</th>
+                    <th scope="col">Popust</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Status izrade</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @php ($count = 1)
+                  @foreach ($productList as $item)
+                          <tr>
+                              {{-- # --}}
+                              <td class="align-middle text-right">{{ $count++ }}</td>
 
-                    <table class="table table-hover">
-                      <thead class="table-secondary">
-                        <tr>                          
-                          <th scope="col">#</th>
-                          <th scope="col">Proizvod</th>
-                          <th scope="col">Boja</th>
-                          <th scope="col">Količina</th>
-                          <th scope="col">Cijena</th>
-                          <th scope="col">Popust</th>
-                          <th scope="col">Opis</th>
-                          <th scope="col">Status izrade</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @php ($count = 1)
-                        @foreach ($productList as $item)
-                                <tr>
-                                    {{-- # --}}
-                                    <td class="align-middle text-right">{{ $count++ }}</td>
+                              {{-- Proizvod --}}
+                              <td class="align-middle text-right">
+                                <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
+                                  <!-- Display the selected value -->
+                                  <span>{{ App\Models\Product::find($item->product_id)->product_name }}</span>
+                                  
+                                  <!-- Hidden select element with options -->
+                                  <select class="edit-select form-select" style="display: none !important">
+                                    <option value="" selected>Odaberi proizvod...</option>
+                                      @foreach ($products as $product)
+                                      <option value="{{ $product->id }}">{{ $product->product_name }}</option>                                  
+                                      @endforeach 
+                                  </select>
+                                </div>
+                              </td>
 
-                                    {{-- Proizvod --}}
-                                    <td class="align-middle text-right">
-                                      <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
-                                        <!-- Display the selected value -->
-                                        <span>{{ App\Models\Product::find($item->product_id)->product_name }}</span>
-                                        
-                                        <!-- Hidden select element with options -->
-                                        <select class="edit-select form-select" style="display: none !important">
-                                          <option value="" selected>Odaberi proizvod...</option>
-                                            @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->product_name }}</option>                                  
-                                            @endforeach 
-                                        </select>
-                                      </div>
-                                    </td>
+                              {{-- Boja --}}
+                              <td class="align-middle text-right">
+                                <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
+                                  <!-- Display the selected value -->
+                                  <span>{{ App\Models\Color::find($item->color_id)->color_name }}</span>
+                                  
+                                  <!-- Hidden select element with options -->
+                                  <select class="edit-select form-select" style="display: none !important">
+                                    <option value="" selected>Odaberi boju...</option>
+                                      @foreach ($colors as $color)
+                                      <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                                      @endforeach 
+                                  </select>
+                                </div>
+                              </td>
 
-                                    {{-- Boja --}}
-                                    <td class="align-middle text-right">
-                                      <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
-                                        <!-- Display the selected value -->
-                                        <span>{{ App\Models\Color::find($item->color_id)->color_name }}</span>
-                                        
-                                        <!-- Hidden select element with options -->
-                                        <select class="edit-select form-select" style="display: none !important">
-                                          <option value="" selected>Odaberi boju...</option>
-                                            @foreach ($colors as $color)
-                                            <option value="{{ $color->id }}">{{ $color->color_name }}</option>                                  
-                                            @endforeach 
-                                        </select>
-                                      </div>
-                                    </td>
+                              {{-- Količina --}}
+                              <td class="align-middle text-right">
+                                <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->amount }}</span> {{ App\Models\Product::find($item->product_id)->unit }}
+                              </td>
 
-                                    {{-- Količina --}}
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->amount }}</span> {{ App\Models\Product::find($item->product_id)->unit }}
-                                    </td>
+                              {{-- Cijena --}}
+                              <td class="align-middle text-right">
+                                <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="order-item-list">{{ $item->price }}</span> €
+                              </td>
 
-                                    {{-- Cijena --}}
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="order-item-list">{{ $item->price }}</span> €
-                                    </td>
+                              {{-- Popust --}}
+                              <td class="align-middle text-right">
+                                <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="order-item-list">{{ $item->discount }}</span> %
+                              </td>
 
-                                    {{-- Popust --}}
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="order-item-list">{{ $item->discount }}</span> %
-                                    </td>
+                              {{-- Opis --}}
+                              <td class="align-middle text-right">
+                                <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="order-item-list">{{ $item->note }}</span>
+                              </td>
 
-                                    {{-- Opis --}}
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="order-item-list">{{ $item->note }}</span>
-                                    </td>
+                              {{-- Status izrade --}}
+                              <td class="align-middle text-right">
+                                <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="order-item-list">
+                                  <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
+                                </div>
+                              </td>
 
-                                    {{-- Status izrade --}}
-                                    <td class="align-middle text-right">
-                                      <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="order-item-list">
-                                        <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
-                                      </div>
-                                    </td>
-
-                                    {{-- Delete button --}}
-                                    <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-item-list"><i class="bi bi-x-lg"></i></button>
-                                    </td>
-                                <tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                              {{-- Delete button --}}
+                              <td>
+                                <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-item-list"><i class="bi bi-x-lg"></i></button>
+                              </td>
+                          <tr>
+                  @endforeach
+                </tbody>
+              </table>
           </div>
-
       </div>
+    </div>
+
+    {{-- Notes part   --}}
+    <div class="col-xl-12">
+      <div class="card" style="margin-top: 30px;">
+  
+        <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">Napomene</div>
+
+        <div class="card-body" style=" border: solid 4px #ffc10711">
+            <!-- Button to trigger the pop-up -->
+            <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal"><i class="bi bi-file-earmark-plus"></i> Dodaj napomenu</button>
+            <table class="table table-hover">
+              <thead class="table-secondary">
+                <tr>                          
+                  <th scope="col">#</th>
+                  <th scope="col">Datum</th>
+                  <th scope="col">Napomena</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @php ($count = 1)
+                @foreach ($orderNotes as $item)
+                  <tr>
+                      {{-- # --}}
+                      <td class="align-middle text-right">{{ $count++ }}</td>
+
+                      {{-- Datum --}}
+                      <td class="align-middle text-right">
+                        <div class="editable-date" data-id="{{ $item->id }}" data-field="created_at" data-model="note">
+                          <input type="date" class="form-control" style="width:50%" value="{{ $item->created_at->format('Y-m-d') }}">
+                        </div>
+                      </td>
+
+                      {{-- Napomena --}}
+                      <td class="align-middle text-right">
+                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="note">{{ $item->note }}</span>
+                      </td>
+
+                      {{-- Delete button --}}
+                      <td>
+                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="note"><i class="bi bi-x-lg"></i></button>
+                      </td>
+                  <tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
       </div>
-
-      {{-- //////////////////// --}}
-      {{-- Notes part   --}}
-      {{-- //////////////////// --}}
-      <div class="col-xl-12">
-        <div class="card" style="margin-top: 30px;">
-    
-          <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">Napomene</div>
-  
-          <div class="card-body" style=" border: solid 4px #ffc10711">
-              <!-- Button to trigger the pop-up -->
-              <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal"><i class="bi bi-file-earmark-plus"></i> Dodaj napomenu</button>
-  
-              {{-- @include('parts.tablesearch') --}}
-  
-                      <table class="table table-hover">
-                        <thead class="table-secondary">
-                          <tr>                          
-                            <th scope="col">#</th>
-                            <th scope="col">Datum</th>
-                            <th scope="col">Napomena</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @php ($count = 1)
-                          @foreach ($orderNotes as $item)
-                                  <tr>
-                                      {{-- # --}}
-                                      <td class="align-middle text-right">{{ $count++ }}</td>
-  
-                                      {{-- Datum --}}
-                                      <td class="align-middle text-right">
-                                        <div class="editable-date" data-id="{{ $item->id }}" data-field="created_at" data-model="note">
-                                          <input type="date" class="form-control" style="width:50%" value="{{ $item->created_at->format('Y-m-d') }}">
-                                        </div>
-                                      </td>
-  
-                                      {{-- Napomena --}}
-                                      <td class="align-middle text-right">
-                                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="note">{{ $item->note }}</span>
-                                      </td>
-  
-                                      {{-- Delete button --}}
-                                      <td>
-                                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="note"><i class="bi bi-x-lg"></i></button>
-                                      </td>
-                                  <tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-            </div>
-  
-        </div>
-        </div>
-
     </div>
   </div>
 </div>
@@ -399,50 +391,55 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{-- popup content --}}
+        {{-- Popup content --}}
         <form method="POST" action="/update-order-products/{{ $order->id}}" id="productForOrderSubmission">
           {{ csrf_field() }}
-              <div class="form-group">
+          <div class="form-group">
 
-                <div class="mb-3">
-                  <label for="product_id">Vrsta proizvoda:</label><br>
-                  <select class="form-select searchable-select-modal" id="product_id" name="product_id">
-                      <option selected>Odaberi proizvod...</option>
-                      @foreach ($productTypes as $productType)
-                        <optgroup label="{{ $productType->type_name }}">
-                          @foreach ($productType->product as $product)
-                            <option value="{{ $product->id }}">{{ $product->product_name }} :: {{ $product->default_price }} €</option>
-                          @endforeach
+            {{-- Product type select box --}}
+            <div class="mb-3">
+              <label for="product_id">Vrsta proizvoda:</label><br>
+              <select class="form-select searchable-select-modal" id="product_id" name="product_id">
+                  <option selected>Odaberi proizvod...</option>
+                  @foreach ($productTypes as $productType)
+                    <optgroup label="{{ $productType->type_name }}">
+                      @foreach ($productType->product as $product)
+                        <option value="{{ $product->id }}">{{ $product->product_name }} :: {{ $product->default_price }} €</option>
                       @endforeach
-                  </select>
-                </div>
+                  @endforeach
+              </select>
+            </div>
 
-                <div class="mb-3">
-                  <label for="amount">Količina:</label>
-                  <input type="number" class="form-control" placeholder="Unesi količinu proizvoda..." id="amount" name="amount" step="1">
-                </div>
+            {{-- Amount input field --}}
+            <div class="mb-3">
+              <label for="amount">Količina:</label>
+              <input type="number" class="form-control" placeholder="Unesi količinu proizvoda..." id="amount" name="amount" step="1">
+            </div>
 
-                <div class="mb-3">
-                  <label for="price">Cijena:</label>
-                  <input type="number" class="form-control" placeholder="Unesi cijenu proizvoda..." id="price" name="price" step=".01">
-                </div>
+            {{-- Price input field --}}
+            <div class="mb-3">
+              <label for="price">Cijena:</label>
+              <input type="number" class="form-control" placeholder="Unesi cijenu proizvoda..." id="price" name="price" step=".01">
+            </div>
 
-                <div class="mb-3">
-                  <label for="color_id">Boja proizvoda:</label><br>
-                  <select class="form-select searchable-select-modal" id="color_id" name="color_id">
-                      <option selected>Odaberi boju proizvoda, ako je usluga stavi neodređeno...</option>
-                      @foreach ($colors as $color)
-                        <option value="{{ $color->id }}">{{ $color->color_name }}</option>                                  
-                      @endforeach
-                  </select>
-                </div>
+            {{-- Product color select box --}}
+            <div class="mb-3">
+              <label for="color_id">Boja proizvoda:</label><br>
+              <select class="form-select searchable-select-modal" id="color_id" name="color_id">
+                  <option selected>Odaberi boju proizvoda, ako je usluga stavi neodređeno...</option>
+                  @foreach ($colors as $color)
+                    <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                  @endforeach
+              </select>
+            </div>
 
-                <div class="mb-3">
-                  <label for="note">Komentar / opis:</label>
-                  <textarea class="form-control" placeholder="Unesi dodatni opis..." id="note" name="note" rows="3">- - -</textarea>
-                </div>
+            {{-- Product note --}}
+            <div class="mb-3">
+              <label for="note">Komentar / opis:</label>
+              <textarea class="form-control" placeholder="Unesi dodatni opis..." id="note" name="note" rows="3">- - -</textarea>
+            </div>
 
-              </div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -452,10 +449,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 
 @include('parts.deleteconfirmation')
 
