@@ -6,7 +6,7 @@
                 <img src="{{ asset($appSettings['invoice_logo']) }}" height="54" />
             </td>
             <td class="w-half">
-                <h2>OTPREMNICA br: <span class="gray-overlay">{{$order->id}}-1-1</span></h2>
+                <h2>OTPREMNICA br: <span class="gray-overlay">{{$order->id}}</span></h2>
             </td>
         </tr>
     </table>
