@@ -21,8 +21,8 @@
           <span style="font-size:100%; margin-left:15px;" >>></span>
           <span style="font-size:100%; margin-left:15px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
           {{-- Header right side --}}
-          <a class="badge bg-secondary float-right" style="margin-right:15px;" href="/dokument/ponuda/{{$order->id}}"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
-          <a class="badge bg-secondary float-right" href="/dokument/otpremnica/{{$order->id}}"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+          <a class="btn bg-warning" style="margin-right:15px; float:right;" href="/dokument/ponuda/{{$order->id}}"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          <a class="btn bg-info" style="float:right;"href="/dokument/otpremnica/{{$order->id}}"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
 
         <div class="card-body">

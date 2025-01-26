@@ -11,26 +11,9 @@
 </head>
 <body>
 
-    <!-- Define header and footer blocks before your content -->
-    <header>
-        <table class="w-full" style="border-bottom: solid 1px black">
-            <tr>
-                <td class="col">
-                    <img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" height="54" />
-                </td>
-                <td class="col-6">
-                    <h3>Otpremnica kupcu br: <span class="gray-overlay">{{ $order->id }} - {{ \Carbon\Carbon::parse($order->date_ordered)->format('Y') }}</span></h3>
-                </td>
-            </tr>
-        </table>
-    </header>
+    @include('parts.pdf-header')
 
-    <footer>
-        <div class="center footer-content">
-            <div><b>{{$appSettings['company_name']}}</b>, {{$appSettings['company_extra_info']}} | Adresa vlasnika: <b>{{$appSettings['address']}}, {{$appSettings['address_city']}}</b> | OIB: <b>{{$appSettings['company_oib']}}</b></div>
-            <div>Porezni broj: <b>{{$appSettings['company_vat_id']}}</b> | Žiro račun IBAN: <b>{{$appSettings['company_iban']}}</b> otvoren u: <b>{{$appSettings['company_bank']}}</b></div>
-        </div>
-    </footer>
+    {{-- PDF content - START --}}
 
     <div class="margin-first">
         <table class="w-full info">
@@ -111,7 +94,7 @@
     </div>
 
     <div class="notes">
-        <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 2 Zakona o PDV-u</p>
+        <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u</p>
     </div>
 
     <div class="margin-signatures">
@@ -123,6 +106,8 @@
             </tr>
         </table>
     </div>
+
+    {{-- PDF content - END --}}
 
 </body>
 </html>

@@ -12,30 +12,9 @@
 </head>
 <body>
 
-    <!-- Define header and footer blocks before your content -->
-    <header>
-        <table class="w-full" style="border-bottom: solid 1px black">
-            <tr>
-                <td class="w-half">
-                    {{--<img src="{{ asset('images/omnius-art-logo.png') }}" alt="Omnius Art" height="54" />--}}
-                    <img src="{{ asset($appSettings['invoice_logo']) }}" height="54" />
-                </td>
-                <td class="w-half">
-                    <h2>RAČUN br: <span class="gray-overlay">{{$receipt->number}}-1-1</span></h2>
-                </td>
-            </tr>
-        </table>
-    </header>
+    @include('parts.pdf-header')
 
-    <footer>
-        <div class="center footer-content">
-            <div><b>{{$appSettings['company_name']}}</b>, {{$appSettings['company_extra_info']}} | Adresa vlasnika: <b>{{$appSettings['address']}}, {{$appSettings['address_city']}}</b> | OIB: <b>{{$appSettings['company_oib']}}</b></div>
-            <div>Porezni broj: <b>{{$appSettings['company_vat_id']}}</b> | Žiro račun IBAN: <b>{{$appSettings['company_iban']}}</b> otvoren u: <b>{{$appSettings['company_bank']}}</b></div>
-        </div>
-    </footer>
-
-
-
+    {{-- PDF content - START --}}
 
     <div class="margin-first">
         <table class="w-full info">
@@ -132,22 +111,9 @@
         <p><b>Broj narudžbe:</b> {{$order->id}}</p>
     </div>
 
-    <div class="margin-first">
-        <table class="w-full info">
-            <tr>
-                <td class="w-tri">
-                </td>
-                <td class="w-tri center relative-section">
-                    M.P.
-                    <img src="{{ asset($appSettings['invoice_stamp']) }}" alt="Omnius Art" height="50" class="mp-image" />
-                </td>
-                <td class="w-tri center relative-section">
-                    <div style="border-top: solid 1px black;">Potpis</div>
-                    <img src="{{ asset($appSettings['invoice_signature']) }}" alt="Omnius Art" height="50" class="signature-image" />
-                </td>
-            </tr>
-        </table>
-    </div>
+    {{-- PDF content - END --}}
+
+    @include('parts.pdf-signature-stamp')
 
 </body>
 </html>
