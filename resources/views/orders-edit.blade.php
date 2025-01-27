@@ -172,16 +172,16 @@
             <div class="col">
 
               <div class="mb-3">
-                <div>Datum dostave:</div>
+                <div>Datum dostave / završetka:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="order">
-                  <input type="date" class="form-control" style="width:80%" value="{{ $order->date_delivered }}">
+                  <input type="date" class="form-control" style="width:80%; border:solid #52cc47 2px" value="{{ $order->date_delivered }}">
                 </div>
               </div>
 
               <div class="mb-3">
                 <div>Datum otkazivanja:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="order">
-                  <input type="date" class="form-control" style="width:80%" value="{{ $order->date_cancelled }}">
+                  <input type="date" class="form-control" style="width:80%; border:solid #fc2a2a 2px" value="{{ $order->date_cancelled }}">
                 </div>
               </div>
 
@@ -312,7 +312,7 @@
               <thead class="table-secondary">
                 <tr>                          
                   <th scope="col">#</th>
-                  <th scope="col">Datum</th>
+                  <th scope="col" style="width: 20%;">Datum</th>
                   <th scope="col">Napomena</th>
                   <th></th>
                 </tr>
@@ -326,9 +326,7 @@
 
                       {{-- Datum --}}
                       <td class="align-middle text-right">
-                        <div class="editable-date" data-id="{{ $item->id }}" data-field="created_at" data-model="note">
-                          <input type="date" class="form-control" style="width:50%" value="{{ $item->created_at->format('Y-m-d') }}">
-                        </div>
+                        <span>{{ $item->created_at->format('Y-m-d') }}</span>
                       </td>
 
                       {{-- Napomena --}}
