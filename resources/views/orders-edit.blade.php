@@ -174,14 +174,14 @@
               <div class="mb-3">
                 <div>Datum dostave / završetka:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="order">
-                  <input type="date" class="form-control" style="width:80%; border:solid #52cc47 2px" value="{{ $order->date_delivered }}">
+                  <input type="date" class="form-control" style="width:80%; border:solid #52cc47 23px !important" value="{{ $order->date_delivered }}">
                 </div>
               </div>
 
               <div class="mb-3">
                 <div>Datum otkazivanja:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="order">
-                  <input type="date" class="form-control" style="width:80%; border:solid #fc2a2a 2px" value="{{ $order->date_cancelled }}">
+                  <input type="date" class="form-control" style="width:80%; border:solid #fc2a2a 3px !important" value="{{ $order->date_cancelled }}">
                 </div>
               </div>
 
@@ -312,9 +312,9 @@
               <thead class="table-secondary">
                 <tr>                          
                   <th scope="col" style="width: 5%;">#</th>
-                  <th scope="col" style="width: 19%;">Datum</th>
+                  <th scope="col" style="width: 10%;">Datum</th>
                   <th scope="col" style="width: 75%;">Napomena</th>
-                  <th></th>
+                  <th style="width: 10%;"></th>
                 </tr>
               </thead>
               <tbody>
