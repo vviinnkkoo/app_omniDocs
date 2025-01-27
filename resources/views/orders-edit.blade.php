@@ -172,14 +172,14 @@
             <div class="col">
 
               <div class="mb-3">
-                <div style="background-color:#5eb909; color:aliceblue; padding:4px; border-radius: 3px;">Datum dostave / završetka:</div>
+                <span style="background-color:#5eb909; color:aliceblue; padding:2px 4px; border-radius: 3px; margin-bottom:5px;">Datum dostave / završetka:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="order">
                   <input type="date" class="form-control" style="width:80%;" value="{{ $order->date_delivered }}">
                 </div>
               </div>
 
               <div class="mb-3">
-                <div style="background-color:#b90909; color:aliceblue; padding:4px; border-radius: 3px;">Datum otkazivanja:</div>
+                <span style="background-color:#b90909; color:aliceblue; padding:2px 4px; border-radius: 3px; margin-bottom:5px;">Datum otkazivanja:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="order">
                   <input type="date" class="form-control" style="width:80%;" value="{{ $order->date_cancelled }}">
                 </div>
