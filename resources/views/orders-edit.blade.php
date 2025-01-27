@@ -172,38 +172,33 @@
             <div class="col">
 
               <div class="mb-3">
-                <span style="background-color:#5eb909; color:aliceblue; padding:2px 4px; border-radius: 3px; margin-bottom:5px;">Datum dostave / završetka:</span>
+                <span style="background-color:#beff81; color:#333; padding:2px 4px; border-radius: 3px; margin-bottom:5px;">Datum dostave / završetka:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="order">
                   <input type="date" class="form-control" style="width:80%;" value="{{ $order->date_delivered }}">
                 </div>
               </div>
 
               <div class="mb-3">
-                <span style="background-color:#b90909; color:aliceblue; padding:2px 4px; border-radius: 3px; margin-bottom:5px;">Datum otkazivanja:</span>
+                <span style="background-color:#e27171; color:#333; padding:2px 4px; border-radius: 3px; margin-bottom:5px;">Datum otkazivanja:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="order">
                   <input type="date" class="form-control" style="width:80%;" value="{{ $order->date_cancelled }}">
-                </div>
+                </div>                
               </div>
 
-
-            </div>
-            
+            </div>            
           </div>
-
         </div>
       </div>
-
     </div>
 
     @include("common.errors")
 
     {{-- Order item list part --}}
     <div class="col-xl-12">
-      <div class="card" style="margin-top: 30px;">
-  
+      <div class="card" style="margin-top: 30px;">  
         <div class="card-header" style="font-weight: 900; background-color: #19875411">Proizvodi</div>
-
           <div class="card-body" style=" border: solid 4px #19875411">
+
             <!-- Button to trigger the pop-up -->
             <button id="popupButton" class="btn btn-success" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Dodaj proizvod</button>
 
@@ -299,7 +294,7 @@
       </div>
     </div>
 
-    {{-- Notes part   --}}
+    {{-- Notes part --}}
     <div class="col-xl-12">
       <div class="card" style="margin-top: 30px;">
   
