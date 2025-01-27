@@ -311,9 +311,9 @@
             <table class="table table-hover">
               <thead class="table-secondary">
                 <tr>                          
-                  <th scope="col">#</th>
-                  <th scope="col" style="width: 20%;">Datum</th>
-                  <th scope="col">Napomena</th>
+                  <th scope="col" style="width: 5%;">#</th>
+                  <th scope="col" style="width: 19%;">Datum</th>
+                  <th scope="col" style="width: 75%;">Napomena</th>
                   <th></th>
                 </tr>
               </thead>
@@ -326,7 +326,7 @@
 
                       {{-- Datum --}}
                       <td class="align-middle text-right">
-                        <span>{{ $item->created_at->format('Y-m-d') }}</span>
+                        <span>{{ $item->created_at->format('d. m. Y.') }}</span>
                       </td>
 
                       {{-- Napomena --}}
