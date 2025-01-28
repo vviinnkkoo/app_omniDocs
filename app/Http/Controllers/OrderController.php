@@ -54,7 +54,7 @@ class OrderController extends Controller
                       })
                       ->orWhereHas('deliveryService.deliveryCompany', function($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%");
-                      });
+                      })
                       ->orWhereHas('customer', function($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%");
             });
