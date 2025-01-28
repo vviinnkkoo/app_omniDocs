@@ -12,7 +12,7 @@
       <div class="card">
 
         {{-- Order info --}}
-        <div class="card-header" style="font-weight: 900;">
+        <div class="card-header d-flex align-items-center" style="font-weight: 900;">
           {{-- Header left side --}}
           <a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
           Narudžba: {{$order->id}}
