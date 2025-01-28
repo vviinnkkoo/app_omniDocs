@@ -32,7 +32,7 @@
                 @endif
 
             @else
-              <a class="btn bg-warning btn-sm" style="color:#333; font-weight:bold; font-size:100%" href="#"><i class="bi bi-plus-square-fill"></i> Napravi</a>
+              <a class="btn bg-primary btn-sm" style="font-weight:bold; font-size:100%" href="#"><i class="bi bi-plus-square-fill"></i> Napravi</a>
             @endif
           </span>
           {{-- Header right side --}}
