@@ -19,8 +19,7 @@
           <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
-          <span style="font-size:100%; margin-left:15px; margin-right:15px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
-          <div class="vr" style="marin-right:15px;"></div>
+          <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
           {{-- Invoice check --}}
           <span>Račun:
             @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
