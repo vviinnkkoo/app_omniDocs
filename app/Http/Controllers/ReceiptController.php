@@ -22,7 +22,6 @@ class ReceiptController extends Controller
     }
     
     // GET function for displaying purposes
-    //
     public function show($year) {
 
         $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
@@ -35,9 +34,6 @@ class ReceiptController extends Controller
             'latest' => $latest
             ]);
     }
-
-    
-
 
     // POST function for saving new stuff
     public function save (Request $request) {
@@ -59,9 +55,7 @@ class ReceiptController extends Controller
         return redirect('/racuni/' . $request->year);
     }
 
-
-     // UPDATE (Ajax version)
-    //
+    // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
 
@@ -82,9 +76,7 @@ class ReceiptController extends Controller
         return response()->json(['message' => 'Payment type updated successfully']);
     }
 
-
     // DELETE function (Ajax version)
-    //
     public function destroy(Request $request, $id): JsonResponse
     {
         // Find the record by ID
@@ -118,9 +110,6 @@ class ReceiptController extends Controller
         $receipt->update(['is_cancelled' => $newIsCancelledValue]);
     }
 
-
-
-
     public static function getReceiptTotal($order_id) {
         $receipt = Receipt::where('order_id', $order_id)->firstOrFail();        
         $order = Order::where('id', $receipt->order_id)->firstOrFail();
@@ -141,9 +130,6 @@ class ReceiptController extends Controller
 
         return $total;
     }
-
-
-
 
     public static function getTotalForAllReceipts($mode) {
         if ($mode === 1) {
@@ -180,9 +166,6 @@ class ReceiptController extends Controller
     
         return number_format(($totalSum), 2, ',', '.');
     }
-
-
-
 
     public static function countReceipts($year) {
         $count = Receipt::where('is_cancelled', 0)->where('year', $year)->count();
