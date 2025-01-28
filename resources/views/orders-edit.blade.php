@@ -19,16 +19,17 @@
           <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
-          <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
+          <span style="font-size:100%; margin-left:15px; margin-right:15px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
+          <div class="vr" style="marin-right:15px;"></div>
           {{-- Invoice check --}}
           <span>Račun:
             @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
               <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
 
                 @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
-                  class="badge bg-success text-decoration-none hover:opacity-75" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Plaćen</a>
+                  class="btn btn-success" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Plaćen</a>
                 @else
-                  class="badge bg-danger text-decoration-none hover:opacity-75" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
+                  class="btn btn-danger" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
                 @endif
 
             @else
