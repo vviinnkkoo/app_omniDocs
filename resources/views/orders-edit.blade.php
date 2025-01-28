@@ -38,8 +38,8 @@
           </span>
           {{-- Invoice check END --}}
           <div style="border-left:solid 4px #333;"></div>
-          <a class="btn bg-warning btn-sm" style="margin-left:15px; color:#333; font-weight:bold;" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
-          <a class="btn bg-info btn-sm" style="margin-left:15px; color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+          <a class="btn bg-warning btn-sm" style="color:#333; font-weight:bold;" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          <a class="btn bg-info btn-sm" style="color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
 
         <div class="card-body">
