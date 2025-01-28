@@ -20,19 +20,21 @@
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
           <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
-          {{-- Invoice check --}}          
-          @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
-            <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
+          {{-- Invoice check --}}
+          <span>Račun:
+            @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
+              <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
 
-              @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
-                class="btn btn-success" style="font-size:100%"><i class="bi bi-filetype-pdf"></i></a>
-              @else
-                class="btn btn-danger" style="font-size:100%"><i class="bi bi-filetype-pdf"></i></a>
-              @endif
+                @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
+                  class="btn btn-success" style="font-size:100%"><i class="bi bi-filetype-pdf"> Plaćen</i></a>
+                @else
+                  class="btn btn-danger" style="font-size:100%"><i class="bi bi-filetype-pdf"> Nenaplaćen</i></a>
+                @endif
 
-          @else
-            <a class="btn bg-warning btn-sm" style="color:#333; font-weight:bold; font-size:100%" href="#" target="_blank"><i class="bi bi-file-pdf-fill"></i> Napravi račun</a>
-          @endif
+            @else
+              <a class="btn bg-warning btn-sm" style="color:#333; font-weight:bold; font-size:100%" href="#"><i class="bi bi-file-pdf-fill"></i> Napravi</a>
+            @endif
+          </span>
           {{-- Header right side --}}
           <a class="btn bg-warning btn-sm" style="float:right; margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
           <a class="btn bg-info btn-sm" style="float:right; margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
