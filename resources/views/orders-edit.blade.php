@@ -26,9 +26,9 @@
               <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
 
                 @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
-                  class="badge btn-success" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Plaćen</a>
+                  class="badge bg-success" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Plaćen</a>
                 @else
-                  class="badge btn-danger" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
+                  class="badge bg-danger" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
                 @endif
 
             @else
