@@ -36,8 +36,8 @@
             @endif
           </span>
           {{-- Header right side --}}
-          <a class="btn bg-warning btn-sm float-end" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
-          <a class="btn bg-info btn-sm float-end" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+          <a class="btn bg-warning btn-sm ms-auto" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          <a class="btn bg-info btn-sm" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
 
         <div class="card-body">
