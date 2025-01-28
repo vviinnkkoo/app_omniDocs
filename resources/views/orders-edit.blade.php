@@ -31,7 +31,7 @@
               @endif
 
           @else
-            <a class="btn bg-warning btn-sm" style="color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Napravi račun</a>
+            <a class="btn bg-warning btn-sm" style="color:#333; font-weight:bold; font-size:100%" href="#" target="_blank"><i class="bi bi-file-pdf-fill"></i> Napravi račun</a>
           @endif
           {{-- Header right side --}}
           <a class="btn bg-warning btn-sm" style="float:right; margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
