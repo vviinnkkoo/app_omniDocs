@@ -15,11 +15,11 @@
         <div class="card-header d-flex align-items-center" style="font-weight: 900;">
           {{-- Header left side --}}
           <a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
-          <span style="margin-left:10px;">Narudžba: {{$order->id}}</span>
-          <span style="margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
-          <span style="margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
-          <span style="margin-left:15px;" >>></span>
-          <span style="margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
+          <span style="font-size:100%; margin-left:10px;">Narudžba: {{$order->id}}</span>
+          <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
+          <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
+          <span style="font-size:100%; margin-left:15px;" >>></span>
+          <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
           {{-- Invoice check --}}
           <span>Račun:
             @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
@@ -28,7 +28,7 @@
                 @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
                   class="btn btn-success btn-sm"><i class="bi bi-filetype-pdf"></i> Plaćen</a>
                 @else
-                  class="btn btn-danger btn-sm" style="font-size:100%"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
+                  class="btn btn-danger btn-sm"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
                 @endif
 
             @else
