@@ -15,7 +15,7 @@
         <div class="card-header d-flex align-items-center" style="font-weight: 900;">
           {{-- Header left side --}}
           <a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
-          Narudžba: {{$order->id}}
+          <span>Narudžba: {{$order->id}}</span>
           <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
@@ -36,8 +36,8 @@
             @endif
           </span>
           {{-- Header right side --}}
-          <a class="btn bg-warning btn-sm ms-auto" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
-          <a class="btn bg-info btn-sm ms-auto" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+          <a class="btn bg-warning btn-sm float-end" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          <a class="btn bg-info btn-sm float-end" style="margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
 
         <div class="card-body">
