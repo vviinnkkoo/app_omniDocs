@@ -94,7 +94,7 @@
     </div>
 
     <div class="notes">
-        <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u</p>
+        <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
     </div>
 
     <div class="margin-signatures">
