@@ -20,8 +20,9 @@
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
           <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
-          {{-- Invoice check --}}
-          <span>Račun:
+          {{-- Header right side --}}
+          {{-- Invoice check START --}}
+          <span class="ms-auto">Račun:
             @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
               <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
 
@@ -35,8 +36,8 @@
               <a class="btn btn-primary btn-sm" style="font-weight:bold;" href="#"><i class="bi bi-file-earmark-plus"></i> Napravi</a>
             @endif
           </span>
-          {{-- Header right side --}}
-          <a class="btn bg-warning btn-sm ms-auto" style="margin-left:15px; color:#333; font-weight:bold;" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          {{-- Invoice check END --}}
+          <a class="btn bg-warning btn-sm" style="margin-left:15px; color:#333; font-weight:bold;" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
           <a class="btn bg-info btn-sm" style="margin-left:15px; color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
 
