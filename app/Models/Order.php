@@ -42,7 +42,7 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->hasMany(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function isOrderDone()
