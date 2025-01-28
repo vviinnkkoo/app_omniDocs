@@ -23,6 +23,19 @@
           {{-- Header right side --}}
           <a class="btn bg-warning btn-sm" style="float:right; margin-left:15px; color:#333; font-weight:bold; font-size:100%" href="/dokument/ponuda/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
           <a class="btn bg-info btn-sm" style="float:right; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+          {{-- Invoice check --}}          
+            @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
+              <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
+
+                @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
+                  class="btn btn-success" style="float:right; font-size:100%"><i class="bi bi-filetype-pdf"></i></a>
+                @else
+                  class="btn btn-danger" style="float:right; font-size:100%"><i class="bi bi-filetype-pdf"></i></a>
+                @endif
+
+            @else
+              <a class="btn bg-warning btn-sm" style="float:right; color:#333; font-weight:bold; font-size:100%" href="/dokument/otpremnica/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Napravi račun</a>
+            @endif
         </div>
 
         <div class="card-body">
