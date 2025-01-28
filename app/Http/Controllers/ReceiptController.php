@@ -40,7 +40,6 @@ class ReceiptController extends Controller
 
 
     // POST function for saving new stuff
-    //
     public function save (Request $request) {
         $validator = Validator::make($request->all(), [
         'order_id' => 'required',
