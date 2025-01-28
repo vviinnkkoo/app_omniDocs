@@ -40,6 +40,11 @@ class Order extends Model
         return $this->belongsTo(DeliveryService::class, 'delivery_service_id');
     }
 
+    public function customer()
+    {
+        return $this->hasMany(Customer::class, 'customer_id');
+    }
+
     public function isOrderDone()
 {
     return $this->orderItemList->every(function ($item) {
