@@ -460,7 +460,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Invoice modal -->
 <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
