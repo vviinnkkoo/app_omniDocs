@@ -42,7 +42,7 @@ class ReceiptController extends Controller
         'year' => 'required'
         ]);
             if ($validator->fails()) {
-                return redirect('/racuni')
+                return redirect()->back()
                     ->withInput()
                     ->withErrors($validator);
             }
@@ -52,7 +52,8 @@ class ReceiptController extends Controller
         $receipt->year = $request->year;
         $receipt->save();
     
-        return redirect('/racuni/' . $request->year);
+        //return redirect('/racuni/' . $request->year);
+        return redirect()->back();
     }
 
     // UPDATE (Ajax version)
