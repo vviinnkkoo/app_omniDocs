@@ -51,8 +51,7 @@ class ReceiptController extends Controller
         $receipt->order_id = $request->order_id;
         $receipt->year = $request->year;
         $receipt->save();
-    
-        //return redirect('/racuni/' . $request->year);
+        
         return redirect()->back();
     }
 
