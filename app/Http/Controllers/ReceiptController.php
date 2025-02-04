@@ -24,9 +24,16 @@ class ReceiptController extends Controller
     // GET function for displaying purposes
     public function show($year) {
 
-        $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
-        $orders = Order::whereNull('date_cancelled')->get()->sortBy('id');
-        $latest = (Receipt::where('year', $year)->orderBy('number', 'desc')->limit(1)->value('number')) + 1;
+        $receipts = Receipt::where('year', $year)
+                            ->orderBy('number')
+                            ->paginate(25);
+        $orders = Order::whereNull('date_cancelled')
+                        ->get()
+                        ->sortBy('id');
+        $latest = (Receipt::where('year', $year)
+                            ->orderBy('number', 'desc')
+                            ->limit(1)
+                            ->value('number')) + 1;
         
         return view('receipts', [
             'receipts' => $receipts,
@@ -59,35 +66,24 @@ class ReceiptController extends Controller
     public function update(Request $request, $id)
     {
 
-        // Validate and update the payment type in the database
         $record = Receipt::findOrFail($id);
-
-        // Get the field name and new value from the request
         $field = $request->input('field');
         $newValue = $request->input('newValue');
-
-        // Update the attribute in the model
         $record->$field = $newValue;
-
-        // Save the model to the database
         $record->save();
-
-        // Return a JSON response or other appropriate response
         return response()->json(['message' => 'Payment type updated successfully']);
     }
 
     // DELETE function (Ajax version)
     public function destroy(Request $request, $id): JsonResponse
     {
-        // Find the record by ID
+
         $record = Receipt::findOrFail($id);
 
-        // Check if the record exists
         if (!$record) {
             return response()->json(['message' => 'Record not found'], 404);
         }
-
-        // Delete the record
+        
         if ($record->delete()) {
             return response()->json(['message' => 'Record deleted successfully']);
         }
@@ -115,6 +111,10 @@ class ReceiptController extends Controller
         $order = Order::where('id', $receipt->order_id)->firstOrFail();
         $deliveryService = DeliveryService::where('id', $order->delivery_service_id)->firstOrFail();
 
+        //$receipt = Receipt::where('order_id', $order_id)->firstOrFail();
+        //$order = $receipt->order;
+        //$deliveryService = $order->deliveryService;
+
         // Reduce 0.6 if payment type is COD and delivery service is HP
         $if_postal_delivery_reduction = 0;
         if ($receipt->order->payment_type_id == 2 && $deliveryService->delivery_company_id == 1) {
@@ -133,13 +133,19 @@ class ReceiptController extends Controller
 
     public static function getTotalForAllReceipts($mode) {
         if ($mode === 1) {
-            $receipts = Receipt::where('is_cancelled', 0)->get();
+            $receipts = Receipt::where('is_cancelled', 0)
+                                ->get();
         } elseif ($mode === 2023) {
-            $receipts = Receipt::where('is_cancelled', 0)->where('year', 2023)->get();
+            $receipts = Receipt::where('is_cancelled', 0)
+                                ->where('year', 2023)
+                                ->get();
         } elseif ($mode === 2024) {
-            $receipts = Receipt::where('is_cancelled', 0)->where('year', 2024)->get();
+            $receipts = Receipt::where('is_cancelled', 0)
+                                ->where('year', 2024)
+                                ->get();
         } elseif ($mode === 3) {
-            $receipts = Receipt::whereNotNull('paid_date')->get();
+            $receipts = Receipt::whereNotNull('paid_date')
+                                ->get();
         } else {
             return;
         }
@@ -168,11 +174,8 @@ class ReceiptController extends Controller
     }
 
     public static function countReceipts($year) {
-        $count = Receipt::where('is_cancelled', 0)->where('year', $year)->count();
-        //$countUnpaidReceipts = Receipt::whereNull('paid_date')->count();
-        //$countPaidReceipts = Receipt::whereNotNull('paid_date')->count();
-
-        return $count;
-
+        return Receipt::where('is_cancelled', 0)
+                      ->where('year', $year)
+                      ->count();
     }
 }
