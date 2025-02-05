@@ -71,6 +71,7 @@ class ReceiptController extends Controller
         $newValue = $request->input('newValue');
         $record->$field = $newValue;
         $record->save();
+
         return response()->json(['message' => 'Payment type updated successfully']);
     }
 
@@ -107,13 +108,13 @@ class ReceiptController extends Controller
     }
 
     public static function getReceiptTotal($order_id) {
-        $receipt = Receipt::where('order_id', $order_id)->firstOrFail();        
-        $order = Order::where('id', $receipt->order_id)->firstOrFail();
-        $deliveryService = DeliveryService::where('id', $order->delivery_service_id)->firstOrFail();
+        //$receipt = Receipt::where('order_id', $order_id)->firstOrFail();        
+        //$order = Order::where('id', $receipt->order_id)->firstOrFail();
+        //$deliveryService = DeliveryService::where('id', $order->delivery_service_id)->firstOrFail();
 
-        //$receipt = Receipt::where('order_id', $order_id)->firstOrFail();
-        //$order = $receipt->order;
-        //$deliveryService = $order->deliveryService;
+        $receipt = Receipt::where('order_id', $order_id)->firstOrFail();
+        $order = $receipt->order;
+        $deliveryService = $order->deliveryService;
 
         // Reduce 0.6 if payment type is COD and delivery service is HP
         $if_postal_delivery_reduction = 0;
