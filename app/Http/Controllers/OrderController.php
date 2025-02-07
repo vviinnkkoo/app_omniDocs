@@ -64,26 +64,50 @@ class OrderController extends Controller
 
         // Show ALL orders
         if ($mode === '1') {
-            $orders = $query->orderBy('id')->paginate(25);
+            $orders = $query->orderBy('id')
+                            ->paginate(25);
         // Show SENT orders
         } elseif ($mode === '2') {
-            $orders = $query->whereNotNull('date_sent')->whereNull('date_delivered')->whereNull('date_cancelled')->orderBy('id')->paginate(25);
+            $orders = $query->whereNotNull('date_sent')
+                            ->whereNull('date_delivered')
+                            ->whereNull('date_cancelled')
+                            ->orderBy('id')
+                            ->paginate(25);
         // Show UNFINISHED orders
         } elseif ($mode === '3') {
-            $orders = $query->whereNull('date_sent')->whereNull('date_cancelled')->orderBy('id')->paginate(25);
+            $orders = $query->whereNull('date_sent')
+                            ->whereNull('date_cancelled')
+                            ->orderBy('id')
+                            ->paginate(25);
         // Show CANCELLED orders
         } elseif ($mode === '4') {
-            $orders = $query->whereNotNull('date_cancelled')->orderBy('id')->paginate(25);
+            $orders = $query->whereNotNull('date_cancelled')
+                            ->orderBy('id')
+                            ->paginate(25);
         } else {
             return;
         }
 
-        $customers = Customer::get()->sortBy('id');
-        $sources = Source::get()->sortBy('id');
-        $deliveryServices = DeliveryService::where('in_use', true)->get()->sortBy('name');
-        $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->get()->sortBy('id');
-        $paymentTypes = PaymentType::get()->sortBy('id');        
-        $countries = Country::get()->sortBy('id');
+        $customers = Customer::get()
+                        ->sortBy('id');
+
+        $sources = Source::get()
+                        ->sortBy('id');
+
+        $deliveryServices = DeliveryService::where('in_use', true)
+                        ->get()
+                        ->sortBy('name');
+
+        $deliveryCompanies = DeliveryCompany::whereNot('id', 1)
+                        ->whereHas('deliveryService')
+                        ->get()
+                        ->sortBy('id');
+
+        $paymentTypes = PaymentType::get()
+                        ->sortBy('id');
+
+        $countries = Country::get()
+                        ->sortBy('id');
         
         return view('orders', [
             'orders' => $orders,
@@ -97,37 +121,54 @@ class OrderController extends Controller
     }
 
 
-    // GET function for editing purposes
-    //
+
+
     public function edit($order_id) {
+
         $order = Order::where('id', $order_id)
                         ->firstOrFail();
+
         $customers = Customer::get()
                         ->sortBy('id');
+
         $sources = Source::get()
                         ->sortBy('id');
+
         $deliveryServices = DeliveryService::get()
-                        ->sortBy('id');        
+                        ->sortBy('id');
+
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)
-                        ->whereHas('deliveryService')->get()->sortBy('id');
+                        ->whereHas('deliveryService')
+                        ->get()
+                        ->sortBy('id');
+
         $paymentTypes = PaymentType::get()
                         ->sortBy('id');
+
         $countries = Country::get()
                         ->sortBy('id');
+
         $productList = OrderItemList::where('order_id', $order_id)
                         ->get();
+
         $orderNotes = OrderNote::where('order_id', $order_id)
                         ->get();
+
         $products = Product::get()
                         ->sortBy('name');
+
         $productTypes = ProductType::get()
                         ->sortBy('id');
+
         $colors = Color::get()
                         ->sortBy('id');
+
         $orderSum = $this->orderItemListController
                         ->sumOrderItemList($order_id);
+
         $deliveryService = DeliveryService::where('id', $order->delivery_service_id)
                         ->firstOrFail();
+
         $latest = (Receipt::where('year', date('Y'))
                         ->orderBy('number', 'desc')
                         ->limit(1)
@@ -163,17 +204,23 @@ class OrderController extends Controller
             ]);
     }
 
+
+
+
     public static function SumOrderExpense($order_id) {
-        $expenses = Expense::where('order_id', $order_id)->sum('amount');
+
+        $expenses = Expense::where('order_id', $order_id)
+                            ->sum('amount');
         
         return number_format(($expenses), 2, ',');
     }
 
 
 
-    // POST function for saving new stuff
-    //
+
+
     public function save (Request $request) {
+
         $validator = Validator::make($request->all(), [
         'date_ordered' => 'required',
         'date_deadline' => 'required',
@@ -210,46 +257,38 @@ class OrderController extends Controller
     }
 
 
-    // UPDATE (Ajax version)
-    //
-    public function update(Request $request, $id)
-    {
 
-        // Validate and update the delivery service in the database
+
+    public function update(Request $request, $id) {
+
         $order = Order::findOrFail($id);
 
-        // Get the field name and new value from the request
         $field = $request->input('field');
         $newValue = $request->input('newValue');
 
-        // Update the attribute in the model
         $order->$field = $newValue;
 
-        // Save the model to the database
         $order->save();
 
-        // Return a JSON response or other appropriate response
         return response()->json(['message' => 'Delivery service updated successfully']);
     }
 
 
-    // DELETE function (Ajax version)
-    //
-    public function destroy(Request $request, $id): JsonResponse
-    {
-        // Find the record by ID
+
+
+    public function destroy(Request $request, $id): JsonResponse {
+
         $record = Order::findOrFail($id);
 
-        // Check if the record exists
         if (!$record) {
             return response()->json(['message' => 'Record not found'], 404);
         }
 
-        // Delete the record
         if ($record->delete()) {
             return response()->json(['message' => 'Record deleted successfully']);
         }
 
         return response()->json(['message' => 'Error deleting the record'], 500);
     }
+
 }
