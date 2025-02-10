@@ -114,7 +114,7 @@ class OrderController extends Controller
         $countries = Country::orderBy('id')->get();
         $productList = OrderItemList::where('order_id', $order_id)->get();
         $orderNotes = OrderNote::where('order_id', $order_id)->get();
-        $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('product_name')->get();
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
         $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
