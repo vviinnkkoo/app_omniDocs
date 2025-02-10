@@ -66,6 +66,7 @@ class OrderController extends Controller
         if ($mode === '1') {
             $orders = $query->orderBy('id')
                             ->paginate(25);
+
         // Show SENT orders
         } elseif ($mode === '2') {
             $orders = $query->whereNotNull('date_sent')
@@ -73,12 +74,14 @@ class OrderController extends Controller
                             ->whereNull('date_cancelled')
                             ->orderBy('id')
                             ->paginate(25);
+
         // Show UNFINISHED orders
         } elseif ($mode === '3') {
             $orders = $query->whereNull('date_sent')
                             ->whereNull('date_cancelled')
                             ->orderBy('id')
                             ->paginate(25);
+                            
         // Show CANCELLED orders
         } elseif ($mode === '4') {
             $orders = $query->whereNotNull('date_cancelled')
