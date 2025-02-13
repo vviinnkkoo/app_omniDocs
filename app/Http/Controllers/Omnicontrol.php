@@ -49,15 +49,4 @@ class Omnicontrol extends Controller
             'countThisMonthOrders' => $countThisMonthOrders
             ]);
     }
-
-    public function hpCodModifierCheck($order_id) {
-        $order = Order::where('id', $order_id)->firstOrFail();
-        $deliveryService = DeliveryService::where('id', Order::find($order_id)->delivery_service_id)->firstOrFail();
-
-        if ($order->payment_type_id == 2 && $deliveryService->delivery_company_id == 1) {
-            return 0.6;
-        } else {
-            return 0;
-        }
-    }
 }

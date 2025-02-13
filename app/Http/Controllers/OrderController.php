@@ -26,15 +26,13 @@ use Illuminate\Http\JsonResponse;
 class OrderController extends Controller
 {
     // Protect all functions and redirect to login if necessary
-    public function __construct(OrderItemListController $orderItemListController, Omnicontrol $omnicontrol)
+    public function __construct(OrderItemListController $orderItemListController)
     {
         $this->middleware('auth');
         $this->orderItemListController = $orderItemListController;
-        $this->omnicontrol = $omnicontrol;
     }
 
     protected $orderItemListController;
-    protected $omnicontrol;
 
     // GET function for displaying purposes
     public function showOrders(Request $request, $mode)
@@ -105,6 +103,7 @@ class OrderController extends Controller
 
     public function edit($order_id)
     {
+        // Get all necessary data for the view
         $order = Order::findOrFail($order_id);
         $customers = Customer::orderBy('id')->get();
         $sources = Source::orderBy('id')->get();
@@ -120,13 +119,14 @@ class OrderController extends Controller
         $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
         $deliveryService = DeliveryService::findOrFail($order->delivery_service_id);
         $latest = (Receipt::where('year', date('Y'))->orderBy('number', 'desc')->limit(1)->value('number')) + 1;
-        $hp_cod_modifier = $this->omnicontrol->hpCodModifierCheck($order->id); // only for company with id "1"
 
+        // Convert order sum to float and calculate total sum
         $orderSum_converted = str_replace(',', '.', $orderSum);
-        $deliveryCost = str_replace(',', '.', $deliveryService->default_cost) - $hp_cod_modifier;
+        $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $orderTotal = number_format(($orderSum_converted + $deliveryCost), 2, ',');
         $orderSum = number_format(($orderSum), 2, ',');
 
+        // Return view with all necessary data
         return view('orders-edit', [
             'order' => $order,
             'customers' => $customers,
