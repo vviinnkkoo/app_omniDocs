@@ -19,7 +19,6 @@ class DoomPDFController extends Controller
     }
 
     protected $orderItemListController;
-    protected $omnicontrol;
 
     private function calculateTotal($order_id)
     {
