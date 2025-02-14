@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Source;
@@ -17,24 +16,17 @@ use App\Models\ProductType;
 use App\Models\Color;
 use App\Models\OrderNote;
 use App\Models\Receipt;
-
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
-    // Protect all functions and redirect to login if necessary
-    public function __construct(OrderItemListController $orderItemListController)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->orderItemListController = $orderItemListController;
     }
 
-    protected $orderItemListController;
-
-    // GET function for displaying purposes
     public function showOrders(Request $request, $mode)
     {
         $search = $request->input('search');
@@ -59,7 +51,8 @@ class OrderController extends Controller
 
         switch ($mode) {
             case '1':
-                $orders = $query->orderBy('id')->paginate(25);
+                $orders = $query->orderBy('id')
+                    ->paginate(25);
                 break;
             case '2':
                 $orders = $query->whereNotNull('date_sent')
@@ -103,30 +96,25 @@ class OrderController extends Controller
 
     public function edit($order_id)
     {
-        // Get all necessary data for the view
-        $order = Order::findOrFail($order_id);
+        $order = Order::with(['customer', 'deliveryService', 'orderItemList', 'orderNotes'])->findOrFail($order_id);
         $customers = Customer::orderBy('id')->get();
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
         $paymentTypes = PaymentType::orderBy('id')->get();
         $countries = Country::orderBy('id')->get();
-        $productList = OrderItemList::where('order_id', $order_id)->get();
-        $orderNotes = OrderNote::where('order_id', $order_id)->get();
         $products = Product::orderBy('product_name')->get();
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
         $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
-        $deliveryService = DeliveryService::findOrFail($order->delivery_service_id);
-        $latest = (Receipt::where('year', date('Y'))->orderBy('number', 'desc')->limit(1)->value('number')) + 1;
+        $deliveryService = $order->deliveryService;
+        $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
 
-        // Convert order sum to float and calculate total sum
         $orderSum_converted = str_replace(',', '.', $orderSum);
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         $orderTotal = number_format(($orderSum_converted + $deliveryCost), 2, ',');
         $orderSum = number_format(($orderSum), 2, ',');
 
-        // Return view with all necessary data
         return view('orders-edit', [
             'order' => $order,
             'customers' => $customers,
@@ -135,22 +123,16 @@ class OrderController extends Controller
             'deliveryCompanies' => $deliveryCompanies,
             'paymentTypes' => $paymentTypes,
             'countries' => $countries,
-            'productList' => $productList,
-            'orderNotes' => $orderNotes,
+            'productList' => $order->orderItemList,
+            'orderNotes' => $order->orderNotes,
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
             'orderSum' => $orderSum,
             'deliveryCost' => $deliveryCost,
             'orderTotal' => $orderTotal,
-            'latest' => $latest
+            'latestReceiptNumber' => $latestReceiptNumber
         ]);
-    }
-
-    public static function SumOrderExpense($order_id)
-    {
-        $expenses = Expense::where('order_id', $order_id)->sum('amount');
-        return number_format(($expenses), 2, ',');
     }
 
     public function save(Request $request)
@@ -165,9 +147,7 @@ class OrderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/narudzbe')
-                ->withInput()
-                ->withErrors($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         }
 
         $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
@@ -207,10 +187,6 @@ class OrderController extends Controller
     public function destroy(Request $request, $id): JsonResponse
     {
         $record = Order::findOrFail($id);
-
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
 
         if ($record->delete()) {
             return response()->json(['message' => 'Record deleted successfully']);
