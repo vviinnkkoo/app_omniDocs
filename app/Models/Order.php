@@ -45,6 +45,11 @@ class Order extends Model
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
+    public function source()
+    {
+        return $this->belongsTo(Source::class, 'source_id');
+    }
+
     public function isOrderDone()
 {
     return $this->orderItemList->every(function ($item) {
