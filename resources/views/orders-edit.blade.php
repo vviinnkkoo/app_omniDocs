@@ -33,7 +33,7 @@
                 @endif
 
             @else
-              <a class="btn btn-primary btn-sm" style="font-weight:bold;" href="#"><i class="bi bi-file-earmark-plus"></i> Napravi</a>
+              <button id="popupButton" class="btn btn-primary btn-sm" style="font-weight:bold;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Izradi</button>
             @endif
           </span>
           {{-- Invoice check END --}}

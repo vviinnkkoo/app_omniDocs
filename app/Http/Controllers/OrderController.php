@@ -19,6 +19,7 @@ use App\Models\Receipt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
+use App\Services\GlobalService;
 
 class OrderController extends Controller
 {
@@ -96,8 +97,7 @@ class OrderController extends Controller
 
     public function edit($order_id)
     {
-        $order = Order::with(['customer', 'deliveryService', 'orderItemList', 'orderNotes'])->findOrFail($order_id);
-        $customers = Customer::orderBy('id')->get();
+        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'deliveryCompany', 'country', 'orderItemList', 'orderNotes'])->findOrFail($order_id);
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
@@ -109,6 +109,7 @@ class OrderController extends Controller
         $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
         $deliveryService = $order->deliveryService;
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
+        $workYears = WorkYears::orderBy('year')->get();
 
         $orderSum_converted = str_replace(',', '.', $orderSum);
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
@@ -117,7 +118,6 @@ class OrderController extends Controller
 
         return view('orders-edit', [
             'order' => $order,
-            'customers' => $customers,
             'sources' => $sources,
             'deliveryServices' => $deliveryServices,
             'deliveryCompanies' => $deliveryCompanies,
@@ -131,7 +131,8 @@ class OrderController extends Controller
             'orderSum' => $orderSum,
             'deliveryCost' => $deliveryCost,
             'orderTotal' => $orderTotal,
-            'latestReceiptNumber' => $latestReceiptNumber
+            'latestReceiptNumber' => $latestReceiptNumber,
+            'workYears' => $workYears
         ]);
     }
 
