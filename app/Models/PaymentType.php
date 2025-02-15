@@ -9,11 +9,8 @@ class PaymentType extends Model
 {
     use HasFactory;
 
-    // change default table name
-    protected $table = 'payment_type';
-
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class, 'payment_type_id');
     }
 }
