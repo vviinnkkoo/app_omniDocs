@@ -69,6 +69,8 @@ class KprController extends Controller
             ->whereNotIn('id', $existingReceiptIds)
             ->orderBy('number')
             ->get();
+
+        $count = 1;
     
         $receiptOptions = [];
         foreach ($receipts as $receipt) {
