@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Receipt;
 use App\Models\OrderItemList;
 use App\Models\WorkYears;
+use App\Models\Kpr;
 
 class GlobalService
 {
