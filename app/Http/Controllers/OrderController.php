@@ -97,7 +97,7 @@ class OrderController extends Controller
 
     public function edit($order_id)
     {
-        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNotes'])->findOrFail($order_id);
+        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
@@ -124,7 +124,7 @@ class OrderController extends Controller
             'paymentTypes' => $paymentTypes,
             'countries' => $countries,
             'productList' => $order->orderItemList,
-            'orderNotes' => $order->orderNotes,
+            'orderNotes' => $order->orderNote,
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
