@@ -476,7 +476,7 @@
 
                 <div class="mb-3">
                   <label for="number">Redni broj računa:</label>
-                  <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latest }}">
+                  <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestReceiptNumber }}">
                 </div>
 
                 <input type="hidden" placeholder="Unesi redni broj računa..." id="order_id" name="order_id" value="{{ $orderId }}">
