@@ -6,6 +6,7 @@ use App\Models\OrderItemList;
 use App\Models\WorkYears;
 use App\Models\Kpr;
 use App\Models\KprItemList;
+use App\Models\Order;
 
 class GlobalService
 {
