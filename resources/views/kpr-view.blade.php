@@ -9,11 +9,8 @@
         <div class="col-xl-12">          
             <div class="card">
 
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
-
                 <div class="card-body">
 
-                  <!-- Button to trigger the pop-up -->
                   <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova uplata</button>
 
                   {{-- @include('parts.tablesearch') --}}
@@ -42,57 +39,53 @@
                       </thead>
                       <tbody>
 
-                          @php ($count = 1)
-                          @foreach ($kprs as $item)
+                        @foreach ($kprs as $item)
+                          <tr 
+                            @if ( $item->exists )
+                              class="kpr-has-receipt">
+                            @else
+                              class="kpr-no-receipt">
+                            @endif
 
-                                @if ( App\Models\KprItemList::where('kpr_id', $item->id)->exists() )
-                                    <tr class="kpr-has-receipt">
-                                @else
-                                    <tr class="kpr-no-receipt">
-                                @endif
+                            <td class="align-middle text-start">{{ $count++ }}</td>
 
-                                <td class="align-middle text-start">{{ $count++ }}</td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->payer }}</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ $item->payer }}</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->date }}</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ \Carbon\Carbon::parse($item->date)->format('d.m.Y') }}</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->paymentTypeName }}</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ App\Models\KprPaymentType::find($item->kpr_payment_type_id)->name }}</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->origin }}</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ $item->origin }}</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->info }}</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ $item->info }}</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->amount }} €</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ $item->amount }} €</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display">{{ $item->receiptsTotal }} €</div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display">{{ App\Http\Controllers\KprController::checkReceiptsAndSum($item->id) }} €</div>
-                                </td>
+                            <td class="align-middle text-start">
+                              <div class="date-display"><a href="/uredi-uplatu/{{ $item->id }}" class="btn btn-success">Uredi</a></div>
+                            </td>
 
-                                <td class="align-middle text-start">
-                                  <div class="date-display"><a href="/uredi-uplatu/{{ $item->id }}" class="btn btn-success">Uredi</a></div>
-                                </td>
-
-                                <td>
-                                  <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="kpr"><i class="bi bi-x-lg"></i></button>
-                                </td>
-
-                            <tr>
-
-                          @endforeach
-
+                            <td>
+                              <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="kpr"><i class="bi bi-x-lg"></i></button>
+                            </td>
+                          <tr>
+                        @endforeach
                       </tbody>
                     </table>
 

@@ -15,13 +15,13 @@ class Kpr extends Model
         $this->attributes['amount'] = is_null($value) ? null : str_replace(',', '.', $value);
     }
 
-    public function receiptx(): HasOne
-    {
-        return $this->hasOne(Receipt::class);
-    }
-
     public function receipt()
     {
         return $this->hasMany(Receipt::class);
+    }
+
+    public function paymentType()
+    {
+        return $this->belongsTo(KprPaymentType::class, 'kpr_payment_type_id');
     }
 }
