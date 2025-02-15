@@ -50,9 +50,8 @@ class Order extends Model
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'delivery_country_id ');
+        return $this->belongsTo(Country::class, 'delivery_country_id');
     }
-
 
     public function isOrderDone()
     {

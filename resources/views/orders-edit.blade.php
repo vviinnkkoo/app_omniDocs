@@ -66,7 +66,7 @@
 
               <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_country_id" data-model="order">
                 <!-- Display the selected value -->
-                <span>{{ $order->paymentCountryName }}</span>
+                <span>{{ $order->countryName }}</span>
                 <!-- Hidden select element with options -->
                 <select class="edit-select form-select" style="display: none !important">
                   <option value="" selected>Odaberi državu...</option>

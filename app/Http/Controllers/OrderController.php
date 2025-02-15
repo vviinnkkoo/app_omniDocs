@@ -105,7 +105,7 @@ class OrderController extends Controller
     {
         $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);        
         $order->paymentTypeName = $order->paymentType->name;
-        $order->paymentCountryName = $order->country->name;
+        $order->countryName = $order->country->name;
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
@@ -116,6 +116,8 @@ class OrderController extends Controller
         $colors = Color::orderBy('id')->get();
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
         $workYears = WorkYears::orderBy('year')->get();
+
+        // Calculations for display
         $deliveryCost = $order->deliveryService->default_cost;
         $orderSubtotal = GlobalService::sumWholeOrder($order_id);
         $orderTotal = number_format(($orderSubtotal + $deliveryCost), 2, ',');
