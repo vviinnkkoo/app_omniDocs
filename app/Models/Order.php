@@ -30,7 +30,7 @@ class Order extends Model
         return $this->hasMany(OrderItemList::class);
     }
 
-    public function orderItemList()
+    public function orderNote()
     {
         return $this->hasMany(OrderNote::class);
     }
@@ -55,7 +55,7 @@ class Order extends Model
         return $this->belongsTo(Source::class, 'source_id');
     }
 
-    public function source()
+    public function country()
     {
         return $this->belongsTo(Country::class, 'delivery_country_id ');
     }
