@@ -25,10 +25,9 @@ class GlobalService
     {
         $order = Order::with(['deliveryService'])->findOrFail($id);
         $deliveryCost = $order->deliveryService->default_cost;
-        $subtotal = self::sumWholeOrder($receipt->id);
-        $total = $subtotal + $deliveryCost;
+        $subtotal = self::sumWholeOrder($id);
 
-        return $total;
+        return $subtotal + $deliveryCost;
     }
 
     
