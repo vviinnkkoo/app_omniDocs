@@ -70,11 +70,11 @@
                             </td>
 
                             <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->amount }} €</div>
+                              <div class="date-display">{{ number_format($item->amount, 2, ',', '.') }} €</div>
                             </td>
 
                             <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->receiptsTotal }} €</div>
+                              <div class="date-display">{{ number_format($item->receiptsTotal, 2, ',', '.') }} €</div>
                             </td>
 
                             <td class="align-middle text-start">

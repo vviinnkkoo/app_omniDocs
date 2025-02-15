@@ -20,12 +20,11 @@ class GlobalService
     }
 
 
-    public static function calculateReceiptTotal($orderId)
+    public static function calculateReceiptTotal($id)
     {
-        $receipt = Receipt::with(['order.deliveryService'])->where('order_id', $orderId)->firstOrFail();
-        $order = $receipt->order;
+        $order = Order::with(['deliveryService'])->findOrFail($id);
         $deliveryCost = $order->deliveryService->default_cost;
-        $subtotal = self::sumWholeOrder($receipt->orderId);
+        $subtotal = self::sumWholeOrder($receipt->id);
         $total = $subtotal + $deliveryCost;
 
         return $total;
