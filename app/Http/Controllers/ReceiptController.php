@@ -10,6 +10,7 @@ use App\Models\OrderItemList;
 use App\Models\WorkYears;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
+use App\Services\GlobalService;
 
 class ReceiptController extends Controller
 {
@@ -22,7 +23,11 @@ class ReceiptController extends Controller
     {
         $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
         $orders = Order::whereNull('date_cancelled')->orderBy('id')->get();
-        $latest = Receipt::where('year', $year)->orderBy('number', 'desc')->value('number') + 1;
+        $latest = GlobalService::getLatestReceiptNumber('year', $year)->orderBy('number', 'desc')->value('number') + 1;
+
+        foreach ($receipts as $receipt) {
+            $receipt->totalAmount = $this->getReceiptTotal($receipt->order_id);
+        }
 
         return view('receipts', [
             'receipts' => $receipts,
@@ -88,7 +93,6 @@ class ReceiptController extends Controller
     public static function getTotalForAllReceipts($mode)
     {
         $query = Receipt::where('is_cancelled', 0);
-
         $workingYears = WorkYears::pluck('year')->toArray();
 
         if (in_array($mode, $workingYears)) {

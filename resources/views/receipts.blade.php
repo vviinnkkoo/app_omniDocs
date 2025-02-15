@@ -77,7 +77,7 @@
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      {{ App\Http\Controllers\ReceiptController::getReceiptTotal($receipt->order_id) }} €
+                                      {{ $receipt->totalAmount }} €
                                     </td>
 
                                     <td class="align-middle text-right">
