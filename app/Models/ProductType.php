@@ -19,6 +19,6 @@ class ProductType extends Model
 
     public function product()
     {
-        return $this->hasMany(Product::class)->orderBy('product_name', 'asc');
+        return $this->hasMany(Product::class)->orderBy('name', 'asc');
     }
 }
