@@ -9,6 +9,10 @@ class KprItemList extends Model
 {
     use HasFactory;
 
-    // change default table name
     protected $table = 'kpr_item_list';
+
+    public function receipt()
+    {
+        return $this->belongsTo(Receipt::class, 'receipt_id');
+    }
 }
