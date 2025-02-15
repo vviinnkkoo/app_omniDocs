@@ -111,7 +111,7 @@
                       </td>
 
                       <td>
-                        <button class="btn btn-danger delete-btn-x" data-id="{{ $listItem->id }}" data-model="kpr-item-list"><i class="bi bi-x-lg"></i></button>
+                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="kpr-item-list"><i class="bi bi-x-lg"></i></button>
                       </td>
                         
                     <tr>
