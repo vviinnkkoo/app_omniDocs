@@ -63,21 +63,21 @@
                     <td style="center">{{$item->product_id}}-{{$item->color_id}}</td>
 
                     <td>
-                        {{ App\Models\Product::find($item->product_id)->product_name }}<br>
-                        <span style="font-size:70%">Boja: {{ App\Models\Color::find($item->color_id)->color_name }}</span>
+                        {{ $item->productName }}<br>
+                        <span style="font-size:70%">Boja: {{ $item->color }}</span>
                     </td>
 
                     <td class="center">
-                        @if (App\Models\Product::find($item->product_id)->unit == 'kom')
-                            {{ number_format(str_replace(',', '.', $item->amount), 0) }} {{ App\Models\Product::find($item->product_id)->unit }}
+                        @if ($item->product == 'kom')
+                            {{ number_format($item->amount), 0 }} {{ $item->product->unit }}
                         @else
-                        {{ $item->amount }} {{ App\Models\Product::find($item->product_id)->unit }}
+                        {{ $item->amount }} {{ $item->product->unit }}
                         @endif
                     </td>
 
-                    <td class="center">{{ number_format(str_replace(',', '.', $item->price), 2, ',', '.') }} €</td>
+                    <td class="center">{{ number_format($item->price), 2, ',', '.' }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ App\Http\Controllers\OrderItemListController::sumSingleItem($item->id) }} €</td>                
+                    <td class="center">{{ $item->itemTotal }} €</td>                
                 </tr>
             @endforeach
 
