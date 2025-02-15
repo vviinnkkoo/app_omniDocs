@@ -16,6 +16,7 @@ use App\Models\ProductType;
 use App\Models\Color;
 use App\Models\OrderNote;
 use App\Models\Receipt;
+use App\Models\WorkYears;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
