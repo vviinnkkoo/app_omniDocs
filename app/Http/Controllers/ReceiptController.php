@@ -23,7 +23,7 @@ class ReceiptController extends Controller
     {
         $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
         $orders = Order::whereNull('date_cancelled')->orderBy('id')->get();
-        $latest = GlobalService::getLatestReceiptNumber('year', $year)->orderBy('number', 'desc')->value('number') + 1;
+        $latest = GlobalService::getLatestReceiptNumber($year);
 
         foreach ($receipts as $receipt) {
             $receipt->totalAmount = $this->getReceiptTotal($receipt->order_id);
