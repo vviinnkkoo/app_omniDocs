@@ -18,25 +18,12 @@ class DoomPDFController extends Controller
         $this->middleware('auth');
     }
 
-    private function calculateTotal($order_id)
-    {
-        $subtotal = GlobalService::calculateReceiptSubtotal($order_id);
-        $deliveryService = DeliveryService::where('id', Order::find($order_id)->delivery_service_id)->firstOrFail();
-        $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
-        return [
-            'subtotal' => $subtotal,
-            'deliveryCost' => $deliveryCost,
-            'total' => number_format(($subtotal + $deliveryCost), 2, ',', '.'),
-            'deliveryCostFormated' => number_format($deliveryCost, 2, ',', '.')
-        ];
-    }
-
     public function invoice($id)
     {
         $receipt = Receipt::where('id', $id)->firstOrFail();
         $order = Order::where('id', $receipt->order_id)->firstOrFail();
         $orderItemList = OrderItemList::where('order_id', $receipt->order_id)->get();
-        $subtotal = GlobalService::calculateReceiptSubtotal($order->id);
+        $subtotal = GlobalService::sumWholeOrder($order->id);
         $total = GlobalService::calculateReceiptTotal($order->id);
         $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
         $currentDateTime = date("dmY-Gis");
