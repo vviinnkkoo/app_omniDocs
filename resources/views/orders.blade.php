@@ -110,10 +110,10 @@
                                     </td>
 
                                     {{-- Total --}}
-                                    @if (($itemsAmount = App\Http\Controllers\OrderItemListController::sumOrderItemList($order->id)) == 0)
+                                    @if ($order->totalAmount == 0)
                                       <td></td>
                                     @else
-                                    <td class="align-middle text-right">{{ number_format($itemsAmount, 2, ',') }} €</td>
+                                    <td class="align-middle text-right">{{ number_format($order->totalAmount, 2, ',') }} €</td>
                                     @endif
                                     
                                     {{-- Has invoice --}}
