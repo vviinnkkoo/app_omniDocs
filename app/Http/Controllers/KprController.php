@@ -38,7 +38,7 @@ class KprController extends Controller
 
         $kprs = $query->whereYear('date', $year)->orderBy('date')->paginate(25);
         $paymentMethods = KprPaymentType::all();
-        $count = 0;
+        $count = 1;
 
         foreach ($kprs as $item) {
             $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
@@ -57,8 +57,19 @@ class KprController extends Controller
         $invoiceList = KprItemList::where('kpr_id', $kpr_id)->get();
         $year = Carbon::parse($item->date)->year;
         $receipts = Receipt::where('year', $year)->where('is_cancelled', 0)->orderBy('number')->get();
+        $count = 1;
 
-        return view('kpr-edit', compact('item', 'year', 'invoiceList', 'receipts'));
+        foreach ($invoiceList as $item) {
+            $item->receiptNumber = $item->receipt->number;
+            $item->customerName = $item->receipt->order->customer->name;
+            $item->orderId = $item->receipt->order_id;
+            $item->trackingCode = $item->receipt->order->tracking_code;
+            $item->receiptDate = Carbon::parse($item->receipt->created_at)->format('d.m.Y - H:i:s');
+            $item->receiptsTotal = GlobalService::calculateReceiptTotal($item->receipt->order_id);
+            $item->receiptID = $item->receipt->id;
+        }
+
+        return view('kpr-edit', compact('item', 'year', 'invoiceList', 'receipts', 'count'));
     }
 
 
