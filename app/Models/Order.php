@@ -30,6 +30,11 @@ class Order extends Model
         return $this->hasMany(OrderItemList::class);
     }
 
+    public function orderItemList()
+    {
+        return $this->hasMany(OrderNote::class);
+    }
+
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class, 'payment_type_id');
@@ -49,6 +54,12 @@ class Order extends Model
     {
         return $this->belongsTo(Source::class, 'source_id');
     }
+
+    public function source()
+    {
+        return $this->belongsTo(Country::class, 'delivery_country_id ');
+    }
+
 
     public function isOrderDone()
 {
