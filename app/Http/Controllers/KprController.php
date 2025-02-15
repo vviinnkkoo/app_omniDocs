@@ -51,14 +51,42 @@ class KprController extends Controller
     }
 
 
-    public function edit($kpr_id)
+    public function edit($id)
     {
-        $item = Kpr::findOrFail($kpr_id);
-        $invoiceList = KprItemList::where('kpr_id', $kpr_id)->get();
-        $year = Carbon::parse($item->date)->year;
-        $receipts = Receipt::where('year', $year)->where('is_cancelled', 0)->orderBy('number')->get();
-        $count = 1;
-
+        $kprInstance = Kpr::with([
+            'kprItemList.receipt.order.customer',
+            'kprItemList.receipt.order.tracking_code',
+            'kprItemList.receipt.created_at'
+        ])->findOrFail($id);
+    
+        $invoiceList = $kprInstance->kprItemList;
+        $year = Carbon::parse($kprInstance->date)->year;
+    
+        $existingReceiptIds = KprItemList::where('kpr_id', $id)
+            ->pluck('receipt_id')
+            ->toArray();
+    
+        $receipts = Receipt::where('year', $year)
+            ->where('is_cancelled', 0)
+            ->whereNotIn('id', $existingReceiptIds)
+            ->orderBy('number')
+            ->get();
+    
+        $receiptOptions = [];
+        foreach ($receipts as $receipt) {
+            $customerName = $receipt->order->customer->name;
+            $total = GlobalService::calculateReceiptTotal($receipt->order_id);
+            $trackingCode = $receipt->order->tracking_code;
+    
+            $receiptOptions[] = [
+                'id' => $receipt->id,
+                'number' => $receipt->number,
+                'customerName' => $customerName,
+                'total' => $total,
+                'trackingCode' => $trackingCode
+            ];
+        }
+    
         foreach ($invoiceList as $item) {
             $item->receiptNumber = $item->receipt->number;
             $item->customerName = $item->receipt->order->customer->name;
@@ -68,10 +96,10 @@ class KprController extends Controller
             $item->receiptsTotal = GlobalService::calculateReceiptTotal($item->receipt->order_id);
             $item->receiptID = $item->receipt->id;
         }
-
-        return view('kpr-edit', compact('item', 'year', 'invoiceList', 'receipts', 'count'));
+    
+        return view('kpr-edit', compact('kprInstance', 'year', 'invoiceList', 'receipts', 'receiptOptions', 'count'));
     }
-
+    
 
     public function save(Request $request)
     {

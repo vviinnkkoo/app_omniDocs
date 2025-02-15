@@ -9,7 +9,7 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header" style="font-weight: 900;">
-          <a class="gray-mark-extra" href="/knjiga-prometa/{{ $year}}"><i class="bi bi-arrow-left"></i></a> Uplata: {{$item->number}} - {{ $year }}
+          <a class="gray-mark-extra" href="/knjiga-prometa/{{ $year}}"><i class="bi bi-arrow-left"></i></a> Uplata: {{$kprInstance->number}} - {{ $year }}
         </div>
         <div class="card-body">
           <div class="row">
@@ -17,21 +17,21 @@
               <div class="mb-3">
                 <div><h5 class="fw-bold">Platitelj:</h5></div>              
                 <div>
-                  <span class="editable" data-id="{{ $item->id }}" data-field="payer" data-model="kpr">{{ $item->payer }}</span>
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="payer" data-model="kpr">{{ $kprInstance->payer }}</span>
                 </div>
               </div>
 
               <div class="mb-3">
                 <div><h5 class="fw-bold">Datum:</h5></div>
-                <div class="editable-date" data-id="{{ $item->id }}" data-field="date" data-model="kpr">
-                  <input type="date" class="form-control" style="width:40%" value="{{ $item->date }}">
+                <div class="editable-date" data-id="{{ $kprInstance->id }}" data-field="date" data-model="kpr">
+                  <input type="date" class="form-control" style="width:40%" value="{{ $kprInstance->date }}">
                 </div>
               </div>
 
               <div class="mb-3">
                 <div><h5 class="fw-bold">Iznos:</h5></div>
                 <div>
-                  <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="kpr">{{ $item->amount }}</span> €
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="amount" data-model="kpr">{{ $kprInstance->amount }}</span> €
                 </div>
               </div>
             </div>
@@ -40,14 +40,14 @@
               <div class="mb-3">
                 <div><h5 class="fw-bold">Broj naloga:</h5></div>              
                 <div>
-                  <span class="editable" data-id="{{ $item->id }}" data-field="origin" data-model="kpr">{{ $item->origin }}</span>
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="origin" data-model="kpr">{{ $kprInstance->origin }}</span>
                 </div>
               </div>
 
               <div class="mb-3">
                 <div><h5 class="fw-bold">Opis:</h5></div>
                 <div>
-                  <span class="editable" data-id="{{ $item->id }}" data-field="info" data-model="kpr">{{ $item->info }}</span>
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="info" data-model="kpr">{{ $kprInstance->info }}</span>
                 </div>
               </div>              
             </div>
@@ -79,39 +79,39 @@
                 </thead>
                 <tbody>
 
-                  @foreach ($invoiceList as $item)
+                  @foreach ($invoiceList as $invoiceItem)
 
                     <tr>
 
-                      <td class="align-middle text-right">{{ $item->receiptNumber }}</td>
+                      <td class="align-middle text-right">{{ $invoiceItem->receiptNumber }}</td>
 
                       <td class="align-middle text-right">
-                        <span>{{ $item->customerName }}</span>
+                        <span>{{ $invoiceItem->customerName }}</span>
                       </td>
 
                       <td class="align-middle text-right">
-                        <a href="/uredi-narudzbu/{{ $item->orderId }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $item->orderId }}</span></a>
+                        <a href="/uredi-narudzbu/{{ $invoiceItem->orderId }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $invoiceItem->orderId }}</span></a>
                       </td>
 
                       <td class="align-middle text-right">
-                        {{ $item->trackingCode }}
+                        {{ $invoiceItem->trackingCode }}
                       </td>
 
                       <td class="align-middle text-right">
-                        <div class="date-display">{{ $item->receiptDate }}</div>
+                        <div class="date-display">{{ $invoiceItem->receiptDate }}</div>
                       </td>
 
                       <td class="align-middle text-right">
-                        {{ $item->receiptsTotal }} €
+                        {{ $invoiceItem->receiptsTotal }} €
                       </td>
 
                       <td>
-                        <a href="/racun/{{ $item->receiptID }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                        <a href="/racun/{{ $invoiceItem->receiptID }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                         </button>
                       </td>
 
                       <td>
-                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="kpr-item-list"><i class="bi bi-x-lg"></i></button>
+                        <button class="btn btn-danger delete-btn-x" data-id="{{ $invoiceItem->id }}" data-model="kpr-item-list"><i class="bi bi-x-lg"></i></button>
                       </td>
                         
                     <tr>
@@ -138,7 +138,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/invoice-to-kpr/{{ $item->id }}" id="productForOrderSubmission">
+        <form method="POST" action="/invoice-to-kpr/{{ $kprInstance->id }}" id="productForOrderSubmission">
           @csrf
               <div class="form-group">
 
@@ -146,11 +146,10 @@
                   <label for="receipt_id">Odaberi račun:</label><br>
                   <select class="form-select searchable-select-modal" id="receipt_id" name="receipt_id">
                       <option selected>Odaberi račun za povezivanje...</option>
-                      @foreach ($receipts as $receipt)
-
-                        @if (!App\Models\KprItemList::where('receipt_id', $receipt->id)->exists() )
-                            <option value="{{ $receipt->id }}">{{ $receipt->number }} - {{ App\Models\Customer::find(App\Models\Order::find($receipt->order_id)->customer_id)->name }} - {{ App\Http\Controllers\ReceiptController::getReceiptTotal($receipt->order_id) }} € - {{ App\Models\Order::find($receipt->order_id)->tracking_code }}</option>
-                        @endif
+                      @foreach($receiptOptions as $option)
+                        <option value="{{ $option['id'] }}">
+                            {{ $option['number'] }} - {{ $option['customerName'] }} - {{ $option['total'] }} € - {{ $option['trackingCode'] }}
+                        </option>
                       @endforeach
                   </select>
                 </div>
