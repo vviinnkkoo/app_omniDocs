@@ -151,14 +151,6 @@ class OrderItemListController extends Controller
             })
             ->groupBy(['product_id'])
             ->get();
-            $title = "Količine za izradu - po proizvodu";
-    }
-
-    public static function sumOrderItemList($id) {
-        return ( OrderItemList::where( 'order_id', $id )->sum( \DB::raw('amount * price * ( ( 100 - discount ) / 100 )' ) ) );
-    }
-
-    public static function sumSingleItem($id) {
-        return number_format( ( OrderItemList::where( 'id', $id )->sum( \DB::raw('amount * price * ( ( 100 - discount ) / 100 )' ) ) ), 2, ',', '.');
+        $title = "Količine za izradu - po proizvodu";
     }
 }

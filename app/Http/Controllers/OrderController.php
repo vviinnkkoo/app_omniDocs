@@ -106,7 +106,7 @@ class OrderController extends Controller
         $products = Product::orderBy('product_name')->get();
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
-        $orderSum = $this->orderItemListController->sumOrderItemList($order_id);
+        $orderSum = GlobalService::sumWholeOrderItemList($order_id);
         $deliveryService = $order->deliveryService;
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
         $workYears = WorkYears::orderBy('year')->get();
