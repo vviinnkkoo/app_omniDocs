@@ -103,7 +103,8 @@ class OrderController extends Controller
 
     public function edit($order_id)
     {
-        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);
+        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);        
+        $order->paymentType = $order->paymentType->name;
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
@@ -112,15 +113,12 @@ class OrderController extends Controller
         $products = Product::orderBy('name')->get();
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
-        $orderSum = GlobalService::sumWholeOrder($order_id);
-        $deliveryService = $order->deliveryService;
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
         $workYears = WorkYears::orderBy('year')->get();
-
-        $orderSum_converted = str_replace(',', '.', $orderSum);
-        $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
-        $orderTotal = number_format(($orderSum_converted + $deliveryCost), 2, ',');
-        $orderSum = number_format(($orderSum), 2, ',');
+        $deliveryCost = $order->deliveryService->default_cost;
+        $orderSubtotal = GlobalService::sumWholeOrder($order_id);
+        $orderTotal = number_format(($orderSubtotal + $deliveryCost), 2, ',');
+        $orderSubtotalFormated = number_format($orderSubtotal, 2, ',');
 
         return view('orders-edit', [
             'order' => $order,
@@ -134,7 +132,7 @@ class OrderController extends Controller
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
-            'orderSum' => $orderSum,
+            'orderSubtotal' => $orderSubtotalFormated,
             'deliveryCost' => $deliveryCost,
             'orderTotal' => $orderTotal,
             'latestReceiptNumber' => $latestReceiptNumber,

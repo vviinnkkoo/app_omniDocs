@@ -16,7 +16,7 @@
           {{-- Header left side --}}
           <a class="gray-mark-extra" href="/narudzbe/3"><i class="bi bi-arrow-left"></i></a>
           <span style="font-size:100%; margin-left:10px;">Narudžba: {{$order->id}}</span>
-          <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSum }} € </span>
+          <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSubtotal }} € </span>
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
           <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
