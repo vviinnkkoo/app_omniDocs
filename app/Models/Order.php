@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
-    // replace dot with comma for display
-    public function getDeliveryWeightAttribute($value)
-    {
-        return str_replace('.', ',', $value);
-    }
-
-    // replace dot with comma for display
     public function setDeliveryWeightAttribute($value)
     {
         $this->attributes['delivery_weight'] = is_null($value) ? null : str_replace(',', '.', $value);
@@ -62,9 +55,9 @@ class Order extends Model
 
 
     public function isOrderDone()
-{
-    return $this->orderItemList->every(function ($item) {
-        return $item->is_done == 1;
-    });
-}
+    {
+        return $this->orderItemList->every(function ($item) {
+            return $item->is_done == 1;
+        });
+    }
 }

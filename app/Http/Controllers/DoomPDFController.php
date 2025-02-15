@@ -9,20 +9,18 @@ use App\Models\DeliveryService;
 use App\Models\PrintLabel;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\GlobalService;
 
 class DoomPDFController extends Controller
 {
-    public function __construct(OrderItemListController $orderItemListController)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->orderItemListController = $orderItemListController;
     }
-
-    protected $orderItemListController;
 
     private function calculateTotal($order_id)
     {
-        $subtotal = $this->orderItemListController->sumOrderItemList($order_id);
+        $subtotal = GlobalService::calculateReceiptSubtotal($order_id);
         $deliveryService = DeliveryService::where('id', Order::find($order_id)->delivery_service_id)->firstOrFail();
         $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
         return [
@@ -38,20 +36,22 @@ class DoomPDFController extends Controller
         $receipt = Receipt::where('id', $id)->firstOrFail();
         $order = Order::where('id', $receipt->order_id)->firstOrFail();
         $orderItemList = OrderItemList::where('order_id', $receipt->order_id)->get();
-        $totals = $this->calculateTotal($order->id);
-        $date = date("dmY-Gis");
+        $subtotal = GlobalService::calculateReceiptSubotal($order->id);
+        $total = GlobalService::calculateReceiptTotal($order->id);
+        $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
+        $currentDateTime = date("dmY-Gis");
 
         $pdf = Pdf::loadView('pdf.invoice', [
             'receipt' => $receipt,
             'order' => $order,
             'orderItemList' => $orderItemList,
-            'deliveryService' => $order->deliveryService,
-            'total' => $totals['total'],
-            'subtotal' => $totals['subtotal'],
-            'deliveryCost' => $totals['deliveryCostFormated']
+            'deliveryService' => $order->deliveryService,            
+            'subtotal' => number_format($subtotal, 2, ',', '.'),
+            'total' => number_format($total, 2, ',', '.'),
+            'deliveryCost' => number_format($deliveryCost, 2, ',', '.')
         ]);
 
-        return $pdf->stream('račun-' . $receipt->year . '-' . $receipt->number . '-1-1-' . $date . '.pdf');
+        return $pdf->stream('račun-' . $receipt->year . '-' . $receipt->number . '-1-1-' . $currentDateTime . '.pdf');
     }
 
     public function documents($mode, $id)
