@@ -36,7 +36,7 @@ class DoomPDFController extends Controller
         $receipt = Receipt::where('id', $id)->firstOrFail();
         $order = Order::where('id', $receipt->order_id)->firstOrFail();
         $orderItemList = OrderItemList::where('order_id', $receipt->order_id)->get();
-        $subtotal = GlobalService::calculateReceiptSubotal($order->id);
+        $subtotal = GlobalService::calculateReceiptSubtotal($order->id);
         $total = GlobalService::calculateReceiptTotal($order->id);
         $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
         $currentDateTime = date("dmY-Gis");
