@@ -66,7 +66,7 @@
 
               <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_country_id" data-model="order">
                 <!-- Display the selected value -->
-                <span>{{ App\Models\Country::find($order->delivery_country_id)->name }}</span>
+                <span>{{ $order->paymentCountryName }}</span>
                 <!-- Hidden select element with options -->
                 <select class="edit-select form-select" style="display: none !important">
                   <option value="" selected>Odaberi državu...</option>
@@ -107,7 +107,7 @@
                 <div class="editable-select" data-id="{{ $order->id }}" data-field="payment_type_id" data-model="order">
 
                   <!-- Display the selected value -->
-                  <span class="gray-mark">{{ App\Models\PaymentType::find($order->payment_type_id)->name }}</span>
+                  <span class="gray-mark">{{ $order->paymentTypeName }}</span>
                   
                   <!-- Hidden select element with options -->
                   <select class="edit-select form-select" style="display: none !important">
