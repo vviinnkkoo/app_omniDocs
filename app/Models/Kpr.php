@@ -24,4 +24,9 @@ class Kpr extends Model
     {
         return $this->belongsTo(KprPaymentType::class, 'kpr_payment_type_id');
     }
+
+    public function kprItemList()
+    {
+        return $this->hasMany(KprItemList::class, 'kpr_id');
+    }
 }
