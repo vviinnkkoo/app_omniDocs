@@ -28,11 +28,11 @@ class DoomPDFController extends Controller
         $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
         $currentDateTime = date("dmY-Gis");
 
-        foreach ($orderItemList as $item) {
-            $item->itemTotal = GlobalService::sumSingleOrderItem($item->id);
+        foreach ($orderItemList as $item) {            
             $item->productName = $item->product->name;
             $item->color = $item->color->name;
             $item->unit = $item->product->unit;
+            $item->itemTotal = GlobalService::sumSingleOrderItem($item->id);
         }
 
         $pdf = Pdf::loadView('pdf.invoice', [

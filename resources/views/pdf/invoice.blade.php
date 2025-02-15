@@ -68,16 +68,16 @@
                     </td>
 
                     <td class="center">
-                        @if ($item->product == 'kom')
-                            {{ number_format($item->amount), 0 }} {{ $item->product->unit }}
+                        @if ($item->unit == 'kom')
+                            {{ number_format($item->amount, 0) }} {{ $item->product->unit }}
                         @else
-                        {{ $item->amount }} {{ $item->product->unit }}
+                            {{ number_format($item->amount, 2, ',', '.') }} {{ $item->product->unit }}
                         @endif
                     </td>
 
-                    <td class="center">{{ number_format($item->price), 2, ',', '.' }} €</td>
+                    <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ $item->itemTotal }} €</td>                
+                    <td class="center">{{ number_format($item->itemTotal, 2, ',', '.') }} €</td>                
                 </tr>
             @endforeach
 
