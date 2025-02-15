@@ -109,7 +109,7 @@ class OrderController extends Controller
         $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
         $paymentTypes = PaymentType::orderBy('id')->get();
         $countries = Country::orderBy('id')->get();
-        $products = Product::orderBy('product_name')->get();
+        $products = Product::orderBy('name')->get();
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
         $orderSum = GlobalService::sumWholeOrder($order_id);
