@@ -108,9 +108,8 @@ class OrderController extends Controller
         $order->countryName = $order->country->name;
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
-        $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryService')->orderBy('id')->get();
+        $deliveryCompanies = DeliveryCompany::whereHas('deliveryService')->orderBy('id')->get();
         $paymentTypes = PaymentType::orderBy('id')->get();
-        dd($paymentTypes);
         $countries = Country::orderBy('id')->get();
         $products = Product::orderBy('name')->get();
         $productTypes = ProductType::orderBy('id')->get();
