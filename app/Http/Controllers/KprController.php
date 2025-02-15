@@ -54,9 +54,7 @@ class KprController extends Controller
     public function edit($id)
     {
         $kprInstance = Kpr::with([
-            'kprItemList.receipt.order.customer',
-            'kprItemList.receipt.order.tracking_code',
-            'kprItemList.receipt.created_at'
+            'kprItemList.receipt.order.customer'
         ])->findOrFail($id);
     
         $invoiceList = $kprInstance->kprItemList;
