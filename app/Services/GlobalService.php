@@ -5,6 +5,7 @@ use App\Models\Receipt;
 use App\Models\OrderItemList;
 use App\Models\WorkYears;
 use App\Models\Kpr;
+use App\Models\KprItemList;
 
 class GlobalService
 {
