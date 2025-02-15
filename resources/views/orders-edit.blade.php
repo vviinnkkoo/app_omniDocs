@@ -66,12 +66,12 @@
 
               <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_country_id" data-model="order">
                 <!-- Display the selected value -->
-                <span>{{ App\Models\Country::find($order->delivery_country_id)->country_name }}</span>
+                <span>{{ App\Models\Country::find($order->delivery_country_id)->name }}</span>
                 <!-- Hidden select element with options -->
                 <select class="edit-select form-select" style="display: none !important">
                   <option value="" selected>Odaberi državu...</option>
                     @foreach ($countries as $country)
-                    <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                    <option value="{{ $country->id }}">{{ $country->name }}</option>
                     @endforeach 
                 </select>
               </div>
@@ -107,13 +107,13 @@
                 <div class="editable-select" data-id="{{ $order->id }}" data-field="payment_type_id" data-model="order">
 
                   <!-- Display the selected value -->
-                  <span class="gray-mark">{{ App\Models\PaymentType::find($order->payment_type_id)->type_name }}</span>
+                  <span class="gray-mark">{{ App\Models\PaymentType::find($order->payment_type_id)->name }}</span>
                   
                   <!-- Hidden select element with options -->
                   <select class="edit-select form-select" style="display: none !important">
                     <option value="" selected>Odaberi način plaćanja...</option>
                       @foreach ($paymentTypes as $paymentType)
-                      <option value="{{ $paymentType->id }}">{{ $paymentType->type_name }}</option>
+                      <option value="{{ $paymentType->id }}">{{ $paymentType->name }}</option>
                       @endforeach 
                   </select>
                 </div>
@@ -244,13 +244,13 @@
                               <td class="align-middle text-right">
                                 <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
                                   <!-- Display the selected value -->
-                                  <span>{{ App\Models\Product::find($item->product_id)->product_name }}</span>
+                                  <span>{{ App\Models\Product::find($item->product_id)->name }}</span>
                                   
                                   <!-- Hidden select element with options -->
                                   <select class="edit-select form-select" style="display: none !important">
                                     <option value="" selected>Odaberi proizvod...</option>
                                       @foreach ($products as $product)
-                                      <option value="{{ $product->id }}">{{ $product->product_name }}</option>                                  
+                                      <option value="{{ $product->id }}">{{ $product->name }}</option>                                  
                                       @endforeach 
                                   </select>
                                 </div>
@@ -260,13 +260,13 @@
                               <td class="align-middle text-right">
                                 <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
                                   <!-- Display the selected value -->
-                                  <span>{{ App\Models\Color::find($item->color_id)->color_name }}</span>
+                                  <span>{{ App\Models\Color::find($item->color_id)->name }}</span>
                                   
                                   <!-- Hidden select element with options -->
                                   <select class="edit-select form-select" style="display: none !important">
                                     <option value="" selected>Odaberi boju...</option>
                                       @foreach ($colors as $color)
-                                      <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                                      <option value="{{ $color->id }}">{{ $color->name }}</option>
                                       @endforeach 
                                   </select>
                                 </div>
@@ -412,9 +412,9 @@
               <select class="form-select searchable-select-modal" id="product_id" name="product_id">
                   <option selected>Odaberi proizvod...</option>
                   @foreach ($productTypes as $productType)
-                    <optgroup label="{{ $productType->type_name }}">
+                    <optgroup label="{{ $productType->name }}">
                       @foreach ($productType->product as $product)
-                        <option value="{{ $product->id }}">{{ $product->product_name }} :: {{ $product->default_price }} €</option>
+                        <option value="{{ $product->id }}">{{ $product->name }} :: {{ $product->default_price }} €</option>
                       @endforeach
                   @endforeach
               </select>
@@ -438,7 +438,7 @@
               <select class="form-select searchable-select-modal" id="color_id" name="color_id">
                   <option selected>Odaberi boju proizvoda, ako je usluga stavi neodređeno...</option>
                   @foreach ($colors as $color)
-                    <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                    <option value="{{ $color->id }}">{{ $color->name }}</option>
                   @endforeach
               </select>
             </div>
