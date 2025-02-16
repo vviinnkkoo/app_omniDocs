@@ -46,11 +46,11 @@
                                       @endif
                                     </td>
 
-                                    <td class="align-middle text-right">{{ App\Models\Product::find($item->product_id)->product_name }}</td>
+                                    <td class="align-middle text-right">{{ App\Models\Product::find($item->product_id)->name }}</td>
 
                                     <td class="align-middle text-right">
                                         @if (isset($item->color_id))
-                                          {{ App\Models\Color::find($item->color_id)->color_name }}
+                                          {{ App\Models\Color::find($item->color_id)->name }}
                                         @else
                                           - - -
                                         @endif
