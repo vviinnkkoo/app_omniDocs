@@ -67,8 +67,8 @@
           {{ csrf_field() }}
               <div class="form-group">
 
-                  <label for="color_name">Boja:</label>
-                  <input type="text" class="form-control" placeholder="Unesi novu boju..." id="color_name" name="color_name">
+                  <label for="color">Boja:</label>
+                  <input type="text" class="form-control" placeholder="Unesi novu boju..." id="color" name="color">
 
               </div>
         </form>

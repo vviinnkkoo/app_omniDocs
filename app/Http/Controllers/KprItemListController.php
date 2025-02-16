@@ -13,15 +13,14 @@ use Illuminate\Http\JsonResponse;
 
 class KprItemListController extends Controller
 {
-    // Protect all functions and redirect to login if necessary
     public function __construct()
     {
         $this->middleware('auth');
     }
+
     
-    // POST function for saving new stuff
-    //
-    public function add (Request $request, $id) {
+    public function add (Request $request, $id)
+    {
         $validator = Validator::make($request->all(), [
         'receipt_id' => 'required'
         ]);
@@ -38,23 +37,22 @@ class KprItemListController extends Controller
         return redirect('/uredi-uplatu/' . $id);
     }
 
-    // DELETE function (Ajax version)
-        //
-        public function destroy(Request $request, $id): JsonResponse
-        {
-            // Find the record by ID
-            $record = KprItemList::findOrFail($id);
 
-            // Check if the record exists
-            if (!$record) {
-                return response()->json(['message' => 'Record not found'], 404);
-            }
+    public function destroy(Request $request, $id): JsonResponse
+    {
+        // Find the record by ID
+        $record = KprItemList::findOrFail($id);
 
-            // Delete the record
-            if ($record->delete()) {
-                return response()->json(['message' => 'Record deleted successfully']);
-            }
-
-            return response()->json(['message' => 'Error deleting the record'], 500);
+        // Check if the record exists
+        if (!$record) {
+            return response()->json(['message' => 'Record not found'], 404);
         }
+
+        // Delete the record
+        if ($record->delete()) {
+            return response()->json(['message' => 'Record deleted successfully']);
+        }
+
+        return response()->json(['message' => 'Error deleting the record'], 500);
+    }
 }

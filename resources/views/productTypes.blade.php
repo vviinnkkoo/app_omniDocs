@@ -64,8 +64,8 @@
           {{ csrf_field() }}
               <div class="form-group">
 
-                  <label for="type_name">Vrsta proizvoda:</label>
-                  <input type="text" class="form-control" placeholder="Unesi novu vrstu proizvoda..." id="type_name" name="type_name">
+                  <label for="name">Vrsta proizvoda:</label>
+                  <input type="text" class="form-control" placeholder="Unesi novu vrstu proizvoda..." id="name" name="name">
 
               </div>
         </form>

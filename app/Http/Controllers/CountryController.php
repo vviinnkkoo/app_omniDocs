@@ -12,13 +12,12 @@ use Illuminate\Http\JsonResponse;
 
 class CountryController extends Controller
 {
-    // Protect all functions and redirect to login if necessary
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
-    // GET function for displaying purposes
+
+
     public function show() {
         $countries = Country::get()->sortBy('id');
         
@@ -28,10 +27,9 @@ class CountryController extends Controller
     }
 
 
-    // POST function for saving new stuff
     public function save (Request $request) {
         $validator = Validator::make($request->all(), [
-        'country_name' => 'required'
+        'name' => 'required'
         ]);
             if ($validator->fails()) {
                 return redirect('/drzave-poslovanja')
@@ -39,14 +37,13 @@ class CountryController extends Controller
                     ->withErrors($validator);
             }
         $country = new Country;
-        $country->country_name = $request->country_name;
+        $country->name = $request->name;
         $country->save();
     
         return redirect('/drzave-poslovanja');
     }
 
 
-     // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
         $country = Country::findOrFail($id);
@@ -58,8 +55,6 @@ class CountryController extends Controller
     }
 
 
-    // DELETE function (Ajax version)
-    //
     public function destroy(Request $request, $id): JsonResponse
     {
         $record = Country::findOrFail($id);

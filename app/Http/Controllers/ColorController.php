@@ -31,7 +31,7 @@ class ColorController extends Controller
     // POST function for saving new stuff
     public function save (Request $request) {
         $validator = Validator::make($request->all(), [
-        'color_name' => 'required'
+        'name' => 'required'
         ]);
             if ($validator->fails()) {
                 return redirect('/boje-proizvoda')
@@ -39,7 +39,7 @@ class ColorController extends Controller
                     ->withErrors($validator);
             }
         $color = new Color;
-        $color->color_name = $request->color_name;
+        $color->name = $request->name;
         $color->save();
     
         return redirect('/boje-proizvoda');

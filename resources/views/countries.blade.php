@@ -65,8 +65,8 @@
           {{ csrf_field() }}
               <div class="form-group">
 
-                  <label for="country_name">Naziv države:</label>
-                  <input type="text" class="form-control" placeholder="Unesi državu poslovanja" id="country_name" name="country_name">
+                  <label for="name">Naziv države:</label>
+                  <input type="text" class="form-control" placeholder="Unesi državu poslovanja" id="name" name="name">
 
               </div>
         </form>
