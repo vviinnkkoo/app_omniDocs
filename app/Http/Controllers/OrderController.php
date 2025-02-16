@@ -120,8 +120,7 @@ class OrderController extends Controller
         // Calculations for display
         $deliveryCost = $order->deliveryService->default_cost;
         $orderSubtotal = GlobalService::sumWholeOrder($order_id);
-        $orderTotal = number_format(($orderSubtotal + $deliveryCost), 2, ',');
-        $orderSubtotalFormated = number_format($orderSubtotal, 2, ',');
+        $orderTotal = $orderSubtotal + $deliveryCost;
 
         return view('orders-edit', [
             'order' => $order,
@@ -135,9 +134,9 @@ class OrderController extends Controller
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
-            'orderSubtotal' => $orderSubtotalFormated,
-            'deliveryCost' => $deliveryCost,
-            'orderTotal' => $orderTotal,
+            'orderSubtotal' => number_format($orderSubtotal, 2, ','),
+            'deliveryCost' => number_format($deliveryCost, 2, ','),
+            'orderTotal' => number_format(($orderTotal), 2, ','),
             'latestReceiptNumber' => $latestReceiptNumber,
             'workYears' => $workYears
         ]);
