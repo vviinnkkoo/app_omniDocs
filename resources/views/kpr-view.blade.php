@@ -84,7 +84,7 @@
                             <td>
                               <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="kpr"><i class="bi bi-x-lg"></i></button>
                             </td>
-                          <tr>
+                          </tr>
                         @endforeach
                       </tbody>
                     </table>
