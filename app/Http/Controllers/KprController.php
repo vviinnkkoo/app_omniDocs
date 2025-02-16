@@ -73,17 +73,14 @@ class KprController extends Controller
         $count = 1;
     
         $receiptOptions = [];
+        
         foreach ($receipts as $receipt) {
-            $customerName = $receipt->order->customer->name;
-            $total = GlobalService::calculateReceiptTotal($receipt->order_id);
-            $trackingCode = $receipt->order->tracking_code;
-    
             $receiptOptions[] = [
                 'id' => $receipt->id,
                 'number' => $receipt->number,
-                'customerName' => $customerName,
-                'total' => $total,
-                'trackingCode' => $trackingCode
+                'customerName' => $receipt->order->customer->name,
+                'total' => number_format(GlobalService::calculateReceiptTotal($receipt->order_id), 2, ',', '.'),
+                'trackingCode' => $receipt->order->tracking_code
             ];
         }
     
@@ -93,7 +90,7 @@ class KprController extends Controller
             $item->orderId = $item->receipt->order_id;
             $item->trackingCode = $item->receipt->order->tracking_code;
             $item->receiptDate = Carbon::parse($item->receipt->created_at)->format('d.m.Y - H:i:s');
-            $item->receiptsTotal = GlobalService::calculateReceiptTotal($item->receipt->order_id);
+            $item->receiptsTotal = number_format (GlobalService::calculateReceiptTotal($item->receipt->order_id), 2, ',', '.');
             $item->receiptID = $item->receipt->id;
         }
     

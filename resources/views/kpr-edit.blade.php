@@ -9,7 +9,7 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header" style="font-weight: 900;">
-          <a class="gray-mark-extra" href="/knjiga-prometa/{{ $year}}"><i class="bi bi-arrow-left"></i></a> Uplata: {{$kprInstance->number}} - {{ $year }}
+          <a class="gray-mark-extra" href="/knjiga-prometa/{{ $year}}"><i class="bi bi-arrow-left"></i></a> Uplata: {{$kprInstance->id}} - {{ $year }}
         </div>
         <div class="card-body">
           <div class="row">
