@@ -32,7 +32,7 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $paymentType->id }}" data-field="type_name" data-model="payment-type">{{ $paymentType->type_name }}</span>
+                                      <span class="editable" data-id="{{ $paymentType->id }}" data-field="type_name" data-model="payment-type">{{ $paymentType->name }}</span>
                                     </td>
                                     <td>
                                       <button class="btn btn-danger delete-btn-x" data-id="{{ $paymentType->id }}" data-model="payment-type"><i class="bi bi-x-lg"></i>
@@ -63,7 +63,7 @@
               <div class="form-group">
 
                   <label for="type_name">Način plaćanja:</label>
-                  <input type="text" class="form-control" placeholder="Unesi naziv..." id="type_name" name="type_name">
+                  <input type="text" class="form-control" placeholder="Unesi naziv..." id="name" name="name">
 
               </div>
         </form>
