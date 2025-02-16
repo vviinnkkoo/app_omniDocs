@@ -68,7 +68,7 @@
                                     <td class="align-middle text-right">{{ App\Models\Source::find($order->source_id)->name }}</td>
                                     <td class="align-middle text-right">{{ $order->delivery_postal }}</td>
                                     <td class="align-middle text-right">{{ App\Models\DeliveryCompany::find(App\Models\DeliveryService::find($order->delivery_service_id)->delivery_company_id)->name }} - {{ App\Models\DeliveryService::find($order->delivery_service_id)->name }}</td>
-                                    <td class="align-middle text-right">{{ App\Models\PaymentType::find($order->payment_type_id)->type_name }}</td>
+                                    <td class="align-middle text-right">{{ App\Models\PaymentType::find($order->payment_type_id)->name }}</td>
 
                                     {{-- Status --}}
                                     <td class="align-middle text-right">
@@ -219,7 +219,7 @@
                   <select class="form-select searchable-select-modal" id="payment_type_id" name="payment_type_id">
                     <option selected>Odaberi način plaćanja...</option>
                     @foreach ($paymentTypes as $paymentType)
-                      <option value="{{ $paymentType->id }}">{{ $paymentType->type_name }}</option>
+                      <option value="{{ $paymentType->id }}">{{ $paymentType->name }}</option>
                     @endforeach
                   </select>
                 </div>
