@@ -159,7 +159,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-        <button type="submit" class="btn btn-primary" form="colorSubmission">Spremi</button>
+        <button type="submit" class="btn btn-primary" form="paymentSubmission">Spremi</button>
       </div>
     </div>
   </div>
