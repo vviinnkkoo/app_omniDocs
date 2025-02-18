@@ -10,6 +10,8 @@ class Kpr extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['payer', 'amount', 'origin', 'date', 'info', 'kpr_payment_type_id'];
+
     public function setAmountAttribute($value)
     {
         $this->attributes['amount'] = is_null($value) ? null : str_replace(',', '.', $value);

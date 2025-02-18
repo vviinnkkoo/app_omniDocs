@@ -113,7 +113,7 @@ class KprController extends Controller
                 ->withErrors($validator);
         }
 
-        Kpr::create($request->except('_token'));
+        Kpr::create($request->all());
 
         return redirect('/knjiga-prometa/' . $date->year);
     }

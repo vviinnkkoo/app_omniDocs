@@ -110,12 +110,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nova boja proizvoda</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Nova uplata</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/knjiga-prometa" id="colorSubmission">
+        <form method="POST" action="/knjiga-prometa" id="paymentSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 
@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="type_id">Mjesto uplate:</label><br>
+                  <label for="kpr_payment_type_id">Mjesto uplate:</label><br>
                   <select class="form-select searchable-select-modal" id="kpr_payment_type_id" name="kpr_payment_type_id">
                       <option selected>Upišite mjesto uplate...</option>
                       @foreach ($paymentMethods as $method)
