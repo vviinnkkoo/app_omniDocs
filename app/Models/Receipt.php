@@ -10,8 +10,9 @@ class Receipt extends Model
     use HasFactory;
 
     // fillable for checkbox
-    protected $fillable = ['is_cancelled'];
+    protected $fillable = ['is_cancelled', 'number', 'order_id', 'year'];
     protected $casts = ['is_cancelled' => 'boolean'];
+
     
     public function setPaidAmountAttribute($value)
     {
