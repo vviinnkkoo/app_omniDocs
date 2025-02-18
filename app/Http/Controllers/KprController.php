@@ -113,7 +113,7 @@ class KprController extends Controller
                 ->withErrors($validator);
         }
 
-        Kpr::create($request->all());
+        Kpr::create($request->$request->only('payer', 'amount', 'origin', 'date', 'info', 'kpr_payment_type_id'));
 
         return redirect('/knjiga-prometa/' . $date->year);
     }
