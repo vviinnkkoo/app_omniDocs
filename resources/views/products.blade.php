@@ -41,20 +41,20 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $product->id }}" data-field="product_name" data-model="product">{{ $product->product_name }}</span>
+                                      <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="product">{{ $product->name }}</span>
                                     </td>
                                     <td class="align-middle text-right">
                                       <div class="editable-select" data-id="{{ $product->id }}" data-field="product_type_id" data-model="product">
                                       
 
                                         <!-- Display the selected value -->
-                                        <span>{{ App\Models\ProductType::find($product->product_type_id)->type_name }}</span>
+                                        <span>{{ App\Models\ProductType::find($product->product_type_id)->name }}</span>
                                         
                                         <!-- Hidden select element with options -->
                                         <select class="edit-select form-select" style="display: none !important">
                                           <option value="" selected>Odaberi vrstu proizvoda...</option>
                                             @foreach ($productTypes as $productType)
-                                            <option value="{{ $productType->id }}">{{ $productType->type_name }}</option>                                  
+                                            <option value="{{ $productType->id }}">{{ $productType->name }}</option>                                  
                                             @endforeach 
                                         </select>
                                       </div>
@@ -99,14 +99,14 @@
           {{ csrf_field() }}
               <div class="form-group">
 
-                  <label for="product_name">Naziv proizvoda:</label>
-                  <input type="text" class="form-control" placeholder="Unesi naziv novog proizvoda..." id="product_name" name="product_name">
+                  <label for="name">Naziv proizvoda:</label>
+                  <input type="text" class="form-control" placeholder="Unesi naziv novog proizvoda..." id="name" name="name">
 
                   <label for="product_type_id">Vrsta proizvoda:</label><br>
                   <select class="form-select searchable-select-modal" id="product_type_id" name="product_type_id">
                       <option selected>Odaberi vrstu proizvoda...</option>
                       @foreach ($productTypes as $productType)
-                        <option value="{{ $productType->id }}">{{ $productType->type_name }}</option>                                  
+                        <option value="{{ $productType->id }}">{{ $productType->name }}</option>                                  
                       @endforeach
                   </select>
 
