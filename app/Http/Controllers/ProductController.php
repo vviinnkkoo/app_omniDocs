@@ -51,7 +51,7 @@ class ProductController extends Controller
     public function save (Request $request)
     {
         $validator = Validator::make($request->all(), [
-        'product_name' => 'required',
+        'name' => 'required',
         'product_type_id' => 'required',
         'default_price' => 'required'
         ]);
@@ -61,7 +61,7 @@ class ProductController extends Controller
                     ->withErrors($validator);
             }
         $products = new Product;
-        $products->product_name = $request->product_name;
+        $products->name = $request->name;
         $products->product_type_id = $request->product_type_id;
         $products->default_price = $request->default_price;
         $products->save();
