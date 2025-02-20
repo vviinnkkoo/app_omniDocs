@@ -43,18 +43,18 @@
         
         <div class="col-sm">
               <div class="card text-white bg-secondary mb-3">
-                <div class="card-header">Izdano računa u <b>2023</b>: <span class="badge text-bg-warning rounded-pill">{{ App\Http\Controllers\ReceiptController::countReceipts(2023) }}</span></div>
+                <div class="card-header">Izdano računa u <b>2023</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\ReceiptController::countReceipts(2023) --}}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ App\Http\Controllers\ReceiptController::getTotalForAllReceipts(2023) }} €</h5>
+                  <h5 class="card-title">{{-- App\Http\Controllers\ReceiptController::getTotalForAllReceipts(2023) --}} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
         </div>
         <div class="col-sm">          
               <div class="card text-white bg-dark mb-3">
-                <div class="card-header">Uplate u <b>2023</b>: <span class="badge text-bg-warning rounded-pill">{{ App\Http\Controllers\KprController::countPayments(2023) }}</span></div>
+                <div class="card-header">Uplate u <b>2023</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\KprController::countPayments(2023) --}}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ App\Http\Controllers\KprController::getTotalPayments(2023) }} €</h5>
+                  <h5 class="card-title">{{-- App\Http\Controllers\KprController::getTotalPayments(2023) --}} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
@@ -65,18 +65,18 @@
         
         <div class="col-sm">
               <div class="card text-white bg-secondary mb-3">
-                <div class="card-header">Izdano računa u <b>2024</b>: <span class="badge text-bg-warning rounded-pill">{{ App\Http\Controllers\ReceiptController::countReceipts(2024) }}</span></div>
+                <div class="card-header">Izdano računa u <b>2024</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\ReceiptController::countReceipts(2024) --}}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ App\Http\Controllers\ReceiptController::getTotalForAllReceipts(2024) }} €</h5>
+                  <h5 class="card-title">{{-- App\Http\Controllers\ReceiptController::getTotalForAllReceipts(2024) --}} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
         </div>
         <div class="col-sm">          
               <div class="card text-white bg-dark mb-3">
-                <div class="card-header">Uplate u <b>2024</b>: <span class="badge text-bg-warning rounded-pill">{{ App\Http\Controllers\KprController::countPayments(2024) }}</span></div>
+                <div class="card-header">Uplate u <b>2024</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\KprController::countPayments(2024) --}}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ App\Http\Controllers\KprController::getTotalPayments(2024) }} €</h5>
+                  <h5 class="card-title">{{-- App\Http\Controllers\KprController::getTotalPayments(2024) --}} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
