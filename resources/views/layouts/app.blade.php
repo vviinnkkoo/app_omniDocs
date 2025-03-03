@@ -62,7 +62,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/kupci"><i class="bi bi-person-add"></i>&nbsp;&nbsp;Kupci</a>
-                                    <a class="dropdown-item" href="/dostavne-sluzbe"><i class="bi bi-box2"></i>&nbsp;&nbsp;Dostavne službe</a>
+                                    <a class="dropdown-item" href="/dostavne-usluge"><i class="bi bi-box2"></i>&nbsp;&nbsp;Dostavne usluge</a>
                                     <a class="dropdown-item" href="/nacin-placanja"><i class="bi bi-cash-coin"></i> Način plaćanja</a>
                                     <a class="dropdown-item" href="/radne-godine"><i class="bi bi-server"></i> Radne godine</a>
                                     <div class="dropdown-divider"></div>

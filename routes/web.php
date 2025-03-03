@@ -23,8 +23,8 @@ use App\Http\Controllers\KprItemListController;
 use App\Http\Controllers\OrderNoteController;
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
-
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
+
 // Display and Post routes //
 
     // Index page
@@ -32,12 +32,10 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
 
     // Delivery services //
-    Route::get('/dostavne-sluzbe', [DeliveryServiceController::class, 'show']);
-    Route::post('/dostavne-sluzbe', [DeliveryServiceController::class, 'save']);
-    Route::put('/update-delivery-service/{id}', [DeliveryServiceController::class, 'update']);
-    Route::delete('/delete-delivery-service/{id}', [DeliveryServiceController::class, 'destroy'])->name('delete.row');
-    Route::put('/delivery-service-inuse-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
-
+    Route::prefix('dostavne-usluge')->group(function () {
+        Route::resource('/', DeliveryServiceController::class);
+        Route::put('/use-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
+    });
 
     // Payment types //
     Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);

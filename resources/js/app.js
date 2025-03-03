@@ -146,26 +146,6 @@ $(function () {
     });
 });
 
-
-
-/*
-// TABLE SEARCH
-// that filters on key up
-$(function () {
-    $('#search').on('keyup', function () {
-        const query = $(this).val().toLowerCase();
-        $('table tbody tr').each(function () {
-            const row = $(this).text().toLowerCase();
-            if (row.includes(query)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    });
-});
-*/
-
 // TABLE SEARCH
 // that filters on key up
 $(function () {
@@ -475,7 +455,7 @@ $(document).ready(function () {
         // Send an AJAX request to update the data
         $.ajax({
             type: 'PUT',
-            url: `/${model}-inuse-status/${deliveryServiceId}`,
+            url: `/${model}/use-status/${deliveryServiceId}`,
             data: { in_use: inUse },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
