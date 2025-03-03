@@ -32,10 +32,16 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
 
     // Delivery services //
-    Route::prefix('dostavne-usluge')->group(function () {
-        Route::resource('/', DeliveryServiceController::class);
-        Route::put('/use-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
-    });
+    //Route::prefix('dostavne-usluge')->group(function () {
+    //    Route::resource('/', DeliveryServiceController::class);
+    //    Route::put('/use-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
+    //});
+
+    Route::resources([
+        'dostavne-usluge' => DeliveryServiceController::class
+    ]);
+
+    Route::put('dostavne-usluge/use-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
 
     // Payment types //
     Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);
