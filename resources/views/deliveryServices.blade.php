@@ -91,7 +91,7 @@
       </div>
       <div class="modal-body">
         <!-- Modal content -->
-        <form method="POST" action="{{ route('dostavne-usluge.store') }}" id="deliveryServiceSubmission">
+        <form method="POST" action="{{ route('dostavne-usluge') }}" id="deliveryServiceSubmission">
           @csrf      
           <div class="form-group">
               <div class="mb-3">
