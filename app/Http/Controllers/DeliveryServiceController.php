@@ -38,9 +38,7 @@ class DeliveryServiceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/dostavne-sluzbe')
-                ->withInput()
-                ->withErrors($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         }
 
         DeliveryService::create([
@@ -49,7 +47,7 @@ class DeliveryServiceController extends Controller
             'default_cost' => $request->default_cost
         ]);
     
-        return redirect('/dostavne-sluzbe');
+        return redirect()->back();
     }
 
     // UPDATE (Ajax version)
