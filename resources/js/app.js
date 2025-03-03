@@ -113,7 +113,7 @@ $(function () {
         const id = $(this).data('id');
         const model = $(this).data('model');
 
-        // Show the confirmation dialog
+        // Show the confirmation diTo alog
         $('.confirmation-dialog').show();
 
         // Handle the confirm delete action
@@ -121,7 +121,7 @@ $(function () {
             // Send an AJAX request to delete the record
             $.ajax({
                 type: 'DELETE',
-                url: `/delete-${model}/${id}`,
+                url: `/${model}/${id}`,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
