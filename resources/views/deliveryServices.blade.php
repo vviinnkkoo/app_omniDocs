@@ -91,7 +91,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/dostavne-sluzbe" id="deliveryServiceSubmission">
+        <form method="POST" action="/dostavne-usluge" id="deliveryServiceSubmission">
           {{ csrf_field() }}
               <div class="form-group">
                 
