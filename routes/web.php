@@ -35,8 +35,11 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'dostavne-usluge' => DeliveryServiceController::class
     ]);
 
-    // Bolean switch routes
+    // Bolean switch routes - USAGE STATUS
     Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
+
+    // Bolean switch routes - IS DONE STATUS    
+    Route::put('/order-item-list/is-done-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
 
     // Payment types //
     Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);
@@ -110,7 +113,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
     Route::put('/update-order-item-list/{id}', [OrderItemListController::class, 'update']);
     Route::delete('/delete-order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
-    Route::put('/order-item-list-isdone-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
 
 
     // PDF render //
