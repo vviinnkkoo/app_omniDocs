@@ -23,7 +23,7 @@ class DeliveryServiceController extends Controller
         $deliveryServices = DeliveryService::with('deliveryCompany')->orderBy('delivery_company_id')->orderBy('name')->get();
         $deliveryCompanies = DeliveryCompany::orderBy('id')->get();
         
-        return view('deliveryServices', [
+        return view('deliveryServices.index', [
             'deliveryServices' => $deliveryServices,
             'deliveryCompanies' => $deliveryCompanies
         ]);
