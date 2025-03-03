@@ -40,7 +40,7 @@
 
                           <td class="align-middle text-right">
                             {{-- Company --}}
-                            <div class="editable-select" data-id="{{ $deliveryService->id }}" data-field="company_id" data-model="dostavne-usluge">
+                            <div class="editable-select" data-id="{{ $deliveryService->id }}" data-field="delivery_company_id" data-model="dostavne-usluge">
 
                               <!-- Display the selected value -->
                               <span>{{ App\Models\DeliveryCompany::find($deliveryService->delivery_company_id)->name }}</span>
