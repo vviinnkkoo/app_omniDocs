@@ -35,7 +35,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'dostavne-usluge' => DeliveryServiceController::class
     ]);
 
-    Route::put('dostavne-usluge/use-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
+    // Bolean switch routes
+    Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
 
     // Payment types //
     Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);
