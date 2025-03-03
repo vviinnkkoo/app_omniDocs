@@ -22,11 +22,9 @@ use App\Http\Controllers\KprController;
 use App\Http\Controllers\KprItemListController;
 use App\Http\Controllers\OrderNoteController;
 
-Auth::routes();
-Auth::routes(['register' => false]); // Disable registration
+Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
-
-
 // Display and Post routes //
 
     // Index page
