@@ -10,7 +10,13 @@ class DeliveryService extends Model
     protected $table = 'delivery_service';
 
     // Fillable for checkbox
-    protected $fillable = ['in_use'];
+    protected $fillable = [
+        'name',
+        'delivery_company_id',
+        'default_cost',
+        'in_use'
+    ];
+    
     protected $casts = ['in_use' => 'boolean'];
     
     public function setDefaultCostAttribute($value)

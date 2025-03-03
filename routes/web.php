@@ -25,18 +25,12 @@ use App\Http\Controllers\OrderNoteController;
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
 
-// Display and Post routes //
+// Display and Post routes
 
     // Index page
     Route::get('/', [Omnicontrol::class, 'index']);
 
-
-    // Delivery services //
-    //Route::prefix('dostavne-usluge')->group(function () {
-    //    Route::resource('/', DeliveryServiceController::class);
-    //    Route::put('/use-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
-    //});
-
+    // Resource routes
     Route::resources([
         'dostavne-usluge' => DeliveryServiceController::class
     ]);
