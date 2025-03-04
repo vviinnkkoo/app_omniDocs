@@ -35,6 +35,15 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'dostavne-usluge' => DeliveryServiceController::class
     ]);
 
+    // Orders //
+    Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
+    Route::get('/poslane-narudzbe', [OrderController::class, 'showSent']);
+    Route::get('/neodradjene-narudzbe', [OrderController::class, 'showUnfinished']);
+    Route::post('/narudzbe', [OrderController::class, 'save']);
+    Route::put('/order/{id}', [OrderController::class, 'update']);
+    Route::get('/uredi-narudzbu/{id}', [OrderController::class, 'edit']);
+    Route::delete('/delete-order/{id}', [OrderController::class, 'destroy'])->name('delete.row');
+
     // Bolean switch routes - USAGE STATUS
     Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
 
@@ -94,16 +103,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/proizvodi', [ProductController::class, 'save']);
     Route::put('/update-product/{id}', [ProductController::class, 'update']);
     Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('delete.row');
-
-
-    // Orders //
-    Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
-    Route::get('/poslane-narudzbe', [OrderController::class, 'showSent']);
-    Route::get('/neodradjene-narudzbe', [OrderController::class, 'showUnfinished']);
-    Route::post('/narudzbe', [OrderController::class, 'save']);
-    Route::put('/update-order/{id}', [OrderController::class, 'update']);
-    Route::get('/uredi-narudzbu/{id}', [OrderController::class, 'edit']);
-    Route::delete('/delete-order/{id}', [OrderController::class, 'destroy'])->name('delete.row');
 
 
     // Order item lists //
