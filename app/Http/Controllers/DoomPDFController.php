@@ -52,7 +52,9 @@ class DoomPDFController extends Controller
     {
         $order = Order::where('id', $id)->firstOrFail();
         $orderItemList = OrderItemList::where('order_id', $id)->get();
-        $totals = $this->calculateTotal($order->id);
+        $subtotal = GlobalService::sumWholeOrder($order->id);
+        $total = GlobalService::calculateReceiptTotal($order->id);
+        $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
         $date = date("dmY-Gis");
 
         $view = '';
@@ -75,9 +77,9 @@ class DoomPDFController extends Controller
             'order' => $order,
             'orderItemList' => $orderItemList,
             'deliveryService' => $order->deliveryService,
-            'total' => $totals['total'],
-            'subtotal' => $totals['subtotal'],
-            'deliveryCost' => $totals['deliveryCostFormated']
+            'total' => $total,
+            'subtotal' => $totals,
+            'deliveryCost' => $deliveryCost
         ]);
 
         return $pdf->stream($filename);
