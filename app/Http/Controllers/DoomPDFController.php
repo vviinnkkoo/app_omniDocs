@@ -104,7 +104,7 @@ class DoomPDFController extends Controller
 
         [$view, $filename] = $templates[$mode];
 
-        return Pdf::loadView($view, compact('receipt', 'order', 'orderItemList', 'orderData', 'subtotal', 'total', 'deliveryCost'))
+        return Pdf::loadView($view, compact('receipt', 'order', 'orderItemList', 'orderData', 'total', 'deliveryCost'))
             ->stream($filename);
     }
 
