@@ -44,6 +44,14 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::get('/uredi-narudzbu/{id}', [OrderController::class, 'edit']);
     Route::delete('/delete-order/{id}', [OrderController::class, 'destroy'])->name('delete.row');
 
+    // Order item lists //
+    Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
+    Route::get('/proizvodi/{mode}', [OrderItemListController::class, 'showProductionItems']);
+    Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']);
+    Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
+    Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);
+    Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
+
     // Bolean switch routes - USAGE STATUS
     Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
 
@@ -103,15 +111,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/proizvodi', [ProductController::class, 'save']);
     Route::put('/update-product/{id}', [ProductController::class, 'update']);
     Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('delete.row');
-
-
-    // Order item lists //
-    Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
-    Route::get('/proizvodi/{mode}', [OrderItemListController::class, 'showProductionItems']);
-    Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']);
-    Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
-    Route::put('/update-order-item-list/{id}', [OrderItemListController::class, 'update']);
-    Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
 
 
     // PDF render //
