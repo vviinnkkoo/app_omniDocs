@@ -62,15 +62,20 @@ class DoomPDFController extends Controller
             ? Receipt::where('order_id', $order->id)->firstOrFail() 
             : null;
 
-        $orderItemList = OrderItemList::with(['product', 'color'])
+        $orderItemList = OrderItemList::with(['product:id,name,unit', 'color:id,name'])
             ->where('order_id', $id)
             ->get()
             ->map(function ($item) {
                 return (object) [
+                    'productID' => $item->product->id,
                     'productName' => $item->product->name,
-                    'color' => $item->color->name,
-                    'unit' => $item->product->unit,
-                    'itemTotal' => GlobalService::sumSingleOrderItem($item->id),
+                    'productUnit' => $item->product->unit,
+                    'colorID' => $item->color->id,
+                    'colorName' => $item->color->name,
+                    'price' => $item->price,
+                    'amount' => $item->itemAmount,
+                    'discount' => $item->discount,
+                    'total' => GlobalService::sumSingleOrderItem($item->id),
                 ];
             });
 

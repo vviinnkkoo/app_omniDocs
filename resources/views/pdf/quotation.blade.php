@@ -59,31 +59,31 @@
             @foreach ($orderItemList as $item)
                 <tr class="items">
 
-                    <td style="center">{{$item->product_id}}-{{$item->color_id}}</td>
+                    <td style="center">{{$item->productID}}-{{$item->colorID}}</td>
 
                     <td>
-                        {{ App\Models\Product::find($item->product_id)->product_name }}<br>
-                        <span style="font-size:70%">Boja: {{ App\Models\Color::find($item->color_id)->color_name }}</span>
+                        {{ $item->productName }}<br>
+                        <span style="font-size:70%">Boja: {{ $item->colorName }}</span>
                     </td>
 
                     <td class="center">
-                        @if (App\Models\Product::find($item->product_id)->unit == 'kom')
-                            {{ number_format(str_replace(',', '.', $item->amount), 0) }} {{ App\Models\Product::find($item->product_id)->unit }}
+                        @if ($item->productUnit == 'kom')
+                            {{ number_format(str_replace(',', '.', $item->total), 0) }} {{ $item->productUnit }}
                         @else
-                        {{ $item->amount }} {{ App\Models\Product::find($item->product_id)->unit }}
+                        {{ $item->total }} {{ $item->productUnit }}
                         @endif
                     </td>
 
                     <td class="center">{{ number_format(str_replace(',', '.', $item->price), 2, ',', '.') }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ App\Http\Controllers\OrderItemListController::sumSingleItem($item->id) }} €</td>                
+                    <td class="center">{{ $item->total }} €</td>                
                 </tr>
             @endforeach
 
             {{-- Delivery service --}}
             <tr class="items" >
                 <td></td>
-                <td><b>Dostava: </b>{{ App\Models\DeliveryCompany::find($deliveryService->delivery_company_id)->name }} - {{ $deliveryService->name }}</td>
+                <td><b>Dostava: </b>{{ $deliveryCompany }} - {{ $deliveryService }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -105,7 +105,7 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ App\Models\PaymentType::find($order->payment_type_id)->type_name }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
+        <p><b>Način plaćanja:</b> {{ $paymentType }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
         <p><b>Poziv na broj:</b> 1512</p>
         <p><b>Broj narudžbe:</b> {{$order->id}}</p>
     </div>
