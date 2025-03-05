@@ -68,7 +68,7 @@
 
                     <td class="center">
                         @if ($item->productUnit == 'kom')
-                            {{ number_format($item->total), 0 }} {{ $item->productUnit }}
+                            {{ number_format($item->amount), 0 }} {{ $item->productUnit }}
                         @else
                         {{ $item->amount }} {{ $item->productUnit }}
                         @endif
@@ -76,7 +76,7 @@
 
                     <td class="center">{{ number_format($item->price), 2, ',', '.' }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ $item->total }} €</td>                
+                    <td class="center">{{ number_format($item->total), 2, ',', '.' }} €</td>                
                 </tr>
             @endforeach
 
@@ -110,7 +110,7 @@
         <p><b>Broj narudžbe:</b> {{$order->id}}</p>
     </div>
 
-    {{-- PDF content - START --}}
+    {{-- PDF content - END --}}
 
     @include('parts.pdf.signature-stamp')
 

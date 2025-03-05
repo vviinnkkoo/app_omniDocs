@@ -73,7 +73,7 @@ class DoomPDFController extends Controller
                     'colorID' => $item->color->id,
                     'colorName' => $item->color->name,
                     'price' => $item->price,
-                    'amount' => $item->itemAmount,
+                    'amount' => $item->amount,
                     'discount' => $item->discount,
                     'total' => GlobalService::sumSingleOrderItem($item->id),
                 ];
