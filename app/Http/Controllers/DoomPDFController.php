@@ -39,6 +39,7 @@ class DoomPDFController extends Controller
         $pdf = Pdf::loadView('pdf.invoice', [
             'receipt' => $receipt,
             'order' => $order,
+            'customer' => $order->customer->name,
             'orderItemList' => $orderItemList,
             'deliveryService' => $order->deliveryService,            
             'subtotal' => number_format($subtotal, 2, ',', '.'),
