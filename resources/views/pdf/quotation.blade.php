@@ -68,13 +68,13 @@
 
                     <td class="center">
                         @if ($item->productUnit == 'kom')
-                            {{ number_format(str_replace(',', '.', $item->total), 0) }} {{ $item->productUnit }}
+                            {{ number_format($item->total), 0 }} {{ $item->productUnit }}
                         @else
-                        {{ $item->total }} {{ $item->productUnit }}
+                        {{ $item->amount }} {{ $item->productUnit }}
                         @endif
                     </td>
 
-                    <td class="center">{{ number_format(str_replace(',', '.', $item->price), 2, ',', '.') }} €</td>
+                    <td class="center">{{ number_format($item->price), 2, ',', '.' }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
                     <td class="center">{{ $item->total }} €</td>                
                 </tr>
