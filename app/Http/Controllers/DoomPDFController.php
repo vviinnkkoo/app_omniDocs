@@ -43,6 +43,7 @@ class DoomPDFController extends Controller
             'orderItemList' => $orderItemList,
             'deliveryService' => $order->deliveryService->name,
             'deliveryCompany' => $order->deliveryService->deliveryCompany->name,
+            'paymentType' => $order->paymentType->name,
             'subtotal' => number_format($subtotal, 2, ',', '.'),
             'total' => number_format($total, 2, ',', '.'),
             'deliveryCost' => number_format($deliveryCost, 2, ',', '.')
