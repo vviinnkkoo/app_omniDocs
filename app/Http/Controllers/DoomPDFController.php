@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Receipt;
 use App\Models\Order;
 use App\Models\OrderItemList;
@@ -50,39 +51,57 @@ class DoomPDFController extends Controller
 
     public function documents($mode, $id)
     {
-        $order = Order::where('id', $id)->firstOrFail();
-        $orderItemList = OrderItemList::where('order_id', $id)->get();
-        $subtotal = GlobalService::sumWholeOrder($order->id);
-        $total = GlobalService::calculateReceiptTotal($order->id);
-        $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
-        $date = date("dmY-Gis");
+        $order = Order::with([
+            'paymentType', 
+            'customer', 
+            'country', 
+            'deliveryService.deliveryCompany'
+        ])->findOrFail($id);
 
-        $view = '';
-        $filename = '';
+        $receipt = $mode === 'racun' 
+            ? Receipt::where('order_id', $order->id)->firstOrFail() 
+            : null;
 
-        switch ($mode) {
-            case 'otpremnica':
-                $view = 'pdf.dispatch';
-                $filename = 'otpremnica-' . $id . '-' . $date . '.pdf';
-                break;
-            case 'ponuda':
-                $view = 'pdf.quotation';
-                $filename = 'ponuda-' . $id . '-' . $date . '.pdf';
-                break;
-            default:
-                return redirect('/');
+        $orderItemList = OrderItemList::with(['product:name,unit', 'color:name'])
+            ->where('order_id', $order->id)
+            ->get()
+            ->map(function ($item) {
+                return (object) [
+                    'productName' => $item->product->name,
+                    'color' => $item->color->name,
+                    'unit' => $item->product->unit,
+                    'itemTotal' => GlobalService::sumSingleOrderItem($item->id),
+                ];
+            });
+
+        $subtotal = number_format(GlobalService::sumWholeOrder($order->id), 2, ',', '.');
+        $total = number_format(GlobalService::calculateReceiptTotal($order->id), 2, ',', '.');
+        $deliveryCost = number_format($order->deliveryService->default_cost ?? 0, 2, ',', '.');
+        $currentDateTime = now()->format('dmY-Gis');
+
+        $orderData = [
+            'paymentType' => $order->paymentType->name ?? '',
+            'customer' => $order->customer->name ?? '',
+            'customerOib' => $order->customer->oib ?? '',
+            'country' => $order->country->name ?? '',
+            'deliveryService' => $order->deliveryService->name ?? '',
+            'deliveryCompany' => $order->deliveryService->deliveryCompany->name ?? '',
+        ];
+
+        $templates = [
+            'otpremnica' => ['pdf.dispatch', "otpremnica-{$id}-{$currentDateTime}.pdf"],
+            'ponuda' => ['pdf.quotation', "ponuda-{$id}-{$currentDateTime}.pdf"],
+            'racun' => ['pdf.invoice', "racun-{$id}-{$currentDateTime}.pdf"]
+        ];
+
+        if (!isset($templates[$mode])) {
+            return redirect('/');
         }
 
-        $pdf = Pdf::loadView($view, [
-            'order' => $order,
-            'orderItemList' => $orderItemList,
-            'deliveryService' => $order->deliveryService,
-            'total' => $total,
-            'subtotal' => $subtotal,
-            'deliveryCost' => $deliveryCost
-        ]);
+        [$view, $filename] = $templates[$mode];
 
-        return $pdf->stream($filename);
+        return Pdf::loadView($view, compact('receipt', 'order', 'orderItemList', 'orderData', 'subtotal', 'total', 'deliveryCost'))
+            ->stream($filename);
     }
 
     public function shippingLabels()
