@@ -85,12 +85,12 @@ class DoomPDFController extends Controller
         $currentDateTime = now()->format('dmY-Gis');
 
         $orderData = [
-            'paymentType' => $order->paymentType->name ?? '',
-            'customer' => $order->customer->name ?? '',
-            'customerOib' => $order->customer->oib ?? '',
-            'country' => $order->country->name ?? '',
-            'deliveryService' => $order->deliveryService->name ?? '',
-            'deliveryCompany' => $order->deliveryService->deliveryCompany->name ?? '',
+            'paymentType' => $order->paymentType->name,
+            'customerName' => $order->customer->name,
+            'customerOib' => $order->customer->oib,
+            'countryName' => $order->country->name,
+            'deliveryServiceName' => $order->deliveryService->name,
+            'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name
         ];
 
         $templates = [

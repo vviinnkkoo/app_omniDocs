@@ -21,11 +21,11 @@
             <tr>
                 <td class="w-tri">
                     <div><h4>Kupac:</h4></div>
-                    <div>{{ App\Models\Customer::find($order->customer_id)->name }}</div>
+                    <div>{{ $orderData->customerName }}</div>
                     <div>{{ $order->delivery_address }}</div>
                     <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
-                    <div>{{ App\Models\Country::find($order->delivery_country_id)->country_name }}</div>
-                    <div style="margin-top:10px"><b>OIB: </b>{{ App\Models\Customer::find($order->customer_id)->oib }}</div>
+                    <div>{{ $orderData->countryName }}</div>
+                    <div style="margin-top:10px"><b>OIB: </b>{{ $orderData->customerOib }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum i vrijeme izdavanja:</h4></div>
@@ -105,7 +105,7 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ $paymentType }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
+        <p><b>Način plaćanja:</b> {{ $orderData->paymentType }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
         <p><b>Poziv na broj:</b> 1512</p>
         <p><b>Broj narudžbe:</b> {{$order->id}}</p>
     </div>
