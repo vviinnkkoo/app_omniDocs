@@ -78,7 +78,7 @@ class DoomPDFController extends Controller
             'orderItemList' => $orderItemList,
             'deliveryService' => $order->deliveryService,
             'total' => $total,
-            'subtotal' => $totals,
+            'subtotal' => $subtotal,
             'deliveryCost' => $deliveryCost
         ]);
 
