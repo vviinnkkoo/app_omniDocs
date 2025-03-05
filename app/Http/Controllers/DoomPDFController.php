@@ -26,7 +26,7 @@ class DoomPDFController extends Controller
         $orderItemList = OrderItemList::where('order_id', $receipt->order_id)->get();
         $subtotal = GlobalService::sumWholeOrder($order->id);
         $total = GlobalService::calculateReceiptTotal($order->id);
-        $deliveryCost = Order::find($order->id)->deliveryService->default_cost;
+        $deliveryCost = $order->deliveryService->default_cost;
         $currentDateTime = date("dmY-Gis");
 
         foreach ($orderItemList as $item) {            
@@ -41,7 +41,8 @@ class DoomPDFController extends Controller
             'order' => $order,
             'customer' => $order->customer->name,
             'orderItemList' => $orderItemList,
-            'deliveryService' => $order->deliveryService,            
+            'deliveryService' => $order->deliveryService->name,
+            'deliveryCompany' => $order->deliveryService->deliveryCompany->name,
             'subtotal' => number_format($subtotal, 2, ',', '.'),
             'total' => number_format($total, 2, ',', '.'),
             'deliveryCost' => number_format($deliveryCost, 2, ',', '.')
