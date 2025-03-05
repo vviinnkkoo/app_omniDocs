@@ -87,7 +87,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td  class="center">{{ $deliveryCost }} €</td>  
+                <td  class="center">{{ number_format($deliveryCost, 2, ',', '.') }} €</td>  
             </tr>
 
             {{-- Total --}}
@@ -97,7 +97,7 @@
                 <td></td>
                 <td></td>
                 <td class="totalAmountText">Sveukupno: </td>
-                <td class="totalAmount center"><b>{{ $total }} €</b></td>
+                <td class="totalAmount center"><b>{{ number_format($total, 2, ',', '.') }} €</b></td>
             </tr>
 
         </table>

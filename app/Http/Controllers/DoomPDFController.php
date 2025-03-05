@@ -79,9 +79,8 @@ class DoomPDFController extends Controller
                 ];
             });
 
-        $subtotal = number_format(GlobalService::sumWholeOrder($order->id), 2, ',', '.');
-        $total = number_format(GlobalService::calculateReceiptTotal($order->id), 2, ',', '.');
-        $deliveryCost = number_format($order->deliveryService->default_cost ?? 0, 2, ',', '.');
+        $total = GlobalService::calculateReceiptTotal($order->id);
+        $deliveryCost = $order->deliveryService->default_cost;
         $currentDateTime = now()->format('dmY-Gis');
 
         $orderData = [
