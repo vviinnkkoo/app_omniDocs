@@ -63,7 +63,7 @@ class DoomPDFController extends Controller
             : null;
 
         $orderItemList = OrderItemList::with(['product:name,unit', 'color:name'])
-            ->where('order_id', $order->id)
+            ->where('order_id', $id)
             ->get()
             ->map(function ($item) {
                 return (object) [
