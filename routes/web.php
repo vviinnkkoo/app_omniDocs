@@ -111,7 +111,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']);
     Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
     Route::put('/update-order-item-list/{id}', [OrderItemListController::class, 'update']);
-    Route::delete('/delete-order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
+    Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
 
 
     // PDF render //
