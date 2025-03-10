@@ -38,8 +38,8 @@ class DoomPDFController extends Controller
     {
         $invoice = Receipt::where('id', $invoiceID)->firstOrFail();
         $orderID = $invoice->order->id;
-        $filename = $this->getTemplates($invoice->id, $invoice->number);
-        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
+        $filename = $this->getTemplate($invoice->id, $invoice->number);
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         
         return Pdf::loadView($view, compact('order', 'orderData', 'orderItemList'))
         ->stream($filename);
@@ -146,7 +146,7 @@ class DoomPDFController extends Controller
         return GlobalService::calculateReceiptTotal($order_id);
     }*/
 
-    private function getOrderData($id)
+    private function getOrderData($id, $includeItems = true)
     {
         $order = Order::with([
             'paymentType:id,name',
@@ -167,23 +167,26 @@ class DoomPDFController extends Controller
             'deliveryCost' => $order->deliveryService->default_cost ?? 0
         ];
 
-        $orderItemList = OrderItemList::with([
-            'product:id,name,unit',
-            'color:id,name'
-        ])
-        ->where('order_id', $id)
-        ->get()
-        ->map(fn($item) => (object) [
-            'productID' => $item->product->id,
-            'productName' => $item->product->name,
-            'productUnit' => $item->product->unit,
-            'colorID' => $item->color->id,
-            'colorName' => $item->color->name,
-            'price' => $item->price,
-            'amount' => $item->amount,
-            'discount' => $item->discount,
-            'total' => GlobalService::sumSingleOrderItem($item->id),
-        ]);
+        if ($includeItems) {
+            $orderItemList = OrderItemList::with(['product:id,name,unit', 'color:id,name'])
+                ->where('order_id', $id)
+                ->get()
+                ->map(function ($item) {
+                    return (object) [
+                        'productID' => $item->product->id,
+                        'productName' => $item->product->name,
+                        'productUnit' => $item->product->unit,
+                        'colorID' => $item->color->id,
+                        'colorName' => $item->color->name,
+                        'price' => $item->price,
+                        'amount' => $item->amount,
+                        'discount' => $item->discount,
+                        'total' => GlobalService::sumSingleOrderItem($item->id)
+                    ];
+                });
+        } else {
+            $orderItemList = null;
+        }
 
         return [$order, $orderData, $orderItemList];
     }
