@@ -31,15 +31,18 @@ class DoomPDFController extends Controller
             return redirect('/')->with('error', 'Vrsta dokumenta nije definirana! Pokušajte ponovno otvoriti poveznicu.');
         }
     
-        return $this->{$methods[$mode]}($id);
+        return $this->{$methods[$mode]}($mode, $id);
     }
 
-    private function generateInvoice($invoiceID)
+    private function generateInvoice($mode, $invoiceID)
     {
-        $receipt = Receipt::where('id', $invoiceID)->firstOrFail();
+        $invoice = Receipt::where('id', $invoiceID)->firstOrFail();
         $orderID = $receipt->order->id;
+        $filename = $this->getTemplates($invoice->id, $invoice->number);
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
         
-        return $pdf->stream('račun-' . $receipt->year . '-' . $receipt->number . '-1-1-' . $this->getCurrentDateTime . '.pdf');
+        return Pdf::loadView($view, compact('order', 'orderData', 'orderItemList'))
+        ->stream($filename);
 
     }
 
@@ -183,6 +186,19 @@ class DoomPDFController extends Controller
         ]);
 
         return [$order, $orderData, $orderItemList];
+    }
+
+    private function getTemplate($mode, $id, $invoiceNumber = null)
+    {
+        $currentDateTime = $this->getCurrentDateTime();
+
+        $templates = [
+            'otpremnica' => ['pdf.dispatch', "otpremnica-{$id}-{$currentDateTime}.pdf"],
+            'ponuda' => ['pdf.quotation', "ponuda-{$id}-{$currentDateTime}.pdf"],
+            'racun' => ['pdf.invoice', "racun-{$invoiceNumber}-{$currentDateTime}.pdf"]
+        ];
+
+        return $templates[$mode] ?? null;
     }
 
     private function getCurrentDateTime()
