@@ -68,16 +68,12 @@
                     </td>
 
                     <td class="center">
-                        <span>
-                            @if ($item->productUnit == 'kom')
-                                {{ number_format($item->amount, 0) }}
-                            @else
-                                {{ number_format($item->amount, 2, ',', '.') }}
-                            @endif
-                        </span>
-                        <span>
-                            {{ $item->productUnit }}
-                        </span>
+                        @if ($item->productUnit == 'kom')
+                            {{ number_format($item->amount, 0) }}
+                        @else
+                            {{ number_format($item->amount, 2, ',', '.') }}
+                        @endif
+                        {{ $item->productUnit }}
                     </td>
 
                     <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
@@ -103,7 +99,7 @@
                 <td></td>
                 <td></td>
                 <td class="totalAmountText">Sveukupno: </td>
-                <td class="totalAmount center"><b>{{ $orderData['total'] }} €</b></td>
+                <td class="totalAmount center"><b>{{ number_format($orderData['total'], 2, ',', '.') }} €</b></td>
             </tr>
 
         </table>
