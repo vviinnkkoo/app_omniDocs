@@ -41,7 +41,7 @@ class DoomPDFController extends Controller
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
-        return Pdf::loadView($view, compact('order', 'orderData', 'orderItemList'))
+        return Pdf::loadView($view, compact('invoice', 'order', 'orderData', 'orderItemList'))
             ->stream($filename);
 
     }
@@ -157,7 +157,7 @@ class DoomPDFController extends Controller
         ])->findOrFail($id);
 
         $orderData = [
-            'paymentType' => $order->paymentType->name ?? '',
+            'paymentTypeName' => $order->paymentType->name ?? '',
             'customerName' => $order->customer->name ?? '',
             'customerOib' => $order->customer->oib ?? '',
             'countryName' => $order->country->name ?? '',

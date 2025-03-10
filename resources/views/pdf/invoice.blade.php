@@ -24,16 +24,16 @@
                     <div>{{ $customer }}</div>
                     <div>{{ $order->delivery_address }}</div>
                     <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
-                    <div>{{ App\Models\Country::find($order->delivery_country_id)->country_name }}</div>
-                    <div style="margin-top:10px"><b>OIB: </b>{{ App\Models\Customer::find($order->customer_id)->oib }}</div>
+                    <div>{{ $orderData['countryName'] }}</div>
+                    <div style="margin-top:10px"><b>OIB: </b>{{ $orderData['customerOib'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum i vrijeme izdavanja:</h4></div>
                     <div>{{$appSettings['address_city']}}</div>
-                    <div>{{ \Carbon\Carbon::parse($receipt->created_at)->format('d.m.Y') }}</div>
-                    <div>u {{ \Carbon\Carbon::parse($receipt->created_at)->format('H:i') }}</div>
+                    <div>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d.m.Y') }}</div>
+                    <div>u {{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i') }}</div>
                     <div style="margin-top:10px"><b>Datum isporuke: </b>{{ \Carbon\Carbon::parse($order->date_sent)->format('d.m.Y') }}</div>
-                    <div><b>Datum dospijeća: </b>{{ \Carbon\Carbon::parse($receipt->created_at)->addDays(14)->format('d.m.Y') }}</div>
+                    <div><b>Datum dospijeća: </b>{{ \Carbon\Carbon::parse($invoice->created_at)->addDays(14)->format('d.m.Y') }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>
@@ -60,11 +60,11 @@
             @foreach ($orderItemList as $item)
                 <tr class="items">
 
-                    <td style="center">{{$item->product_id}}-{{$item->color_id}}</td>
+                    <td style="center">{{$item->productID}}-{{$item->colorID}}</td>
 
                     <td>
                         {{ $item->productName }}<br>
-                        <span style="font-size:70%">Boja: {{ $item->color }}</span>
+                        <span style="font-size:70%">Boja: {{ $item->colorName }}</span>
                     </td>
 
                     <td class="center">
@@ -84,11 +84,11 @@
             {{-- Delivery service --}}
             <tr class="items" >
                 <td></td>
-                <td><b>Dostava: </b>{{ $deliveryCompany }} - {{ $deliveryService }}</td>
+                <td><b>Dostava: </b>{{ $orderData['deliveryCompanyName'] }} - {{ $orderData['deliveryServiceName'] }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td  class="center">{{ $deliveryCost }} €</td>  
+                <td  class="center">{{ $orderData['deliveryCost'] }} €</td>  
             </tr>
 
             {{-- Total --}}
@@ -98,7 +98,7 @@
                 <td></td>
                 <td></td>
                 <td class="totalAmountText">Sveukupno: </td>
-                <td class="totalAmount center"><b>{{ $total }} €</b></td>
+                <td class="totalAmount center"><b>{{ $orderData['total'] }} €</b></td>
             </tr>
 
         </table>
@@ -106,7 +106,7 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ $paymentType }} &nbsp;&nbsp; <b>Račun izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
+        <p><b>Način plaćanja:</b> {{ $orderData['paymentTypeName'] }} &nbsp;&nbsp; <b>Račun izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
         <p><b>Poziv na broj:</b> 1512</p>
         <p><b>Broj narudžbe:</b> {{$order->id}}</p>
     </div>
