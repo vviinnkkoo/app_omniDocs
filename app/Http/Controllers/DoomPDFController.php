@@ -38,11 +38,11 @@ class DoomPDFController extends Controller
     {
         $invoice = Receipt::where('id', $invoiceID)->firstOrFail();
         $orderID = $invoice->order->id;
-        $filename = $this->getTemplate($invoice->id, $invoice->number);
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
+        [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
         return Pdf::loadView($view, compact('order', 'orderData', 'orderItemList'))
-        ->stream($filename);
+            ->stream($filename);
 
     }
 
