@@ -94,7 +94,7 @@
                                     
 
                                     <td>
-                                      <a href="/racun/{{$receipt->id}}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                                      <a href="/dokument/racun/{{$receipt->id}}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                                     </td>
 
                                     <td>
