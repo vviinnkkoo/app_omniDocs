@@ -69,10 +69,11 @@
 
                     <td class="center">
                         @if ($item->productUnit == 'kom')
-                            {{ number_format($item->amount, 0) }} {{ $item->product->unit }}
+                            {{ number_format($item->amount, 0) }}
                         @else
-                            {{ number_format($item->amount, 2, ',', '.') }} {{ $item->productUnit }}
+                            {{ number_format($item->amount, 2, ',', '.') }}
                         @endif
+                        {{ $item->productUnit }}
                     </td>
 
                     <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
