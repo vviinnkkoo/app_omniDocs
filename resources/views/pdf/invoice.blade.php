@@ -21,7 +21,7 @@
             <tr>
                 <td class="w-tri">
                     <div><h4>Kupac:</h4></div>
-                    <div>{{ $customer }}</div>
+                    <div>{{ $orderData['customerName'] }}</div>
                     <div>{{ $order->delivery_address }}</div>
                     <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
                     <div>{{ $orderData['countryName'] }}</div>
