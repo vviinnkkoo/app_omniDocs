@@ -37,7 +37,7 @@ class DoomPDFController extends Controller
     private function generateInvoice($mode, $invoiceID)
     {
         $invoice = Receipt::where('id', $invoiceID)->firstOrFail();
-        $orderID = $receipt->order->id;
+        $orderID = $invoice->order->id;
         $filename = $this->getTemplates($invoice->id, $invoice->number);
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
         
@@ -48,9 +48,9 @@ class DoomPDFController extends Controller
 
     public function invoice($id)
     {
-        $receipt = Receipt::where('id', $id)->firstOrFail();
-        $order = Order::where('id', $receipt->order_id)->firstOrFail();
-        $orderItemList = OrderItemList::where('order_id', $receipt->order_id)->get();
+        $invoice = Receipt::where('id', $id)->firstOrFail();
+        $order = Order::where('id', $invoice->order_id)->firstOrFail();
+        $orderItemList = OrderItemList::where('order_id', $invoice->order_id)->get();
         $subtotal = GlobalService::sumWholeOrder($order->id);
         $total = GlobalService::calculateReceiptTotal($order->id);
         $deliveryCost = $order->deliveryService->default_cost;
@@ -64,7 +64,7 @@ class DoomPDFController extends Controller
         }
 
         $pdf = Pdf::loadView('pdf.invoice', [
-            'receipt' => $receipt,
+            'receipt' => $invoice,
             'order' => $order,
             'customer' => $order->customer->name,
             'orderItemList' => $orderItemList,
@@ -76,7 +76,7 @@ class DoomPDFController extends Controller
             'deliveryCost' => number_format($deliveryCost, 2, ',', '.')
         ]);
 
-        return $pdf->stream('račun-' . $receipt->year . '-' . $receipt->number . '-1-1-' . $currentDateTime . '.pdf');
+        return $pdf->stream('račun-' . $invoice->year . '-' . $invoice->number . '-1-1-' . $currentDateTime . '.pdf');
     }
 
     public function documents($mode, $id)
