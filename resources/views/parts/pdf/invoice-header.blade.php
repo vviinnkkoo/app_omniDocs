@@ -6,7 +6,7 @@
                 <img src="{{ asset($appSettings['invoice_logo']) }}" height="54" />
             </td>
             <td class="w-half">
-                <h2>RAČUN br: <span class="gray-overlay">{{$receipt->number}}-1-1</span></h2>
+                <h2>RAČUN br: <span class="gray-overlay">{{$invoice->number}}-1-1</span></h2>
             </td>
         </tr>
     </table>
