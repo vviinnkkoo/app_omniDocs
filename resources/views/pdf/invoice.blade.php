@@ -71,7 +71,7 @@
                         @if ($item->productUnit == 'kom')
                             {{ number_format($item->amount, 0) }} {{ $item->product->unit }}
                         @else
-                            {{ number_format($item->amount, 2, ',', '.') }} {{ $item->product->unit }}
+                            {{ number_format($item->amount, 2, ',', '.') }} {{ $item->productUnit }}
                         @endif
                     </td>
 
