@@ -76,7 +76,7 @@
 
                     <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
                     <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ number_format($item->total, 2, ',', '.') }} €</td>                
+                    <td class="center">{{ number_format($item->itemTotal, 2, ',', '.') }} €</td>                
                 </tr>
             @endforeach
 
