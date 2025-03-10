@@ -185,7 +185,7 @@ class DoomPDFController extends Controller
         return [$order, $orderData, $orderItemList];
     }
 
-    private function getCurrentDateTime();
+    private function getCurrentDateTime()
     {
         return now()->format('dmY-Gis');
     }
