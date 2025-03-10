@@ -68,12 +68,16 @@
                     </td>
 
                     <td class="center">
-                        @if ($item->productUnit == 'kom')
-                            {{ number_format($item->amount, 0) }}
-                        @else
-                            {{ number_format($item->amount, 2, ',', '.') }}
-                        @endif
-                        {{ $item->productUnit }}
+                        <span>
+                            @if ($item->productUnit == 'kom')
+                                {{ number_format($item->amount, 0) }}
+                            @else
+                                {{ number_format($item->amount, 2, ',', '.') }}
+                            @endif
+                        </span>
+                        <span>
+                            {{ $item->productUnit }}
+                        </span>
                     </td>
 
                     <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
