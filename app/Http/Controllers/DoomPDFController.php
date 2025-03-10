@@ -19,6 +19,30 @@ class DoomPDFController extends Controller
         $this->middleware('auth');
     }
 
+    public function generateDocument($mode, $id)
+    {
+        $methods = [
+            'otpremnica' => 'generateDispatchNote',
+            'ponuda' => 'generateQuotation',
+            'racun' => 'generateInvoice'
+        ];
+    
+        if (!isset($methods[$mode])) {
+            return redirect('/')->with('error', 'Vrsta dokumenta nije definirana! Pokušajte ponovno otvoriti poveznicu.');
+        }
+    
+        return $this->{$methods[$mode]}($id);
+    }
+
+    private function generateInvoice($invoiceID)
+    {
+        $receipt = Receipt::where('id', $invoiceID)->firstOrFail();
+        $orderID = $receipt->order->id;
+        
+        return $pdf->stream('račun-' . $receipt->year . '-' . $receipt->number . '-1-1-' . $this->getCurrentDateTime . '.pdf');
+
+    }
+
     public function invoice($id)
     {
         $receipt = Receipt::where('id', $id)->firstOrFail();
@@ -54,16 +78,7 @@ class DoomPDFController extends Controller
 
     public function documents($mode, $id)
     {
-        $order = Order::with([
-            'paymentType', 
-            'customer', 
-            'country', 
-            'deliveryService.deliveryCompany'
-        ])->findOrFail($id);
-
-        $receipt = $mode === 'racun' 
-            ? Receipt::where('order_id', $order->id)->firstOrFail() 
-            : null;
+        [$order, $orderData] = $this->getOrderData($orderID);
 
         $orderItemList = OrderItemList::with(['product:id,name,unit', 'color:id,name'])
             ->where('order_id', $id)
@@ -82,19 +97,6 @@ class DoomPDFController extends Controller
                 ];
             });
 
-        $total = GlobalService::calculateReceiptTotal($order->id);
-        $deliveryCost = $order->deliveryService->default_cost;
-        $currentDateTime = now()->format('dmY-Gis');
-
-        $orderData = [
-            'paymentType' => $order->paymentType->name,
-            'customerName' => $order->customer->name,
-            'customerOib' => $order->customer->oib,
-            'countryName' => $order->country->name,
-            'deliveryServiceName' => $order->deliveryService->name,
-            'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name
-        ];
-
         $templates = [
             'otpremnica' => ['pdf.dispatch', "otpremnica-{$id}-{$currentDateTime}.pdf"],
             'ponuda' => ['pdf.quotation', "ponuda-{$id}-{$currentDateTime}.pdf"],
@@ -111,7 +113,7 @@ class DoomPDFController extends Controller
             ->stream($filename);
     }
 
-    public function shippingLabels()
+    /*public function shippingLabels()
     {
         $shippingLabels = PrintLabel::where('label_type', 'shipping')->get();
 
@@ -136,12 +138,55 @@ class DoomPDFController extends Controller
         return $pdf->stream();
     }
 
-    public static function labelItemTotal($order_id, $omnicontrol, $orderItemListController)
+    public static function labelItemTotal($order_id)
     {
-        $subtotal = $orderItemListController->sumOrderItemList($order_id);
-        $deliveryService = DeliveryService::where('id', Order::find($order_id)->delivery_service_id)->firstOrFail();
-        $deliveryCost = str_replace(',', '.', $deliveryService->default_cost);
+        return GlobalService::calculateReceiptTotal($order_id);
+    }*/
 
-        return number_format(($subtotal + $deliveryCost), 2, ',', '.');
+    private function getOrderData($id)
+    {
+        $order = Order::with([
+            'paymentType:id,name',
+            'customer:id,name,oib',
+            'country:id,name',
+            'deliveryService:id,name,default_cost',
+            'deliveryService.deliveryCompany:id,name'
+        ])->findOrFail($id);
+
+        $orderData = [
+            'paymentType' => $order->paymentType->name ?? '',
+            'customerName' => $order->customer->name ?? '',
+            'customerOib' => $order->customer->oib ?? '',
+            'countryName' => $order->country->name ?? '',
+            'deliveryServiceName' => $order->deliveryService->name ?? '',
+            'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? '',
+            'total' => GlobalService::calculateReceiptTotal($id),
+            'deliveryCost' => $order->deliveryService->default_cost ?? 0
+        ];
+
+        $orderItemList = OrderItemList::with([
+            'product:id,name,unit',
+            'color:id,name'
+        ])
+        ->where('order_id', $id)
+        ->get()
+        ->map(fn($item) => (object) [
+            'productID' => $item->product->id,
+            'productName' => $item->product->name,
+            'productUnit' => $item->product->unit,
+            'colorID' => $item->color->id,
+            'colorName' => $item->color->name,
+            'price' => $item->price,
+            'amount' => $item->amount,
+            'discount' => $item->discount,
+            'total' => GlobalService::sumSingleOrderItem($item->id),
+        ]);
+
+        return [$order, $orderData, $orderItemList];
+    }
+
+    private function getCurrentDateTime();
+    {
+        return now()->format('dmY-Gis');
     }
 }
