@@ -81,24 +81,7 @@ class DoomPDFController extends Controller
 
     public function documents($mode, $id)
     {
-        [$order, $orderData] = $this->getOrderData($orderID);
-
-        $orderItemList = OrderItemList::with(['product:id,name,unit', 'color:id,name'])
-            ->where('order_id', $id)
-            ->get()
-            ->map(function ($item) {
-                return (object) [
-                    'productID' => $item->product->id,
-                    'productName' => $item->product->name,
-                    'productUnit' => $item->product->unit,
-                    'colorID' => $item->color->id,
-                    'colorName' => $item->color->name,
-                    'price' => $item->price,
-                    'amount' => $item->amount,
-                    'discount' => $item->discount,
-                    'itemTotal' => GlobalService::sumSingleOrderItem($item->id),
-                ];
-            });
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
 
         $templates = [
             'otpremnica' => ['pdf.dispatch', "otpremnica-{$id}-{$currentDateTime}.pdf"],
@@ -181,7 +164,7 @@ class DoomPDFController extends Controller
                         'price' => $item->price,
                         'amount' => $item->amount,
                         'discount' => $item->discount,
-                        'total' => GlobalService::sumSingleOrderItem($item->id)
+                        'itemTotal' => GlobalService::sumSingleOrderItem($item->id)
                     ];
                 });
         } else {
