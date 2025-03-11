@@ -27,12 +27,7 @@ class DeliveryService extends Model
 
     public function orders()
     {
-        return $this->hasMany('App\Order');
-    }
-
-    public function deliveryCompany()
-    {
-        return $this->belongsTo(DeliveryCompany::class, 'delivery_company_id');
+        return $this->hasMany(Order::class, 'delivery_service_id');
     }
 
 }

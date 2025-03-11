@@ -14,6 +14,6 @@ class DeliveryCompany extends Model
 
     public function deliveryService()
     {
-        return $this->hasMany(DeliveryService::class);
+        return $this->belongsTo(DeliveryService::class, 'delivery_service_id');
     }
 }
