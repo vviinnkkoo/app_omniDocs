@@ -202,7 +202,7 @@
 
                     @foreach ($deliveryCompanies as $company)
                       <optgroup label="{{ $company->name }}">
-                        @foreach ($company->deliveryService as $service)
+                        @foreach ($company->deliveryServices as $service)
                           @if ($service->in_use == 1)
                             <option value="{{ $service->id }}">{{ $service->name }} >> {{ $service->default_cost }} €</option>
                           @endif
