@@ -13,7 +13,7 @@
 
                   <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova uplata</button>
 
-                  {{-- @include('parts.tablesearch') --}}
+                  {{-- @include('includes.tablesearch') --}}
 
                   <form method="GET" action="/knjiga-prometa/{{$year}}" class="mb-3">
                     <div class="input-group w-25 float-end">
@@ -165,7 +165,7 @@
   </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection
 

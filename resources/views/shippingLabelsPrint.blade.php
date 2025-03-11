@@ -18,7 +18,7 @@
 
                   <a class="btn btn-danger" style="margin-bottom:20px; margin-left:10px;" href="/obrisi-etikete"><i class="bi bi-trash3"></i> Obriši etikete</a>
 
-                  @include('parts.tablesearch')
+                  @include('includes.tablesearch')
 
                     <table class="table table-hover">
                       <thead class="table-dark">
@@ -112,7 +112,7 @@
   </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection
 

@@ -18,7 +18,7 @@
 
                   <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px; margin-left:10px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
 
-                  {{-- @include('parts.tablesearch') --}}
+                  {{-- @include('includes.tablesearch') --}}
 
                   <form method="GET" action="/narudzbe/1" class="mb-3">
                     <div class="input-group w-25 float-end">
@@ -106,7 +106,7 @@
 
                                     {{-- Tracking number --}}
                                     <td class="align-middle text-right">
-                                      @include("parts.tracking-code-condition")                                    
+                                      @include("includes.tracking-code-condition")                                    
                                     </td>
 
                                     {{-- Total --}}
@@ -246,7 +246,7 @@
       <div class="modal-body">
         <!-- popup content -->
         <form method="POST" action="/kupci/2" id="customerSubmission">
-          @include('parts.form-fields-customers')
+          @include('includes.form-fields-customers')
         </form>
       </div>
       <div class="modal-footer">

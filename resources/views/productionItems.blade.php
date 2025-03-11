@@ -18,7 +18,7 @@
                   
                   <span class="fs-3">{{ $title }}</span>
 
-                  @include('parts.tablesearch')
+                  @include('includes.tablesearch')
 
                     <table class="table table-hover">
                       <thead class="table-dark">
@@ -98,7 +98,7 @@
     </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection
 

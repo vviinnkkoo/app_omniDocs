@@ -16,7 +16,7 @@
                   <!-- Button to trigger the pop-up -->
                   <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Novi račun</button>
 
-                  @include('parts.tablesearch')
+                  @include('includes.tablesearch')
 
                     <table class="table table-hover">
                       <thead class="table-dark">
@@ -174,7 +174,7 @@
   </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection
 

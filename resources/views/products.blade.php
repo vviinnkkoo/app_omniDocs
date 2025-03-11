@@ -16,7 +16,7 @@
                   <!-- Button to trigger the pop-up -->
                   <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Novi proizvod</button>
 
-                  {{-- @include('parts.tablesearch') --}}
+                  {{-- @include('includes.tablesearch') --}}
 
                   <form method="GET" action="/proizvodi" class="mb-3">
                     <div class="input-group w-25 float-end">
@@ -125,6 +125,6 @@
   </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection

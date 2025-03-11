@@ -7,12 +7,12 @@
 
     <title>Ponuda br: {{$order->id}}</title>
 
-    @include('parts.pdf.style')
+    @include('includes.pdf.style')
 
 </head>
 <body>
 
-    @include('parts.pdf.quotation-header')
+    @include('includes.pdf.quotation-header')
 
     {{-- PDF content - START --}}
 
@@ -44,75 +44,18 @@
         </table>
     </div>
 
-    <div class="margin-top">
-        <table class="products">
-            <tr>
-                <th>Šifra</th>
-                <th>Naziv</th>
-                <th>Količina</th>
-                <th>Cijena</th>
-                <th>Popust</th>
-                <th>Iznos</th>
-            </tr>
-
-            {{-- Order items loop --}}
-            @foreach ($orderItemList as $item)
-                <tr class="items">
-
-                    <td style="center">{{$item->productID}}-{{$item->colorID}}</td>
-
-                    <td>
-                        {{ $item->productName }}<br>
-                        <span style="font-size:70%">Boja: {{ $item->colorName }}</span>
-                    </td>
-
-                    <td class="center">
-                        @if ($item->productUnit == 'kom')
-                            {{ number_format($item->amount, 0) }} {{ $item->productUnit }}
-                        @else
-                        {{ $item->amount }} {{ $item->productUnit }}
-                        @endif
-                    </td>
-
-                    <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
-                    <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ number_format($item->itemTotal, 2, ',', '.') }} €</td>                
-                </tr>
-            @endforeach
-
-            {{-- Delivery service --}}
-            <tr class="items" >
-                <td></td>
-                <td><b>Dostava: </b>{{ $orderData['deliveryCompanyName'] }} - {{ $orderData['deliveryServiceName'] }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td  class="center">{{ number_format($deliveryCost, 2, ',', '.') }} €</td>  
-            </tr>
-
-            {{-- Total --}}
-            <tr class="total">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="totalAmountText">Sveukupno: </td>
-                <td class="totalAmount center"><b>{{ number_format($total, 2, ',', '.') }} €</b></td>
-            </tr>
-
-        </table>
-    </div>
+    @include('includes.pdf.shared.order-items')
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
         <p><b>Način plaćanja:</b> {{ $orderData['paymentType'] }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
-        <p><b>Poziv na broj:</b> 1512</p>
-        <p><b>Broj narudžbe:</b> {{$order->id}}</p>
+        <p><b>Poziv na broj:</b> 1512-{{$orderData['id']}}</p>
+        <p><b>Broj narudžbe:</b> {{$orderData['id']}}</p>
     </div>
 
     {{-- PDF content - END --}}
 
-    @include('parts.pdf.signature-stamp')
+    @include('includes.pdf.shared.signature-stamp')
 
 </body>
 </html>

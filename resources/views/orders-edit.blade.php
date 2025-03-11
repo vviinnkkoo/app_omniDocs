@@ -179,7 +179,7 @@
                 <div>
                   <span class="editable gray-mark" data-id="{{ $order->id }}" data-field="tracking_code" data-model="order">{{ $order->tracking_code }}</span>&nbsp;
                   <span>
-                    @include("parts.tracking-code-condition")
+                    @include("includes.tracking-code-condition")
                   </span>
                 </div>
               </div>
@@ -501,6 +501,6 @@
   </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection
