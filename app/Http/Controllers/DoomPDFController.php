@@ -47,60 +47,25 @@ class DoomPDFController extends Controller
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
-        return Pdf::loadView($view, compact('invoiceData', 'order', 'orderData', 'orderItemList'))
+        return Pdf::loadView($view, compact('invoiceData', 'orderData', 'orderItemList'))
             ->stream($filename);
     }
 
-    public function invoice($id)
+    private function generateQuotation($mode, $orderID)
     {
-        $invoice = Receipt::where('id', $id)->firstOrFail();
-        $order = Order::where('id', $invoice->order_id)->firstOrFail();
-        $orderItemList = OrderItemList::where('order_id', $invoice->order_id)->get();
-        $subtotal = GlobalService::sumWholeOrder($order->id);
-        $total = GlobalService::calculateReceiptTotal($order->id);
-        $deliveryCost = $order->deliveryService->default_cost;
-        $currentDateTime = date("dmY-Gis");
-
-        foreach ($orderItemList as $item) {            
-            $item->productName = $item->product->name;
-            $item->color = $item->color->name;
-            $item->unit = $item->product->unit;
-            $item->itemTotal = GlobalService::sumSingleOrderItem($item->id);
-        }
-
-        $pdf = Pdf::loadView('pdf.invoice', [
-            'receipt' => $invoice,
-            'order' => $order,
-            'customer' => $order->customer->name,
-            'orderItemList' => $orderItemList,
-            'deliveryService' => $order->deliveryService->name,
-            'deliveryCompany' => $order->deliveryService->deliveryCompany->name,
-            'paymentType' => $order->paymentType->name,
-            'subtotal' => number_format($subtotal, 2, ',', '.'),
-            'total' => number_format($total, 2, ',', '.'),
-            'deliveryCost' => number_format($deliveryCost, 2, ',', '.')
-        ]);
-
-        return $pdf->stream('račun-' . $invoice->year . '-' . $invoice->number . '-1-1-' . $currentDateTime . '.pdf');
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
+        [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
+        
+        return Pdf::loadView($view, compact('orderData', 'orderItemList'))
+            ->stream($filename);
     }
 
-    public function documents($mode, $id)
+    private function generateInvoice($mode, $orderID)
     {
-        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
-
-        $templates = [
-            'otpremnica' => ['pdf.dispatch', "otpremnica-{$id}-{$currentDateTime}.pdf"],
-            'ponuda' => ['pdf.quotation', "ponuda-{$id}-{$currentDateTime}.pdf"],
-            'racun' => ['pdf.invoice', "racun-{$id}-{$currentDateTime}.pdf"]
-        ];
-
-        if (!isset($templates[$mode])) {
-            return redirect('/');
-        }
-
-        [$view, $filename] = $templates[$mode];
-
-        return Pdf::loadView($view, compact('receipt', 'order', 'orderItemList', 'orderData', 'total', 'deliveryCost'))
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
+        [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
+        
+        return Pdf::loadView($view, compact('orderData', 'orderItemList'))
             ->stream($filename);
     }
 
