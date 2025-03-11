@@ -110,6 +110,7 @@ class OrderController extends Controller
         $deliveryServices = DeliveryService::orderBy('id')->get();
         //$deliveryCompanies = DeliveryCompany::has('deliveryServices')->orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::with('deliveryServices')->orderBy('id')->get();
+        dd($deliveryCompanies);
         $paymentTypes = PaymentType::orderBy('id')->get();
         $countries = Country::orderBy('id')->get();
         $products = Product::orderBy('name')->get();
