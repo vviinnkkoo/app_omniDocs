@@ -119,7 +119,7 @@
                                     {{-- Has invoice --}}
                                     <td class="align-middle text-right">
                                       @if ( App\Models\Receipt::where('order_id', $order->id)->where('is_cancelled', 0)->exists() )
-                                      <a href="/racun/{{ App\Models\Receipt::where('order_id', $order->id)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
+                                      <a href="/dokument/racun/{{ App\Models\Receipt::where('order_id', $order->id)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
 
                                           {{-- Need fixing because of new connection with KPR --}}
                                           @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $order->id )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
