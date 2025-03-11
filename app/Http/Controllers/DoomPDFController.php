@@ -60,7 +60,7 @@ class DoomPDFController extends Controller
             ->stream($filename);
     }
 
-    private function generateInvoice($mode, $orderID)
+    private function generateDispatchNote($mode, $orderID)
     {
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
