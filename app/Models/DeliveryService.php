@@ -31,8 +31,8 @@ class DeliveryService extends Model
     }
 
     public function deliveryCompany()
-{
-    return $this->belongsTo(DeliveryCompany::class, 'delivery_company_id');
-}
+    {
+        return $this->belongsTo(DeliveryCompany::class, 'delivery_company_id');
+    }
 
 }

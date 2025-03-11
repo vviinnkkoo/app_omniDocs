@@ -44,7 +44,7 @@ class DoomPDFController extends Controller
             'time' => Carbon::parse($invoice->created_at)->format('H:i'),            
             'eta' => Carbon::parse($invoice->created_at)->addDays(14)->format('d.m.Y'),
         ];
-        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
         return Pdf::loadView($view, compact('invoiceData', 'orderData', 'orderItemList'))
@@ -53,7 +53,7 @@ class DoomPDFController extends Controller
 
     private function generateQuotation($mode, $orderID)
     {
-        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
         return Pdf::loadView($view, compact('orderData', 'orderItemList'))
@@ -62,7 +62,7 @@ class DoomPDFController extends Controller
 
     private function generateDispatchNote($mode, $orderID)
     {
-        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
+        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
         return Pdf::loadView($view, compact('orderData', 'orderItemList'))
@@ -105,7 +105,7 @@ class DoomPDFController extends Controller
             'paymentType:id,name',
             'customer:id,name,oib',
             'country:id,name',
-            'deliveryService:id,name,default_cost',
+            'deliveryService:id,name,default_cost,delivery_company_id',
             'deliveryService.deliveryCompany:id,name'
         ])->findOrFail($id);
 
