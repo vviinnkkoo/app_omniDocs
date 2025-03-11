@@ -46,8 +46,6 @@ class DoomPDFController extends Controller
         ];
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
-
-        dd($orderData);
         
         return Pdf::loadView($view, compact('invoiceData', 'orderData', 'orderItemList'))
             ->stream($filename);
@@ -128,7 +126,9 @@ class DoomPDFController extends Controller
             'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? '',
             'total' => GlobalService::calculateReceiptTotal($id),
             'deliveryCost' => $order->deliveryService->default_cost ?? 0
-        ];
+        ];        
+
+        dd($orderData);
 
         if ($includeItems) {
             $orderItemList = OrderItemList::with(['product:id,name,unit', 'color:id,name'])
