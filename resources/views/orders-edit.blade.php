@@ -24,7 +24,7 @@
           {{-- Invoice check START --}}
           <span class="ms-auto">Račun:
             @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
-              <a href="/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
+              <a href="/dokument/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
 
                 @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
                   class="btn btn-success btn-sm"><i class="bi bi-filetype-pdf"></i> Plaćen</a>

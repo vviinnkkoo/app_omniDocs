@@ -7,12 +7,12 @@
 
     <title>Račun</title>
 
-    @include('parts.pdf.style')
+    @include('includes.pdf.style')
 
 </head>
 <body>
 
-    @include('parts.pdf.invoice-header')
+    @include('includes.pdf.invoice-header')
 
     {{-- PDF content - START --}}
 
@@ -45,7 +45,7 @@
         </table>
     </div>
 
-    @include('parts.pdf.shared.order-items')
+    @include('includes.pdf.shared.order-items')
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
@@ -56,7 +56,7 @@
 
     {{-- PDF content - END --}}
 
-    @include('parts.pdf.shared.signature-stamp')
+    @include('includes.pdf.shared.signature-stamp')
 
 </body>
 </html>
