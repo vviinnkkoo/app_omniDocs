@@ -12,8 +12,8 @@ class DeliveryCompany extends Model
     // change default table name
     protected $table = 'delivery_company';
 
-    public function deliveryService()
+    public function deliveryServices()
     {
-        return $this->belongsTo(DeliveryService::class, 'delivery_service_id');
+        return $this->hasMany(DeliveryService::class, 'delivery_company_id');
     }
 }
