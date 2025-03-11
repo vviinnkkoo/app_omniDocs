@@ -123,7 +123,7 @@ class DoomPDFController extends Controller
             'deliveryCity' => $order->delivery_city ?? '',
             'deliveryPostal' => $order->delivery_postal ?? '',
             'deliveryServiceName' => $order->deliveryService->name ?? '',
-            'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? 'err',
+            'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? '',
             'total' => GlobalService::calculateReceiptTotal($id),
             'deliveryCost' => $order->deliveryService->default_cost ?? 0
         ];
