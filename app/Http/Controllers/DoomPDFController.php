@@ -126,9 +126,7 @@ class DoomPDFController extends Controller
             'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? '',
             'total' => GlobalService::calculateReceiptTotal($id),
             'deliveryCost' => $order->deliveryService->default_cost ?? 0
-        ];        
-
-        dd($orderData);
+        ];
 
         if ($includeItems) {
             $orderItemList = OrderItemList::with(['product:id,name,unit', 'color:id,name'])
