@@ -44,9 +44,6 @@ class DoomPDFController extends Controller
             'time' => Carbon::parse($invoice->created_at)->format('H:i'),            
             'eta' => Carbon::parse($invoice->created_at)->addDays(14)->format('d.m.Y'),
         ];
-
-        dd($invoiceData);
-        
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
