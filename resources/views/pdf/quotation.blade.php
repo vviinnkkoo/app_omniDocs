@@ -22,17 +22,17 @@
                 <td class="w-tri">
                     <div><h4>Kupac:</h4></div>
                     <div>{{ $orderData['customerName'] }}</div>
-                    <div>{{ $order->delivery_address }}</div>
-                    <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
+                    <div>{{ $orderData['deliveryAddress'] }}</div>
+                    <div>{{ $orderData['deliveryCity'] }}, {{ $orderData['deliveryPostal'] }}</div>
                     <div>{{ $orderData['countryName'] }}</div>
                     <div style="margin-top:10px"><b>OIB: </b>{{ $orderData['customerOib'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum i vrijeme izdavanja:</h4></div>
-                    <div>{{$appSettings['address_city']}}</div>
-                    <div>{{ \Carbon\Carbon::parse($order->created_at)->format('d.m.Y') }}</div>
-                    <div>u {{ \Carbon\Carbon::parse($order->created_at)->format('H:i') }}</div>
-                    <div><b>Ponuda vrijedi do: </b>{{ \Carbon\Carbon::parse($order->created_at)->addDays(14)->format('d.m.Y') }}</div>
+                    <div>{{ $appSettings['address_city'] }}</div>
+                    <div>{{ $orderData['dateOrdered'] }}</div>
+                    <div>u {{ $orderData['timeOrdered'] }}</div>
+                    <div><b>Ponuda vrijedi do: </b>{{ $orderData['eta'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>

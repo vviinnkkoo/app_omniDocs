@@ -20,14 +20,15 @@
             <tr>
                 <td class="w-tri">
                     <div><h4>Kupac:</h4></div>
-                    <div>{{ App\Models\Customer::find($order->customer_id)->name }}</div>
-                    <div>{{ $order->delivery_address }}</div>
-                    <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
-                    <div>{{ App\Models\Country::find($order->delivery_country_id)->country_name }}</div>
+                    <div>{{ $orderData['customerName'] }}</div>
+                    <div>{{ $orderData['deliveryAddress'] }}</div>
+                    <div>{{ $orderData['deliveryCity'] }}, {{ $orderData['deliveryPostal'] }}</div>
+                    <div>{{ $orderData['countryName'] }}</div>
+                    <div style="margin-top:10px"><b>OIB: </b>{{ $orderData['customerOib'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum isporuke:</h4></div>
-                    <div>{{ \Carbon\Carbon::parse($order->date_sent)->format('d.m.Y') }}</div>
+                    <div>{{ $orderData['dateSent'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>

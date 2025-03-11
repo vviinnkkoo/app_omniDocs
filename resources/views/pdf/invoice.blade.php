@@ -22,18 +22,18 @@
                 <td class="w-tri">
                     <div><h4>Kupac:</h4></div>
                     <div>{{ $orderData['customerName'] }}</div>
-                    <div>{{ $order->delivery_address }}</div>
-                    <div>{{ $order->delivery_city }}, {{ $order->delivery_postal }}</div>
+                    <div>{{ $orderData['deliveryAddress'] }}</div>
+                    <div>{{ $orderData['deliveryCity'] }}, {{ $orderData['deliveryPostal'] }}</div>
                     <div>{{ $orderData['countryName'] }}</div>
                     <div style="margin-top:10px"><b>OIB: </b>{{ $orderData['customerOib'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum i vrijeme izdavanja:</h4></div>
                     <div>{{$appSettings['address_city']}}</div>
-                    <div>{{ \Carbon\Carbon::parse($invoice->created_at)->format('d.m.Y') }}</div>
-                    <div>u {{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i') }}</div>
-                    <div style="margin-top:10px"><b>Datum isporuke: </b>{{ \Carbon\Carbon::parse($order->date_sent)->format('d.m.Y') }}</div>
-                    <div><b>Datum dospijeća: </b>{{ \Carbon\Carbon::parse($invoice->created_at)->addDays(14)->format('d.m.Y') }}</div>
+                    <div>{{ $invoiceData['date'] }}</div>
+                    <div>u {{ $invoiceData['time'] }}</div>
+                    <div style="margin-top:10px"><b>Datum isporuke: </b>{{ $orderData['dateSent'] }}</div>
+                    <div><b>Datum dospijeća: </b>{{ $invoiceData['eta'] }}</div>
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>
@@ -45,71 +45,13 @@
         </table>
     </div>
 
-    <div class="margin-top">
-        <table class="products">
-            <tr>
-                <th>Šifra</th>
-                <th>Naziv</th>
-                <th>Količina</th>
-                <th>Cijena</th>
-                <th>Popust</th>
-                <th>Iznos</th>
-            </tr>
-
-            {{-- Order items loop --}}
-            @foreach ($orderItemList as $item)
-                <tr class="items">
-
-                    <td style="center">{{$item->productID}}-{{$item->colorID}}</td>
-
-                    <td>
-                        {{ $item->productName }}<br>
-                        <span style="font-size:70%">Boja: {{ $item->colorName }}</span>
-                    </td>
-
-                    <td class="center">
-                        @if ($item->productUnit == 'kom')
-                            {{ number_format($item->amount, 0) }}
-                        @else
-                            {{ number_format($item->amount, 2, ',', '.') }}
-                        @endif
-                        {{ $item->productUnit }}
-                    </td>
-
-                    <td class="center">{{ number_format($item->price, 2, ',', '.') }} €</td>
-                    <td class="center">{{ $item->discount }} %</td>
-                    <td class="center">{{ number_format($item->itemTotal, 2, ',', '.') }} €</td>                
-                </tr>
-            @endforeach
-
-            {{-- Delivery service --}}
-            <tr class="items" >
-                <td></td>
-                <td><b>Dostava: </b>{{ $orderData['deliveryCompanyName'] }} - {{ $orderData['deliveryServiceName'] }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td  class="center">{{ $orderData['deliveryCost'] }} €</td>  
-            </tr>
-
-            {{-- Total --}}
-            <tr class="total">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="totalAmountText">Sveukupno: </td>
-                <td class="totalAmount center"><b>{{ number_format($orderData['total'], 2, ',', '.') }} €</b></td>
-            </tr>
-
-        </table>
-    </div>
+    @include('parts.pdf.shared.order-items')
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
         <p><b>Način plaćanja:</b> {{ $orderData['paymentTypeName'] }} &nbsp;&nbsp; <b>Račun izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
         <p><b>Poziv na broj:</b> 1512</p>
-        <p><b>Broj narudžbe:</b> {{$order->id}}</p>
+        <p><b>Broj narudžbe:</b> {{$orderData['id']}}</p>
     </div>
 
     {{-- PDF content - END --}}

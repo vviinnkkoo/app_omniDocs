@@ -38,10 +38,16 @@ class DoomPDFController extends Controller
     {
         $invoice = Receipt::where('id', $invoiceID)->firstOrFail();
         $orderID = $invoice->order->id;
+        $invoiceData = [
+            'number' => $invoice->number,
+            'date' => Carbon::parse($invoice->created_at)->format('d.m.Y'),
+            'time' => Carbon::parse($invoice->created_at)->format('H:i'),            
+            'eta' => Carbon::parse($invoice->created_at)->addDays(14)->format('d.m.Y'),
+        ];
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID, true);
         [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
         
-        return Pdf::loadView($view, compact('invoice', 'order', 'orderData', 'orderItemList'))
+        return Pdf::loadView($view, compact('invoiceData', 'order', 'orderData', 'orderItemList'))
             ->stream($filename);
 
     }
@@ -140,10 +146,18 @@ class DoomPDFController extends Controller
         ])->findOrFail($id);
 
         $orderData = [
+            'id' => $order->id,
             'paymentTypeName' => $order->paymentType->name ?? '',
             'customerName' => $order->customer->name ?? '',
             'customerOib' => $order->customer->oib ?? '',
             'countryName' => $order->country->name ?? '',
+            'dateSent' => Carbon::parse($order->date_sent)->format('d.m.Y') ?? '',
+            'dateOrdered' => Carbon::parse($order->created_at)->format('d.m.Y') ?? '',
+            'timeOrdered' => Carbon::parse($order->created_at)->format('H:i') ?? '',
+            'eta' => Carbon::parse($order->created_at)->addDays(14)->format('d.m.Y') ?? '',
+            'deliveryAddress' => $order->delivery_address ?? '',
+            'deliveryCity' => $order->delivery_city ?? '',
+            'deliveryPostal' => $order->delivery_postal ?? '',
             'deliveryServiceName' => $order->deliveryService->name ?? '',
             'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? '',
             'total' => GlobalService::calculateReceiptTotal($id),
