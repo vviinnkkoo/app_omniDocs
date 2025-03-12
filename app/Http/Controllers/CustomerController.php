@@ -29,7 +29,7 @@ class CustomerController extends Controller
                       ->orWhere('postal', 'like', "%{$search}%")
                       ->orWhere('city', 'like', "%{$search}%")
                       ->orWhereHas('country', function($query) use ($search) {
-                        $query->where('country_name', 'like', "%{$search}%");
+                        $query->where('name', 'like', "%{$search}%");
                       });
             });
         }
