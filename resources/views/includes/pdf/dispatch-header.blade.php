@@ -6,7 +6,7 @@
                 <img src="{{ asset($appSettings['invoice_logo']) }}" height="54" />
             </td>
             <td class="w-half">
-                <h2>OTPREMNICA br: <span class="gray-overlay">{{$order->id}}</span></h2>
+                <h2>OTPREMNICA br: <span class="gray-overlay">{{ $orderData['id'] }}</span></h2>
             </td>
         </tr>
     </table>
@@ -14,7 +14,7 @@
 
 <footer>
     <div class="center footer-content">
-        <div><b>{{$appSettings['company_name']}}</b>, {{$appSettings['company_extra_info']}} | Adresa vlasnika: <b>{{$appSettings['address']}}, {{$appSettings['address_city']}}</b> | OIB: <b>{{$appSettings['company_oib']}}</b></div>
-        <div>Porezni broj: <b>{{$appSettings['company_vat_id']}}</b> | Žiro račun IBAN: <b>{{$appSettings['company_iban']}}</b> otvoren u: <b>{{$appSettings['company_bank']}}</b></div>
+        <div><b>{{ $appSettings['company_name'] }}</b>, {{ $appSettings['company_extra_info'] }} | Adresa vlasnika: <b>{{ $appSettings['address'] }}, {{ $appSettings['address_city'] }}</b> | OIB: <b>{{ $appSettings['company_oib'] }}</b></div>
+        <div>Porezni broj: <b>{{ $appSettings['company_vat_id'] }}</b> | Žiro račun IBAN: <b>{{ $appSettings['company_iban'] }}</b> otvoren u: <b>{{ $appSettings['company_bank'] }}</b></div>
     </div>
 </footer>

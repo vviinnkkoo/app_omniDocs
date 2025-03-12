@@ -29,7 +29,7 @@
                 </td>
                 <td class="w-tri">
                     <div><h4>Datum i vrijeme izdavanja:</h4></div>
-                    <div>{{$appSettings['address_city']}}</div>
+                    <div>{{ $appSettings['address_city'] }}</div>
                     <div>{{ $invoiceData['date'] }}</div>
                     <div>u {{ $invoiceData['time'] }}</div>
                     <div style="margin-top:10px"><b>Datum isporuke: </b>{{ $orderData['dateSent'] }}</div>
@@ -37,8 +37,8 @@
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>
-                    <div><b>Email:</b> {{$appSettings['contact_email']}}</div>
-                    <div><b>Mob:</b> {{$appSettings['contact_phone']}}</div>
+                    <div><b>Email:</b> {{ $appSettings['contact_email'] }}</div>
+                    <div><b>Mob:</b> {{ $appSettings['contact_phone'] }}</div>
                 </td>
                 
             </tr>
@@ -49,9 +49,9 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ $orderData['paymentTypeName'] }} &nbsp;&nbsp; <b>Račun izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
-        <p><b>Poziv na broj:</b> 1512-{{$orderData['id']}}</p>
-        <p><b>Broj narudžbe:</b> {{$orderData['id']}}</p>
+        <p><b>Način plaćanja:</b> {{ $orderData['paymentTypeName'] }} &nbsp;&nbsp; <b>Račun izdaje:</b> {{ $appSettings['invoice_issuer_01'] }}</p>
+        <p><b>Poziv na broj:</b> 1512-{{ $orderData['id'] }}</p>
+        <p><b>Broj narudžbe:</b> {{ $orderData['id'] }}</p>
     </div>
 
     {{-- PDF content - END --}}
