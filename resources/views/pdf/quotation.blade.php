@@ -48,7 +48,7 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ $orderData['paymentType'] }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{ $appSettings['invoice_issuer_01'] }}</p>
+        <p><b>Način plaćanja:</b> {{ $orderData['paymentTypeName'] }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{ $appSettings['invoice_issuer_01'] }}</p>
         <p><b>Poziv na broj:</b> 1512-{{ $orderData['id'] }}</p>
         <p><b>Broj narudžbe:</b> {{ $orderData['id'] }}</p>
     </div>
