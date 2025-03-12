@@ -245,7 +245,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/kupci/2" id="customerSubmission">
+        <form method="POST" action="/kupci" id="customerSubmission">
           @include('includes.form-fields-customers')
         </form>
       </div>
