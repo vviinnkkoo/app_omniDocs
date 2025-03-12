@@ -36,13 +36,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'kupci' => CustomerController::class
     ]);
 
-    /*/ Customers //
-    Route::get('/kupci', [CustomerController::class, 'show']);
-    Route::post('/kupci/{ref}', [CustomerController::class, 'save']);
-    Route::put('/update-customer/{id}', [CustomerController::class, 'update']);
-    Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete.row');*/
-
-
     // Orders //
     Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
     Route::get('/poslane-narudzbe', [OrderController::class, 'showSent']);
