@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Otpremnica kupcu</title>
+    <title>Otpremnica kupcu br: {{ $orderData['id'] }}</title>
     
     @include('includes.pdf.style')
 
@@ -32,8 +32,8 @@
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>
-                    <div><b>Email:</b> {{$appSettings['contact_email']}}</div>
-                    <div><b>Mob:</b> {{$appSettings['contact_phone']}}</div>
+                    <div><b>Email:</b> {{ $appSettings['contact_email'] }}</div>
+                    <div><b>Mob:</b> {{ $appSettings['contact_phone'] }}</div>
                 </td>
             </tr>
         </table>
@@ -43,7 +43,7 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Broj narudžbe:</b> {{$orderData['id']}}</p>
+        <p><b>Broj narudžbe:</b> {{ $orderData['id'] }}</p>
     </div>
 
     <div class="margin-signatures">

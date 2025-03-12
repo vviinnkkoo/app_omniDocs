@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Ponuda br: {{$order->id}}</title>
+    <title>Ponuda br: {{ $orderData['id'] }}</title>
 
     @include('includes.pdf.style')
 
@@ -36,8 +36,8 @@
                 </td>
                 <td class="w-tri">
                     <div><h4>Kontakt:</h4></div>
-                    <div><b>Email:</b> {{$appSettings['contact_email']}}</div>
-                    <div><b>Mob:</b> {{$appSettings['contact_phone']}}</div>
+                    <div><b>Email:</b> {{ $appSettings['contact_email'] }}</div>
+                    <div><b>Mob:</b> {{ $appSettings['contact_phone'] }}</div>
                 </td>
                 
             </tr>
@@ -48,9 +48,9 @@
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ $orderData['paymentType'] }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{$appSettings['invoice_issuer_01']}}</p>
-        <p><b>Poziv na broj:</b> 1512-{{$orderData['id']}}</p>
-        <p><b>Broj narudžbe:</b> {{$orderData['id']}}</p>
+        <p><b>Način plaćanja:</b> {{ $orderData['paymentType'] }} &nbsp;&nbsp; <b>Ponudu izdaje:</b> {{ $appSettings['invoice_issuer_01'] }}</p>
+        <p><b>Poziv na broj:</b> 1512-{{ $orderData['id'] }}</p>
+        <p><b>Broj narudžbe:</b> {{ $orderData['id'] }}</p>
     </div>
 
     {{-- PDF content - END --}}
