@@ -31,7 +31,7 @@ class CustomerController extends Controller
             });
         }
 
-        $customers = $query->orderBy('id')->paginate(25);
+        $customers = $query->with('country')->orderBy('id')->paginate(25);
         $countries = Country::orderBy('id')->get();
 
         return view('pages.customers.index', [

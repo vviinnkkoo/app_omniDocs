@@ -51,53 +51,53 @@
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="name" data-model="customer">{{ $customer->name }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="name" data-model="kupci">{{ $customer->name }}</span>
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="email" data-model="customer">{{ $customer->email }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="email" data-model="kupci">{{ $customer->email }}</span>
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="phone" data-model="customer">{{ $customer->phone }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="phone" data-model="kupci">{{ $customer->phone }}</span>
                                     </td>
 
                                     <td class="align-middle text-end">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="address" data-model="customer">{{ $customer->address }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="address" data-model="kupci">{{ $customer->address }}</span>
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="house_number" data-model="customer">{{ $customer->house_number }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="house_number" data-model="kupci">{{ $customer->house_number }}</span>
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="city" data-model="customer">{{ $customer->city }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="city" data-model="kupci">{{ $customer->city }}</span>
                                     </td>
 
                                     <td class="align-middle text-right">
 
-                                      <div class="editable-select" data-id="{{ $customer->id }}" data-field="country_id" data-model="customer">
+                                      <div class="editable-select" data-id="{{ $customer->id }}" data-field="country_id" data-model="kupci">
                                       
 
                                         <!-- Display the selected value -->
-                                        <span>{{ App\Models\Country::find($customer->country_id)->country_name }}</span>
+                                        <span>{{ $customer->country->name }}</span>
                                         
                                         <!-- Hidden select element with options -->
                                         <select class="edit-select form-select" style="display: none !important">
                                           <option value="" selected>Odaberi državu...</option>
                                             @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->country_name }}</option>                                  
+                                            <option value="{{ $country->id }}">{{ $country->name }}</option>                                  
                                             @endforeach 
                                         </select>
                                     </div>
 
                                     </td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="customer">{{ $customer->postal }}</span>
+                                      <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
                                     </td>
 
                                     <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $customer->id }}" data-model="customer"><i class="bi bi-x-lg"></i>
+                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $customer->id }}" data-model="kupci"><i class="bi bi-x-lg"></i>
                                       </button>
                                     </td>
 
