@@ -32,8 +32,16 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
     // Resource routes
     Route::resources([
-        'dostavne-usluge' => DeliveryServiceController::class
+        'dostavne-usluge' => DeliveryServiceController::class,
+        'kupci' => CustomerController::class
     ]);
+
+    /*/ Customers //
+    Route::get('/kupci', [CustomerController::class, 'show']);
+    Route::post('/kupci/{ref}', [CustomerController::class, 'save']);
+    Route::put('/update-customer/{id}', [CustomerController::class, 'update']);
+    Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete.row');*/
+
 
     // Orders //
     Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
@@ -63,14 +71,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/nacin-placanja', [PaymentTypeController::class, 'save']);
     Route::put('/update-payment-type/{id}', [PaymentTypeController::class, 'updatePaymentType']);
     Route::delete('/delete-payment-type/{id}', [PaymentTypeController::class, 'destroy'])->name('delete.row');
-
-
-    // Customers //
-    Route::get('/kupci', [CustomerController::class, 'show']);
-    Route::post('/kupci/{ref}', [CustomerController::class, 'save']);
-    Route::put('/update-customer/{id}', [CustomerController::class, 'update']);
-    Route::delete('/delete-customer/{id}', [CustomerController::class, 'destroy'])->name('delete.row');
-
 
     // Sources, sales channels //
     Route::get('/kanali-prodaje', [SourceController::class, 'show']);

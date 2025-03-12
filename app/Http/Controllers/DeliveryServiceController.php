@@ -11,13 +11,11 @@ use Illuminate\Http\JsonResponse;
 
 class DeliveryServiceController extends Controller
 {
-    // Protect all functions and redirect to login if necessary
     public function __construct()
     {
         $this->middleware('auth');
     }
     
-    // GET function for displaying purposes
     public function index(Request $request)
     {
         $deliveryServices = DeliveryService::with('deliveryCompany')->orderBy('delivery_company_id')->orderBy('name')->get();
@@ -29,7 +27,6 @@ class DeliveryServiceController extends Controller
         ]);
     }
 
-    // POST function for saving new stuff
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -50,7 +47,6 @@ class DeliveryServiceController extends Controller
         return redirect()->back();
     }
 
-    // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
         $deliveryService = DeliveryService::findOrFail($id);
@@ -64,19 +60,17 @@ class DeliveryServiceController extends Controller
         return response()->json(['message' => 'Delivery service updated successfully']);
     }
 
-    // DELETE function (Ajax version)
     public function destroy(Request $request, $id): JsonResponse
     {
         $record = DeliveryService::findOrFail($id);
 
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
+        if (!$record->delete()) {
+            abort(500, 'Brisanje trenutno nije moguće.');
         }
 
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return response()->json(['message' => 'Uspješno obrisano.']);
     }
 
-    // Checkbox function (Ajax version)
     public function updateIsUsedStatus(Request $request, $id)
     {
         $deliveryService = DeliveryService::findOrFail($id);

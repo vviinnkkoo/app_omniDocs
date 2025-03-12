@@ -130,7 +130,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/kupci/1" id="customerSubmission">
+        <form method="POST" action="/kupci" id="customerSubmission">
           @include('includes.form-fields-customers')
         </form>
       </div>

@@ -92,11 +92,6 @@ class DoomPDFController extends Controller
         $pdf->setPaper($customPaper);
 
         return $pdf->stream();
-    }
-
-    public static function labelItemTotal($order_id)
-    {
-        return GlobalService::calculateReceiptTotal($order_id);
     }*/
 
     private function getOrderData($id, $includeItems = true)

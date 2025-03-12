@@ -10,14 +10,12 @@ use Illuminate\Http\JsonResponse;
 
 class CustomerController extends Controller
 {
-    // Protect all functions and redirect to login if necessary
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    // GET function for displaying purposes
-    public function show(Request $request)
+    public function index(Request $request)
     {
         $search = $request->input('search');
         $query = Customer::query();
@@ -36,17 +34,16 @@ class CustomerController extends Controller
         $customers = $query->orderBy('id')->paginate(25);
         $countries = Country::orderBy('id')->get();
 
-        return view('customers', [
+        return view('pages.customers.index', [
             'customers' => $customers,
             'countries' => $countries,
             'search' => $search
         ]);
     }
 
-    // POST function for saving new stuff
-    public function save(Request $request)
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required',
             'country_id' => 'required'
         ]);
@@ -62,7 +59,6 @@ class CustomerController extends Controller
         return redirect()->back();
     }
 
-    // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
         $customer = Customer::findOrFail($id);
@@ -74,15 +70,14 @@ class CustomerController extends Controller
         return response()->json(['message' => 'Customer updated successfully']);
     }
 
-    // DELETE function (Ajax version)
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id): JsonResponse
     {
         $record = Customer::findOrFail($id);
 
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
+        if (!$record->delete()) {
+            abort(500, 'Brisanje trenutno nije moguće.');
         }
 
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return response()->json(['message' => 'Uspješno obrisano.']);
     }
 }
