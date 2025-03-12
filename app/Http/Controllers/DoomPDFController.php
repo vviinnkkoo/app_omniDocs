@@ -54,7 +54,7 @@ class DoomPDFController extends Controller
     private function generateQuotation($mode, $orderID)
     {
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
-        [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
+        [$view, $filename] = $this->getTemplate($mode, $orderID);
         
         return Pdf::loadView($view, compact('orderData', 'orderItemList'))
             ->stream($filename);
@@ -63,7 +63,7 @@ class DoomPDFController extends Controller
     private function generateDispatchNote($mode, $orderID)
     {
         [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
-        [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
+        [$view, $filename] = $this->getTemplate($mode, $orderID);
         
         return Pdf::loadView($view, compact('orderData', 'orderItemList'))
             ->stream($filename);
