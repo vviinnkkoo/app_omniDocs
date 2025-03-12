@@ -48,10 +48,6 @@ class CustomerController extends Controller
             'country_id' => 'required'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator);
-        }
-
         Customer::create($request->only([
             'name', 'oib', 'email', 'phone', 'address', 'house_number', 'city', 'postal', 'country_id'
         ]));
@@ -62,12 +58,15 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $customer = Customer::findOrFail($id);
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-        $customer->$field = $newValue;
-        $customer->save();
 
-        return response()->json(['message' => 'Customer updated successfully']);
+        $validated = $request->validate([
+            'field' => 'required|in:name,oib,email,phone,address,house_number,city,postal,country_id',
+            'newValue' => 'required'
+        ]);
+
+        $customer->update([$validated['field'] => $validated['newValue']]);
+
+        return response()->json(['message' => 'Izmjenjeni podaci su uspješno spremljeni.']);
     }
 
     public function destroy($id): JsonResponse
