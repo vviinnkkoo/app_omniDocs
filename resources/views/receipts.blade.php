@@ -98,7 +98,7 @@
                                     </td>
 
                                     <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $receipt->id }}" data-model="receipt"><i class="bi bi-x-lg"></i></button>
+                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $receipt->id }}" data-model="racuni"><i class="bi bi-x-lg"></i></button>
                                     </td>
 
                                 <tr>
