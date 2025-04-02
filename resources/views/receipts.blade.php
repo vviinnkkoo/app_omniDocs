@@ -71,7 +71,7 @@
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <div class="editable-date-invoice" data-id="{{ $receipt->id }}" data-field="created_at" data-model="receipt" data-raw-date="{{ $receipt->created_at }}">
+                                      <div class="editable-date-invoice" data-id="{{ $receipt->id }}" data-field="created_at" data-model="racuni" data-raw-date="{{ $receipt->created_at }}">
                                         <div class="date-display">{{ \Carbon\Carbon::parse($receipt->created_at)->format('d.m.Y - H:i:s') }}</div>
                                       </div>
                                     </td>
