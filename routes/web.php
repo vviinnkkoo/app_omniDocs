@@ -33,8 +33,19 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     // Resource routes
     Route::resources([
         'dostavne-usluge' => DeliveryServiceController::class,
-        'kupci' => CustomerController::class
+        'kupci' => CustomerController::class,
+        'racuni' => ReceiptController::class
     ]);
+
+    // Custom routes //
+    Route::get('/racuni/{year}', [ReceiptController::class, 'show']);
+
+    // Bolean switch routes - USAGE STATUS
+    Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
+
+    // Bolean switch routes - IS DONE STATUS    
+    Route::put('/order-item-list/is-done-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
+    Route::put('/racuni/cancelled-status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
 
     // Orders //
     Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
@@ -52,12 +63,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
     Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);
     Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
-
-    // Bolean switch routes - USAGE STATUS
-    Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
-
-    // Bolean switch routes - IS DONE STATUS    
-    Route::put('/order-item-list/is-done-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
 
     // Payment types //
     Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);
@@ -111,14 +116,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::get('/dokument/{mode}/{id}', [DoomPDFController::class, 'generateDocument']);
     Route::get('/etikete', [DoomPDFController::class, 'shippingLabels']);
     Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
-
-
-    // Receipts //
-    Route::get('/racuni/{year}', [ReceiptController::class, 'show']);
-    Route::post('/racuni', [ReceiptController::class, 'save']);
-    Route::put('/update-receipt/{id}', [ReceiptController::class, 'update']);
-    Route::delete('/delete-receipt/{id}', [ReceiptController::class, 'destroy'])->name('delete.row');
-    Route::put('/receipt-isdone-status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
 
 
     // LABELS   //

@@ -18,6 +18,18 @@ class ReceiptController extends Controller
     {
         $this->middleware('auth');
     }
+    
+    public function index()
+    {
+        $receipts = Receipt::orderBy('year', 'desc')->orderBy('number')->paginate(25);
+        $years = WorkYears::orderBy('year', 'desc')->get();
+        $latest = GlobalService::getLatestReceiptNumber();
+
+        return view('receipts', [
+            'years' => $years,
+            'latest' => $latest
+        ]);
+    }
 
     public function show($year)
     {
@@ -36,7 +48,7 @@ class ReceiptController extends Controller
         ]);
     }
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'order_id' => 'required',
