@@ -124,7 +124,7 @@
   </div>
 </div>
 
-@include('parts.deleteconfirmation')
+@include('includes.deleteconfirmation')
 
 @endsection
 
