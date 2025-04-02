@@ -45,7 +45,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
     // Bolean switch routes - IS DONE STATUS    
     Route::put('/order-item-list/is-done-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
-    Route::put('/racuni/cancelled-status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
+    Route::put('/racuni/is-done-status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
 
     // Orders //
     Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);

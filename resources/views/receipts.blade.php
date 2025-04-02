@@ -81,7 +81,7 @@
                                     </td>
 
                                     <td class="align-middle text-right">
-                                      <div class="form-check form-switch order-item" data-id="{{ $receipt->id }}" data-model="receipt">
+                                      <div class="form-check form-switch order-item" data-id="{{ $receipt->id }}" data-model="racuni">
                                         <input class="form-check-input edit-checkbox" type="checkbox" name="is_cancelled" id="flexSwitchCheckDefault" {{ $receipt->is_cancelled ? 'checked' : '' }}>
                                       </div>
                                     </td>
