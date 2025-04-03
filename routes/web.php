@@ -34,11 +34,13 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::resources([
         'dostavne-usluge' => DeliveryServiceController::class,
         'kupci' => CustomerController::class,
-        'racuni' => ReceiptController::class
+        'racuni' => ReceiptController::class,
+        'knjiga-prometa' => KprController::class
     ]);
 
     // Custom routes //
     Route::get('/racuni/{year}', [ReceiptController::class, 'show']);
+    Route::get('/knjiga-prometa/{year}', [KprController::class, 'show']);
 
     // Bolean switch routes - USAGE STATUS
     Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
@@ -46,6 +48,10 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     // Bolean switch routes - IS DONE STATUS    
     Route::put('/order-item-list/is-done-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
     Route::put('/racuni/is-done-status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
+
+    // Invoices //
+    Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
+    Route::delete('/delete-kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
 
     // Orders //
     Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
@@ -82,13 +88,11 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::put('/update-work-year/{id}', [WorkYearsController::class, 'update']);
     Route::delete('/delete-work-year/{id}', [WorkYearsController::class, 'destroy'])->name('delete.row');
 
-
     // Countries //
     Route::get('/drzave-poslovanja', [CountryController::class, 'show']);
     Route::post('/drzave-poslovanja', [CountryController::class, 'save']);
     Route::put('/update-country/{id}', [CountryController::class, 'update']);
     Route::delete('/delete-country/{id}', [CountryController::class, 'destroy'])->name('delete.row');
-
 
     // Product types //
     Route::get('/vrste-proizvoda', [ProductTypeController::class, 'show']);
@@ -96,13 +100,11 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::put('/update-product-type/{id}', [ProductTypeController::class, 'update']);
     Route::delete('/delete-product-type/{id}', [ProductTypeController::class, 'destroy'])->name('delete.row');
 
-
     // Colors //
     Route::get('/boje-proizvoda', [ColorController::class, 'show']);
     Route::post('/boje-proizvoda', [ColorController::class, 'save']);
     Route::put('/update-color/{id}', [ColorController::class, 'update']);
     Route::delete('/delete-color/{id}', [ColorController::class, 'destroy'])->name('delete.row');
-
 
     // Products //
     Route::get('/proizvodi', [ProductController::class, 'show']);
@@ -110,13 +112,11 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::put('/update-product/{id}', [ProductController::class, 'update']);
     Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('delete.row');
 
-
     // PDF render //
     Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);
     Route::get('/dokument/{mode}/{id}', [DoomPDFController::class, 'generateDocument']);
     Route::get('/etikete', [DoomPDFController::class, 'shippingLabels']);
     Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
-
 
     // LABELS   //
     // Shipping //
@@ -124,20 +124,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/dostavne-etikete', [PrintLabelController::class, 'saveShippingLabel']);
     Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('delete.row');
     Route::get('/obrisi-etikete', [PrintLabelController::class, 'deleteAllLabels']);
-
-
-    // KPRs //
-    Route::get('/knjiga-prometa/{year}', [KprController::class, 'show']);
-    Route::post('/knjiga-prometa', [KprController::class, 'save']);
-    Route::put('/update-kpr/{id}', [KprController::class, 'update']);
-    Route::delete('/delete-kpr/{id}', [KprController::class, 'destroy'])->name('delete.row');
-    Route::get('/uredi-uplatu/{id}', [KprController::class, 'edit']);
-
-
-    // Invoices //
-    Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
-    Route::delete('/delete-kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
-
 
     // Order note edits //
     Route::post('add-note/{id}', [OrderNoteController::class, 'add']);

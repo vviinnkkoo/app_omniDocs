@@ -78,11 +78,11 @@
                             </td>
 
                             <td class="align-middle text-start">
-                              <div class="date-display"><a href="/uredi-uplatu/{{ $item->id }}" class="btn btn-success">Uredi</a></div>
+                              <div class="date-display"><a href="/knjiga-prometa/{{ $item->id }}" class="btn btn-success">Uredi</a></div>
                             </td>
 
                             <td>
-                              <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="kpr"><i class="bi bi-x-lg"></i></button>
+                              <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="knjiga-prometa"><i class="bi bi-x-lg"></i></button>
                             </td>
                           </tr>
                         @endforeach

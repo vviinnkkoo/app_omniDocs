@@ -17,13 +17,13 @@
               <div class="mb-3">
                 <div><h5 class="fw-bold">Platitelj:</h5></div>              
                 <div>
-                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="payer" data-model="kpr">{{ $kprInstance->payer }}</span>
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="payer" data-model="knjiga-prometa">{{ $kprInstance->payer }}</span>
                 </div>
               </div>
 
               <div class="mb-3">
                 <div><h5 class="fw-bold">Datum:</h5></div>
-                <div class="editable-date" data-id="{{ $kprInstance->id }}" data-field="date" data-model="kpr">
+                <div class="editable-date" data-id="{{ $kprInstance->id }}" data-field="date" data-model="knjiga-prometa">
                   <input type="date" class="form-control" style="width:40%" value="{{ $kprInstance->date }}">
                 </div>
               </div>
@@ -31,7 +31,7 @@
               <div class="mb-3">
                 <div><h5 class="fw-bold">Iznos:</h5></div>
                 <div>
-                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="amount" data-model="kpr">{{ $kprInstance->amount }}</span> €
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="amount" data-model="knjiga-prometa">{{ $kprInstance->amount }}</span> €
                 </div>
               </div>
             </div>
@@ -40,14 +40,14 @@
               <div class="mb-3">
                 <div><h5 class="fw-bold">Broj naloga:</h5></div>              
                 <div>
-                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="origin" data-model="kpr">{{ $kprInstance->origin }}</span>
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="origin" data-model="knjiga-prometa">{{ $kprInstance->origin }}</span>
                 </div>
               </div>
 
               <div class="mb-3">
                 <div><h5 class="fw-bold">Opis:</h5></div>
                 <div>
-                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="info" data-model="kpr">{{ $kprInstance->info }}</span>
+                  <span class="editable" data-id="{{ $kprInstance->id }}" data-field="info" data-model="knjiga-prometa">{{ $kprInstance->info }}</span>
                 </div>
               </div>              
             </div>
