@@ -77,7 +77,7 @@
     table.products th {
         background-color: gray;
         color: #ffffff;
-        padding: 0.5rem;
+        padding: 0.2rem;
         font-weight: bold;
     }
     table tr.items {
@@ -85,7 +85,8 @@
         vertical-align: top;
     }
     table tr.items td {
-        padding: 0.15rem 0.5rem;
+        padding: 0.1rem 0.5rem;
+        border-bottom: solid 1px #a8a8a8;
     }
     table tr.total td {
         padding: 0.25rem 0.5rem;
