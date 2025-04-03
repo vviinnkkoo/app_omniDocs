@@ -34,7 +34,7 @@ class KprItemListController extends Controller
         $kprItemList->kpr_id = $id;
         $kprItemList->save();
     
-        return redirect('/uredi-uplatu/' . $id);
+        return redirect()->back();
     }
 
 
