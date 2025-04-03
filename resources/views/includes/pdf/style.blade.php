@@ -85,10 +85,10 @@
         vertical-align: top;
     }
     table tr.items td {
-        padding: 0.5rem;
+        padding: 0.1rem;
     }
     table tr.total td {
-        padding: 0.5rem;
+        padding: 0.1rem;
     }
     table tr.total td.totalAmount {
         background-color: #dce1e6;
