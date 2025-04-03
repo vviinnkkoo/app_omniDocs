@@ -52,7 +52,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
     // Invoices //
     Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
-    Route::delete('/delete-kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
+    Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
 
     // Orders //
     Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
