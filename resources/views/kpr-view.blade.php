@@ -78,7 +78,7 @@
                             </td>
 
                             <td class="align-middle text-start">
-                              <div class="date-display"><a href="/knjiga-prometa/{{ $item->id }}" class="btn btn-success">Uredi</a></div>
+                              <div class="date-display"><a href="{{ route('knjiga-prometa.show', $item->id) }}" class="btn btn-success">Uredi</a></div>
                             </td>
 
                             <td>

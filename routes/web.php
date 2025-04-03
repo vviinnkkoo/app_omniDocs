@@ -40,7 +40,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
 
     // Custom routes //
     Route::get('/racuni/{year}', [ReceiptController::class, 'show']);
-    Route::get('/knjiga-prometa/{year}', [KprController::class, 'show']);
+    //Route::get('/knjiga-prometa/{year}', [KprController::class, 'show']);
 
     // Bolean switch routes - USAGE STATUS
     Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);

@@ -21,7 +21,7 @@ class KprController extends Controller
     }
 
 
-    public function show(Request $request, $year)
+    public function index(Request $request, $year = null)
     {
         $search = $request->input('search');
         $query = Kpr::query();
@@ -29,14 +29,21 @@ class KprController extends Controller
         if ($search) {
             $query->where(function($query) use ($search) {
                 $query->where('payer', 'like', "%{$search}%")
-                      ->orWhere('amount', 'like', "%{$search}%")
-                      ->orWhere('origin', 'like', "%{$search}%")
-                      ->orWhere('date', 'like', "%{$search}%")
-                      ->orWhere('info', 'like', "%{$search}%");
+                    ->orWhere('amount', 'like', "%{$search}%")
+                    ->orWhere('origin', 'like', "%{$search}%")
+                    ->orWhere('date', 'like', "%{$search}%")
+                    ->orWhere('info', 'like', "%{$search}%");
             });
         }
 
-        $kprs = $query->whereYear('date', $year)->orderBy('date')->paginate(25);
+        // Filtriraj samo ako je $year postavljen
+        if (!is_null($year)) {
+            $query->whereYear('date', $year);
+        } else {
+            $year = Carbon::now()->year;
+        }
+
+        $kprs = $query->orderBy('date')->paginate(25);
         $paymentMethods = KprPaymentType::all();
         $count = 1;
 
@@ -51,7 +58,8 @@ class KprController extends Controller
     }
 
 
-    public function edit($id)
+
+    public function show($id)
     {
         $kprInstance = Kpr::with([
             'kprItemList.receipt.order.customer'
@@ -98,7 +106,7 @@ class KprController extends Controller
     }
     
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $date = Carbon::parse($request->date);
 
