@@ -33,7 +33,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     // Custom routes //
     Route::get('/racuni/{year}', [ReceiptController::class, 'show']);
     //Route::get('/knjiga-prometa/{year}', [KprController::class, 'show']);
-    Route::get('/knjiga-prometa/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
+    Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
 
     // Resource routes
     Route::resources([
