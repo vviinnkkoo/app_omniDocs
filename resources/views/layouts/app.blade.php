@@ -99,7 +99,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @foreach ($workYears as $workYear)
-                                        <a class="dropdown-item" href="/racuni/{{ $workYear->year}}"><i class="bi bi-receipt"></i> {{ $workYear->year}}</a>
+                                        <a class="dropdown-item" href="/racuni/godina/{{ $workYear->year}}"><i class="bi bi-receipt"></i> {{ $workYear->year}}</a>
                                     @endforeach
                                 </div>
                             </li>

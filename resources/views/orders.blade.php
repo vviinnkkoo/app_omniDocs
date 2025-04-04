@@ -18,8 +18,6 @@
 
                   <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px; margin-left:10px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
 
-                  {{-- @include('includes.tablesearch') --}}
-
                   <form method="GET" action="/narudzbe/1" class="mb-3">
                     <div class="input-group w-25 float-end">
                         <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">

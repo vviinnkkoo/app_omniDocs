@@ -31,7 +31,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::get('/', [Omnicontrol::class, 'index']);
 
     // Custom routes //
-    Route::get('/racuni/{year}', [ReceiptController::class, 'show']);
+    Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index');
     Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
 
     // Resource routes

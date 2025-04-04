@@ -36,7 +36,6 @@ class KprController extends Controller
             });
         }
 
-        // Filtriraj samo ako je $year postavljen
         if (!is_null($year)) {
             $query->whereYear('date', $year);
         } else {

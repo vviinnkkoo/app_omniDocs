@@ -18,21 +18,15 @@ class ReceiptController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function index()
-    {
-        $receipts = Receipt::orderBy('year', 'desc')->orderBy('number')->paginate(25);
-        $years = WorkYears::orderBy('year', 'desc')->get();
-        $latest = GlobalService::getLatestReceiptNumber();
 
-        return view('receipts', [
-            'years' => $years,
-            'latest' => $latest
-        ]);
-    }
-
-    public function show($year)
+    public function index(null $year)
     {
+        if (is_null($year)) {
+            $years = WorkYears::orderBy('year', 'desc')->first();
+        } else {
+            $years = Carbon::now()->year;
+        }
+
         $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
         $orders = Order::whereNull('date_cancelled')->orderBy('id')->get();
         $latest = GlobalService::getLatestReceiptNumber($year);
@@ -65,12 +59,12 @@ class ReceiptController extends Controller
                          ->exists();
     
         if ($exists) {
-            return redirect()->back()->withInput()->with('error', "Račun s brojem {$request->number} već postoji u {$request->year}. godini.");
+            return redirect()->back()->withInput()->with('error', "Račun s brojem <b>{$request->number}</b> već postoji u <b>{$request->year}.</b> godini.");
         }
     
         Receipt::create($request->only('number', 'order_id', 'year'));
     
-        return redirect()->back()->with('success', "Račun broj {$number} uspješno je dodan u {$year}. godinu!");
+        return redirect()->back()->with('success', "Račun broj <b>{$number}</b> uspješno je dodan u <b>{$year}.</b> godinu!");
     }
     
 
