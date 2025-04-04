@@ -55,31 +55,24 @@ class ReceiptController extends Controller
             'year' => 'required',
             'number' => 'required'
         ]);
-
+    
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator);
+            return redirect()->back()->withInput()->with('error', 'Molimo popunite sva polja.');
         }
-
+    
         $exists = Receipt::where('year', $request->year)
-                        ->where('number', $request->number)
-                        ->exists();
-
+                         ->where('number', $request->number)
+                         ->exists();
+    
         if ($exists) {
-            return redirect()->back()->withInput()->withErrors(['number' => 'Račun s tim brojem već postoji za ovu godinu.']);
+            return redirect()->back()->withInput()->with('error', 'Račun s tim brojem već postoji za ovu godinu.');
         }
-
+    
         Receipt::create($request->only('number', 'order_id', 'year'));
-
-        return redirect()->back()->with('success', 'Račun uspješno kreiran.');
+    
+        return redirect()->back()->with('success', 'Račun uspješno dodan.');
     }
-
-    public function update(Request $request, $id)
-    {
-        $record = Receipt::findOrFail($id);
-        $record->update($request->only('field', 'newValue'));
-
-        return response()->json(['message' => 'Payment type updated successfully']);
-    }
+    
 
     public function destroy(Request $request, $id): JsonResponse
     {
