@@ -168,7 +168,9 @@
             </div>
         </nav>
 
-        @include('common.errors')
+        <div class="mt-5">
+            @include('common.errors')
+        </div>
 
         <main class="py-4 mt-5">
             @yield('content')
