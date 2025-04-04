@@ -168,7 +168,7 @@
             </div>
         </nav>
 
-        <div class="px-4 mt-5 w-75 mx-auto">
+        <div class="px-4 w-75 mx-auto" style="margin-top:70px;">
             @include('common.errors')
         </div>
 
