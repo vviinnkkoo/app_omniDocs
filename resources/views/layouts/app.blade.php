@@ -168,7 +168,7 @@
             </div>
         </nav>
 
-        <div class="mt-5">
+        <div class="p-4 mt-5 w-75">
             @include('common.errors')
         </div>
 
