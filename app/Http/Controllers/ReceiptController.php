@@ -52,16 +52,25 @@ class ReceiptController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'order_id' => 'required',
-            'year' => 'required'
+            'year' => 'required',
+            'number' => 'required'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
         }
 
+        $exists = Receipt::where('year', $request->year)
+                        ->where('number', $request->number)
+                        ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withInput()->withErrors(['number' => 'Račun s tim brojem već postoji za ovu godinu.']);
+        }
+
         Receipt::create($request->only('number', 'order_id', 'year'));
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Račun uspješno kreiran.');
     }
 
     public function update(Request $request, $id)
