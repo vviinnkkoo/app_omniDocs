@@ -172,7 +172,7 @@
             @include('common.errors')
         </div>
 
-        <main style="margin-top:40px;">
+        <main>
             @yield('content')
         </main>
     </div>
