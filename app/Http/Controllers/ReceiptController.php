@@ -19,7 +19,7 @@ class ReceiptController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(null $year)
+    public function index($year = null)
     {
         if (is_null($year)) {
             $years = WorkYears::orderBy('year', 'desc')->first();
