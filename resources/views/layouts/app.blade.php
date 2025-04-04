@@ -172,7 +172,7 @@
             @include('common.errors')
         </div>
 
-        <main class="py-4">
+        <main style="margin-top:40px;">
             @yield('content')
         </main>
     </div>
