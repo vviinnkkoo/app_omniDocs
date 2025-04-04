@@ -168,11 +168,11 @@
             </div>
         </nav>
 
-        <div class="p-4 mt-5 w-75">
+        <div class="px-4 mt-5 w-75 mx-auto">
             @include('common.errors')
         </div>
 
-        <main class="py-4 mt-5">
+        <main class="py-4">
             @yield('content')
         </main>
     </div>
