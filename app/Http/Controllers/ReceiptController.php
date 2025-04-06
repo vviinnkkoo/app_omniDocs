@@ -65,7 +65,7 @@ class ReceiptController extends Controller
     
         Receipt::create($request->only('number', 'order_id', 'year'));
     
-        return redirect()->back()->with('success', "Račun broj <b>{$number}</b> uspješno je dodan u <b>{$year}.</b> godinu!");
+        return redirect()->back()->with('success', "Račun broj <b>{$request->number$number}</b> uspješno je dodan u <b>{$request->number$year}.</b> godinu!");
     }
     
 
