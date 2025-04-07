@@ -32,10 +32,10 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $productType->id }}" data-field="type_name" data-model="product-type">{{ $productType->name }}</span>
+                                      <span class="editable" data-id="{{ $productType->id }}" data-field="type_name" data-model="update-product-type">{{ $productType->name }}</span>
                                     </td>
                                     <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="product-type"><i class="bi bi-x-lg"></i>
+                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="delete-product-type"><i class="bi bi-x-lg"></i>
                                       </button>
                                     </td>
                                 <tr>
