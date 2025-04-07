@@ -41,10 +41,10 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="product">{{ $product->name }}</span>
+                                      <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="update-product">{{ $product->name }}</span>
                                     </td>
                                     <td class="align-middle text-right">
-                                      <div class="editable-select" data-id="{{ $product->id }}" data-field="product_type_id" data-model="product">
+                                      <div class="editable-select" data-id="{{ $product->id }}" data-field="product_type_id" data-model="update-product">
                                       
 
                                         <!-- Display the selected value -->
@@ -61,10 +61,10 @@
 
                                     </td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $product->id }}" data-field="default_price" data-model="product">{{ $product->default_price }}</span> €
+                                      <span class="editable" data-id="{{ $product->id }}" data-field="default_price" data-model="update-product">{{ $product->default_price }}</span> €
                                     </td>
                                     <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $product->id }}" data-model="product"><i class="bi bi-x-lg"></i>
+                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $product->id }}" data-model="update-product"><i class="bi bi-x-lg"></i>
                                       </button>
                                     </td>
                                 <tr>
