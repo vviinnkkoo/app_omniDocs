@@ -208,8 +208,6 @@
       </div>
     </div>
 
-    @include("common.errors")
-
     {{-- Order item list part --}}
     <div class="col-xl-12">
       <div class="card" style="margin-top: 30px;">  
