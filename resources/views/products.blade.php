@@ -64,7 +64,7 @@
                                       <span class="editable" data-id="{{ $product->id }}" data-field="default_price" data-model="update-product">{{ $product->default_price }}</span> €
                                     </td>
                                     <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $product->id }}" data-model="update-product"><i class="bi bi-x-lg"></i>
+                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $product->id }}" data-model="delete-product"><i class="bi bi-x-lg"></i>
                                       </button>
                                     </td>
                                 <tr>
