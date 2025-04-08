@@ -167,7 +167,7 @@
                   <select class="form-select searchable-select-modal" id="customer_id" name="customer_id">
                     <option selected>Odaberi kupca...</option>
                     @foreach ($customers as $customer)
-                      <option value="{{ $customer->id }}">{{ $customer->name }}</option>                                  
+                      <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->city }}</option>                                  
                     @endforeach
                   </select>
                 </div>
