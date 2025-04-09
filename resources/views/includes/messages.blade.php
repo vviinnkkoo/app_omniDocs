@@ -1,4 +1,4 @@
-<div id="popup-alert-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 1055;"></div>
+<div id="popup-alert-container" style="position: fixed; top: 1rem; right: 2rem; z-index: 1055;"></div>
 
 <script>
     function showPopupAlert(message, type = 'success') {

@@ -62,7 +62,7 @@ class CountryController extends Controller
         $record = Country::findOrFail($id);
 
         if ($record->delete()) {
-            return redirect()->back()->with('success', 'Država uspješno obrisana.');
+            return redirect()->back()->with('warning', 'Država uspješno obrisana.');
         }
         return redirect()->back()->with('error', 'Država nije obrisana.');
     }
