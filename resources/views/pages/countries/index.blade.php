@@ -30,7 +30,7 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $country->id }}" data-field="country_name" data-model="country">{{ $country->country_name }}</span>
+                                      <span class="editable" data-id="{{ $country->id }}" data-field="name" data-model="country">{{ $country->name }}</span>
                                     </td>
                                     <td>
                                       <button class="btn btn-danger delete-btn-x" data-id="{{ $country->id }}" data-model="country"><i class="bi bi-x-lg"></i>
