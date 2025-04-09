@@ -9,8 +9,11 @@ class Country extends Model
 {
     use HasFactory;
 
-    // change default table name
     protected $table = 'country';
+
+    protected $fillable = [
+        'name'
+    ];
 
     public function orders()
     {
