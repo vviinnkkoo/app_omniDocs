@@ -6,11 +6,8 @@
 <div class="containerx" style="margin-left:5%; margin-right:5%">
 
     <div class="row justify-content-center">
-        <div>          
+      <div class="col-xl-12">
             <div class="card">
-
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
-
                 <div class="card-body">
 
                   <!-- Button to trigger the pop-up -->
