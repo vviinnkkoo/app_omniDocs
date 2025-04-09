@@ -20,7 +20,7 @@ class CountryController extends Controller
     {
         $countries = Country::orderBy('id')->get();
         
-        return view('countries', [
+        return view('pages.countries.index', [
             'countries' => $countries
             ]);
     }
