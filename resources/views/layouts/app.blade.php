@@ -13,9 +13,6 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css']) --}}
-
     <!-- Styles -->
     <link href="{{ asset('build/assets/app-f2018de5.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -168,14 +165,12 @@
             </div>
         </nav>
 
-        <div class="px-4 w-75 mx-auto" style="margin-top:70px;">
-            @include('common.errors')
-        </div>
-
-        <main>
+        <main class="px-4 w-75 mx-auto" style="margin-top:70px;">
             @yield('content')
         </main>
     </div>
+
+    @include('includes.messages')
 
 </body>
 </html>

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Country;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
 
 class CustomerController extends Controller
 {
@@ -72,7 +71,7 @@ class CustomerController extends Controller
         return response()->json(['message' => 'Izmjenjeni podaci su uspješno spremljeni.']);
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy($id)
     {
         $record = Customer::findOrFail($id);
 

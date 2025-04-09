@@ -39,7 +39,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'dostavne-usluge' => DeliveryServiceController::class,
         'kupci' => CustomerController::class,
         'racuni' => ReceiptController::class,
-        'knjiga-prometa' => KprController::class
+        'knjiga-prometa' => KprController::class,
+        'drzave-poslovanja' => CountryController::class
     ]);
 
     // Bolean switch routes - USAGE STATUS
@@ -87,12 +88,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/radne-godine', [WorkYearsController::class, 'save']);
     Route::put('/update-work-year/{id}', [WorkYearsController::class, 'update']);
     Route::delete('/delete-work-year/{id}', [WorkYearsController::class, 'destroy'])->name('delete.row');
-
-    // Countries //
-    Route::get('/drzave-poslovanja', [CountryController::class, 'show']);
-    Route::post('/drzave-poslovanja', [CountryController::class, 'save']);
-    Route::put('/update-country/{id}', [CountryController::class, 'update']);
-    Route::delete('/delete-country/{id}', [CountryController::class, 'destroy'])->name('delete.row');
 
     // Product types //
     Route::get('/vrste-proizvoda', [ProductTypeController::class, 'show']);
