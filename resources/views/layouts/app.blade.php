@@ -165,7 +165,7 @@
             </div>
         </nav>
 
-        <main class="p-4 mx-auto" style="margin-top:70px;">
+        <main class="p-2 mx-auto" style="margin-top:70px;">
             @yield('content')
         </main>
     </div>
