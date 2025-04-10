@@ -89,7 +89,7 @@ $(".editable-select").each(function () {
                   e.hide(),
                   $.ajax({
                       type: "PUT",
-                      url: `/update-${r}/${n}`,
+                      url: `/${r}/${n}`,
                       data: { field: s, newValue: o },
                       headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                       success: function () {},
