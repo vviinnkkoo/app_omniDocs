@@ -8,7 +8,7 @@
         alert.setAttribute('role', 'alert');
         alert.id = alertId;
 
-        alert.style.boxShadow = `0 0 20px rgba(0, 0, 0, 0.15)`;
+        alert.style.boxShadow = `0 0 20px rgba(0, 0, 0, 0.25)`;
 
         alert.innerHTML = `
             ${message}
