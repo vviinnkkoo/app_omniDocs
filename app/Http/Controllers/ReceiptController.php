@@ -60,7 +60,7 @@ class ReceiptController extends Controller
                          ->exists();
     
         if ($exists) {
-            return redirect()->back()->withInput()->with('error', "Račun s brojem <b>{$request->number}</b> već postoji u <b>{$request->year}.</b> godini.");
+            return redirect()->back()->withInput()->with('error', "Račun s brojem {$request->number} već postoji u {$request->year}. godini.");
         }
     
         Receipt::create($request->only('number', 'order_id', 'year'));
