@@ -9,6 +9,7 @@
         alert.id = alertId;
 
         alert.style.boxShadow = `0 0 20px rgba(0, 0, 0, 0.25)`;
+        alert.style.fontSize = '18px';
 
         alert.innerHTML = `
             ${message}
