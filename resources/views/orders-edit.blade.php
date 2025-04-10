@@ -404,7 +404,7 @@
           {{ csrf_field() }}
           <div class="form-group">
 
-            {{-- Product type select box --}}
+            {{-- Product type --}}
             <div class="mb-3">
               <label for="product_id">Vrsta proizvoda:</label><br>
               <select class="form-select searchable-select-modal" id="product_id" name="product_id">
@@ -418,31 +418,21 @@
               </select>
             </div>
 
-            {{-- Amount input field --}}
+            {{-- Amount --}}
             <div class="mb-3">
               <label for="amount">Količina:</label>
               <input type="number" class="form-control" placeholder="Unesi količinu proizvoda..." id="amount" name="amount" step="1">
             </div>
 
-            {{-- Price input field --}}
+            {{-- Price --}}
             <div class="mb-3">
               <label for="price">Cijena:</label>
               <input type="number" class="form-control" placeholder="Unesi cijenu proizvoda..." id="price" name="price" step=".01">
             </div>
-
-            {{-- Product color select box --}}
-            {{--<div class="mb-3">
-              <label for="color_id">Boja proizvoda:</label><br>
-              <select class="form-select searchable-select-modal" id="color_id" name="color_id">
-                  <option selected>Odaberi boju proizvoda, ako je usluga stavi neodređeno...</option>
-                  @foreach ($colors as $color)
-                    <option value="{{ $color->id }}">{{ $color->name }}</option>
-                  @endforeach
-              </select>
-            </div>--}}
-
+            
+            {{-- Product color --}}
             <div class="mb-3">
-              <span for="payment_type_id">Boja proizvoda:</span>
+              <p for="payment_type_id">Boja proizvoda:</p>
                 @foreach ($colors as $color)
                   <input type="radio" class="btn-check" name="color_id" autocomplete="off" value="{{ $color->id }} " id="color_{{ $color->id }}" />
                   <label class="btn btn-secondary btn-sm me-2" for="color_{{ $color->id }}">{{ $color->name }}</label>
