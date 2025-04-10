@@ -8,13 +8,7 @@
         alert.setAttribute('role', 'alert');
         alert.id = alertId;
 
-        //alert.style.boxShadow = `0 0 20px`;
-
-        // Dohvati CSS varijablu za boju
-        const alertColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-alert-color-rgb').trim();
-
-        // Dodaj box-shadow sa dobivenom bojom
-        alert.style.boxShadow = `0 0 20px rgba(${alertColor}, 0.15)`;
+        alert.style.boxShadow = `0 0 40px`;
 
         alert.innerHTML = `
             ${message}
