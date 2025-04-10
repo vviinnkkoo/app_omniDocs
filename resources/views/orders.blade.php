@@ -214,7 +214,7 @@
 
             {{-- Payment type --}}
             <div class="mb-3">
-              <p for="payment_type_id">Način plaćanja:</p>
+              <span style="display: block;">Način plaćanja:</span>
                 @foreach ($paymentTypes as $paymentType)
                   <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" />
                   <label class="btn btn-secondary btn-sm me-2 mb-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
