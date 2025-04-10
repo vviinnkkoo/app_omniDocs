@@ -37,7 +37,7 @@ $(function () {
             $(".confirm-delete").on("click", function () {
                 $.ajax({
                     type: "DELETE",
-                    url: `/delete-${t}/${e}`,
+                    url: `/${t}/${e}`,
                     headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                     success: function () {
                         $(`[data-id="${e}"]`).closest("tr").remove(), $(".confirmation-dialog").hide();
