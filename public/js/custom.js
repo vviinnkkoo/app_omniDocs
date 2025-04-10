@@ -1,3 +1,4 @@
+// Ajax update for text fields
 $(".editable").on("dblclick", function () {
     const e = $(this).data("id"),
         t = $(this).data("field"),
@@ -15,7 +16,7 @@ $(".editable").on("dblclick", function () {
                     ? s.html(r)
                     : $.ajax({
                           type: "PUT",
-                          url: `/update-${n}/${e}`,
+                          url: `/${n}/${e}`,
                           data: { field: t, newValue: o },
                           headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                           success: function () {
@@ -29,6 +30,7 @@ $(".editable").on("dblclick", function () {
     }
 });
 
+// Ajax delete records
 $(function () {
     $(".delete-btn-x").on("click", function () {
         const e = $(this).data("id"),
@@ -53,6 +55,7 @@ $(function () {
     });
 });
 
+// Table search on keyup
 $(function () {
     $("#search").on("keyup", function () {
         const e = $(this).val().toLowerCase().split(" ");
@@ -67,6 +70,7 @@ $(function () {
     });
 });
 
+// Ajax update for select fields
 $(".editable-select").each(function () {
     const e = $(this).find("select"),
         t = $(this).find("span"),
@@ -97,6 +101,7 @@ $(".editable-select").each(function () {
         });
 });
 
+// Ajax update for date fields
 $(".editable-date").on("click", function () {
     const e = $(this).data("id"),
         t = $(this).data("field"),
@@ -129,6 +134,7 @@ $(".editable-date").on("click", function () {
         r.focus();
 });
 
+// Ajax update for datetime fields
 $(".editable-datetime").on("click", function () {
     const e = $(this).data("id"),
         t = $(this).data("field"),
@@ -161,6 +167,7 @@ $(".editable-datetime").on("click", function () {
         r.focus();
 });
 
+// Ajax update for datetime fields on invoices
 $(".editable-date-invoice").on("click", function () {
     const e = $(this).data("id"),
         t = $(this).data("field"),
@@ -198,6 +205,7 @@ $(".editable-date-invoice").on("click", function () {
     }
 });
 
+// Ajax update checkbox state
 $(document).ready(function () {
     $(".edit-checkbox").on("click", function () {
         const e = $(this).closest(".order-item").data("id"),
@@ -216,6 +224,7 @@ $(document).ready(function () {
     });
 });
 
+// Ajax update checkbox state for delivery services
 $(document).ready(function () {
     $(".edit-checkbox-delivery-service").on("click", function () {
         const e = $(this).closest(".delivery-service-item").data("id"),
