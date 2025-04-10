@@ -209,7 +209,7 @@
 
                 </div>
 
-                <div class="mb-3">
+                {{--<div class="mb-3">
                   <label for="payment_type_id">Način plaćanja:</label>
                   <select class="form-select searchable-select-modal" id="payment_type_id" name="payment_type_id">
                     <option selected>Odaberi način plaćanja...</option>
@@ -217,7 +217,15 @@
                       <option value="{{ $paymentType->id }}">{{ $paymentType->name }}</option>
                     @endforeach
                   </select>
-                </div>
+                </div>--}}
+
+                <div class="mb-3">
+                  <p for="payment_type_id">Način plaćanja:</p>
+                    @foreach ($paymentTypes as $paymentType)
+                      <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" />
+                      <label class="btn btn-secondary" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
+                    @endforeach
+                  </select>
 
               </div>
         </form>
