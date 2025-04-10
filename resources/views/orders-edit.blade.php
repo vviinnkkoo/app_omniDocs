@@ -431,7 +431,7 @@
             </div>
 
             {{-- Product color select box --}}
-            <div class="mb-3">
+            {{--<div class="mb-3">
               <label for="color_id">Boja proizvoda:</label><br>
               <select class="form-select searchable-select-modal" id="color_id" name="color_id">
                   <option selected>Odaberi boju proizvoda, ako je usluga stavi neodređeno...</option>
@@ -439,6 +439,14 @@
                     <option value="{{ $color->id }}">{{ $color->name }}</option>
                   @endforeach
               </select>
+            </div>--}}
+
+            <div class="mb-3">
+              <span for="payment_type_id">Boja proizvoda:</span>
+                @foreach ($colors as $color)
+                  <input type="radio" class="btn-check" name="color_id" autocomplete="off" value="{{ $color->id }} " id="color_{{ $color->id }}" />
+                  <label class="btn btn-secondary btn-sm me-2" for="color_{{ $color->id }}">{{ $color->name }}</label>
+                @endforeach
             </div>
 
             {{-- Product note --}}

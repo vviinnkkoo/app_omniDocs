@@ -215,3 +215,10 @@
   .page-break{
     page-break-before: always;
   }
+
+  .btn-check:checked+.btn {
+    color: hwb(0 29% 71%);
+    background-color: #f7c995;
+    border-color: #a37d51;
+    box-shadow: 0 0 0 15px #f7c99525;
+}
