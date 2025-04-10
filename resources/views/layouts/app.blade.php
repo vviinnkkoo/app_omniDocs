@@ -19,6 +19,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('build/assets/app-f163c3af.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
     
     <!-- Jquery JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
