@@ -1,4 +1,4 @@
-<div id="popup-alert-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 1055; border: solid 3px;"></div>
+<div id="popup-alert-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 1055;"></div>
 
 <script>
     function showPopupAlert(message, type = 'success') {
@@ -8,8 +8,7 @@
         alert.setAttribute('role', 'alert');
         alert.id = alertId;
 
-        const alertColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-alert-color-rgb').trim();
-        alert.style.boxShadow = `0 0 20px rgba(${alertColor}, 0.15)`;
+        alert.style.boxShadow = `0 0 20px`;
 
         alert.innerHTML = `
             ${message}
