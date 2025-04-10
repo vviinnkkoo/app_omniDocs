@@ -225,9 +225,7 @@
                       <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" />
                       <label class="btn btn-secondary" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
                     @endforeach
-                  </select>
-
-              </div>
+                </div>
         </form>
       </div>
       <div class="modal-footer">
