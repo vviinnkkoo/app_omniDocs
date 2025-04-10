@@ -43,12 +43,10 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'drzave-poslovanja' => CountryController::class
     ]);
 
-    // Bolean switch routes - USAGE STATUS
-    Route::put('dostavne-usluge/usage-status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
-
-    // Bolean switch routes - IS DONE STATUS    
-    Route::put('/order-item-list/is-done-status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
-    Route::put('/racuni/is-done-status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
+    // Bolean switch routes - CHECKBOX STATUS CHANGE
+    Route::put('/order-item-list/status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
+    Route::put('/racuni/status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
+    Route::put('dostavne-usluge/status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
 
     // Invoices //
     Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    

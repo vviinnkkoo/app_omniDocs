@@ -213,7 +213,7 @@ $(document).ready(function () {
             n = $(this).closest(".order-item").data("model");
         $.ajax({
             type: "PUT",
-            url: `/${n}-isdone-status/${e}`,
+            url: `/${n}/status/${e}`,
             data: { is_done: t },
             headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
             success: function () {},
@@ -232,7 +232,7 @@ $(document).ready(function () {
             n = $(this).closest(".delivery-service-item").data("model");
         $.ajax({
             type: "PUT",
-            url: `/${n}-inuse-status/${e}`,
+            url: `/${n}/status/${e}`,
             data: { in_use: t },
             headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
             success: function () {},
