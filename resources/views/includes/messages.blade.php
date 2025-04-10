@@ -10,6 +10,7 @@
 
         alert.style.boxShadow = `0 0 20px rgba(0, 0, 0, 0.25)`;
         alert.style.fontSize = '16px';
+        alert.style.borderWidth = '2px';
 
         alert.innerHTML = `
             ${message}
