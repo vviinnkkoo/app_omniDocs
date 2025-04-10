@@ -226,6 +226,7 @@
                       <label class="btn btn-secondary btn-sm me-2" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
                     @endforeach
                 </div>
+              </div>
         </form>
       </div>
       <div class="modal-footer">
