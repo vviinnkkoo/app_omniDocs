@@ -435,7 +435,7 @@
               <p for="payment_type_id">Boja proizvoda:</p>
                 @foreach ($colors as $color)
                   <input type="radio" class="btn-check" name="color_id" autocomplete="off" value="{{ $color->id }} " id="color_{{ $color->id }}" />
-                  <label class="btn btn-secondary btn-sm me-2" for="color_{{ $color->id }}">{{ $color->name }}</label>
+                  <label class="btn btn-secondary btn-sm me-2 mb-1" for="color_{{ $color->id }}">{{ $color->name }}</label>
                 @endforeach
             </div>
 
