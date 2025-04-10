@@ -17,18 +17,16 @@
     <link href="{{ asset('build/assets/app-f2018de5.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
-    <!-- Scripts -->
-    <script src="{{ asset('build/assets/app-f163c3af.js') }}" defer></script>
-    <script src="{{ asset('js/custom.js') }}" defer></script>
-    
-    <!-- Jquery JS -->
-    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
-    
+    <!-- jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
 
     <!-- Select2 init -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+
+    <!-- Scripts -->
+    <script src="{{ asset('build/assets/app-f163c3af.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
 
 
 </head>
