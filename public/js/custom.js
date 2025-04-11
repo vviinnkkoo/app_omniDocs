@@ -117,7 +117,7 @@ $(".editable-date").on("click", function () {
                 $(this).html(i),
                     $.ajax({
                         type: "PUT",
-                        url: `/update-${n}/${e}`,
+                        url: `/${n}/${e}`,
                         data: { field: t, newValue: i },
                         headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                         success: function () {
@@ -150,7 +150,7 @@ $(".editable-datetime").on("click", function () {
                 $(this).html(i),
                     $.ajax({
                         type: "PUT",
-                        url: `/update-${n}/${e}`,
+                        url: `/${n}/${e}`,
                         data: { field: t, newValue: i },
                         headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                         success: function () {
@@ -184,7 +184,7 @@ $(".editable-date-invoice").on("click", function () {
                 i.remove(),
                 $.ajax({
                     type: "PUT",
-                    url: `/update-${n}/${e}`,
+                    url: `/${n}/${e}`,
                     data: { field: t, newValue: l },
                     headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
                     success: function () {},
