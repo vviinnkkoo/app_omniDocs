@@ -17,7 +17,7 @@ use App\Models\ProductType;
 use App\Models\Color;
 use App\Models\OrderNote;
 use App\Models\Receipt;
-use App\Models\Kpr;
+use App\Models\KprItemList;
 use App\Models\WorkYears;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -87,8 +87,7 @@ class OrderController extends Controller
         ->pluck('id', 'order_id');
 
         // Učitaj samo ID-eve Kpr
-        $kprs = Kpr::whereIn('receipt_id', $receipts->values())
-        ->where('is_cancelled', 0)
+        $kprs = KprItemList::whereIn('receipt_id', $receipts->values())
         ->pluck('receipt_id', 'receipt_id');
 
 
