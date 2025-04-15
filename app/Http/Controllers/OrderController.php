@@ -104,7 +104,6 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $order->totalAmount = GlobalService::sumWholeOrder($order->id);
             $order->customeName = $order->customer->name;
-            $order->dateOrdered = $order->date_ordered->format('d. m. Y.');
             $order->sourceName = $order->source->name;
             $order->deliveryServiceName = $order->deliveryService->name;
             $order->deliveryCompanyName = $order->deliveryService->deliveryCompany->name;
