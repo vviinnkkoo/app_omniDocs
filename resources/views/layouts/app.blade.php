@@ -77,10 +77,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/narudzbe/1"><i class="bi bi-list-stars"></i> Popis narudžbi</a>
-                                    <a class="dropdown-item" href="/narudzbe/2"><i class="bi bi-car-front-fill"></i> Poslane narudžbe</a>
-                                    <a class="dropdown-item" href="/narudzbe/3"><i class="bi bi-exclamation-diamond-fill"></i> Neodrađene narudžbe</a>
-                                    <a class="dropdown-item" href="/narudzbe/4"><i class="bi bi-x-octagon"></i> Otkazane narudžbe</a>
+                                    <a class="dropdown-item" href="/narudzbe/prikaz/sve"><i class="bi bi-list-stars"></i> Popis narudžbi</a>
+                                    <a class="dropdown-item" href="/narudzbe/prikaz/poslane"><i class="bi bi-car-front-fill"></i> Poslane narudžbe</a>
+                                    <a class="dropdown-item" href="/narudzbe/prikaz/neodradene"><i class="bi bi-exclamation-diamond-fill"></i> Neodrađene narudžbe</a>
+                                    <a class="dropdown-item" href="/narudzbe/prikaz/otkazane"><i class="bi bi-x-octagon"></i> Otkazane narudžbe</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/proizvodi/1"><i class="bi bi-gear-fill"></i> Proizvodi u izradi</a>
                                     <a class="dropdown-item" href="/proizvodi/2"><i class="bi bi-gear-fill"></i> U izradi po boji</a>

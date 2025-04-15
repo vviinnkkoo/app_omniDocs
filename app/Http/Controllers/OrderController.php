@@ -141,7 +141,7 @@ class OrderController extends Controller
 
         }
 
-        return view('orders', compact(
+        return view('orders.index', compact(
             'orders', 'customers', 'sources', 'deliveryServices', 
             'deliveryCompanies', 'paymentTypes', 'countries', 'today'
         ));
@@ -168,7 +168,7 @@ class OrderController extends Controller
         $orderSubtotal = GlobalService::sumWholeOrder($order_id);
         $orderTotal = $orderSubtotal + $deliveryCost;
 
-        return view('orders-edit', [
+        return view('orders.show', [
             'order' => $order,
             'sources' => $sources,
             'deliveryServices' => $deliveryServices,
@@ -223,7 +223,7 @@ class OrderController extends Controller
         $order->delivery_email = $customer->email;
         $order->save();
 
-        return redirect('/uredi-narudzbu/' . $next_id);
+        return redirect('/narudzbe/' . $next_id);
     }
 
     public function update(Request $request, $id)
