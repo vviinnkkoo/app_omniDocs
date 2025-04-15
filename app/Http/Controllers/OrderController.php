@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Source;
@@ -29,7 +30,7 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-    public function showOrders(Request $request, $mode)
+    public function index(Request $request, $type)
     {
         $search = $request->input('search');
         $query = Order::query();
@@ -51,25 +52,25 @@ class OrderController extends Controller
             });
         }
 
-        switch ($mode) {
-            case '1':
+        switch ($type) {
+            case 'sve':
                 $orders = $query->orderBy('id')
                     ->paginate(25);
                 break;
-            case '2':
+            case 'poslane':
                 $orders = $query->whereNotNull('date_sent')
                     ->whereNull('date_delivered')
                     ->whereNull('date_cancelled')
                     ->orderBy('id')
                     ->paginate(25);
                 break;
-            case '3':
+            case 'neodradene':
                 $orders = $query->whereNull('date_sent')
                     ->whereNull('date_cancelled')
                     ->orderBy('id')
                     ->paginate(25);
                 break;
-            case '4':
+            case 'otkazane':
                 $orders = $query->whereNotNull('date_cancelled')
                     ->orderBy('id')
                     ->paginate(25);
@@ -78,32 +79,77 @@ class OrderController extends Controller
                 return;
         }
 
+        // Get all receipts and KPRs for the orders
+        $orderIds = $orders->pluck('id')->toArray();
+        $receipts = Receipt::whereIn('order_id', $orderIds)
+        ->where('is_cancelled', 0)
+        ->pluck('id', 'order_id');
+
+        // Učitaj samo ID-eve Kpr
+        $kprs = Kpr::whereIn('receipt_id', $receipts->values())
+        ->where('is_cancelled', 0)
+        ->pluck('receipt_id', 'receipt_id');
+
+
+        // Get all required data for the view
         $customers = Customer::orderBy('id')->get();
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::where('in_use', true)->orderBy('name')->get();
-        $deliveryCompanies = DeliveryCompany::whereNot('id', 1)->whereHas('deliveryServices')->orderBy('id')->get();
+        $deliveryCompanies = DeliveryCompany::whereHas('deliveryServices')->orderBy('id')->get();
         $paymentTypes = PaymentType::orderBy('id')->get();
         $countries = Country::orderBy('id')->get();
+        $today = Carbon::now();
 
-        // Calculate the total amount for each item in the order
+        // Update info for required fields
         foreach ($orders as $order) {
             $order->totalAmount = GlobalService::sumWholeOrder($order->id);
+            $order->customeName = $order->customer->name;
+            $order->dateOrdered = $order->date_ordered->format('d. m. Y.');
+            $order->sourceName = $order->source->name;
+            $order->deliveryServiceName = $order->deliveryService->name;
+            $order->deliveryCompanyName = $order->deliveryService->deliveryCompany->name;
+            $order->paymentTypeName = $order->paymentType->name;
+            
+            if ($order->date_cancelled) {
+                $order->date_cancelled = $order->date_cancelled->format('d. m. Y.');
+            }
+
+            if ($order->date_delivered) {                
+                $order->daysToDeliver = $order->date_delivered->diffInDays($order->date_ordered);
+                $order->date_delivered = $order->date_delivered->format('d. m. Y.');
+            }
+
+            if ($order->date_sent) {
+                $order->date_sent = $order->date_sent->format('d. m. Y.');
+            }
+
+            if ($order->date_deadline) {                
+                $order->daysLeft = $order->date_deadline->diffInDays($today);
+                $order->date_deadline = $order->date_deadline->format('d. m. Y.');
+                
+                if ($order->$daysLeft < 3) {
+                    $order->deadlineClass = 'btn-danger';
+                } elseif ($daysLeft < 5) {
+                    $order->deadlineClass = 'btn-warning';
+                } else {
+                    $order->deadlineClass = 'btn-success';
+                }
+            }
+
+            $order->receipt_id = $receipts[$order->id]->id ?? null;
+            $order->isPaid = isset($order->receipt_id) && isset($kprs[$order->receipt_id]);
+
         }
 
-        return view('orders', [
-            'orders' => $orders,
-            'customers' => $customers,
-            'sources' => $sources,
-            'deliveryServices' => $deliveryServices,
-            'deliveryCompanies' => $deliveryCompanies,
-            'paymentTypes' => $paymentTypes,
-            'countries' => $countries
-        ]);
+        return view('orders', compact(
+            'orders', 'customers', 'sources', 'deliveryServices', 
+            'deliveryCompanies', 'paymentTypes', 'countries', 'today'
+        ));
     }
 
     public function edit($order_id)
     {
-        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);        
+        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);
         $order->paymentTypeName = $order->paymentType->name;
         $order->countryName = $order->country->name;
         $sources = Source::orderBy('id')->get();

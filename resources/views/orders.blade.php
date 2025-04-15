@@ -49,21 +49,20 @@
 
                                     <td class="align-middle text-right">{{ $order->id }}</td>
 
-                                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/uredi-narudzbu/{{ $order->id }}">{{ App\Models\Customer::find($order->customer_id)->name }}
+                                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/uredi-narudzbu/{{ $order->id }}">{{ $order->customeName }}
                                         @if ($order->isOrderDone() && is_null($order->date_sent))
-                                        {{--<span class="badge bg-success">New</span>--}}
-                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
-                                          <i class="bi bi-check"></i>
-                                        </span>
+                                          <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                                            <i class="bi bi-check"></i>
+                                          </span>
                                         @endif
                                       </a>
                                     </td>
 
-                                    <td class="align-middle text-right">{{ \Carbon\Carbon::parse($order->date_ordered)->format('d. m. Y') }}</td>
-                                    <td class="align-middle text-right">{{ App\Models\Source::find($order->source_id)->name }}</td>
+                                    <td class="align-middle text-right">{{ $order->date_ordered }}</td>
+                                    <td class="align-middle text-right">{{ $order->sourceName }}</td>
                                     <td class="align-middle text-right">{{ $order->delivery_postal }}</td>
-                                    <td class="align-middle text-right">{{ App\Models\DeliveryCompany::find(App\Models\DeliveryService::find($order->delivery_service_id)->delivery_company_id)->name }} - {{ App\Models\DeliveryService::find($order->delivery_service_id)->name }}</td>
-                                    <td class="align-middle text-right">{{ App\Models\PaymentType::find($order->payment_type_id)->name }}</td>
+                                    <td class="align-middle text-right">{{ $order->deliveryCompanyName }} - {{ $order->deliveryServiceName }}</td>
+                                    <td class="align-middle text-right">{{ $ordere->paymentTypeName }}</td>
 
                                     {{-- Status --}}
                                     <td class="align-middle text-right">
@@ -71,33 +70,37 @@
                                       {{-- Check if cancelled --}}
                                       @if (isset($order->date_cancelled))
                                         <span class="btn btn-sm btn-dark">Otkazano<br>
-                                          <span style="font-size: 80%"><b>{{ \Carbon\Carbon::parse($order->date_cancelled)->format('d. m. Y.') }}</b></span>
-                                        </span></td>
+                                          <span style="font-size: 80%"><b>{{ $order->date_cancelled }}</b></span>
+                                        </span>
+
                                       {{-- Check if delivered --}}
                                       @elseif (isset($order->date_delivered))
                                         <span class="btn btn-sm btn-success">Dostavljeno<br>
-                                          <span style="font-size: 80%">Isporuka: <b>{{ \Carbon\Carbon::parse($order->date_delivered)->diffInDays(\Carbon\Carbon::parse($order->date_sent)) }} d</b></span>
-                                        </span></td>
-                                        
+                                          <span style="font-size: 80%">Isporuka: {{ $order->date_delivered }} (<b>{{ $order->daysToDeliver }} d</b>)</span>
+                                        </span>
+
                                       {{-- If not delivered, check if it's sent --}}
                                       @elseif (isset($order->date_sent))
                                         <span class="btn btn-sm btn-secondary">Poslano<br>
-                                          <span style="font-size: 80%">{{ \Carbon\Carbon::parse($order->date_sent)->format('d. m. Y.') }}</span>
-                                        </span></td>
+                                          <span style="font-size: 80%">{{ $order->date_sent }}</span>
+                                        </span>
+
+                                      {{-- Deadline check --}}
                                       @else
-                                        {{-- Check if deadline is set --}}
                                         @if (isset($order->date_deadline))
-                                            <span class="btn btn-sm btn-danger">
-                                                {{-- If deadline is set, calculate how much days is left --}}
-                                                @if ( \Carbon\Carbon::parse($order->date_deadline) > \Carbon\Carbon::now())
-                                                Rok: <b>{{ \Carbon\Carbon::parse($order->date_deadline)->diffInDays(\Carbon\Carbon::now()) }} d</b></span></td>
-                                                @else
-                                                Prošao rok
-                                              @endif
+                                          @if ($order->daysLeft > $today)
+                                            <span class="btn btn-sm {{ $order->deadlineClass }}">
+                                              Rok: <b>{{ $order->daysLeft }} d</b>
+                                            </span>
+                                          @else
+                                            <span class="text-danger">Prošao rok</span>
+                                          @endif
                                         @else
-                                            Nema</td>
+                                          <span class="text-muted">Nema</span>
                                         @endif
                                       @endif
+
+                                    </td>
 
                                     {{-- Tracking number --}}
                                     <td class="align-middle text-right">
@@ -113,11 +116,9 @@
                                     
                                     {{-- Has invoice --}}
                                     <td class="align-middle text-right">
-                                      @if ( App\Models\Receipt::where('order_id', $order->id)->where('is_cancelled', 0)->exists() )
-                                      <a href="/dokument/racun/{{ App\Models\Receipt::where('order_id', $order->id)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
-
-                                          {{-- Need fixing because of new connection with KPR --}}
-                                          @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $order->id )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
+                                      @if ( $order->receipt_id )
+                                      <a href="/dokument/racun/{{ $order->receipt_id }}" target="_blank" 
+                                          @if ( $order->isPaid )
                                             class="btn btn-success"><i class="bi bi-filetype-pdf"></i></a>
                                           @else
                                             class="btn btn-danger"><i class="bi bi-filetype-pdf"></i></a>

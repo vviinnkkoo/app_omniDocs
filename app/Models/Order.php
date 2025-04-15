@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
+    protected $casts = [
+        'date_cancelled' => 'datetime',
+        'date_delivered' => 'datetime',
+        'date_sent' => 'datetime',
+        'date_deadline' => 'datetime'
+    ];
+
     public function setDeliveryWeightAttribute($value)
     {
         $this->attributes['delivery_weight'] = is_null($value) ? null : str_replace(',', '.', $value);

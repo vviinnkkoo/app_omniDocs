@@ -33,6 +33,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     // Custom routes //
     Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index');
     Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
+    Route::get('/narudzbe/prikaz/{type}', [OrderController::class, 'index'])->name('narudzbe.index');
 
     // Resource routes
     Route::resources([
@@ -40,7 +41,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'kupci' => CustomerController::class,
         'racuni' => ReceiptController::class,
         'knjiga-prometa' => KprController::class,
-        'drzave-poslovanja' => CountryController::class
+        'drzave-poslovanja' => CountryController::class,
+        'narudzbe' => OrderController::class
     ]);
 
     // Bolean switch routes - CHECKBOX STATUS CHANGE
@@ -51,15 +53,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     // Invoices //
     Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
     Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
-
-    // Orders //
-    Route::get('/narudzbe/{mode}', [OrderController::class, 'showOrders']);
-    Route::get('/poslane-narudzbe', [OrderController::class, 'showSent']);
-    Route::get('/neodradjene-narudzbe', [OrderController::class, 'showUnfinished']);
-    Route::post('/narudzbe', [OrderController::class, 'save']);
-    Route::put('/order/{id}', [OrderController::class, 'update']);
-    Route::get('/uredi-narudzbu/{id}', [OrderController::class, 'edit']);
-    Route::delete('/delete-order/{id}', [OrderController::class, 'destroy'])->name('delete.row');
 
     // Order item lists //
     Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
