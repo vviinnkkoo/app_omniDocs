@@ -187,7 +187,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'date_ordered' => 'required',
