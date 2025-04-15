@@ -168,7 +168,7 @@ class OrderController extends Controller
         $orderSubtotal = GlobalService::sumWholeOrder($order_id);
         $orderTotal = $orderSubtotal + $deliveryCost;
 
-        return view('orders.show', [
+        return view('orders.edit', [
             'order' => $order,
             'sources' => $sources,
             'deliveryServices' => $deliveryServices,
