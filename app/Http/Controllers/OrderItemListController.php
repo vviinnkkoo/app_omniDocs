@@ -27,7 +27,8 @@ class OrderItemListController extends Controller
         'price' => 'required'
         ]);
             if ($validator->fails()) {
-                return redirect('/uredi-narudzbu/' . $id)
+                return redirect()
+                    ->back()
                     ->withInput()
                     ->withErrors($validator);
             }
@@ -40,7 +41,7 @@ class OrderItemListController extends Controller
         $orderItemList->note = $request->note;
         $orderItemList->save();
     
-        return redirect('/uredi-narudzbu/' . $id);
+        return redirect()-back()->with('success', 'Proizvod je uspješno dodan.');
     }
 
     public function showProductionItems($mode) {
