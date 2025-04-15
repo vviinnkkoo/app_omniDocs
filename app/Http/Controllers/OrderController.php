@@ -147,7 +147,7 @@ class OrderController extends Controller
         ));
     }
 
-    public function edit($order_id)
+    public function show($order_id)
     {
         $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);
         $order->paymentTypeName = $order->paymentType->name;
