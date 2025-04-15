@@ -10,6 +10,7 @@ class Order extends Model
     protected $casts = [
         'date_cancelled' => 'datetime',
         'date_delivered' => 'datetime',
+        'date_ordered' => 'datetime',
         'date_sent' => 'datetime',
         'date_deadline' => 'datetime'
     ];
