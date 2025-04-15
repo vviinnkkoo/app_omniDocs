@@ -141,7 +141,7 @@ class OrderController extends Controller
 
         }
 
-        return view('orders.index', compact(
+        return view('pages.orders.index', compact(
             'orders', 'customers', 'sources', 'deliveryServices', 
             'deliveryCompanies', 'paymentTypes', 'countries', 'today'
         ));
@@ -168,7 +168,7 @@ class OrderController extends Controller
         $orderSubtotal = GlobalService::sumWholeOrder($order_id);
         $orderTotal = $orderSubtotal + $deliveryCost;
 
-        return view('orders.edit', [
+        return view('pages.orders.show', [
             'order' => $order,
             'sources' => $sources,
             'deliveryServices' => $deliveryServices,
