@@ -14,7 +14,7 @@
         {{-- Order info --}}
         <div class="card-header d-flex align-items-center" style="font-weight: 900;">
           {{-- Header left side --}}
-          <a class="gray-mark-extra" href="/narudzbe/prikaz/neodradeno"><i class="bi bi-arrow-left"></i></a>
+          <a class="gray-mark-extra" href="/narudzbe/prikaz/neodradene"><i class="bi bi-arrow-left"></i></a>
           <span style="font-size:100%; margin-left:10px;">Narudžba: {{$order->id}}</span>
           <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSubtotal }} € </span>
           <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
