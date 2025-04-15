@@ -62,7 +62,7 @@
                                     <td class="align-middle text-right">{{ $order->sourceName }}</td>
                                     <td class="align-middle text-right">{{ $order->delivery_postal }}</td>
                                     <td class="align-middle text-right">{{ $order->deliveryCompanyName }} - {{ $order->deliveryServiceName }}</td>
-                                    <td class="align-middle text-right">{{ $ordere->paymentTypeName }}</td>
+                                    <td class="align-middle text-right">{{ $order->paymentTypeName }}</td>
 
                                     {{-- Status --}}
                                     <td class="align-middle text-right">
