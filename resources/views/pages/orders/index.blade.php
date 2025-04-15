@@ -88,7 +88,7 @@
                                       {{-- Deadline check --}}
                                       @else
                                         @if (isset($order->date_deadline))
-                                          @if ($order->daysLeft > $today)
+                                          @if ($order->daysLeft)
                                             <span class="btn btn-sm {{ $order->deadlineClass }}">
                                               Rok: <b>{{ $order->daysLeft }} d</b>
                                             </span>
