@@ -102,6 +102,7 @@ class OrderController extends Controller
 
         // Update info for required fields
         foreach ($orders as $order) {
+            $order->formated_date_ordered = $order->date_ordered->format('d. m. Y.');
             $order->totalAmount = GlobalService::sumWholeOrder($order->id);
             $order->customeName = $order->customer->name;
             $order->sourceName = $order->source->name;

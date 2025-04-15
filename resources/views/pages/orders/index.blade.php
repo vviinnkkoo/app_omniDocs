@@ -58,7 +58,7 @@
                                       </a>
                                     </td>
 
-                                    <td class="align-middle text-right">{{ $order->date_ordered }}</td>
+                                    <td class="align-middle text-right">{{ $order->formated_date_ordered }}</td>
                                     <td class="align-middle text-right">{{ $order->sourceName }}</td>
                                     <td class="align-middle text-right">{{ $order->delivery_postal }}</td>
                                     <td class="align-middle text-right">{{ $order->deliveryCompanyName }} - {{ $order->deliveryServiceName }}</td>
