@@ -151,11 +151,11 @@ class OrderController extends Controller
         $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);
         $order->paymentTypeName = $order->paymentType->name;
         $order->countryName = $order->country->name;
-        $order->formated_date_sent = $order->date_sent ? $order->date_sent->format('yyyy-MM-dd') : null;
-        $order->formated_date_ordered = $order->date_ordered->format('yyyy-MM-dd');
-        $order->formated_date_deadline = $order->date_deadline ? $order->date_deadline->format('yyyy-MM-dd') : null;
-        $order->formated_date_delivered = $order->date_delivered ? $order->date_delivered->format('yyyy-MM-dd') : null;
-        $order->formated_date_cancelled = $order->date_cancelled ? $order->date_cancelled->format('yyyy-MM-dd') : null;
+        $order->formated_date_sent = $order->date_sent ? $order->date_sent->format('Y-m-d') : null;
+        $order->formated_date_ordered = $order->date_ordered->format('Y-m-d');
+        $order->formated_date_deadline = $order->date_deadline ? $order->date_deadline->format('Y-m-d') : null;
+        $order->formated_date_delivered = $order->date_delivered ? $order->date_delivered->format('Y-m-d') : null;
+        $order->formated_date_cancelled = $order->date_cancelled ? $order->date_cancelled->format('Y-m-d') : null;
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::has('deliveryServices')->orderBy('id')->get();
