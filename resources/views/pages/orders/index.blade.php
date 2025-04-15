@@ -49,7 +49,7 @@
 
                                     <td class="align-middle text-right">{{ $order->id }}</td>
 
-                                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/uredi-narudzbu/{{ $order->id }}">{{ $order->customeName }}
+                                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/narudzbe/{{ $order->id }}">{{ $order->customeName }}
                                         @if ($order->isOrderDone() && is_null($order->date_sent))
                                           <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                                             <i class="bi bi-check"></i>
