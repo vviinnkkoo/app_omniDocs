@@ -124,7 +124,6 @@ class OrderController extends Controller
 
             if ($order->date_deadline) {                
                 $order->daysLeft = $order->date_deadline->diffInDays($today);
-                $order->date_deadline = $order->date_deadline->format('d. m. Y.');
                 
                 if ($order->$daysLeft < 3) {
                     $order->deadlineClass = 'btn-danger';
