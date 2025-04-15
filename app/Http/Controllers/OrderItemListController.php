@@ -41,7 +41,7 @@ class OrderItemListController extends Controller
         $orderItemList->note = $request->note;
         $orderItemList->save();
     
-        return redirect()-back()->with('success', 'Proizvod je uspješno dodan.');
+        return redirect()->back()->with('success', 'Proizvod je uspješno dodan.');
     }
 
     public function showProductionItems($mode) {
