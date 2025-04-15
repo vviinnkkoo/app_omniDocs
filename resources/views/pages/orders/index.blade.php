@@ -70,19 +70,19 @@
                                       {{-- Check if cancelled --}}
                                       @if (isset($order->date_cancelled))
                                         <span class="btn btn-sm btn-dark">Otkazano<br>
-                                          <span style="font-size: 80%"><b>{{ $order->date_cancelled }}</b></span>
+                                          <span style="font-size: 80%"><b>{{ $order->formated_date_cancelled }}</b></span>
                                         </span>
 
                                       {{-- Check if delivered --}}
                                       @elseif (isset($order->date_delivered))
                                         <span class="btn btn-sm btn-success">Dostavljeno<br>
-                                          <span style="font-size: 80%">Isporuka: {{ $order->date_delivered }} (<b>{{ $order->daysToDeliver }} d</b>)</span>
+                                          <span style="font-size: 80%">Isporuka: {{ $order->formated_date_delivered }} (<b>{{ $order->daysToDeliver }} d</b>)</span>
                                         </span>
 
                                       {{-- If not delivered, check if it's sent --}}
                                       @elseif (isset($order->date_sent))
                                         <span class="btn btn-sm btn-secondary">Poslano<br>
-                                          <span style="font-size: 80%">{{ $order->date_sent }}</span>
+                                          <span style="font-size: 80%">{{ $order->formated_date_sent }}</span>
                                         </span>
 
                                       {{-- Deadline check --}}

@@ -111,16 +111,16 @@ class OrderController extends Controller
             $order->paymentTypeName = $order->paymentType->name;
             
             if ($order->date_cancelled) {
-                $order->date_cancelled = $order->date_cancelled->format('d. m. Y.');
+                $order->formated_date_cancelled = $order->date_cancelled->format('d. m. Y.');
             }
 
             if ($order->date_delivered) {                
                 $order->daysToDeliver = $order->date_delivered->diffInDays($order->date_ordered);
-                $order->date_delivered = $order->date_delivered->format('d. m. Y.');
+                $order->formated_date_delivered = $order->date_delivered->format('d. m. Y.');
             }
 
             if ($order->date_sent) {
-                $order->date_sent = $order->date_sent->format('d. m. Y.');
+                $order->formated_date_sent = $order->date_sent->format('d. m. Y.');
             }
 
             if ($order->date_deadline) {                
