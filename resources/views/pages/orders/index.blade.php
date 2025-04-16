@@ -90,7 +90,8 @@
                                         @if (isset($order->date_deadline))
                                           @if ($order->daysLeft)
                                             <span class="btn btn-sm {{ $order->deadlineClass }}">
-                                              Rok: <b>{{ $order->daysLeft }} d</b>
+                                              Rok: <b>{{ $order->daysLeft }} d</b><br>
+                                                <span style="font-size: 80%">{{ $order->formated_date_deadline }}</span>
                                             </span>
                                           @else
                                             <span class="text-danger">Prošao rok</span>
