@@ -125,6 +125,7 @@ class OrderController extends Controller
 
             if ($order->date_deadline) {                
                 $order->daysLeft = $order->date_deadline->diffInDays($today);
+                $order->formated_date_deadline = $order->date_deadline->format('d. m. Y.');
                 
                 if ($order->daysLeft <= 5) {
                     $order->deadlineClass = 'btn-danger';

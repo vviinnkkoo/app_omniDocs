@@ -20,16 +20,16 @@ class OrderNoteController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate(['note' => 'required|string|min:2|max:1000', 'order_id' => 'required|integer']);
+    {
+        $request->validate(['note' => 'required|string|min:2|max:1000', 'order_id' => 'required|integer']);
 
-    OrderNote::create([
-        'note' => $request->note,
-        'order_id' => $request->id
-    ]);
+        OrderNote::create([
+            'note' => $request->note,
+            'order_id' => $request->id
+        ]);
 
-    return back()->with('success', 'Napomena uspješno dodana.');
-}
+        return back()->with('success', 'Napomena uspješno dodana.');
+    }
 
 public function update(Request $request, $id): JsonResponse
 {
