@@ -341,12 +341,12 @@
 
                       {{-- Napomena --}}
                       <td class="align-middle text-right">
-                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="note">{{ $item->note }}</span>
+                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="napomena">{{ $item->note }}</span>
                       </td>
 
                       {{-- Delete button --}}
                       <td>
-                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="note"><i class="bi bi-x-lg"></i></button>
+                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="napomena"><i class="bi bi-x-lg"></i></button>
                       </td>
                   <tr>
                 @endforeach
@@ -369,7 +369,7 @@
       </div>
       <div class="modal-body">
         {{-- popup content --}}
-        <form method="POST" action="/add-note/{{ $order->id}}" id="noteForOrderSubmission">
+        <form method="POST" action="/napomena/{{ $order->id}}" id="noteForOrderSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 

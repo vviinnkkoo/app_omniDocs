@@ -43,6 +43,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'knjiga-prometa' => KprController::class,
         'drzave-poslovanja' => CountryController::class,
         'narudzbe' => OrderController::class
+        'napomena' => OrderNoteController::class
     ]);
 
     // Bolean switch routes - CHECKBOX STATUS CHANGE
@@ -110,8 +111,3 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
     Route::post('/dostavne-etikete', [PrintLabelController::class, 'saveShippingLabel']);
     Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('delete.row');
     Route::get('/obrisi-etikete', [PrintLabelController::class, 'deleteAllLabels']);
-
-    // Order note edits //
-    Route::post('add-note/{id}', [OrderNoteController::class, 'add']);
-    Route::put('/update-note/{id}', [OrderNoteController::class, 'update']);
-    Route::delete('/delete-note/{id}', [OrderNoteController::class, 'destroy'])->name('delete.row');

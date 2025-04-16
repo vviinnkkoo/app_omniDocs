@@ -19,56 +19,34 @@ class OrderNoteController extends Controller
         $this->middleware('auth');
     }
 
+    public function store(Request $request, $id)
+{
+    $request->validate(['note' => 'required']);
 
-    // POST function for saving new stuff
-    public function add (Request $request, $id) {
-        $validator = Validator::make($request->all(), [
-        'note' => 'required'
-        ]);
+    OrderNote::create([
+        'note' => $request->note,
+        'order_id' => $id,
+    ]);
 
-        if ($validator->fails()) {
-            return redirect('/uredi-narudzbu/' . $id)
-                ->withInput()
-                ->withErrors($validator);
-        }
+    return back()->with('success', 'Napomena uspješno dodana.');
+}
 
-        $orderNote = new OrderNote;
-        $orderNote->note = $request->note;
-        $orderNote->order_id = $id;
-        $orderNote->save();
-    
-        return redirect('/uredi-narudzbu/' . $id);
-    }
+public function update(Request $request, $id): JsonResponse
+{
+    OrderNote::findOrFail($id)->update([
+        $request->input('field') => $request->input('newValue')
+    ]);
 
+    return response()->json(['message' => 'Napomena ažurirana.']);
+}
 
-    // UPDATE (Ajax version)
-    public function update(Request $request, $id)
-    {
-        $record = OrderNote::findOrFail($id);
+public function destroy($id): JsonResponse
+{
+    $deleted = OrderNote::findOrFail($id)->delete();
 
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-
-        $record->$field = $newValue;
-        $record->save();
-
-        return response()->json(['message' => 'Payment type updated successfully']);
-    }
-
-    
-    // DELETE function (Ajax version)
-    public function destroy(Request $request, $id): JsonResponse
-    {
-        $record = OrderNote::findOrFail($id);
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Error deleting the record'], 500);
-    }
+    return response()->json([
+        'message' => $deleted ? 'Napomena obrisana.' : 'Greška prilikom brisanja.'
+    ], $deleted ? 200 : 500);
+}
 
 }
