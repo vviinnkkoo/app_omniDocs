@@ -42,7 +42,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.logi
         'racuni' => ReceiptController::class,
         'knjiga-prometa' => KprController::class,
         'drzave-poslovanja' => CountryController::class,
-        'narudzbe' => OrderController::class
+        'narudzbe' => OrderController::class,
         'napomena' => OrderNoteController::class
     ]);
 
