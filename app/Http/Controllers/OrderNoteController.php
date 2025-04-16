@@ -25,7 +25,7 @@ class OrderNoteController extends Controller
 
     OrderNote::create([
         'note' => $request->note,
-        'order_id' => $id,
+        'order_id' => $request->id
     ]);
 
     return back()->with('success', 'Napomena uspješno dodana.');
