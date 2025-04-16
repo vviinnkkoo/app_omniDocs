@@ -19,9 +19,9 @@ class OrderNoteController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
 {
-    $request->validate(['note' => 'required']);
+    $request->validate(['note' => 'required|string|min:2|max:1000', 'order_id' => 'required|integer']);
 
     OrderNote::create([
         'note' => $request->note,
