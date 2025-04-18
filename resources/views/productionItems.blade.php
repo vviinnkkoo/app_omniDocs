@@ -9,10 +9,7 @@
 
     <div class="row justify-content-center">
         <div class="col-xl-12">          
-            <div class="card">
-
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
-                
+            <div class="card">                
 
                 <div class="card-body"> 
                   
@@ -84,7 +81,7 @@
 
                                     <td class="align-middle text-right">
                                         @if (isset($item->id))                                   
-                                            <a href="/uredi-narudzbu/{{ $item->order_id }}" class="btn btn-sm btn-primary">Narudžba {{ $item->order_id }} <i class="bi bi-arrow-right-circle-fill"></i></a>
+                                            <a href="/narudžbe/{{ $item->order_id }}" class="btn btn-sm btn-primary">Narudžba {{ $item->order_id }} <i class="bi bi-arrow-right-circle-fill"></i></a>
                                         @endif
                                     </td>
                                     
