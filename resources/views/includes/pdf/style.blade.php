@@ -26,7 +26,7 @@
         /*font-family: 'DejaVu Sans';*/
         /*font-family: 'Open Sans', sans-serif;*/
         /*font-family: 'DejaVu Sans', 'sans-serif';*/
-        font-family: Helvetica, Arial, sans-serif;
+        font-family: Courier, sans-serif;
     }
     h4 {
         margin: 0;
