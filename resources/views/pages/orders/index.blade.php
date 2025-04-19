@@ -116,13 +116,14 @@
                                     @endif
                                     
                                     {{-- Has invoice --}}
-                                    @isset($order->receipt_id)
+                                    <td class="align-middle text-right">
+                                      @isset($order->receipt_id)
                                       <a href="/dokument/racun/{{ $order->receipt_id }}" target="_blank" 
                                           class="btn {{ $order->isPaid ? 'btn-success' : 'btn-danger' }}">
                                           <i class="bi bi-filetype-pdf"></i></a>
-                                    @else
-                                      Nema
-                                    @endisset
+                                      @else
+                                        Nema
+                                      @endisset
 
                                     </td>
                                 <tr>
