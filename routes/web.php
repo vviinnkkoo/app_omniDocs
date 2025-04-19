@@ -23,7 +23,7 @@ use App\Http\Controllers\KprItemListController;
 use App\Http\Controllers\OrderNoteController;
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
+Route::get('/prijava-u-app', [LoginController::class, 'showLoginForm'])->name('auth.login');
 
 // Display and Post routes
 
