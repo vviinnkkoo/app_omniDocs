@@ -136,7 +136,7 @@ class OrderController extends Controller
                 }
             }
 
-            $order->receipt_id = $receipts[$order->id]->id ?? null;
+            $order->receipt_id = $receipts[$order->id] ?? null;
             $order->isPaid = isset($order->receipt_id) && isset($kprs[$order->receipt_id]);
 
         }
