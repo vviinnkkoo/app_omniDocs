@@ -8,7 +8,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-xl-12">
+    <div class="col-md-12">
       <div class="card">
 
         {{-- Order info --}}
@@ -227,6 +227,7 @@
                     <th scope="col">Cijena</th>
                     <th scope="col">Popust</th>
                     <th scope="col">Opis</th>
+                    <th scope="col">Opis na računu</th>
                     <th scope="col">Status izrade</th>
                     <th></th>
                   </tr>
