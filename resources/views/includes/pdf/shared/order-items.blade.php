@@ -17,7 +17,10 @@
 
                 <td>
                     {{ $item->productName }}<br>
-                    <span style="font-size:70%">Boja: {{ $item->colorName }}</span>
+                    <span style="font-size:70%"><b>Opis:</b> {{ $item->colorName }}</span>
+                    @isset($item->noteOnInvoice)
+                    <span style="font-size:70%">&nbsp;<b>Napomena:</b> {{ $item->colorName }}</span>
+                    @endisset
                 </td>
 
                 <td class="center">
