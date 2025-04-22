@@ -6,9 +6,9 @@
 @section('title', $orderId . ' - ' . $customerName . ' - Uredi narudžbu' )
 
 @section('content')
-<div class="container">
+<div class="containerx" style="margin-left:5%; margin-right:5%">
   <div class="row justify-content-center">
-    <div class="col-12">
+    <div class="col-md-12">
       <div class="card">
 
         {{-- Order info --}}
