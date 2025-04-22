@@ -290,6 +290,13 @@
                                 <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="order-item-list">{{ $item->note }}</span>
                               </td>
 
+                              {{-- Prikaz napomene na računu --}}
+                              <td class="align-middle text-right">
+                                <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="note-on-invoice">
+                                  <input class="form-check-input edit-checkbox" type="checkbox" name="note_on_invoice" id="flexSwitchCheckDefault" {{ $item->note_on_invoice ? 'checked' : '' }}>
+                                </div>
+                              </td>
+
                               {{-- Status izrade --}}
                               <td class="align-middle text-right">
                                 <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="order-item-list">

@@ -47,6 +47,7 @@ Route::get('/prijava-u-app', [LoginController::class, 'showLoginForm'])->name('a
     ]);
 
     // Bolean switch routes - CHECKBOX STATUS CHANGE
+    Route::put('/note-on-invoice/status/{id}', [OrderItemListController::class, 'updateNoteOnInvoiceStatus']);
     Route::put('/order-item-list/status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
     Route::put('/racuni/status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
     Route::put('dostavne-usluge/status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);

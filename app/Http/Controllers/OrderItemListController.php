@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 
 class OrderItemListController extends Controller
-{       
-    // Protect all functions and redirect to login if necessary
+{
     public function __construct()
     {
         $this->middleware('auth');
     }
     
-    // POST function for saving new stuff
     public function add (Request $request, $id) {
         $validator = Validator::make($request->all(), [
         'product_id' => 'required',
@@ -90,7 +88,6 @@ class OrderItemListController extends Controller
             return;
         }
 
-
         return view('productionItems', [
             'items' => $items,
             'title' => $title,
@@ -98,29 +95,19 @@ class OrderItemListController extends Controller
             ]);
     }
 
-    // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
-
-        // Validate and update the payment type in the database
         $record = OrderItemList::findOrFail($id);
 
-        // Get the field name and new value from the request
         $field = $request->input('field');
         $newValue = $request->input('newValue');
 
-        // Update the attribute in the model
         $record->$field = $newValue;
-
-        // Save the model to the database
         $record->save();
 
-        // Return a JSON response or other appropriate response
         return response()->json(['message' => 'Payment type updated successfully']);
     }
 
-
-    // DELETE function (Ajax version)
     public function destroy(Request $request, $id): JsonResponse
     {
         $record = OrderItemList::findOrFail($id);
@@ -135,13 +122,14 @@ class OrderItemListController extends Controller
 
     public function updateIsDoneStatus(Request $request, $id)
     {
-        $orderItem = OrderItemList::find($id);
-        if ($orderItem->is_done == false) {
-            $newIsDoneValue = true; // If it's 0, set it to 1
-        } else {
-            $newIsDoneValue = false; // If it's 1, set it to 0
-        }
-        $orderItem->update(['is_done' => $newIsDoneValue]);
+        $orderItem = OrderItemList::findOrFail($id);
+        $orderItem->update(['is_done' => !$orderItem->is_done]);
+    }
+
+    public function updateNoteOnInvoiceStatus(Request $request, $id)
+    {
+        $orderItem = OrderItemList::findOrFail($id);
+        $orderItem->update(['note_on_invoice' => !$orderItem->note_on_invoice]);
     }
 
     // SUM colors
