@@ -18,7 +18,7 @@
                 <td>
                     {{ $item->productName }}<br>
                     <span style="font-size:70%"><b>Opis:</b> {{ $item->colorName }}</span>
-                    @if($item->note_on_invoice)
+                    @if($item->noteOnInvoice)
                         <span style="font-size:70%">&nbsp;<b>Napomena:</b> {{ $item->note }}</span>
                     @endif
                 </td>

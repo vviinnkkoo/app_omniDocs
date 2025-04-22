@@ -137,6 +137,8 @@ class DoomPDFController extends Controller
                         'price' => $item->price,
                         'amount' => $item->amount,
                         'discount' => $item->discount,
+                        'noteOnInvoice' => $item->note_on_invoice,
+                        'note' => $item->note,
                         'itemTotal' => GlobalService::sumSingleOrderItem($item->id)
                     ];
                 });
