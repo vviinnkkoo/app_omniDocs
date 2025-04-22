@@ -18,9 +18,9 @@
                 <td>
                     {{ $item->productName }}<br>
                     <span style="font-size:70%"><b>Opis:</b> {{ $item->colorName }}</span>
-                    @isset($item->noteOnInvoice)
-                    <span style="font-size:70%">&nbsp;<b>Napomena:</b> {{ $item->colorName }}</span>
-                    @endisset
+                    @if($item->noteOnInvoice)
+                        <span style="font-size:70%">&nbsp;<b>Napomena:</b> {{ $item->note }}</span>
+                    @endif
                 </td>
 
                 <td class="center">
