@@ -99,6 +99,7 @@ class OrderController extends Controller
         $paymentTypes = PaymentType::orderBy('id')->get();
         $countries = Country::orderBy('id')->get();
         $today = Carbon::now();
+        $currentUrl = url()->current();
 
         // Update info for required fields
         foreach ($orders as $order) {
@@ -143,7 +144,7 @@ class OrderController extends Controller
 
         return view('pages.orders.index', compact(
             'orders', 'customers', 'sources', 'deliveryServices', 
-            'deliveryCompanies', 'paymentTypes', 'countries', 'today'
+            'deliveryCompanies', 'paymentTypes', 'countries', 'today', 'currentUrl'
         ));
     }
 
