@@ -49,7 +49,7 @@
 
                                     <td class="align-middle text-right">{{ $order->id }}</td>
 
-                                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/narudzbe/{{ $order->id }}">{{ $order->customeName }}
+                                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/narudzbe/{{ $order->id }}">{{ $order->customer_name }}
                                         @if ($order->isOrderDone() && is_null($order->date_sent))
                                           <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                                             <i class="bi bi-check"></i>
@@ -59,10 +59,10 @@
                                     </td>
 
                                     <td class="align-middle text-right">{{ $order->formated_date_ordered }}</td>
-                                    <td class="align-middle text-right">{{ $order->sourceName }}</td>
+                                    <td class="align-middle text-right">{{ $order->source_name }}</td>
                                     <td class="align-middle text-right">{{ $order->delivery_postal }}</td>
-                                    <td class="align-middle text-right">{{ $order->deliveryCompanyName }} - {{ $order->deliveryServiceName }}</td>
-                                    <td class="align-middle text-right">{{ $order->paymentTypeName }}</td>
+                                    <td class="align-middle text-right">{{ $order->delivery_company_name }} - {{ $order->delivery_service_name }}</td>
+                                    <td class="align-middle text-right">{{ $order->payment_type_name }}</td>
 
                                     {{-- Status --}}
                                     <td class="align-middle text-right">
@@ -76,7 +76,7 @@
                                       {{-- Check if delivered --}}
                                       @elseif (isset($order->date_delivered))
                                         <span class="btn btn-sm btn-success">Dostavljeno<br>
-                                          <span style="font-size: 80%">Isporuka: {{ $order->formated_date_delivered }} (<b>{{ $order->daysToDeliver }} d</b>)</span>
+                                          <span style="font-size: 80%">{{ $order->formated_date_delivered }} (<b>{{ $order->daysToDeliver }} d</b>)</span>
                                         </span>
 
                                       {{-- If not delivered, check if it's sent --}}
@@ -88,9 +88,9 @@
                                       {{-- Deadline check --}}
                                       @else
                                         @if (isset($order->date_deadline))
-                                          @if ($order->daysLeft)
-                                            <span class="btn btn-sm {{ $order->deadlineClass }}">
-                                              Rok: <b>{{ $order->daysLeft }} d</b><br>
+                                          @if ($order->days_left)
+                                            <span class="btn btn-sm {{ $order->deadline_class }}">
+                                              Rok: <b>{{ $order->days_left }} d</b><br>
                                                 <span style="font-size: 80%">{{ $order->formated_date_deadline }}</span>
                                             </span>
                                           @else
@@ -109,17 +109,17 @@
                                     </td>
 
                                     {{-- Total --}}
-                                    @if ($order->totalAmount == 0)
+                                    @if ($order->total_amount == 0)
                                       <td></td>
                                     @else
-                                    <td class="align-middle text-right">{{ number_format($order->totalAmount, 2, ',') }} €</td>
+                                    <td class="align-middle text-right">{{ number_format($order->total_amount, 2, ',') }} €</td>
                                     @endif
                                     
                                     {{-- Has invoice --}}
                                     <td class="align-middle text-right">
                                       @isset($order->receipt_id)
                                       <a href="/dokument/racun/{{ $order->receipt_id }}" target="_blank" 
-                                          class="btn {{ $order->isPaid ? 'btn-success' : 'btn-danger' }}">
+                                          class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }}">
                                           <i class="bi bi-filetype-pdf"></i></a>
                                       @else
                                         Nema

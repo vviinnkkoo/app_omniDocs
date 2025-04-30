@@ -36,6 +36,7 @@ class OrderController extends Controller
         $search = $request->input('search');
         $query = Order::query();
 
+        // Search functionality
         if ($search) {
             $query->where(function ($query) use ($search) {
                 $query->where('tracking_code', 'like', "%{$search}%")
@@ -53,10 +54,10 @@ class OrderController extends Controller
             });
         }
 
+        // Filter by order types
         switch ($type) {
             case 'sve':
-                $orders = $query->orderBy('id')
-                    ->paginate(25);
+                $orders = $query->orderBy('id')->paginate(25);
                 break;
             case 'poslane':
                 $orders = $query->whereNotNull('date_sent')
@@ -80,18 +81,12 @@ class OrderController extends Controller
                 return;
         }
 
-        // Get all receipts and KPRs for the orders
-        $orderIds = $orders->pluck('id')->toArray();
-        $receipts = Receipt::whereIn('order_id', $orderIds)
-        ->where('is_cancelled', 0)
-        ->pluck('id', 'order_id');
+        // Fetch data for the view
+        $data = $this->getReceiptAndKprData($orders);
+        $receipts = $data['receipts'];
+        $kprIds = $data['kprIds'];
 
-        // Učitaj samo ID-eve Kpr
-        $kprs = KprItemList::whereIn('receipt_id', $receipts->values())
-        ->pluck('receipt_id', 'receipt_id');
-
-
-        // Get all required data for the view
+        // Get other required data for the view
         $customers = Customer::orderBy('id')->get();
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::where('in_use', true)->orderBy('name')->get();
@@ -101,45 +96,11 @@ class OrderController extends Controller
         $today = Carbon::now();
         $currentUrl = url()->current();
 
-        // Update info for required fields
+        // Add extra information to orders using accessors
         foreach ($orders as $order) {
-            $order->formated_date_ordered = $order->date_ordered->format('d. m. Y.');
-            $order->totalAmount = GlobalService::sumWholeOrder($order->id);
-            $order->customeName = $order->customer->name;
-            $order->sourceName = $order->source->name;
-            $order->deliveryServiceName = $order->deliveryService->name;
-            $order->deliveryCompanyName = $order->deliveryService->deliveryCompany->name;
-            $order->paymentTypeName = $order->paymentType->name;
-            
-            if ($order->date_cancelled) {
-                $order->formated_date_cancelled = $order->date_cancelled->format('d. m. Y.');
-            }
-
-            if ($order->date_delivered) {                
-                $order->daysToDeliver = $order->date_delivered->diffInDays($order->date_ordered);
-                $order->formated_date_delivered = $order->date_delivered->format('d. m. Y.');
-            }
-
-            if ($order->date_sent) {
-                $order->formated_date_sent = $order->date_sent->format('d. m. Y.');
-            }
-
-            if ($order->date_deadline) {                
-                $order->daysLeft = $order->date_deadline->diffInDays($today);
-                $order->formated_date_deadline = $order->date_deadline->format('d. m. Y.');
-                
-                if ($order->daysLeft <= 5) {
-                    $order->deadlineClass = 'btn-danger';
-                } elseif ($order->daysLeft <= 10) {
-                    $order->deadlineClass = 'btn-warning';
-                } else {
-                    $order->deadlineClass = 'btn-success';
-                }
-            }
-
+            $order->total_amount = GlobalService::sumWholeOrder($order->id);
             $order->receipt_id = $receipts[$order->id] ?? null;
-            $order->isPaid = isset($order->receipt_id) && isset($kprs[$order->receipt_id]);
-
+            $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
         }
 
         return view('pages.orders.index', compact(
@@ -148,16 +109,29 @@ class OrderController extends Controller
         ));
     }
 
+
     public function show($order_id)
     {
-        $order = Order::with(['customer', 'paymentType', 'source', 'deliveryService', 'country', 'orderItemList', 'orderNote'])->findOrFail($order_id);
-        $order->paymentTypeName = $order->paymentType->name;
-        $order->countryName = $order->country->name;
-        $order->formated_date_sent = $order->date_sent ? $order->date_sent->format('Y-m-d') : null;
-        $order->formated_date_ordered = $order->date_ordered->format('Y-m-d');
-        $order->formated_date_deadline = $order->date_deadline ? $order->date_deadline->format('Y-m-d') : null;
-        $order->formated_date_delivered = $order->date_delivered ? $order->date_delivered->format('Y-m-d') : null;
-        $order->formated_date_cancelled = $order->date_cancelled ? $order->date_cancelled->format('Y-m-d') : null;
+        $order = Order::with([
+            'customer',
+            'paymentType',
+            'source',
+            'deliveryService.deliveryCompany',
+            'country',
+            'orderItemList.product',
+            'orderItemList.productType',
+            'orderItemList.color',
+            'orderNote'
+        ])->findOrFail($order_id);
+
+        $order->delivery_cost = $order->deliveryService->default_cost;
+        $order->subtotal = GlobalService::sumWholeOrder($order_id);
+        $order->total = $order->subtotal + $order->delivery_cost;
+
+        // Condition checks
+        $order->receipt_id = $receipts[$order->id] ?? null;
+        $order->is_paid = isset($order->receipt_id) && isset($kprs[$order->receipt_id]);
+
         $sources = Source::orderBy('id')->get();
         $deliveryServices = DeliveryService::orderBy('id')->get();
         $deliveryCompanies = DeliveryCompany::has('deliveryServices')->orderBy('id')->get();
@@ -168,11 +142,7 @@ class OrderController extends Controller
         $colors = Color::orderBy('id')->get();
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
         $workYears = WorkYears::orderBy('year')->get();
-
-        // Calculations for display
-        $deliveryCost = $order->deliveryService->default_cost;
-        $orderSubtotal = GlobalService::sumWholeOrder($order_id);
-        $orderTotal = $orderSubtotal + $deliveryCost;
+        $orderItemList = $order->orderItemList;
 
         return view('pages.orders.show', [
             'order' => $order,
@@ -181,16 +151,13 @@ class OrderController extends Controller
             'deliveryCompanies' => $deliveryCompanies,
             'paymentTypes' => $paymentTypes,
             'countries' => $countries,
-            'productList' => $order->orderItemList,
+            'orderItemList' => $orderItemList,
             'orderNotes' => $order->orderNote,
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
-            'orderSubtotal' => number_format($orderSubtotal, 2, ','),
-            'deliveryCost' => number_format($deliveryCost, 2, ','),
-            'orderTotal' => number_format(($orderTotal), 2, ','),
             'latestReceiptNumber' => $latestReceiptNumber,
-            'workYears' => $workYears
+            'workYears' => $workYears,
         ]);
     }
 
@@ -252,5 +219,22 @@ class OrderController extends Controller
         }
 
         return response()->json(['message' => 'Error deleting the record'], 500);
+    }
+
+    private function getReceiptAndKprData($orders)
+    {
+        $orderIds = $orders->pluck('id')->toArray();
+
+        $receiptId = Receipt::whereIn('order_id', $orderIds)
+            ->where('is_cancelled', 0)
+            ->pluck('id', 'order_id');
+
+        $kprIds = KprItemList::whereIn('receipt_id', $receipts->values())
+            ->pluck('receipt_id', 'receipt_id');
+
+        return [
+            'receiptId' => $receiptId,
+            'kprIds' => $kprIds
+        ];
     }
 }

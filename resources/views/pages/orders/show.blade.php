@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
- {{ $customerName = App\Models\Customer::find($order->customer_id)->name }}
- {{ $orderId = $order->id}}
-
-@section('title', $orderId . ' - ' . $customerName . ' - Uredi narudžbu' )
+@section('title', $order->id . ' - ' . $order->customer_name . ' - Uredi narudžbu' )
 
 @section('content')
 <div class="containerx" style="margin-left:5%; margin-right:5%">
@@ -16,30 +13,24 @@
           {{-- Header left side --}}
           <a class="gray-mark-extra" href="/narudzbe/prikaz/neodradene"><i class="bi bi-arrow-left"></i></a>
           <span style="font-size:100%; margin-left:10px;">Narudžba: {{$order->id}}</span>
-          <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ $orderSubtotal }} € </span>
-          <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ $deliveryCost }} €</span>
+          <span style="font-size:100%; margin-left:30px;" class="badge bg-secondary">Naručeno: {{ number_format($order->subtotal, 2, ',') }} € </span>
+          <span style="font-size:100%; margin-left:15px; color:#333" class="badge bg-warning">Dostava: {{ number_format($order->delivery_cost, 2, ',') }} €</span>
           <span style="font-size:100%; margin-left:15px;" >>></span>
-          <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ $orderTotal }} €</span>
+          <span style="font-size:100%; margin-left:15px; margin-right:30px;" class="badge bg-success">Sveukupno: {{ number_format($order->total, 2, ',') }} €</span>
           {{-- Header right side --}}
           {{-- Invoice check START --}}
           <span class="ms-auto">Račun:
-            @if ( App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->exists() )
-              <a href="/dokument/racun/{{ App\Models\Receipt::where('order_id', $orderId)->where('is_cancelled', 0)->first()->id }}" target="_blank" 
-
-                @if ( App\Models\KprItemList::where( 'receipt_id', ( App\Models\Receipt::where('order_id', $orderId )->where( 'is_cancelled', 0 )->first()->id ) )->exists() )
-                  class="btn btn-success btn-sm"><i class="bi bi-filetype-pdf"></i> Plaćen</a>
-                @else
-                  class="btn btn-danger btn-sm"><i class="bi bi-filetype-pdf"></i> Nenaplaćen</a>
-                @endif
-
+            @isset($order->receipt_id)
+              <a href="/dokument/racun/{{ $order->receipt_id }}" target="_blank"
+                class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }} btn-sm"><i class="bi bi-filetype-pdf"></i> {{ $order->is_paid ? 'Plaćen' : 'Nenaplaćen' }}</a>
             @else
               <button id="popupButton" class="btn btn-primary btn-sm" style="font-weight:bold;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Izradi</button>
-            @endif
+            @endisset
           </span>
           {{-- Invoice check END --}}
           <div style="width:4px; background-color:#333; margin-left:10px;"></div>
-          <a class="btn bg-warning btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/ponuda/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
-          <a class="btn bg-info btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$orderId}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+          <a class="btn bg-warning btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/ponuda/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+          <a class="btn bg-info btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
         </div>
 
         <div class="card-body">
@@ -51,7 +42,7 @@
               </div>
 
               <div>
-                <h6 style="font-weight: 900">{{ App\Models\Customer::find($order->customer_id)->name }}</h6>
+                <h6 style="font-weight: 900">{{ $order->customer_name }}</h6>
               </div>
 
               <div>
@@ -124,7 +115,7 @@
                 <div class="editable-select" data-id="{{ $order->id }}" data-field="source_id" data-model="narudzbe">
 
                   <!-- Display the selected value -->
-                  <span class="gray-mark">{{ App\Models\Source::find($order->source_id)->name }}</span>
+                  <span class="gray-mark">{{ $order->source_name }}</span>
                   
                   <!-- Hidden select element with options -->
                   <select class="edit-select form-select" style="display: none !important">
@@ -152,7 +143,7 @@
                   <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_service_id" data-model="narudzbe">
 
                     <!-- Display the selected value -->
-                    <span class="gray-mark">{{ App\Models\DeliveryService::find($order->delivery_service_id)->name }}</span>
+                    <span class="gray-mark">{{ $order->delivery_company_name }} - {{ $order->delivery_service_name }}</span>
                     
                     <!-- Hidden select element with options -->
                     <select class="edit-select form-select" style="display: none !important">
@@ -243,7 +234,7 @@
                               <td class="align-middle text-right">
                                 <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
                                   <!-- Display the selected value -->
-                                  <span>{{ App\Models\Product::find($item->product_id)->name }}</span>
+                                  <span>{{ $item->product_name }}</span>
                                   
                                   <!-- Hidden select element with options -->
                                   <select class="edit-select form-select" style="display: none !important">
@@ -259,7 +250,7 @@
                               <td class="align-middle text-right">
                                 <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
                                   <!-- Display the selected value -->
-                                  <span>{{ App\Models\Color::find($item->color_id)->name }}</span>
+                                  <span>{{ $item->color_name }}</span>
                                   
                                   <!-- Hidden select element with options -->
                                   <select class="edit-select form-select" style="display: none !important">
@@ -273,7 +264,7 @@
 
                               {{-- Količina --}}
                               <td class="align-middle text-right">
-                                <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->amount }}</span> {{ App\Models\Product::find($item->product_id)->unit }}
+                                <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->amount }}</span> {{ $item->unit }}
                               </td>
 
                               {{-- Cijena --}}
@@ -484,7 +475,7 @@
                   <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestReceiptNumber }}">
                 </div>
 
-                <input type="hidden" placeholder="Unesi redni broj računa..." id="order_id" name="order_id" value="{{ $orderId }}">
+                <input type="hidden" placeholder="Unesi redni broj računa..." id="order_id" name="order_id" value="{{ $order->id }}">
 
                 <div class="mb-3">
                   <label for="year">Godina računa:</label>

@@ -67,4 +67,84 @@ class Order extends Model
             return $item->is_done == 1;
         });
     }
+
+    // GET Accessors
+    public function getPaymentTypeNameAttribute()
+    {
+        return $this->paymentType->name ?? null;
+    }
+
+    public function getCountryNameAttribute()
+    {
+        return $this->country->name ?? null;
+    }
+
+    public function getCustomerNameAttribute()
+    {
+        return $this->customer->name ?? null;
+    }
+
+    public function getSourceNameAttribute()
+    {
+        return $this->source->name ?? null;
+    }
+
+    public function getDeliveryServiceNameAttribute()
+    {
+        return $this->deliveryService->name ?? null;
+    }
+
+    public function getDeliveryCompanyNameAttribute()
+    {
+        return $this->deliveryService->deliveryCompany->name ?? null;
+    }
+
+    // Date formatters (one accessor per format)
+    public function getFormatedDateSentAttribute()
+    {
+        return $this->date_sent ? $this->date_sent->format('d. m. Y.') : null;
+    }
+
+    public function getFormatedDateOrderedAttribute()
+    {
+        return $this->date_ordered ? $this->date_ordered->format('d. m. Y.') : null;
+    }
+
+    public function getFormatedDateDeadlineAttribute()
+    {
+        return $this->date_deadline ? $this->date_deadline->format('d. m. Y.') : null;
+    }
+
+    public function getFormatedDateDeliveredAttribute()
+    {
+        return $this->date_delivered ? $this->date_delivered->format('d. m. Y.') : null;
+    }
+
+    public function getFormatedDateCancelledAttribute()
+    {
+        return $this->date_cancelled ? $this->date_cancelled->format('d. m. Y.') : null;
+    }
+
+    // Calculate days and deadlines
+    public function getDaysToDeliverAttribute()
+    {
+        return $this->date_delivered ? $this->date_delivered->diffInDays($this->date_ordered) : null;
+    }
+
+    public function getDaysLeftAttribute()
+    {
+        return $this->date_deadline ? $this->date_deadline->diffInDays(now()) : null;
+    }
+
+    public function getDeadlineClassAttribute()
+    {
+        if ($this->days_left <= 5) {
+            return 'btn-danger';
+        } elseif ($this->days_left <= 10) {
+            return 'btn-warning';
+        }
+
+        return 'btn-success';
+    }
+
 }
