@@ -124,7 +124,7 @@
                                       @else
                                         Nema
                                       @endisset
-
+                                      
                                     </td>
                                 <tr>
                         @endforeach

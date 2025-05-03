@@ -133,7 +133,11 @@ class Order extends Model
 
     public function getDaysLeftAttribute()
     {
-        return $this->date_deadline ? $this->date_deadline->diffInDays(now()) : null;
+        if (!$this->date_deadline || $this->date_deadline->isPast()) {
+            return null;
+        }
+
+        return now()->diffInDays($this->date_deadline);
     }
 
     public function getDeadlineClassAttribute()
