@@ -128,6 +128,11 @@ class OrderController extends Controller
         $order->subtotal = GlobalService::sumWholeOrder($order_id);
         $order->total = $order->subtotal + $order->delivery_cost;
 
+        // Fetch data for the view
+        $data = $this->getReceiptAndKprData($order);
+        $receipts = $data['receiptId'];
+        $kprIds = $data['kprIds'];
+
         // Condition checks
         $order->receipt_id = $receipts[$order->id] ?? null;
         $order->is_paid = isset($order->receipt_id) && isset($kprs[$order->receipt_id]);
