@@ -229,7 +229,7 @@ class OrderController extends Controller
             ->where('is_cancelled', 0)
             ->pluck('id', 'order_id');
 
-        $kprIds = KprItemList::whereIn('receipt_id', $receipts->values())
+        $kprIds = KprItemList::whereIn('receipt_id', $receiptId->values())
             ->pluck('receipt_id', 'receipt_id');
 
         return [
