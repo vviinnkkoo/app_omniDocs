@@ -83,7 +83,7 @@ class OrderController extends Controller
 
         // Fetch data for the view
         $data = $this->getReceiptAndKprData($orders);
-        $receipts = $data['receipts'];
+        $receipts = $data['receiptId'];
         $kprIds = $data['kprIds'];
 
         // Get other required data for the view
