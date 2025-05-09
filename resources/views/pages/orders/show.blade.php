@@ -225,7 +225,7 @@
                 </thead>
                 <tbody>
                   @php ($count = 1)
-                  @foreach ($productList as $item)
+                  @foreach ($orderItemList as $item)
                           <tr>
                               {{-- # --}}
                               <td class="align-middle text-right">{{ $count++ }}</td>
