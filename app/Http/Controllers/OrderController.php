@@ -119,7 +119,7 @@ class OrderController extends Controller
             'deliveryService.deliveryCompany',
             'country',
             'orderItemList.product',
-            'orderItemList.productType',
+            'orderItemList.product.productType',
             'orderItemList.color',
             'orderNote'
         ])->findOrFail($order_id);
