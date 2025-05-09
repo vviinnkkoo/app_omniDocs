@@ -134,7 +134,7 @@
               <div class="mb-3">
                 <div>Datum slanja:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_sent" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%" value="{{ $order->formated_date_sent }}">
+                  <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_sent }}">
                 </div>
               </div>
 
