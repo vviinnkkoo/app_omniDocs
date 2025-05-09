@@ -82,14 +82,14 @@
               <div class="mb-3">
                 <div>Naručeno:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_ordered" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%" value="{{ $order->formated_date_ordered }}">
+                  <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_ordered }}">
                 </div>
               </div>
 
               <div class="mb-3">
                 <div>Rok za dostavu:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_deadline" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%" value="{{ $order->formated_date_deadline }}">
+                  <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_deadline }}">
                 </div>
               </div>
 
@@ -182,14 +182,14 @@
               <div class="mb-3">
                 <span><i class="bi bi-check-circle-fill" style="color: green;"></i> Datum dostave / završetka:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%;" value="{{ $order->formated_date_delivered }}">
+                  <input type="date" class="form-control" style="width:80%;" value="{{ $order->input_formated_date_delivered }}">
                 </div>
               </div>
 
               <div class="mb-3">
                 <span><i class="bi bi-x-circle-fill" style="color: red;"></i> Datum otkazivanja:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%;" value="{{ $order->formated_date_cancelled }}">
+                  <input type="date" class="form-control" style="width:80%;" value="{{ $order->input_formated_date_cancelled }}">
                 </div>                
               </div>
 

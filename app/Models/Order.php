@@ -99,7 +99,7 @@ class Order extends Model
         return $this->deliveryService->deliveryCompany->name ?? null;
     }
 
-    // Date formatters (one accessor per format)
+    // Date formatters (for DISPLAY purposes)
     public function getFormatedDateSentAttribute()
     {
         return $this->date_sent ? $this->date_sent->format('d. m. Y.') : null;
@@ -123,6 +123,32 @@ class Order extends Model
     public function getFormatedDateCancelledAttribute()
     {
         return $this->date_cancelled ? $this->date_cancelled->format('d. m. Y.') : null;
+    }
+
+    // Date formatters (for INPUT purposes)
+    public function getInputFormatedDateSentAttribute()
+    {
+        return $this->date_sent ? $this->date_sent->format('Y-m-d') : null;
+    }
+
+    public function getInputFormatedDateOrderedAttribute()
+    {
+        return $this->date_ordered ? $this->date_ordered->format('Y-m-d') : null;
+    }
+
+    public function getInputFormatedDateDeadlineAttribute()
+    {
+        return $this->date_deadline ? $this->date_deadline->format('Y-m-d') : null;
+    }
+
+    public function getInputFormatedDateDeliveredAttribute()
+    {
+        return $this->date_delivered ? $this->date_delivered->format('Y-m-d') : null;
+    }
+
+    public function getInputFormatedDateCancelledAttribute()
+    {
+        return $this->date_cancelled ? $this->date_cancelled->format('Y-m-d') : null;
     }
 
     // Calculate days and deadlines
