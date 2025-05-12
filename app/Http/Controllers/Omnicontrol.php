@@ -29,7 +29,7 @@ class Omnicontrol extends Controller
         // Get all active orders, then sum the total amount of each order
         // and add it to the total earnings
         $orderIds = Order::whereNull('date_cancelled')->pluck('id');
-        $countOrders = $orders->count();
+        $countOrders = $orderIds->count();
 
         $totalEarnings = 0; // Initialize total earnings to 0
 
