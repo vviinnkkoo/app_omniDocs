@@ -53,7 +53,7 @@ class KprController extends Controller
             $item->index = $kprs->firstItem() + $index;
         }
 
-        return view('kpr-view', compact('kprs', 'year', 'paymentMethods', 'count'));
+        return view('kpr-view', compact('kprs', 'year', 'paymentMethods'));
     }
 
 
