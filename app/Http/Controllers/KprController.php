@@ -46,11 +46,12 @@ class KprController extends Controller
         $paymentMethods = KprPaymentType::all();
         $count = 1;
 
-        foreach ($kprs as $item) {
+        foreach ($kprs as $index => $item) {
             $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
             $item->date = Carbon::parse($item->date)->format('d.m.Y');
             $item->paymentTypeName = $item->paymentType->name;
             $item->receiptsTotal = GlobalService::sumAllReciepesFromKpr($item->id);
+            $item->index = $index + 1;
         }
 
         return view('kpr-view', compact('kprs', 'year', 'paymentMethods', 'count'));

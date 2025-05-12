@@ -10,6 +10,7 @@ class KprItemList extends Model
     use HasFactory;
 
     protected $table = 'kpr_item_list';
+    protected $fillable = ['receipt_id', 'kpr_id'];
 
     public function receipt()
     {

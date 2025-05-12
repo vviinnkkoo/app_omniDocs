@@ -15,6 +15,21 @@ class Order extends Model
         'date_deadline' => 'datetime'
     ];
 
+    protected $fillable = [
+        'date_ordered',
+        'date_deadline',
+        'customer_id',
+        'source_id',
+        'delivery_service_id',
+        'payment_type_id',
+        'delivery_address',
+        'delivery_city',
+        'delivery_country_id',
+        'delivery_postal',
+        'delivery_phone',
+        'delivery_email',
+    ];
+
     public function setDeliveryWeightAttribute($value)
     {
         $this->attributes['delivery_weight'] = is_null($value) ? null : str_replace(',', '.', $value);

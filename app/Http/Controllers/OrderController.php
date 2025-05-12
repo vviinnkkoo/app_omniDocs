@@ -168,40 +168,28 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'date_ordered' => 'required',
-            'date_deadline' => 'required',
-            'customer_id' => 'required',
-            'source_id' => 'required',
-            'delivery_service_id' => 'required',
-            'payment_type_id' => 'required',
+        $validated = $request->validate([
+            'date_ordered' => 'required|date',
+            'date_deadline' => 'required|date',
+            'customer_id' => 'required|exists:customers,id',
+            'source_id' => 'required|exists:sources,id',
+            'delivery_service_id' => 'required|exists:delivery_services,id',
+            'payment_type_id' => 'required|exists:payment_types,id',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator);
-        }
+        $customer = Customer::findOrFail($validated['customer_id']);
 
-        $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
-        $next_id = $statement[0]->Auto_increment;
+        $order = Order::create([
+            ...$validated,
+            'delivery_address' => "{$customer->address} {$customer->house_number}",
+            'delivery_city' => $customer->city,
+            'delivery_country_id' => $customer->country_id,
+            'delivery_postal' => $customer->postal,
+            'delivery_phone' => $customer->phone,
+            'delivery_email' => $customer->email,
+        ]);
 
-        $customer = Customer::findOrFail($request->customer_id);
-
-        $order = new Order;
-        $order->date_ordered = $request->date_ordered;
-        $order->date_deadline = $request->date_deadline;
-        $order->customer_id = $request->customer_id;
-        $order->source_id = $request->source_id;
-        $order->delivery_service_id = $request->delivery_service_id;
-        $order->payment_type_id = $request->payment_type_id;
-        $order->delivery_address = "{$customer->address} {$customer->house_number}";
-        $order->delivery_city = $customer->city;
-        $order->delivery_country_id = $customer->country_id;
-        $order->delivery_postal = $customer->postal;
-        $order->delivery_phone = $customer->phone;
-        $order->delivery_email = $customer->email;
-        $order->save();
-
-        return redirect('/narudzbe/' . $next_id);
+        return redirect('/narudzbe/' . $order->id);
     }
 
     public function update(Request $request, $id)
@@ -217,13 +205,9 @@ class OrderController extends Controller
 
     public function destroy(Request $request, $id): JsonResponse
     {
-        $record = Order::findOrFail($id);
-
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return Order::findOrFail($id)->delete()
+            ? response()->json(['message' => 'Record deleted successfully'])
+            : response()->json(['message' => 'Error deleting the record'], 500);
     }
 
     private function getReceiptAndKprData($orders)

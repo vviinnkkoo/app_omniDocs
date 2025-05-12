@@ -38,14 +38,9 @@
                       <tbody>
 
                         @foreach ($kprs as $item)
-                          <tr 
-                            @if ( $item->exists )
-                              class="kpr-has-receipt">
-                            @else
-                              class="kpr-no-receipt">
-                            @endif
+                          <tr class="{{ $item->exists ? 'kpr-has-receipt' : 'kpr-no-receipt' }}">
 
-                            <td class="align-middle text-start">{{ $count++ }}</td>
+                            <td class="align-middle text-start">{{ $item->index }}</td>
 
                             <td class="align-middle text-start">
                               <div class="date-display">{{ $item->payer }}</div>
