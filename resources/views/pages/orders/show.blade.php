@@ -375,7 +375,7 @@
                 <div class="mb-3">
                   <label for="note">Napomena:</label>
                   <textarea class="form-control" placeholder="Unesi dodatni opis..." id="note" name="note" rows="3">- - -</textarea>
-                  <hidden id="order_id" name="order_id" value="{{ $order->id }}">
+                  <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}">
                 </div>
 
               </div>
