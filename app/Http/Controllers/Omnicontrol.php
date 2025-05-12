@@ -27,14 +27,22 @@ class Omnicontrol extends Controller
     // Display index page
     public function index()
     {
-        // Get all active orders, then sum the total amount of each order
-        // and add it to the total earnings
-        $orderIds = Order::whereNull('date_cancelled')->pluck('id');
-        $countOrders = $orderIds->count();
+        // Get all active orders
+        $activeOrderIds = Order::whereNull('date_cancelled')->pluck('id');
+        $countActiveOrders = $activeOrderIds->count();
+        // Get all undelivered orders
+        $undeliveredOrderIds = Order::whereNull('date_sent')->whereNull('date_cancelled')->pluck('id');
+        $countUndeliveredOrders = $undeliveredOrderIds->count();
+        // Get this month orders
+        $thisMonthOrderIds = Order::whereYear('date_ordered', Carbon::now()->year)
+            ->whereMonth('date_ordered', Carbon::now()->month)
+            ->pluck('id');
+        $countThisMonthOrders = $thisMonthOrderIds->count();
 
-        $totalEarnings = 0; // Initialize total earnings to 0
+        // Initialize total earnings to 0
+        $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
-        foreach ($orderIds as $orderId) {
+        foreach ($activeOrderIds as $orderId) {
             $totalEarnings += GlobalService::sumWholeOrder($orderId); 
         }
 
@@ -52,15 +60,12 @@ class Omnicontrol extends Controller
         $countUndeliveredOrders = Order::whereNull('date_sent')
             ->whereNull('date_cancelled')
             ->count();
-        $countThisMonthOrders = Order::whereYear('date_ordered', Carbon::now()->year)
-            ->whereMonth('date_ordered', Carbon::now()->month)
-            ->count();
 
         return view('home', compact(
             'earningTotal', 
             'earningUndelivered', 
             'earningCurrentMonth', 
-            'countOrders', 
+            'countActiveOrders', 
             'countUndeliveredOrders', 
             'countThisMonthOrders'
         ));
