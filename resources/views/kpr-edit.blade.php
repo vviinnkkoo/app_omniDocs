@@ -147,7 +147,7 @@
                   <select class="form-select searchable-select-modal" id="receipt_id" name="receipt_id">
                       <option selected>Odaberi račun za povezivanje...</option>
                       @foreach($receiptOptions as $item)
-                        <option value="{{ $option['id'] }}">
+                        <option value="{{ $item['id'] }}">
                             {{ $item['number'] }} - {{ $item['customerName'] }} - {{ $item['total'] }} € - {{ $item['trackingCode'] }}
                         </option>
                       @endforeach
