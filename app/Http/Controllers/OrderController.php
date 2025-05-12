@@ -173,7 +173,7 @@ class OrderController extends Controller
             'date_deadline' => 'required|date',
             'customer_id' => 'required|exists:customers,id',
             'source_id' => 'required|exists:sources,id',
-            'delivery_service_id' => 'required|exists:delivery_services,id',
+            'delivery_service_id' => 'required|exists:delivery_service,id',
             'payment_type_id' => 'required|exists:payment_types,id',
         ]);
 
