@@ -25,28 +25,28 @@ class OrderNoteController extends Controller
 
         OrderNote::create([
             'note' => $request->note,
-            'order_id' => $request->id
+            'order_id' => $request->order_id
         ]);
 
         return back()->with('success', 'Napomena uspješno dodana.');
     }
 
-public function update(Request $request, $id): JsonResponse
-{
-    OrderNote::findOrFail($id)->update([
-        $request->input('field') => $request->input('newValue')
-    ]);
+    public function update(Request $request, $id): JsonResponse
+    {
+        OrderNote::findOrFail($id)->update([
+            $request->input('field') => $request->input('newValue')
+        ]);
 
-    return response()->json(['message' => 'Napomena ažurirana.']);
-}
+        return response()->json(['message' => 'Napomena ažurirana.']);
+    }
 
-public function destroy($id): JsonResponse
-{
-    $deleted = OrderNote::findOrFail($id)->delete();
+    public function destroy($id): JsonResponse
+    {
+        $deleted = OrderNote::findOrFail($id)->delete();
 
-    return response()->json([
-        'message' => $deleted ? 'Napomena obrisana.' : 'Greška prilikom brisanja.'
-    ], $deleted ? 200 : 500);
-}
+        return response()->json([
+            'message' => $deleted ? 'Napomena obrisana.' : 'Greška prilikom brisanja.'
+        ], $deleted ? 200 : 500);
+    }
 
 }
