@@ -39,7 +39,7 @@ class Omnicontrol extends Controller
             ->pluck('id');
         $countThisMonthOrders = $thisMonthOrderIds->count();
 
-        $workYears = WorkYears::orderBy('year')->pluck('year');
+        $workYears = WorkYears::orderBy('year')->pluck('year')->values();
 
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
