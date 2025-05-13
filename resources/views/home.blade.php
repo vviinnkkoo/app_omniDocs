@@ -39,14 +39,14 @@
     <div class="row">
       <h1>Računi i uplate</h1>
     </div>
-    @foreach ($workYears as $year)
+    @foreach ($yearData as $item)
       <div class="row mt-3">
-        <h3>Godina: {{ $year }}</h2>
+        <h3>Godina: {{ $item->year }}</h2>
         <div class="col-sm">
               <div class="card text-white bg-secondary mb-3">
-                <div class="card-header">Izdano računa</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\ReceiptController::countReceipts(2023) --}}</span></div>
+                <div class="card-header">Izdano računa</b>: <span class="badge text-bg-warning rounded-pill">{{ $item->invoiceCount }}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{-- App\Http\Controllers\ReceiptController::getTotalForAllReceipts(2023) --}} €</h5>
+                  <h5 class="card-title">{{ $item->invoiceSum}} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>

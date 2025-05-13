@@ -40,7 +40,18 @@ class Omnicontrol extends Controller
         $countThisMonthOrders = $thisMonthOrderIds->count();
 
         $workYears = WorkYears::orderBy('year')->pluck('year')->toArray();
-        //dd($workYears);
+        $yearData = [];
+
+        foreach ($workYears as $year) {
+        $invoiceCount = GlobalService::countReceipts($year);
+        $invoiceSum = GlobalService::calculateTotalForAllReceiptsInYear($year);
+
+        $yearData[] = [
+            'year' => $year,
+            'invoiceCount' => $invoiceCount,
+            'invoiceSum' => $invoiceSum,
+        ];
+    }
 
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
