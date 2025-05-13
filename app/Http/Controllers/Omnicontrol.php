@@ -41,6 +41,8 @@ class Omnicontrol extends Controller
 
         $workYears = WorkYears::orderBy('year')->pluck('year')->toArray();
 
+        dd($workYears);
+
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
         foreach ($activeOrderIds as $orderId) {
