@@ -46,25 +46,22 @@ class Omnicontrol extends Controller
             $totalEarnings += GlobalService::sumWholeOrder($orderId); 
         }
 
-        $earningTotal = number_format($totalEarnings, 2, ',');
+        foreach ($undeliveredOrderIds as $orderId) {
+            $undeliveredEarnings += GlobalService::sumWholeOrder($orderId); 
+        }
 
-        // Get all undelivered orders, then sum the total amount of each order
-        $earningUndelivered = number_format(OrderItemList::whereHas('order', function ($q1) {
-            $q1->whereNull('date_sent')->whereNull('date_cancelled');
-        })->sum('amount * price'), 2, ',');
+        foreach ($thisMonthOrderIds as $orderId) {
+            $currentMonthEarnings += GlobalService::sumWholeOrder($orderId); 
+        }
 
-        $earningCurrentMonth = number_format(OrderItemList::whereHas('order', function ($q2) {
-            $q2->whereYear('date_ordered', Carbon::now()->year)
-                ->whereMonth('date_ordered', Carbon::now()->month);
-        })->sum('amount * price'), 2, ',');
-        $countUndeliveredOrders = Order::whereNull('date_sent')
-            ->whereNull('date_cancelled')
-            ->count();
+        $totalEarnings = number_format($totalEarnings, 2, ',');
+        $undeliveredEarnings = number_format($undeliveredEarnings, 2, ',');
+        $currentMonthEarnings = number_format($currentMonthEarnings, 2, ',');
 
         return view('home', compact(
-            'earningTotal', 
-            'earningUndelivered', 
-            'earningCurrentMonth', 
+            'totalEarnings', 
+            'undeliveredEarnings', 
+            'currentMonthEarnings', 
             'countActiveOrders', 
             'countUndeliveredOrders', 
             'countThisMonthOrders'

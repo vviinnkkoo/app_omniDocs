@@ -13,7 +13,7 @@
               <div class="card text-white bg-success mb-3">
                 <div class="card-header">Sveukupno naručeno: <span class="badge text-bg-warning rounded-pill">{{ $countOrders }}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ $earningTotal }} €</h5>
+                  <h5 class="card-title">{{ $totalEarnings }} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
@@ -22,7 +22,7 @@
               <div class="card text-white bg-primary mb-3">
                 <div class="card-header">Neisporučeno do danas: <span class="badge text-bg-warning rounded-pill">{{ $countUndeliveredOrders }}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ $earningUndelivered }} €</h5>
+                  <h5 class="card-title">{{ $undeliveredEarnings }} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
@@ -31,7 +31,7 @@
               <div class="card text-white bg-dark mb-3">
                 <div class="card-header">Naručeno ovaj mjesec: <span class="badge text-bg-warning rounded-pill">{{ $countThisMonthOrders }}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ $earningCurrentMonth }} €</h5>
+                  <h5 class="card-title">{{ $currentMonthEarnings }} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
