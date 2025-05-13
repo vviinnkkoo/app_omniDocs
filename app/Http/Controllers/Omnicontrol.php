@@ -40,6 +40,7 @@ class Omnicontrol extends Controller
         $countThisMonthOrders = $thisMonthOrderIds->count();
 
         $workYears = WorkYears::pluck('year')->values();
+        dd($workYears);
 
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
