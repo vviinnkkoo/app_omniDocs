@@ -8,6 +8,7 @@ use App\Models\OrderItemList;
 use App\Models\Order;
 use App\Models\DeliveryService;
 use App\Models\Receipt;
+use App\Models\WorkYears;
 use App\Services\GlobalService;
 
 use Carbon\Carbon;
@@ -26,20 +27,20 @@ class Omnicontrol extends Controller
 
     // Display index page
     public function index()
-    {
-        // Get all active orders
+    {        
         $activeOrderIds = Order::whereNull('date_cancelled')->pluck('id');
         $countActiveOrders = $activeOrderIds->count();
-        // Get all undelivered orders
+
         $undeliveredOrderIds = Order::whereNull('date_sent')->whereNull('date_cancelled')->pluck('id');
         $countUndeliveredOrders = $undeliveredOrderIds->count();
-        // Get this month orders
+        
         $thisMonthOrderIds = Order::whereYear('date_ordered', Carbon::now()->year)
             ->whereMonth('date_ordered', Carbon::now()->month)
             ->pluck('id');
         $countThisMonthOrders = $thisMonthOrderIds->count();
 
-        // Initialize total earnings to 0
+        $workYears = WorkYears::orderBy('year')->pluck('year')->toArray();
+
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
         foreach ($activeOrderIds as $orderId) {
@@ -64,7 +65,8 @@ class Omnicontrol extends Controller
             'currentMonthEarnings', 
             'countActiveOrders', 
             'countUndeliveredOrders', 
-            'countThisMonthOrders'
+            'countThisMonthOrders',
+            'workYears'
         ));
     }
 }
