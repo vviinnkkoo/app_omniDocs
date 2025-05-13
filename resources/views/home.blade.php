@@ -11,7 +11,7 @@
         <h1>Status narudžbi</h1>
         <div class="col-sm">
               <div class="card text-white bg-success mb-3">
-                <div class="card-header">Sveukupno naručeno: <span class="badge text-bg-warning rounded-pill">{{ $countOrders }}</span></div>
+                <div class="card-header">Sveukupno naručeno: <span class="badge text-bg-warning rounded-pill">{{ $countActiveOrders }}</span></div>
                 <div class="card-body">
                   <h5 class="card-title">{{ $totalEarnings }} €</h5>
                   <p class="card-text">...</p>
