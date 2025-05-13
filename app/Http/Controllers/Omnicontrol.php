@@ -78,7 +78,7 @@ class Omnicontrol extends Controller
             'countActiveOrders', 
             'countUndeliveredOrders', 
             'countThisMonthOrders',
-            'workYears'
+            'yearData'
         ));
     }
 }
