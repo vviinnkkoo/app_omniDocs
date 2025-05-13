@@ -41,7 +41,7 @@
     </div>
     @foreach ($workYears as $year)
       <div class="row mt-3">
-        <h2>Godina: {{ $year }}</h2>
+        <h3>Godina: {{ $year }}</h2>
         <div class="col-sm">
               <div class="card text-white bg-secondary mb-3">
                 <div class="card-header">Izdano računa</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\ReceiptController::countReceipts(2023) --}}</span></div>
