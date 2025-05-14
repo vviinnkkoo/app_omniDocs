@@ -33,23 +33,13 @@ class GlobalService
     
     public static function calculateTotalForAllReceiptsInYear($year)
     {
-        $query = Receipt::with(['order.deliveryService'])->where('is_cancelled', 0);
-        $workingYears = WorkYears::pluck('year')->toArray();
-
-        if (in_array($year, $workingYears)) {
-            $query->where('year', $year);
-        } elseif ($year === 3) {
-            $query->whereNotNull('paid_date');
-        }
-
-        $receipts = $query->get();
-        $totalSum = 0;
-
-        foreach ($receipts as $receipt) {
-            $totalSum += self::calculateReceiptTotal($receipt->order_id);
-        }
-
-        return $totalSum;
+        return DB::table('receipts')
+        ->join('orders', 'receipts.order_id', '=', 'orders.id')
+        ->join('order_item_list', 'orders.id', '=', 'orderorder_item_list.order_id')
+        ->where('receipts.is_cancelled', 0)
+        ->where('receipts.year', $year)
+        ->select(DB::raw('SUM(order_items.amount * order_items.price) as total'))
+        ->value('total') ?? 0;
     }
 
 
