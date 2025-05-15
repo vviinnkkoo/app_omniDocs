@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Receipt;
 use App\Models\OrderItemList;
 use App\Models\WorkYears;
