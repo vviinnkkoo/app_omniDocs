@@ -37,11 +37,11 @@ class GlobalService
     {
         return DB::table('receipts')
         ->join('orders', 'receipts.order_id', '=', 'orders.id')
-        ->join('order_item_list', 'orders.id', '=', 'orderorder_item_list.order_id')
+        ->join('order_item_list', 'orders.id', '=', 'order_item_list.order_id')
         ->where('receipts.is_cancelled', 0)
         ->where('receipts.year', $year)
-        ->select(DB::raw('SUM(order_items.amount * order_items.price) as total'))
-        ->value('total') ?? 0;
+        ->select(DB::raw(self::ORDER_ITEM_SUM_QUERY . self::ORDER_ITEM_SUM_ALIAS))
+        ->value(self::ORDER_ITEM_SUM_ALIAS) ?? 0;
     }
 
 
