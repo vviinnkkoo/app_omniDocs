@@ -46,10 +46,15 @@ class Omnicontrol extends Controller
         $invoiceCount = GlobalService::countReceipts($year);
         $invoiceSum = GlobalService::calculateTotalForAllReceiptsInYear($year);
 
+        $paymentCount = GlobalService::countAllPaymentsInYear($year);
+        $paymentSum = GlobalService::sumAllPaymentsInYear($year);
+
         $yearData[] = [
             'year' => $year,
             'invoiceCount' => $invoiceCount,
             'invoiceSum' => number_format($invoiceSum, 2, ','),
+            'paymentCount' => $paymentCount,
+            'paymentSum' => number_format($paymentSum, 2, ',')
         ];
     }
 

@@ -53,9 +53,9 @@
         </div>
         <div class="col-sm">          
               <div class="card text-white bg-dark mb-3">
-                <div class="card-header">Uplate</b>: <span class="badge text-bg-warning rounded-pill">{{-- App\Http\Controllers\KprController::countPayments(2023) --}}</span></div>
+                <div class="card-header">Uplate</b>: <span class="badge text-bg-warning rounded-pill">{{ $data['paymentCount'] }}</span></div>
                 <div class="card-body">
-                  <h5 class="card-title">{{-- App\Http\Controllers\KprController::getTotalPayments(2023) --}} €</h5>
+                  <h5 class="card-title">{{ $data['paymentSum'] }} €</h5>
                   <p class="card-text">...</p>
                 </div>
               </div>
