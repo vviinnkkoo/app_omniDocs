@@ -49,7 +49,7 @@ class Omnicontrol extends Controller
         $yearData[] = [
             'year' => $year,
             'invoiceCount' => $invoiceCount,
-            'invoiceSum' => $invoiceSum,
+            'invoiceSum' => number_format($invoiceSum, 2, ','),
         ];
     }
 
