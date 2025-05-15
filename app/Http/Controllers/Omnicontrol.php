@@ -43,20 +43,20 @@ class Omnicontrol extends Controller
         $yearData = [];
 
         foreach ($workYears as $year) {
-        $invoiceCount = GlobalService::countReceipts($year);
-        $invoiceSum = GlobalService::calculateTotalForAllReceiptsInYear($year);
+            $invoiceCount = GlobalService::countReceipts($year);
+            $invoiceSum = GlobalService::calculateTotalForAllReceiptsInYear($year);
 
-        $paymentCount = GlobalService::countAllPaymentsInYear($year);
-        $paymentSum = GlobalService::sumAllPaymentsInYear($year);
+            $paymentCount = GlobalService::countAllPaymentsInYear($year);
+            $paymentSum = GlobalService::sumAllPaymentsInYear($year);
 
-        $yearData[] = [
-            'year' => $year,
-            'invoiceCount' => $invoiceCount,
-            'invoiceSum' => number_format($invoiceSum, 2, ','),
-            'paymentCount' => $paymentCount,
-            'paymentSum' => number_format($paymentSum, 2, ',')
-        ];
-    }
+            $yearData[] = [
+                'year' => $year,
+                'invoiceCount' => $invoiceCount,
+                'invoiceSum' => number_format($invoiceSum, 2, ','),
+                'paymentCount' => $paymentCount,
+                'paymentSum' => number_format($paymentSum, 2, ',')
+            ];
+        }
 
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
