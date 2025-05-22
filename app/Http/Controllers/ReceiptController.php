@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\DeliveryService;
 use App\Models\OrderItemList;
 use App\Models\WorkYears;
+use App\Models\KprItemList;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use App\Services\GlobalService;
@@ -28,19 +29,21 @@ class ReceiptController extends Controller
             $years = Carbon::now()->year;
         }
 
-        $receipts = Receipt::where('year', $year)->orderBy('number')->paginate(25);
-        $orders = Order::whereNull('date_cancelled')->orderBy('id')->get();
+        $orderIdsWithReceipts = Receipt::where('is_cancelled', 0)->pluck('order_id')->toArray(); // Get all order IDs that have receipts
+        $orders = Order::whereNotIn('id', $orderIdsWithReceipts)->with('customer')->get(); // Get all orders that do not have receipts
+        $receipts = Receipt::with('kprItem')->where('year', $year)->orderBy('number')->paginate(25);
         $latest = GlobalService::getLatestReceiptNumber($year);
 
         foreach ($receipts as $receipt) {
+            $receipt->customerName = $receipt->order->customer->name ?? '';
+            $receipt->paymentTypeName = $receipt->order->paymentType->name ?? '';
+            $receipt->formatedDateCreatedAt = Carbon::parse($receipt->created_at)->format('d.m.Y - H:i:s');
             $receipt->totalAmount = GlobalService::calculateReceiptTotal($receipt->order_id);
         }
 
-        return view('receipts', [
-            'receipts' => $receipts,
-            'orders' => $orders,
-            'latest' => $latest
-        ]);
+        return view('receipts', compact(
+            'receipts', 'orders', 'latest'
+        ));
     }
 
     public function store(Request $request)
