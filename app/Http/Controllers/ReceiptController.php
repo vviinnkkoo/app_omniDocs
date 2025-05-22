@@ -38,7 +38,7 @@ class ReceiptController extends Controller
             $receipt->customerName = $receipt->order->customer->name ?? '';
             $receipt->paymentTypeName = $receipt->order->paymentType->name ?? '';
             $receipt->formatedDateCreatedAt = Carbon::parse($receipt->created_at)->format('d.m.Y - H:i:s');
-            $receipt->totalAmount = GlobalService::calculateReceiptTotal($receipt->order_id);
+            $receipt->totalAmount = number_format(GlobalService::calculateReceiptTotal($receipt->order_id), 2, ','); // Get and format total amount
         }
 
         return view('receipts', compact(
