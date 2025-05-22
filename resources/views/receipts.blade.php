@@ -70,7 +70,7 @@
 
                                   <td>
                                     @if ( $receipt->hasPayment )
-                                      <a href="/uredi-uplatu/{{ $receipt->paymentId }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
+                                      <a href="/knjiga-prometa/{{ $receipt->paymentId }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
                                         </i> Uplata <span class="badge badge-secondary" style="background-color:darkred">ID: {{ $receipt->paymentId }}</span>
                                       </a>
                                     @endif
