@@ -19,7 +19,7 @@ class Receipt extends Model
         return $this->belongsTo(Order::class, 'order_id');
     }
 
-    public function canceller()
+    /* public function canceller()
     {
         return $this->hasOne(self::class, 'cancelled_receipt_id');
     }
@@ -32,7 +32,7 @@ class Receipt extends Model
     public function getIsCancellingAttribute(): bool
     {
         return self::where('cancelled_receipt_id', $this->id)->exists();
-    }
+    } */
 
     public function kprItem()
     {
