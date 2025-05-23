@@ -23,6 +23,7 @@
                         <th scope="col">Narudžba</th>
                         <th scope="col">Način plaćanja</th>
                         <th scope="col">Vrijeme izdavanja</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Iznos na računu</th>
                         <th scope="col">Storno</th>
                         <th scope="col">Povezana uplata</th>
@@ -56,6 +57,10 @@
                                     <div class="editable-date-invoice" data-id="{{ $receipt->id }}" data-field="created_at" data-model="racuni" data-raw-date="{{ $receipt->created_at }}">
                                       <div class="date-display">{{ $receipt->formatedDateCreatedAt }}</div>
                                     </div>
+                                  </td>
+
+                                  <td class="align-middle text-right">
+                                    {{-- Nenaplaćen / Naplaćen / Storno račun / Storniran --}}
                                   </td>
 
                                   <td class="align-middle text-right">

@@ -13,8 +13,9 @@ use App\Models\Order;
 class GlobalService
 {
     // Define the query strings as a constant
-    const ORDER_ITEM_SUM_QUERY = 'SUM(amount * price * ( ( 100 - discount ) / 100 )) as ';
-    const ORDER_ITEM_SUM_ALIAS = 'calculation';
+    const SUM_QUERY = 'SUM(amount * price * ( ( 100 - discount ) / 100 )) as ';
+    const SUM_ALIAS = 'calculation';
+
 
     // Receipt :: Global functions
     public static function getLatestReceiptNumber($year)
@@ -28,8 +29,13 @@ class GlobalService
         $order = Order::with(['deliveryService'])->findOrFail($id);
         $deliveryCost = $order->deliveryService->default_cost;
         $subtotal = self::sumWholeOrder($id);
+        $total = $subtotal + $deliveryCost;
 
-        return $subtotal + $deliveryCost;
+        if (!is_null($receipt->cancelled_receipt_id)) {
+            $total *= -1;
+        }
+
+        return $total;
     }
 
     
@@ -40,8 +46,8 @@ class GlobalService
         ->join('order_item_list', 'orders.id', '=', 'order_item_list.order_id')
         ->where('receipts.is_cancelled', 0)
         ->where('receipts.year', $year)
-        ->select(DB::raw(self::ORDER_ITEM_SUM_QUERY . self::ORDER_ITEM_SUM_ALIAS))
-        ->value(self::ORDER_ITEM_SUM_ALIAS) ?? 0;
+        ->select(DB::raw(self::SUM_QUERY . self::SUM_ALIAS))
+        ->value(self::SUM_ALIAS) ?? 0;
     }
 
 
@@ -53,7 +59,7 @@ class GlobalService
 
     private static function getOrderItemSumQuery($alias)
     {
-        return self::ORDER_ITEM_SUM_QUERY . $alias;
+        return self::SUM_QUERY . $alias;
     }
 
 
@@ -61,8 +67,8 @@ class GlobalService
     public static function sumWholeOrder($id)
     {
         return OrderItemList::where('order_id', $id)
-            ->selectRaw(self::getOrderItemSumQuery(self::ORDER_ITEM_SUM_ALIAS))
-            ->pluck(self::ORDER_ITEM_SUM_ALIAS)
+            ->selectRaw(self::getOrderItemSumQuery(self::SUM_ALIAS))
+            ->pluck(self::SUM_ALIAS)
             ->first();
     }
 
@@ -70,10 +76,11 @@ class GlobalService
     public static function sumSingleOrderItem($id)
     {        
         return OrderItemList::where('id', $id)
-            ->selectRaw(self::getOrderItemSumQuery(self::ORDER_ITEM_SUM_ALIAS))
-            ->pluck(self::ORDER_ITEM_SUM_ALIAS)
+            ->selectRaw(self::getOrderItemSumQuery(self::SUM_ALIAS))
+            ->pluck(self::SUM_ALIAS)
             ->first();
     }
+
 
     // KPR :: Global functions
     public static function sumAllPaymentsInYear($year)
