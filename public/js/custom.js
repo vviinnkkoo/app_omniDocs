@@ -291,6 +291,11 @@ document.getElementById("refresh-number-btn").addEventListener("click", function
                 numberInput.disabled = false;
                 numberInput.classList.remove("opacity-50");
                 loader.classList.add("d-none");
-            }, 500); // pola sekunde pauze
+            }, 500); // Delay in ms
+        })
+        .catch(() => {
+            numberInput.disabled = false;
+            numberInput.classList.remove("opacity-50");
+            loader.classList.add("d-none");
         });
 });
