@@ -39,8 +39,8 @@ class ReceiptController extends Controller
             $receipt->paymentTypeName = $receipt->order->paymentType->name ?? '';
             $receipt->formatedDateCreatedAt = Carbon::parse($receipt->created_at)->format('d.m.Y - H:i:s');
             $receipt->totalAmount = GlobalService::calculateReceiptTotal($receipt->order_id); // Get total amount
-            if (!is_null($receipt->cancelled_receipt_id)) { $totalAmount *= -1; } // Invert total amount if receipt is cancelling another receipt
-            $receipt->totalAmount = number_format($totalAmount, 2, ','); // Format total amount for display
+            if (!is_null($receipt->cancelled_receipt_id)) { $receipt->totalAmount *= -1; } // Invert total amount if receipt is cancelling another receipt
+            $receipt->totalAmount = number_format($receipt->totalAmount, 2, ','); // Format total amount for display
         }
 
         return view('receipts', compact(
