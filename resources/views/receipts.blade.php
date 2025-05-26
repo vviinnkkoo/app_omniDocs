@@ -129,8 +129,11 @@
                   <label for="number">Redni broj računa:</label>
                   <div class="input-group">
                     <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latest }}">
-                    <button type="button" class="btn btn-outline-secondary" id="refresh-number-btn">
+                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" id="refresh-number-btn">
                       🔄
+                      <div id="numberLoader" class="spinner-border spinner-border-sm text-primary d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     </button>
                   </div>
                 </div>

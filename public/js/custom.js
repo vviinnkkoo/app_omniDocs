@@ -276,18 +276,21 @@ function qS() {
 document.getElementById("refreshNumberBtn").addEventListener("click", function () {
     const numberInput = document.getElementById("number");
     const year = document.getElementById("year").value;
+    const loader = document.getElementById("numberLoader");
 
-    // Disable the input and add a class for visual feedback
     numberInput.disabled = true;
     numberInput.classList.add("opacity-50");
+    loader.classList.remove("d-none");
 
     fetch(`/racuni/zadnji-broj/${year}`)
         .then(response => response.json())
         .then(data => {
-            numberInput.value = data.latest_number;
-        })
-        .finally(() => {
-            numberInput.disabled = false;
-            numberInput.classList.remove("opacity-50");
+            setTimeout(() => {
+                numberInput.value = data.latest_number;
+
+                numberInput.disabled = false;
+                numberInput.classList.remove("opacity-50");
+                loader.classList.add("d-none");
+            }, 500); // pola sekunde pauze
         });
 });
