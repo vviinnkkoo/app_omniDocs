@@ -286,7 +286,7 @@ document.getElementById("refresh-number-btn").addEventListener("click", function
         .then(response => response.json())
         .then(data => {
             setTimeout(() => {
-                numberInput.value = data.latest_number;
+                numberInput.value = data.latest;
 
                 numberInput.disabled = false;
                 numberInput.classList.remove("opacity-50");
