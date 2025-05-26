@@ -273,7 +273,7 @@ function qS() {
     (document.body.scrollTop = 0), (document.documentElement.scrollTop = 0);
 }
 
-document.getElementById("refreshNumberBtn").addEventListener("click", function () {
+document.getElementById("refresh-number-btn").addEventListener("click", function () {
     const numberInput = document.getElementById("number");
     const year = document.getElementById("year").value;
     const loader = document.getElementById("numberLoader");
