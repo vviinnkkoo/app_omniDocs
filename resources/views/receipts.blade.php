@@ -128,7 +128,7 @@
                 <div class="mb-3">
                   <label for="number">Redni broj računa:</label>
                   <div class="input-group">
-                    <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latest }}">
+                    <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latest }}" required>
                     <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" id="refresh-number-btn">
                       🔄
                       <div id="numberLoader" class="spinner-border spinner-border-sm text-primary d-none" role="status">
@@ -140,8 +140,8 @@
 
                 <div class="mb-3">
                   <label for="order_id">Povezana narudžba:</label><br>
-                  <select class="form-select searchable-select-modal" id="order_id" name="order_id">
-                      <option selected>Odaberi narudžbu...</option>
+                  <select class="form-select searchable-select-modal" id="order_id" name="order_id" required>
+                      <option disabled selected>Odaberi narudžbu...</option>
                       @foreach ($orders as $order)
                         <option value="{{ $order->id }}">{{ $order->id }} - {{ $order->customer->name }}</option>
                       @endforeach
@@ -150,7 +150,7 @@
 
                 <div class="mb-3">
                   <label for="year">Godina računa:</label>
-                  <select class="form-select searchable-select-modal" id="year" name="year">
+                  <select class="form-select searchable-select-modal" id="year" name="year" required>
                     @foreach ($workYears as $workYear)
                       <option {{ $loop->last ? 'selected' : '' }}>{{ $workYear->year }}</option>
                     @endforeach

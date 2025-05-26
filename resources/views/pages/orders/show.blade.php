@@ -472,14 +472,22 @@
 
                 <div class="mb-3">
                   <label for="number">Redni broj računa:</label>
-                  <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestReceiptNumber }}">
+                  <div class="input-group">
+                    <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestReceiptNumber }}" required>
+                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" id="refresh-number-btn">
+                      🔄
+                      <div id="numberLoader" class="spinner-border spinner-border-sm text-primary d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </button>
+                  </div>
                 </div>
 
-                <input type="hidden" placeholder="Unesi redni broj računa..." id="order_id" name="order_id" value="{{ $order->id }}">
+                <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" requried>
 
                 <div class="mb-3">
                   <label for="year">Godina računa:</label>
-                  <select class="form-select searchable-select-modal" id="year" name="year">
+                  <select class="form-select searchable-select-modal" id="year" name="year" required>
                     @foreach ($workYears as $workYear)
                       <option {{ $loop->last ? 'selected' : '' }}>{{ $workYear->year }}</option>
                     @endforeach

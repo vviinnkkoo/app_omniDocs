@@ -161,8 +161,8 @@
             {{-- Customer --}}
             <div class="mb-3">
               <label for="customer_id">Kupac:</label>
-              <select class="form-select searchable-select-modal" id="customer_id" name="customer_id">
-                <option selected>Odaberi kupca...</option>
+              <select class="form-select searchable-select-modal" id="customer_id" name="customer_id" required>
+                <option disabled selected>Odaberi kupca...</option>
                 @foreach ($customers as $customer)
                   <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->city }}</option>                                  
                 @endforeach
@@ -172,20 +172,20 @@
             {{-- Order date --}}
             <div class="mb-3">
               <label for="date_ordered">Datum narudžbe:</label>
-              <input type="date" class="form-control" id="date_ordered" name="date_ordered">
+              <input type="date" class="form-control" id="date_ordered" name="date_ordered" required>
             </div>
 
             {{-- Delivery ETA --}}
             <div class="mb-3">
               <label for="date_ordered">Krajnji rok za isporuku:</label>
-              <input type="date" class="form-control" id="date_deadline" name="date_deadline">
+              <input type="date" class="form-control" id="date_deadline" name="date_deadline" required>
             </div>          
 
             {{-- Sales channel --}}
             <div class="mb-3">
               <label for="source_id">Kanal prodaje:</label>
-              <select class="form-select searchable-select-modal" id="source_id" name="source_id">
-                <option selected>Odaberi kanal prodaje...</option>
+              <select class="form-select searchable-select-modal" id="source_id" name="source_id" required>
+                <option disabled selected>Odaberi kanal prodaje...</option>
                 @foreach ($sources as $source)
                   <option value="{{ $source->id }}">{{ $source->name }}</option>                                  
                 @endforeach
@@ -195,9 +195,9 @@
             {{-- Delivery service --}}
             <div class="mb-3">
               <label for="delivery_service_id">Dostavna služba:</label>
-              <select class="form-select searchable-select-modal" id="delivery_service_id" name="delivery_service_id">
+              <select class="form-select searchable-select-modal" id="delivery_service_id" name="delivery_service_id" required>
 
-                <option selected>Odaberi dostavnu službu...</option>
+                <option disabled selected>Odaberi dostavnu službu...</option>
 
                 @foreach ($deliveryCompanies as $company)
                   <optgroup label="{{ $company->name }}">
@@ -215,7 +215,7 @@
             <div class="mb-3">
               <span style="display: block;">Način plaćanja:</span>
                 @foreach ($paymentTypes as $paymentType)
-                  <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" />
+                  <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" required>
                   <label class="btn btn-secondary btn-sm me-2 mb-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
                 @endforeach
             </div>
