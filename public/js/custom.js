@@ -273,15 +273,21 @@ function qS() {
     (document.body.scrollTop = 0), (document.documentElement.scrollTop = 0);
 }
 
-// Refresh the latest invoice number for a given year
-document.getElementById('refresh-number-btn').addEventListener('click', function () {
-    const year = document.getElementById('year').value;
-    alert('Button radi!');
+document.getElementById("refreshNumberBtn").addEventListener("click", function () {
+    const numberInput = document.getElementById("number");
+    const year = document.getElementById("year").value;
+
+    // Disable the input and add a class for visual feedback
+    numberInput.disabled = true;
+    numberInput.classList.add("opacity-50");
 
     fetch(`/racuni/zadnji-broj/${year}`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('number').value = data.latest;
+            numberInput.value = data.latest_number;
         })
-        .catch(error => console.error('Greška pri dohvaćanju broja:', error));
+        .finally(() => {
+            numberInput.disabled = false;
+            numberInput.classList.remove("opacity-50");
+        });
 });
