@@ -31,10 +31,6 @@ class GlobalService
         $subtotal = self::sumWholeOrder($id);
         $total = $subtotal + $deliveryCost;
 
-        if (!is_null($receipt->cancelled_receipt_id)) {
-            $total *= -1;
-        }
-
         return $total;
     }
 
