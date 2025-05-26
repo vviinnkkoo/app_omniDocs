@@ -276,6 +276,7 @@ function qS() {
 // Refresh the latest invoice number for a given year
 document.getElementById('refresh-number-btn').addEventListener('click', function () {
     const year = document.getElementById('year').value;
+    alert('Button radi!');
 
     fetch(`/racuni/zadnji-broj/${year}`)
         .then(response => response.json())
