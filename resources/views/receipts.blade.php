@@ -127,7 +127,12 @@
 
                 <div class="mb-3">
                   <label for="number">Redni broj računa:</label>
-                  <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latest }}">
+                  <div class="input-group">
+                    <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latest }}">
+                    <button type="button" class="btn btn-outline-secondary" id="refresh-number-btn">
+                      🔄
+                    </button>
+                  </div>
                 </div>
 
                 <div class="mb-3">

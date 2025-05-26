@@ -89,4 +89,13 @@ class ReceiptController extends Controller
         $receipt->update(['is_cancelled' => !$receipt->is_cancelled]);
     }
 
+    public function latestNumber($year)
+    {
+        $latest = GlobalService::getLatestReceiptNumber($year);
+
+        return response()->json([
+            'latest' => $latest
+        ]);
+    }
+
 }

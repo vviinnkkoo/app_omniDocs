@@ -26,13 +26,12 @@ Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 Route::get('/prijava-u-app', [LoginController::class, 'showLoginForm'])->name('auth.login')->middleware('throttle:3,1');
 Route::post('/prijava-u-app', [LoginController::class, 'login'])->middleware('throttle:3,1');
 
-// Display and Post routes
-
     // Index page
     Route::get('/', [Omnicontrol::class, 'index']);
 
     // Custom routes //
-    Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index');
+    Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index'); // Index override for the view
+    Route::get('/racuni/zadnji-broj/{year}', [ReceiptController::class, 'getLatestNumber'])->name('racuni.getLatestNumber'); // Return JSON format for AJAX refresh
     Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
     Route::get('/narudzbe/prikaz/{type}', [OrderController::class, 'index'])->name('narudzbe.index');
 

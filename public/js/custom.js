@@ -272,3 +272,15 @@ Pl.addEventListener("click", qS);
 function qS() {
     (document.body.scrollTop = 0), (document.documentElement.scrollTop = 0);
 }
+
+// Refresh the latest invoice number for a given year
+document.getElementById('refresh-number-btn').addEventListener('click', function () {
+    const year = document.getElementById('year').value;
+
+    fetch(`/racuni/zadnji-broj/${year}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('number').value = data.latest;
+        })
+        .catch(error => console.error('Greška pri dohvaćanju broja:', error));
+});
