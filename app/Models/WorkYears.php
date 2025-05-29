@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkYears extends Model
 {
-    protected $fillable = ['year']
+    protected $fillable = ['year'];
 }
