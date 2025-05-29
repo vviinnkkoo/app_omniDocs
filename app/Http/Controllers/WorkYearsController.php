@@ -25,15 +25,15 @@ class WorkYearsController extends Controller
         $validator = Validator::make($request->all(), [
         'year' => 'required'
         ]);
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'Molimo unesite radnu godinu.')
-                    ->withInput();
-            }
-        $source = new WorkYears;
-        $source->year = $request->year;
-        $source->save();
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->with('error', 'Molimo unesite radnu godinu.')
+                ->withInput();
+        }
+
+        WorkYears::create($request->all());
     
         return redirect()->back()
             ->with('success', 'Radna godina je uspješno dodana.');

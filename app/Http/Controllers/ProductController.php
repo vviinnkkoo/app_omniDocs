@@ -53,11 +53,9 @@ class ProductController extends Controller
                 ->withErrors($validator);
         }
 
-        Product::create($request->only(['name', 'product_type_id', 'default_price']));
+        Product::create($request->all());
 
-        return redirect()
-            ->route('products.index')
-            ->with('success', 'Proizvod je uspješno dodan.');
+        return redirect()->back()->with('success', 'Proizvod je uspješno dodan.');
     }
 
     public function update(Request $request, $id)

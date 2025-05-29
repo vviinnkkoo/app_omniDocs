@@ -26,15 +26,17 @@ class SourceController extends Controller
         $validator = Validator::make($request->all(), [
         'name' => 'required'
         ]);
-            if ($validator->fails()) {
-                return redirect('/kanali-prodaje')
-                    ->withInput()
-                    ->withErrors($validator);
-            }
-        $source = new Source;
-        $source->name = $request->name;
-        $source->save();
-        return redirect('/kanali-prodaje');
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        Source::store($request->all());
+
+        return redirect()->back()->with('success', 'Novi kanal prodaje uspješno dodan.');
     }
 
     public function update(Request $request, $id)
@@ -54,15 +56,9 @@ class SourceController extends Controller
     {
 
         $record = Source::findOrFail($id);
-
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
         if ($record->delete()) {
             return response()->json(['message' => 'Record deleted successfully']);
         }
-
         return response()->json(['message' => 'Error deleting the record'], 500);
     }
 }
