@@ -42,7 +42,7 @@ class ColorController extends Controller
         $color->name = $request->name;
         $color->save();
     
-        return redirect('/boje-proizvoda');
+        return redirect()->back()->with('success', 'Boja uspješno dodana!');
     }
 
 

@@ -12,42 +12,35 @@ use Illuminate\Http\JsonResponse;
 
 class WorkYearsController extends Controller
 {
-    // Protect all functions and redirect to login if necessary
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-
-    // GET function for displaying purposes
-    public function show() {        
-        return view('workYears');
+    public function index() {        
+        return view('pages.work-years.index');
     }
 
-
-    // POST function for saving new stuff
-    public function save (Request $request) {
-
+    public function store (Request $request) {
         $validator = Validator::make($request->all(), [
         'year' => 'required'
         ]);
             if ($validator->fails()) {
-                return redirect('/radne-godine')
-                    ->withInput()
-                    ->withErrors($validator);
+                return redirect()
+                    ->back()
+                    ->with('error', 'Molimo unesite radnu godinu.')
+                    ->withInput();
             }
         $source = new WorkYears;
         $source->year = $request->year;
         $source->save();
     
-        return redirect('/radne-godine');
+        return redirect()->back()
+            ->with('success', 'Radna godina je uspješno dodana.');
     }
 
-
-    // UPDATE (Ajax version)
     public function update(Request $request, $id)
     {
-
         $source = WorkYears::findOrFail($id);
 
         $field = $request->input('field');
@@ -59,11 +52,8 @@ class WorkYearsController extends Controller
         return response()->json(['message' => 'Payment type updated successfully']);
     }
 
-
-    // DELETE function (Ajax version)
     public function destroy(Request $request, $id): JsonResponse
     {
-
         $record = WorkYears::findOrFail($id);
 
         if (!$record) {

@@ -43,7 +43,7 @@ class ReceiptController extends Controller
             $receipt->totalAmount = number_format($receipt->totalAmount, 2, ','); // Format total amount for display
         }
 
-        return view('receipts', compact(
+        return view('pages.receipts.index', compact(
             'receipts', 'orders', 'latest'
         ));
     }

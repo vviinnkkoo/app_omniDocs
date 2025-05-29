@@ -53,7 +53,7 @@ class KprController extends Controller
             $item->index = $kprs->firstItem() + $index;
         }
 
-        return view('kpr-view', compact('kprs', 'year', 'paymentMethods'));
+        return view('pages.kpr.index', compact('kprs', 'year', 'paymentMethods'));
     }
 
 
@@ -101,7 +101,7 @@ class KprController extends Controller
             $item->receiptID = $item->receipt->id;
         }
     
-        return view('kpr-edit', compact('kprInstance', 'year', 'invoiceList', 'receipts', 'receiptOptions', 'count'));
+        return view('pages.kpr.show', compact('kprInstance', 'year', 'invoiceList', 'receipts', 'receiptOptions', 'count'));
     }
     
 
