@@ -79,29 +79,11 @@ Route::post('/kanali-prodaje', [SourceController::class, 'save']);
 Route::put('/update-source/{id}', [SourceController::class, 'update']);
 Route::delete('/delete-source/{id}', [SourceController::class, 'destroy'])->name('delete.row');
 
-// Work years //
-Route::get('/radne-godine', [WorkYearsController::class, 'show']);
-Route::post('/radne-godine', [WorkYearsController::class, 'save']);
-Route::put('/update-work-year/{id}', [WorkYearsController::class, 'update']);
-Route::delete('/delete-work-year/{id}', [WorkYearsController::class, 'destroy'])->name('delete.row');
-
 // Product types //
 Route::get('/vrste-proizvoda', [ProductTypeController::class, 'show']);
 Route::post('/vrste-proizvoda', [ProductTypeController::class, 'save']);
 Route::put('/update-product-type/{id}', [ProductTypeController::class, 'update']);
 Route::delete('/delete-product-type/{id}', [ProductTypeController::class, 'destroy'])->name('delete.row');
-
-// Colors //
-Route::get('/boje-proizvoda', [ColorController::class, 'show']);
-Route::post('/boje-proizvoda', [ColorController::class, 'save']);
-Route::put('/update-color/{id}', [ColorController::class, 'update']);
-Route::delete('/delete-color/{id}', [ColorController::class, 'destroy'])->name('delete.row');
-
-// Products //
-Route::get('/proizvodi', [ProductController::class, 'show']);
-Route::post('/proizvodi', [ProductController::class, 'save']);
-Route::put('/update-product/{id}', [ProductController::class, 'update']);
-Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('delete.row');
 
 // PDF render //
 Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);

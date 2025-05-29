@@ -67,7 +67,7 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/proizvodi"><i class="bi bi-suit-club"></i> Proizvodi</a>
                                     <a class="dropdown-item" href="/vrste-proizvoda"><i class="bi bi-tags"></i> Vrsta proizvoda</a>
-                                    <a class="dropdown-item" href="/boje-proizvoda"><i class="bi bi-palette"></i> Boje proizvoda</a>
+                                    <a class="dropdown-item" href="/opis"><i class="bi bi-palette"></i> Boje proizvoda</a>
                                 </div>
                             </li>
 
