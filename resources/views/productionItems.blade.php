@@ -42,21 +42,21 @@
                                       @endif
                                     </td>
 
-                                    <td class="align-middle text-right">{{ App\Models\Product::find($item->product_id)->name }}</td>
+                                    <td class="align-middle text-right">{{ $item->productName }}</td>
 
                                     <td class="align-middle text-right">
                                         @if (isset($item->color_id))
-                                          {{ App\Models\Color::find($item->color_id)->name }}
+                                          {{ $item->colorName }}
                                         @else
                                           - - -
                                         @endif
                                     </td>
 
                                     <td class="align-middle text-right">
-                                        @if (App\Models\Product::find($item->product_id)->unit == 'kom')
-                                            {{ number_format(str_replace(',', '.', $item->amount), 0) }} {{ App\Models\Product::find($item->product_id)->unit }}
+                                        @if ($item->unit == 'kom')
+                                            {{ $item->formattedAmount }} {{ $item->unit }}
                                         @else
-                                            {{ $item->amount }} {{ App\Models\Product::find($item->product_id)->unit }}
+                                            {{ $item->amount }} {{ $item->unit }}
                                         @endif                                      
                                     </td>
 

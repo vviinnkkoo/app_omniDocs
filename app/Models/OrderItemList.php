@@ -62,4 +62,19 @@ class OrderItemList extends Model
     {
         return $this->product->unit ?? null;
     }
+
+    public function getFormattedAmountAttribute()
+    {
+        $unit = $this->unit();
+
+        if (!$unit) return $this->amount;
+
+        if ($unit === 'kom') {
+            $formattedAmount = number_format($amount, 0);
+        } else {
+            $formattedAmount = $amount;
+        }
+
+        return $formattedAmount;
+    }
 }
