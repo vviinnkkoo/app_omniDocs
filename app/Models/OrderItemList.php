@@ -65,7 +65,7 @@ class OrderItemList extends Model
 
     public function getFormattedAmountAttribute()
     {
-        $unit = $this->unit();
+        $unit = $this->unit;
 
         if (!$unit) return $this->amount;
 
