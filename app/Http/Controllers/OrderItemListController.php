@@ -83,12 +83,6 @@ class OrderItemListController extends Controller
                 abort(404);
         }
 
-        foreach ($items as $item) {
-            $item->product_name = $item->product->name ?? 'Nije definirano';
-            $item->color_name = $item->color->name ?? 'Nije definirano';
-            $item->amount = $item->formattedAmount;
-        }
-
         return view('productionItems', [
             'items' => $items,
             'title' => $title,

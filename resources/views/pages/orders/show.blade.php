@@ -234,7 +234,7 @@
                               <td class="align-middle text-right">
                                 <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
                                   <!-- Display the selected value -->
-                                  <span>{{ $item->product_name }}</span>
+                                  <span>{{ $item->productName }}</span>
                                   
                                   <!-- Hidden select element with options -->
                                   <select class="edit-select form-select" style="display: none !important">
@@ -250,7 +250,7 @@
                               <td class="align-middle text-right">
                                 <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
                                   <!-- Display the selected value -->
-                                  <span>{{ $item->color_name }}</span>
+                                  <span>{{ $item->colorName }}</span>
                                   
                                   <!-- Hidden select element with options -->
                                   <select class="edit-select form-select" style="display: none !important">
@@ -264,7 +264,7 @@
 
                               {{-- Količina --}}
                               <td class="align-middle text-right">
-                                <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->amount }}</span> {{ $item->unit }}
+                                <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->formattedAmount }}</span> {{ $item->unit }}
                               </td>
 
                               {{-- Cijena --}}
