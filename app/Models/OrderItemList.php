@@ -66,11 +66,11 @@ class OrderItemList extends Model
     public function getFormattedAmountAttribute()
     {
         if (!$this->unit) {
-            return $this->amount;
+            number_format($this->amount, 2, ',', '.')
         }
 
         return $this->unit === 'kom'
             ? number_format($this->amount, 0)
-            : $this->amount;
+            : number_format($this->amount, 2, ',', '.')
     }
 }
