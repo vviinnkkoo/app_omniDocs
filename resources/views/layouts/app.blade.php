@@ -82,9 +82,10 @@
                                     <a class="dropdown-item" href="/narudzbe/prikaz/neodradene"><i class="bi bi-exclamation-diamond-fill"></i> Neodrađene narudžbe</a>
                                     <a class="dropdown-item" href="/narudzbe/prikaz/otkazane"><i class="bi bi-x-octagon"></i> Otkazane narudžbe</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/proizvodi/1"><i class="bi bi-gear-fill"></i> Proizvodi u izradi</a>
-                                    <a class="dropdown-item" href="/proizvodi/2"><i class="bi bi-gear-fill"></i> U izradi po boji</a>
-                                    <a class="dropdown-item" href="/proizvodi/3"><i class="bi bi-gear-fill"></i> U izradi po proizvodu</a>
+                                    <a class="dropdown-item" href="/proizvodi/prikaz/u-izradi"><i class="bi bi-gear-fill"></i> Proizvodi u izradi</a>
+                                    <a class="dropdown-item" href="/proizvodi/prikaz/grupirano-prema-boji"><i class="bi bi-gear-fill"></i> U izradi po boji</a>
+                                    <a class="dropdown-item" href="/proizvodi/prikaz/grupirano-u-izradi"><i class="bi bi-gear-fill"></i> Grupirani proizvodi u izradi</a>
+                                    <a class="dropdown-item" href="/proizvodi/prikaz/izradeno"><i class="bi bi-gear-fill"></i> Izrađeno do sada</a>
                                 </div>
                             </li>
 

@@ -34,6 +34,7 @@ Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('
 Route::get('/racuni/zadnji-broj/{year}', [ReceiptController::class, 'getLatestNumber'])->name('racuni.getLatestNumber'); // Return JSON format for AJAX refresh
 Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
 Route::get('/narudzbe/prikaz/{type}', [OrderController::class, 'index'])->name('narudzbe.index');
+Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems']);
 
 // Resource routes
 Route::resources([
@@ -61,7 +62,6 @@ Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])-
 
 // Order item lists //
 Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
-Route::get('/proizvodi/{mode}', [OrderItemListController::class, 'showProductionItems']);
 Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']);
 Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
 Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);

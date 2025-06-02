@@ -44,55 +44,51 @@ class OrderItemListController extends Controller
 
     public function showProductionItems($mode) {
 
-        // show all items to be produced
-        if ($mode === '1') {
-            $items = OrderItemList::whereHas('order', function ($query) {
-                $query->whereNull('date_sent')->whereNull('date_cancelled');
-            })->get();
+        $pendingOrders = fn ($query) => $query->whereNull('date_sent')->whereNull('date_cancelled');
+        $sentOrders    = fn ($query) => $query->whereNotNull('date_sent')->whereNull('date_cancelled');
 
-            $title = "Svi proizvodi za izradu";
+        $baseQuery = OrderItemList::query()->with(['product', 'color', 'order']);
 
-        // show items grouped by color
-        } elseif ($mode === '2') {
-            $items = OrderItemList::select('product_id', 'color_id', \DB::raw('SUM(amount) as amount'))
-            ->whereHas('order', function ($query) {
-                $query->whereNull('date_sent')->whereNull('date_cancelled');
-            })
-            ->groupBy(['product_id', 'color_id'])
-            ->get();
+        switch ($mode) {
+            case 'u-izradi':
+                $items = $baseQuery->whereHas('order', $pendingOrders)->get();
+                $title = "Svi proizvodi za izradu";
+                break;
 
-            $title = "Količine za izradu - po boji";
-        
-        // show items grouped by product
-        } elseif ($mode === '3') {
-            $items = OrderItemList::select('product_id', \DB::raw('SUM(amount) as amount'))
-            ->whereHas('order', function ($query) {
-                $query->whereNull('date_sent')->whereNull('date_cancelled');
-            })
-            ->groupBy(['product_id'])
-            ->get();
+            case 'grupirano-prema-boji':
+                $items = $baseQuery->selectRaw('product_id, color_id, SUM(amount) as amount')
+                    ->whereHas('order', $pendingOrders)
+                    ->groupBy('product_id', 'color_id')
+                    ->get();
+                $title = "Količine za izradu - po boji";
+                break;
 
-            $title = "Količine za izradu - po proizvodu";
+            case 'grupirano-u-izradi':
+                $items = $baseQuery->selectRaw('product_id, SUM(amount) as amount')
+                    ->whereHas('order', $pendingOrders)
+                    ->groupBy('product_id')
+                    ->get();
+                $title = "Količine za izradu - po proizvodu";
+                break;
 
-        } elseif ($mode === '4') {
-            $items = OrderItemList::select('product_id', \DB::raw('SUM(amount) as amount'))
-            ->whereHas('order', function ($query) {
-                $query->whereNotNull('date_sent')->whereNull('date_cancelled');
-            })
-            ->groupBy(['product_id'])
-            ->get();
+            case 'izradeno':
+                $items = $baseQuery->selectRaw('product_id, SUM(amount) as amount')
+                    ->whereHas('order', $sentOrders)
+                    ->groupBy('product_id')
+                    ->get();
+                $title = "Izrađene količine - po proizvodu";
+                break;
 
-            $title = "Izrađene količine - po proizvodu";
-
-        } else {
-            return;
+            default:
+                abort(404);
         }
 
         return view('productionItems', [
             'items' => $items,
             'title' => $title,
             'count' => 1,
-            ]);
+        ]);
+
     }
 
     public function update(Request $request, $id)
