@@ -71,6 +71,6 @@ class OrderItemList extends Model
 
         return $this->unit === 'kom'
             ? number_format($this->amount, 0)
-            : number_format($this->amount, 2, ',', '.')
+            : number_format($this->amount, 2, ',', '.');
     }
 }
