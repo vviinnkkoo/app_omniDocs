@@ -10,21 +10,25 @@
             <div class="card">
                 <div class="card-body">
 
-                  <!-- New order and customer buttons, search bar section -->
-                  <div>
-                    <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova narudžba</button>
-                    <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px; margin-left:10px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
+                   <!-- New order and customer buttons, search bar section -->
+                  <div class="clearfix mb-3">
+                    <button id="popupButton" class="btn btn-primary float-start mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <i class="bi bi-file-earmark-plus"></i> Nova narudžba
+                    </button>
+                    <button id="popupButton" class="btn btn-primary float-start ms-2 mb-2" data-bs-toggle="modal" data-bs-target="#customerModal">
+                      <i class="bi bi-file-earmark-plus"></i> Novi kupac
+                    </button>
 
-                    <form method="GET" action="{{ $currentUrl }}" class="mb-3">
-                      <div class="input-group w-25 float-end">
-                          <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
-                          <button type="submit" class="btn btn-primary">Pretraži</button>
+                    <form method="GET" action="{{ $currentUrl }}" class="float-end mb-2">
+                      <div class="input-group w-25">
+                        <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">Pretraži</button>
                       </div>
                     </form>
                   </div>
 
                   <!-- Order type filter buttons -->
-                  <div>
+                  <div class="clearfix mb-3">
                     <a class="btn btn-primary btn-sm float-start" href="/narudzbe/prikaz/sve">Sve narudžbe</a>
                     <a class="btn btn-success btn-sm ms-1 float-start" href="/narudzbe/prikaz/poslane">Poslane narudžbe</a>
                     <a class="btn btn-warning btn-sm ms-1 float-start" href="/narudzbe/prikaz/neodradene">Neodrađene narudžbe</a>
