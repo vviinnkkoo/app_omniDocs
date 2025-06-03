@@ -95,7 +95,7 @@
                                     </td>
 
                                     <td>
-                                      <span>{{ $customer->formattedTotalOrderedAmount }} €</span>
+                                      <span class="align-middle text-right">{{ $customer->formattedTotalOrderedAmount }} €</span>
                                     </td>
 
                                     <td>
