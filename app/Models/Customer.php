@@ -23,4 +23,19 @@ class Customer extends Model
         return $this->belongsTo(Country::class, 'country_id');
     }
 
+    public function getFormattedTotalOrderedAmountAttribute()
+    {
+        if (!$this->relationLoaded('orders')) {
+        return 'Nema narudžbi';
+        }
+
+        $total = 0;
+
+        foreach ($this->orders as $order) {
+            $total += GlobalService::sumWholeOrder($order->id);
+        }
+
+        return number_format($total, 2, ',', '.');
+    }
+
 }

@@ -33,6 +33,7 @@
                           <th scope="col">Grad</th>
                           <th scope="col">Država</th>
                           <th scope="col">PBR</th>
+                          <th scope="col">Sveukupno naručeno</th>
                           <th></th>
                           <th></th>
                           
@@ -91,6 +92,10 @@
                                     </td>
                                     <td class="align-middle text-right">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
+                                    </td>
+
+                                    <td>
+                                      <span>{{ $customer->formattedTotalOrderedAmount }} €</span>
                                     </td>
 
                                     <td>
