@@ -94,8 +94,8 @@
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
                                     </td>
 
-                                    <td>
-                                      <span class="align-middle text-right">{{ $customer->formattedTotalOrderedAmount }} €</span>
+                                    <td class="align-middle text-right">
+                                      <span>{{ $customer->formattedTotalOrderedAmount }} €</span>
                                     </td>
 
                                     <td>
