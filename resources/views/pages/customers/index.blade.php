@@ -3,16 +3,12 @@
 @section('title', 'Omnius Art | Kupci')
 
 @section('content')
-<div class="containerx" style="margin-left:15%; margin-right:15%">
+<div class="containerx" style="margin-left:5%; margin-right:5%">
 
     <div class="row justify-content-center">
         <div class="col-xl-12">          
             <div class="card">
-
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
-
                 <div class="card-body">
-
                   <!-- Button to trigger the pop-up -->
                   <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
 
@@ -98,8 +94,8 @@
                                     </td>
 
                                     <td>
-                                      <a href="/narudzbe/prikaz/kupac/{{ $customer->id }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
-                                        </i> Sve narudžbe <span class="badge badge-secondary" style="background-color:darkred">{{ $customer->orders_count }}</span>
+                                      <a href="/narudzbe/prikaz/kupac/{{ $customer->id }}" class="btn btn-warning"><i class="bi bi-box-arrow-up-right"></i>
+                                        </i> Sve narudžbe <span class="badge badge-primary" style="background-color:limegreen">{{ $customer->orders_count }}</span>
                                       </a>
                                     </td>
 
