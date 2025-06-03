@@ -31,7 +31,7 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request, $type)
+    public function index(Request $request, $type, $customerId = null)
     {
         $search = $request->input('search');
         $query = Order::query();
@@ -54,7 +54,7 @@ class OrderController extends Controller
             });
         }
 
-        // Filter by order types
+        // Filter by defined types
         switch ($type) {
             case 'sve':
                 $orders = $query->orderBy('id')->paginate(25);
@@ -76,6 +76,15 @@ class OrderController extends Controller
                 $orders = $query->whereNotNull('date_cancelled')
                     ->orderBy('id')
                     ->paginate(25);
+                break;
+            case 'kupac':
+                if ($customerId) {
+                    $orders = $query->where('customer_id', $customerId)
+                        ->orderBy('id')
+                        ->paginate(25);
+                } else {
+                    return redirect()->back()->withErrors(['message' => 'Dogodila se pogreška. Nije odabran kupac ili šifra kupca nije ispravna.']);
+                }
                 break;
             default:
                 return;

@@ -38,6 +38,7 @@
                           <th scope="col">Država</th>
                           <th scope="col">PBR</th>
                           <th></th>
+                          <th></th>
                           
                         </tr>
                       </thead>
@@ -94,6 +95,12 @@
                                     </td>
                                     <td class="align-middle text-right">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
+                                    </td>
+
+                                    <td>
+                                      <a href="/narudzbe/prikaz/kupac/{{ $customer->id }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
+                                        </i> Sve narudžbe <span class="badge badge-secondary" style="background-color:darkred">{{ $customer->orders_count }}</span>
+                                      </a>
                                     </td>
 
                                     <td>
