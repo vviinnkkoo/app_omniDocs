@@ -95,7 +95,7 @@
 
                                     <td>
                                       <a href="/narudzbe/prikaz/kupac/{{ $customer->id }}" class="btn btn-primary"><i class="bi bi-box-arrow-up-right"></i>
-                                        </i> Sve narudžbe <span class="badge badge-success">{{ $customer->orders_count }}</span>
+                                        </i> Sve narudžbe <span class="badge badge-secondary" style="background-color:green">{{ $customer->orders_count }}</span>
                                       </a>
                                     </td>
 
