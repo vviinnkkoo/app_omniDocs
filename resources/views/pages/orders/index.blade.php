@@ -20,7 +20,7 @@
                     </button>
 
                     <form method="GET" action="{{ $currentUrl }}" class="float-end mb-2">
-                      <div class="input-group w-25">
+                      <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
                         <button type="submit" class="btn btn-primary">Pretraži</button>
                       </div>
