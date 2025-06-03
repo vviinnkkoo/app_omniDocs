@@ -44,19 +44,19 @@
                         @foreach ($customers as $customer)
                                 <tr>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       {{ $count++ }}
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="name" data-model="kupci">{{ $customer->name }}</span>
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="email" data-model="kupci">{{ $customer->email }}</span>
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="phone" data-model="kupci">{{ $customer->phone }}</span>
                                     </td>
 
@@ -64,15 +64,15 @@
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="address" data-model="kupci">{{ $customer->address }}</span>
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="house_number" data-model="kupci">{{ $customer->house_number }}</span>
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="city" data-model="kupci">{{ $customer->city }}</span>
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
 
                                       <div class="editable-select" data-id="{{ $customer->id }}" data-field="country_id" data-model="kupci">
                                       
@@ -90,11 +90,11 @@
                                     </div>
 
                                     </td>
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle">
                                       <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
                                     </td>
 
-                                    <td class="align-middle text-right">
+                                    <td class="align-middle text-end">
                                       <span>{{ $customer->formattedTotalOrderedAmount }} €</span>
                                     </td>
 
