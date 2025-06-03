@@ -83,7 +83,7 @@ class OrderController extends Controller
                         ->orderBy('id')
                         ->paginate(25);
                 } else {
-                    return redirect()->back()->withErrors(['message' => 'Dogodila se pogreška. Nije odabran kupac ili šifra kupca nije ispravna.']);
+                    return redirect()->back()->with(['error' => 'Dogodila se pogreška. Nije odabran kupac ili šifra kupca nije ispravna.']);
                 }
                 break;
             default:
