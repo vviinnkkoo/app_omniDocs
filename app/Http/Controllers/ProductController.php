@@ -42,7 +42,7 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'product_type_id' => 'required|exists:product_types,id',
+            'product_type_id' => 'required|exists:product_type,id',
             'default_price' => 'required|numeric',
         ]);
 
