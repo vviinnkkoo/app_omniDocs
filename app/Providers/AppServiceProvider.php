@@ -28,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap(); // For Bootstrap 5
+        if (env('STATUSBAR_ENABLED', false)) {
+            \DB::enableQueryLog();
+        }
 
         // Share data with all views
         View::composer('*', function ($view) {
