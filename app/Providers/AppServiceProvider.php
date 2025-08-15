@@ -92,5 +92,7 @@ class AppServiceProvider extends ServiceProvider
                 ]);
                 break;
         }
+
+        dd(env('STATUSBAR_ENABLED'));
     }
 }
