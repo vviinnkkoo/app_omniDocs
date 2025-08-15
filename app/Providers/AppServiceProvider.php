@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap(); // For Bootstrap 5
         if (env('STATUSBAR_ENABLED', false)) {
-            \DB::enableQueryLog();
-        }
+        \DB::enableQueryLog();
+    }
 
         // Share data with all views
         View::composer('*', function ($view) {
@@ -92,7 +92,5 @@ class AppServiceProvider extends ServiceProvider
                 ]);
                 break;
         }
-
-        dd(env('STATUSBAR_ENABLED'));
     }
 }
