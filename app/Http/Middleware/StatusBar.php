@@ -22,12 +22,11 @@ class StatusBar
             $overhead = microtime(true) - LARAVEL_START;
 
             $statusBarHtml = "
-                <div style='position:fixed;top:0;left:0;width:100%;background:#222;color:#fff;font-size:12px;padding:5px;z-index:9999;'>
+                <div style='width:100%;background:#222;color:#fff;font-size:12px;padding:5px 10px;box-shadow:0 2px 5px rgba(0,0,0,0.3);'>
                     Query time: " . round($queryTime, 2) . " ms |
                     Memory usage: " . round($memory / 1024 / 1024, 2) . " MB |
                     Total time: " . round($overhead, 2) . " s
                 </div>
-                <div style='margin-top:22px;'></div>
             ";
 
             if ($response->headers->get('Content-Type') && str_contains($response->headers->get('Content-Type'), 'text/html')) {
