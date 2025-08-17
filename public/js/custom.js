@@ -69,13 +69,15 @@ document.addEventListener("click", function(event) {
 
     if (!modalEl || !confirmBtn || !cancelBtn) return;
 
-    // Bootstrap 5 Modal instance
-    const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
-    bsModal.show();
+    // Otvori modal putem Bootstrap HTML atributa
+    modalEl.classList.add('show', 'd-block');
+    modalEl.style.backgroundColor = 'rgba(0,0,0,0.5)'; // overlay
 
-    const closeModal = () => bsModal.hide();
+    const closeModal = () => {
+        modalEl.classList.remove('show', 'd-block');
+    };
 
-    const onConfirm = () => {
+    confirmBtn.onclick = () => {
         fetch(`/${model}/${id}`, {
             method: "DELETE",
             headers: {
@@ -92,7 +94,6 @@ document.addEventListener("click", function(event) {
         .finally(() => closeModal());
     };
 
-    confirmBtn.onclick = onConfirm;
     cancelBtn.onclick = closeModal;
 });
 
