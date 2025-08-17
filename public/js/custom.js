@@ -1,58 +1,99 @@
-// Ajax update for text fields
-$(".editable").on("dblclick", function () {
-    const e = $(this).data("id"),
-        t = $(this).data("field"),
-        n = $(this).data("model"),
-        s = $(this);
-    if (!s.hasClass("editing")) {
-        const r = s.text(),
-            i = $("<input>", { type: "text", class: "edit-input", value: r });
-        s.html(i),
-            i.focus(),
-            s.addClass("editing"),
-            i.blur(function () {
-                const o = i.val();
-                o === ""
-                    ? s.html(r)
-                    : $.ajax({
-                          type: "PUT",
-                          url: `/${n}/${e}`,
-                          data: { field: t, newValue: o },
-                          headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-                          success: function () {
-                              s.removeClass("editing"), s.text(o);
-                          },
-                          error: function () {
-                              alert("Error updating the data.");
-                          },
-                      });
-            });
-    }
+// Ajax update for text fields with ENTER & ESC support
+document.addEventListener("dblclick", function (event) {
+    const target = event.target.closest(".editable");
+    if (!target || target.classList.contains("editing")) return;
+
+    const id = target.dataset.id;
+    const field = target.dataset.field;
+    const model = target.dataset.model;
+    const originalValue = target.textContent;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "edit-input";
+    input.value = originalValue;
+
+    target.textContent = "";
+    target.appendChild(input);
+    input.focus();
+    target.classList.add("editing");
+
+    const finishEditing = (newValue, save = true) => {
+        if (!save || newValue === "") {
+            target.textContent = originalValue;
+            target.classList.remove("editing");
+            return;
+        }
+
+        fetch(`/${model}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ field, newValue })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            target.textContent = newValue;
+        })
+        .catch(() => {
+            alert("Error updating the data.");
+            target.textContent = originalValue;
+        })
+        .finally(() => {
+            target.classList.remove("editing");
+        });
+    };
+
+    input.addEventListener("blur", () => finishEditing(input.value));
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            input.blur(); // okida fetch
+        } else if (e.key === "Escape") {
+            finishEditing(originalValue, false); // odustajanje
+        }
+    });
 });
 
-// Ajax delete records
-$(function () {
-    $(".delete-btn-x").on("click", function () {
-        const e = $(this).data("id"),
-            t = $(this).data("model");
-        $(".confirmation-dialog").show(),
-            $(".confirm-delete").on("click", function () {
-                $.ajax({
-                    type: "DELETE",
-                    url: `/${t}/${e}`,
-                    headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-                    success: function () {
-                        $(`[data-id="${e}"]`).closest("tr").remove(), $(".confirmation-dialog").hide();
-                    },
-                    error: function () {
-                        alert("Error deleting the record."), $(".confirmation-dialog").hide();
-                    },
-                });
-            }),
-            $(".cancel-delete").on("click", function () {
-                $(".confirmation-dialog").hide();
-            });
+// Ajax delete records (vanilla JS)
+document.addEventListener("click", function(event) {
+    const deleteBtn = event.target.closest(".delete-btn-x");
+    if (!deleteBtn) return;
+
+    const id = deleteBtn.dataset.id;
+    const model = deleteBtn.dataset.model;
+    const dialog = document.querySelector(".confirmation-dialog");
+    const confirmBtn = dialog.querySelector(".confirm-delete");
+    const cancelBtn = dialog.querySelector(".cancel-delete");
+
+    if (!dialog || !confirmBtn || !cancelBtn) return;
+
+    dialog.style.display = "block";
+
+    const closeDialog = () => {
+        dialog.style.display = "none";
+        confirmBtn.replaceWith(confirmBtn.cloneNode(true)); // uklanja prethodni listener
+    };
+
+    confirmBtn.addEventListener("click", () => {
+        fetch(`/${model}/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Delete failed");
+            const row = document.querySelector(`[data-id="${id}"]`)?.closest("tr");
+            if (row) row.remove();
+        })
+        .catch(() => alert("Error deleting the record."))
+        .finally(() => closeDialog());
     });
+
+    cancelBtn.addEventListener("click", closeDialog);
 });
 
 // Table search on keyup
