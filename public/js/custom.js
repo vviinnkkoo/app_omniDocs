@@ -63,21 +63,18 @@ document.addEventListener("click", function(event) {
 
     const id = deleteBtn.dataset.id;
     const model = deleteBtn.dataset.model;
+
     const modalEl = document.getElementById("confirmationModal");
     const confirmBtn = modalEl.querySelector("#confirmDeleteBtn");
-    const cancelBtn = modalEl.querySelector('[data-bs-dismiss="modal"]');
 
-    if (!modalEl || !confirmBtn || !cancelBtn) return;
+    // Bootstrap Modal instance
+    const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
+    bsModal.show();
 
-    // Otvori modal putem Bootstrap HTML atributa
-    modalEl.classList.add('show', 'd-block');
-    modalEl.style.backgroundColor = 'rgba(0,0,0,0.5)'; // overlay
+    const closeModal = () => bsModal.hide();
 
-    const closeModal = () => {
-        modalEl.classList.remove('show', 'd-block');
-    };
-
-    confirmBtn.onclick = () => {
+    // Postavi handler za potvrdu brisanja
+    const onConfirm = () => {
         fetch(`/${model}/${id}`, {
             method: "DELETE",
             headers: {
@@ -94,7 +91,7 @@ document.addEventListener("click", function(event) {
         .finally(() => closeModal());
     };
 
-    cancelBtn.onclick = closeModal;
+    confirmBtn.onclick = onConfirm;
 });
 
 // Table search on keyup
