@@ -58,32 +58,32 @@ Route::put('dostavne-usluge/status/{id}', [DeliveryServiceController::class, 'up
 
 // Invoices //
 Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
-Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('delete.row');
+Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('kpr-item-list.delete');
 
 // Order item lists //
 Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
 Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']);
 Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
 Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);
-Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('delete.row');
+Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('order-item-list.delete');
 
 // Payment types //
 Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);
 Route::post('/nacin-placanja', [PaymentTypeController::class, 'save']);
 Route::put('/update-payment-type/{id}', [PaymentTypeController::class, 'updatePaymentType']);
-Route::delete('/delete-payment-type/{id}', [PaymentTypeController::class, 'destroy'])->name('delete.row');
+Route::delete('/delete-payment-type/{id}', [PaymentTypeController::class, 'destroy'])->name('payment_type.delete');
 
 // Sources, sales channels //
 Route::get('/kanali-prodaje', [SourceController::class, 'show']);
 Route::post('/kanali-prodaje', [SourceController::class, 'save']);
 Route::put('/update-source/{id}', [SourceController::class, 'update']);
-Route::delete('/delete-source/{id}', [SourceController::class, 'destroy'])->name('delete.row');
+Route::delete('/delete-source/{id}', [SourceController::class, 'destroy'])->name('source.delete');
 
 // Product types //
 Route::get('/vrste-proizvoda', [ProductTypeController::class, 'show']);
 Route::post('/vrste-proizvoda', [ProductTypeController::class, 'save']);
 Route::put('/update-product-type/{id}', [ProductTypeController::class, 'update']);
-Route::delete('/delete-product-type/{id}', [ProductTypeController::class, 'destroy'])->name('delete.row');
+Route::delete('/delete-product-type/{id}', [ProductTypeController::class, 'destroy'])->name('product_type.delete');
 
 // PDF render //
 Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);
@@ -95,5 +95,5 @@ Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
 // Shipping //
 Route::get('/dostavne-etikete', [PrintLabelController::class, 'showShippingLabels']);
 Route::post('/dostavne-etikete', [PrintLabelController::class, 'saveShippingLabel']);
-Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('delete.row');
+Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('shipping_label.delete');
 Route::get('/obrisi-etikete', [PrintLabelController::class, 'deleteAllLabels']);
