@@ -273,29 +273,33 @@ function qS() {
     (document.body.scrollTop = 0), (document.documentElement.scrollTop = 0);
 }
 
-document.getElementById("refresh-number-btn").addEventListener("click", function () {
-    const numberInput = document.getElementById("number");
-    const year = document.getElementById("year").value;
-    const loader = document.getElementById("numberLoader");
+const refreshBtn = document.getElementById("refresh-number-btn");
 
-    numberInput.disabled = true;
-    numberInput.classList.add("opacity-50");
-    loader.classList.remove("d-none");
+if (refreshBtn) { // Check if element exists
+    refreshBtn.addEventListener("click", function () {
+        const numberInput = document.getElementById("number");
+        const year = document.getElementById("year").value;
+        const loader = document.getElementById("numberLoader");
 
-    fetch(`/racuni/zadnji-broj/${year}`)
-        .then(response => response.json())
-        .then(data => {
-            setTimeout(() => {
-                numberInput.value = data.latest;
+        numberInput.disabled = true;
+        numberInput.classList.add("opacity-50");
+        loader.classList.remove("d-none");
 
+        fetch(`/racuni/zadnji-broj/${year}`)
+            .then(response => response.json())
+            .then(data => {
+                setTimeout(() => {
+                    numberInput.value = data.latest;
+
+                    numberInput.disabled = false;
+                    numberInput.classList.remove("opacity-50");
+                    loader.classList.add("d-none");
+                }, 500);
+            })
+            .catch(() => {
                 numberInput.disabled = false;
                 numberInput.classList.remove("opacity-50");
                 loader.classList.add("d-none");
-            }, 500); // Delay in ms
-        })
-        .catch(() => {
-            numberInput.disabled = false;
-            numberInput.classList.remove("opacity-50");
-            loader.classList.add("d-none");
-        });
-});
+            });
+    });
+}
