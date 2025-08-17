@@ -57,43 +57,40 @@ document.addEventListener("dblclick", function (event) {
 });
 
 // Ajax delete records (vanilla JS)
+let deleteId, deleteModel;
+const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+
 document.addEventListener("click", function(event) {
-    const deleteBtn = event.target.closest(".delete-btn-x");
-    if (!deleteBtn) return;
+    const btn = event.target.closest(".delete-btn-x");
+    if (!btn) return;
 
-    const id = deleteBtn.dataset.id;
-    const model = deleteBtn.dataset.model;
-    const dialog = document.querySelector(".confirmation-dialog");
-    const confirmBtn = dialog.querySelector(".confirm-delete");
-    const cancelBtn = dialog.querySelector(".cancel-delete");
+    deleteId = btn.dataset.id;
+    deleteModel = btn.dataset.model;
 
-    if (!dialog || !confirmBtn || !cancelBtn) return;
+    confirmationModal.show();
+});
 
-    dialog.style.display = "block";
+document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
+    if (!deleteId || !deleteModel) return;
 
-    const closeDialog = () => {
-        dialog.style.display = "none";
-        confirmBtn.replaceWith(confirmBtn.cloneNode(true)); // uklanja prethodni listener
-    };
-
-    confirmBtn.addEventListener("click", () => {
-        fetch(`/${model}/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-            }
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Delete failed");
-            const row = document.querySelector(`[data-id="${id}"]`)?.closest("tr");
-            if (row) row.remove();
-        })
-        .catch(() => alert("Error deleting the record."))
-        .finally(() => closeDialog());
+    fetch(`/${deleteModel}/${deleteId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        }
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("Delete failed");
+        const row = document.querySelector(`[data-id="${deleteId}"]`)?.closest("tr");
+        if (row) row.remove();
+    })
+    .catch(() => alert("Error deleting the record."))
+    .finally(() => {
+        deleteId = null;
+        deleteModel = null;
+        confirmationModal.hide();
     });
-
-    cancelBtn.addEventListener("click", closeDialog);
 });
 
 // Table search on keyup
