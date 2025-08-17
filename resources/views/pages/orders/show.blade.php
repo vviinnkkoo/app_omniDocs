@@ -298,7 +298,8 @@
 
                               {{-- Delete button --}}
                               <td>
-                                <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-item-list"><i class="bi bi-x-lg"></i></button>
+                                <x-delete-button :id="$item->id" model="order-item-list" />
+                                {{-- <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-item-list"><i class="bi bi-x-lg"></i></button> --}}
                               </td>
                           <tr>
                   @endforeach
