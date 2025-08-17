@@ -30,10 +30,10 @@ Route::post('/prijava-u-app', [LoginController::class, 'login'])->middleware('th
 Route::get('/', [Omnicontrol::class, 'index']);
 
 // Custom routes //
-Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index'); // Index override for the invoice view
+Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index_by_year'); // Index override for the invoice view
 Route::get('/racuni/zadnji-broj/{year}', [ReceiptController::class, 'getLatestNumber'])->name('racuni.getLatestNumber'); // Return JSON format for AJAX refresh
-Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index');
-Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.index'); // Filter orders by type or customer
+Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index_by_year');
+Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.index_by_type'); // Filter orders by type or customer
 Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems']);
 
 // Resource routes
