@@ -1,4 +1,4 @@
-<!-- Confirmation Modal -->
+<!-- Confirmation Modal (bootstrap modal) -->
 <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

@@ -343,9 +343,9 @@
                         <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="napomena">{{ $item->note }}</span>
                       </td>
 
-                      {{-- Delete button --}}
+                      {{-- Delete button COMPONENT --}}
                       <td>
-                        <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="napomena"><i class="bi bi-x-lg"></i></button>
+                        <x-delete-button :id="$item->id" model="napomena" />
                       </td>
                   <tr>
                 @endforeach

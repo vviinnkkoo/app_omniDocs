@@ -25,9 +25,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/custom.js') }}" defer></script>
     <script src="{{ asset('build/assets/app-f163c3af.js') }}" defer></script>
-    
+    <script src="{{ asset('js/custom.js') }}" defer></script>
 
 
 </head>

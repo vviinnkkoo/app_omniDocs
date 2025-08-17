@@ -57,39 +57,37 @@ document.addEventListener("dblclick", function (event) {
 });
 
 // Ajax delete records (vanilla JS)
-let deleteId, deleteModel;
-const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+document.addEventListener('DOMContentLoaded', function () {
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    let currentId = null;
+    let currentModel = null;
 
-document.addEventListener("click", function(event) {
-    const btn = event.target.closest(".delete-btn-x");
-    if (!btn) return;
+    document.querySelectorAll('.delete-btn-x').forEach(btn => {
+        btn.addEventListener('click', function () {
+            currentId = this.dataset.id;
+            currentModel = this.dataset.model;
+        });
+    });
 
-    deleteId = btn.dataset.id;
-    deleteModel = btn.dataset.model;
+    confirmBtn.addEventListener('click', function () {
+        if (!currentId || !currentModel) return;
 
-    confirmationModal.show();
-});
-
-document.getElementById("confirmDeleteBtn").addEventListener("click", () => {
-    if (!deleteId || !deleteModel) return;
-
-    fetch(`/${deleteModel}/${deleteId}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-        }
-    })
-    .then(res => {
-        if (!res.ok) throw new Error("Delete failed");
-        const row = document.querySelector(`[data-id="${deleteId}"]`)?.closest("tr");
-        if (row) row.remove();
-    })
-    .catch(() => alert("Error deleting the record."))
-    .finally(() => {
-        deleteId = null;
-        deleteModel = null;
-        confirmationModal.hide();
+        fetch(`/${currentModel}/${currentId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(resp => {
+            if (!resp.ok) throw new Error('Delete failed');
+            const row = document.querySelector(`[data-id="${currentId}"]`)?.closest('tr');
+            if (row) row.remove();
+            currentId = null;
+            currentModel = null;
+            // Bootstrap modal će se automatski zatvoriti jer dugme ima data-bs-dismiss="modal"
+        })
+        .catch(() => alert('Error deleting the record.'));
     });
 });
 
