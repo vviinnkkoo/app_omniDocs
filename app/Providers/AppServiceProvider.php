@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Pagination\Paginator;
 
 use App\Models\WorkYears;
@@ -51,12 +50,10 @@ class AppServiceProvider extends ServiceProvider
             DB::enableQueryLog();
         }
 
-        // Share data with all views, cache per connection
-        $connection = DB::getDefaultConnection();
-
-        View::composer('*', function ($view) use ($connection) {
-            $workYears = Cache::remember("workYears_{$connection}", 60, fn() => WorkYears::orderBy('id')->get());
-            $appSettings = Cache::remember("appSettings_{$connection}", 60, fn() => Settings::pluck('setting_value', 'setting_name')->toArray());
+        // Share data with all views (BEZ cache-a)
+        View::composer('*', function ($view) {
+            $workYears = WorkYears::orderBy('id')->get();
+            $appSettings = Settings::pluck('setting_value', 'setting_name')->toArray();
 
             $view->with('workYears', $workYears)
                  ->with('appSettings', $appSettings);
