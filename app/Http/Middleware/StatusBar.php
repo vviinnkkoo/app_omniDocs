@@ -10,13 +10,21 @@ class StatusBar
 {
     public function handle(Request $request, Closure $next)
     {
+        // Aktiviramo DB query log odmah
+        if (env('STATUSBAR_ENABLED', false)) {
+            DB::enableQueryLog();
+        }
+
+        $start = microtime(true);
+
         $response = $next($request);
 
         if (env('STATUSBAR_ENABLED', false)) {
-            $queryTime = collect(DB::getQueryLog())->sum(fn($q) => $q['time']);
+            $queryLog = DB::getQueryLog();
+            $queryCount = count($queryLog);
+            $queryTime = collect($queryLog)->sum(fn($q) => $q['time']);
             $memory = memory_get_peak_usage(true);
             $overhead = microtime(true) - LARAVEL_START;
-            $queryCount = count(DB::getQueryLog());
 
             $statusBarHtml = "
                 <div style='width:100%;background:#222;color:#fff;font-size:12px;padding:5px 10px;position:fixed;bottom:0;left:0;z-index:9999;box-shadow:0 -2px 5px rgba(0,0,0,0.3);'>
@@ -28,7 +36,6 @@ class StatusBar
 
             if ($response->headers->get('Content-Type') && str_contains($response->headers->get('Content-Type'), 'text/html')) {
                 $content = $response->getContent();
-                // ubacujemo odmah nakon <body> taga
                 $content = preg_replace('/(<body[^>]*>)/i', '$1'.$statusBarHtml, $content, 1);
                 $response->setContent($content);
             }

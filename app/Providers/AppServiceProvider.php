@@ -45,12 +45,7 @@ class AppServiceProvider extends ServiceProvider
         // Pagination
         Paginator::useBootstrap();
 
-        // Query log if statusbar is enabled
-        if (env('STATUSBAR_ENABLED', false)) {
-            DB::enableQueryLog();
-        }
-
-        // Share data with all views (BEZ cache-a)
+        // Share data with all views
         View::composer('*', function ($view) {
             $workYears = WorkYears::orderBy('id')->get();
             $appSettings = Settings::pluck('setting_value', 'setting_name')->toArray();
