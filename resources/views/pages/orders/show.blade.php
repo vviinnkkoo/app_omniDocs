@@ -311,7 +311,7 @@
     <div class="row g-2 d-flex align-items-stretch" style="margin-top: 30px;">
 
       {{-- Paketi (70% desktop, 100% mobile) --}}
-      <div class="col-12 col-lg-10 mb-3">
+      <div class="col-12 col-lg-10 mb-3 d-flex">
           <div class="card flex-fill">
               <div class="card-header" style="font-weight: 900; background-color: #007bff11;">
                   Paketi
@@ -323,7 +323,7 @@
       </div>
 
       {{-- Napomene (30% desktop, 100% mobile) --}}
-      <div class="col-12 col-lg-2 mb-3">
+      <div class="col-12 col-lg-2 mb-3 d-flex">
         <div class="card flex-fill">
           <div class="card-header d-flex align-items-center" style="font-weight: 900; background-color: #ffc10711;">
             <span class="me-2">Napomene</span>
