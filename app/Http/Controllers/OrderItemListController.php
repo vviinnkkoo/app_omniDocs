@@ -17,29 +17,20 @@ class OrderItemListController extends Controller
         $this->middleware('auth');
     }
     
-    public function add (Request $request, $id) {
-        $validator = Validator::make($request->all(), [
-        'product_id' => 'required',
-        'amount' => 'required',
-        'color_id' => 'required',
-        'price' => 'required'
-        ]);
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors($validator);
-            }
-        $orderItemList = new OrderItemList;
-        $orderItemList->product_id = $request->product_id;
-        $orderItemList->order_id = $id;
-        $orderItemList->amount = $request->amount;
-        $orderItemList->price = $request->price;
-        $orderItemList->color_id = $request->color_id;
-        $orderItemList->note = $request->note;
-        $orderItemList->save();
-    
-        return redirect()->back()->with('success', 'Proizvod je uspješno dodan.');
+    public function add(Request $request, $order_id) {
+        OrderItemList::create(array_merge(
+            $request->validate([
+                'product_id' => 'required',
+                'amount' => 'required',
+                'color_id' => 'required',
+                'price' => 'required',
+                'note' => 'nullable|string',
+                'discount' => 'nullable|numeric|min:0|max:100'
+            ]),
+            ['order_id' => $order_id]
+        ));
+
+        return back()->with('success', 'Proizvod je uspješno dodan.');
     }
 
     public function showProductionItems($mode) {
