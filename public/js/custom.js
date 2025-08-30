@@ -56,7 +56,7 @@ document.addEventListener("dblclick", function (event) {
     });
 });
 
-// Ajax delete records (vanilla JS)
+// Ajax delete records (vanilla JS) s fade-out efektom
 document.addEventListener("click", function(event) {
     const deleteBtn = event.target.closest(".delete-btn-x");
     if (!deleteBtn) return;
@@ -73,7 +73,6 @@ document.addEventListener("click", function(event) {
 
     const closeModal = () => bsModal.hide();
 
-    // Postavi handler za potvrdu brisanja
     const onConfirm = () => {
         fetch(`/${model}/${id}`, {
             method: "DELETE",
@@ -84,8 +83,18 @@ document.addEventListener("click", function(event) {
         })
         .then(response => {
             if (!response.ok) throw new Error("Delete failed");
-            const row = document.querySelector(`[data-id="${id}"]`)?.closest("tr");
-            if (row) row.remove();
+
+            // Odredi element
+            const li = document.querySelector(`[data-id="${id}"]`)?.closest("li");
+            const tr = document.querySelector(`[data-id="${id}"]`)?.closest("tr");
+
+            const element = li || tr;
+            if (element) {
+                // Fade out
+                element.style.transition = "opacity 0.4s ease";
+                element.style.opacity = 0;
+                setTimeout(() => element.remove(), 400);
+            }
         })
         .catch(() => alert("Error deleting the record."))
         .finally(() => closeModal());
