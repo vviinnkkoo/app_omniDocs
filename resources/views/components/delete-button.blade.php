@@ -3,5 +3,5 @@
         data-model="{{ $model }}"
         data-bs-toggle="modal" 
         data-bs-target="#confirmationModal">
-    x
+    X
 </button>
