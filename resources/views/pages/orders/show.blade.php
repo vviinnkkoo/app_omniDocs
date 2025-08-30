@@ -435,7 +435,7 @@
             {{-- Discount --}}
             <div class="mb-3">
               <label for="price">Popust (%):</label>
-              <input type="number" class="form-control" value="0" min="0" max="100" id="price" name="discount" step="1" required>
+              <input type="number" class="form-control" value="0" min="0" max="100" id="discount" name="discount" step="1" required>
             </div>
             
             {{-- Product color --}}
