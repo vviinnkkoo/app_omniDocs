@@ -308,7 +308,7 @@
     </div>
 
     {{-- Notes part --}}
-    <div class="row g-0" style="margin-top: 30px;">
+    <div style="margin-top: 30px;">
 
       {{-- Paketi (70% desktop, 100% mobile) --}}
       <div class="col-12 col-lg-8 mb-3">
