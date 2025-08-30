@@ -326,16 +326,15 @@
       {{-- Napomene (30% desktop, 100% mobile) --}}
       <div class="col-12 col-lg-4 mb-3">
         <div class="card">
-          <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">
-            Napomene
+          <div class="card-header d-flex justify-content-between align-items-center" style="font-weight: 900; background-color: #ffc10711;">
+            <span>Napomene</span>
+            <!-- Button sa samo plus ikonkom -->
+            <button id="popupButton" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#expensesModal">
+              <i class="bi bi-plus"></i>
+            </button>
           </div>
 
           <div class="card-body" style="border: solid 4px #ffc10711">
-            <!-- Button to trigger the pop-up -->
-            <button id="popupButton" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#expensesModal">
-              <i class="bi bi-file-earmark-plus"></i> Dodaj napomenu
-            </button>
-
             <div class="row">
               @foreach ($orderNotes as $item)
                 <div class="col-12 col-md-6 mb-3 ajax-deletable"> {{-- 2 u redu na desktopu --}}
