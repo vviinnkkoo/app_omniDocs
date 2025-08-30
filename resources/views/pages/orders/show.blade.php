@@ -338,7 +338,7 @@
 
             <div class="row">
               @foreach ($orderNotes as $item)
-                <div class="col-12 col-md-6 mb-3"> {{-- 2 u redu na desktopu --}}
+                <div class="col-12 col-md-6 mb-3 ajax-deletable"> {{-- 2 u redu na desktopu --}}
                   <div class="p-3 rounded" style="background:#f8f9fa; border:1px solid #dee2e6;">
 
                     {{-- Header (datum + delete) --}}

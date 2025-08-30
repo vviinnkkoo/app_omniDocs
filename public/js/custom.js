@@ -67,7 +67,6 @@ document.addEventListener("click", function(event) {
     const modalEl = document.getElementById("confirmationModal");
     const confirmBtn = modalEl.querySelector("#confirmDeleteBtn");
 
-    // Bootstrap Modal instance
     const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
     bsModal.show();
 
@@ -84,13 +83,9 @@ document.addEventListener("click", function(event) {
         .then(response => {
             if (!response.ok) throw new Error("Delete failed");
 
-            // Odredi element
-            const li = document.querySelector(`[data-id="${id}"]`)?.closest("li");
-            const tr = document.querySelector(`[data-id="${id}"]`)?.closest("tr");
-
-            const element = li || tr;
+            // Prvo pokušaj ajax-deletable, fallback na tr
+            const element = deleteBtn.closest(".ajax-deletable") || deleteBtn.closest("tr");
             if (element) {
-                // Fade out
                 element.style.transition = "opacity 0.4s ease";
                 element.style.opacity = 0;
                 setTimeout(() => element.remove(), 400);
