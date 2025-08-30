@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="containerx" style="margin-left:5%; margin-right:5%">
-  <div class="row justify-content-center">
+  <div class="row g-2 justify-content-center">
     <div class="col-md-12">
       <div class="card">
 
@@ -308,7 +308,7 @@
     </div>
 
     {{-- Notes part --}}
-    <div style="margin-top: 30px;">
+    <div class="row g-1" style="margin-top: 30px;">
 
       {{-- Paketi (70% desktop, 100% mobile) --}}
       <div class="col-12 col-lg-8 mb-3">
