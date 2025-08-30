@@ -310,51 +310,73 @@
     </div>
 
     {{-- Notes part --}}
-    <div class="col-xl-12">
-      <div class="card" style="margin-top: 30px;">
-  
-        <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">Napomene</div>
+    <div class="row" style="margin-top: 30px;">
 
-        <div class="card-body" style=" border: solid 4px #ffc10711">
-            <!-- Button to trigger the pop-up -->
-            <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal"><i class="bi bi-file-earmark-plus"></i> Dodaj napomenu</button>
-            <table class="table table-hover">
-              <thead class="table-secondary">
-                <tr>                          
-                  <th scope="col" style="width: 5%;">#</th>
-                  <th scope="col" style="width: 10%;">Datum</th>
-                  <th scope="col" style="width: 75%;">Napomena</th>
-                  <th style="width: 10%;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                @php ($count = 1)
-                @foreach ($orderNotes as $item)
-                  <tr>
-                      {{-- # --}}
-                      <td class="align-middle text-right">{{ $count++ }}</td>
-
-                      {{-- Datum --}}
-                      <td class="align-middle text-right">
-                        <span>{{ $item->created_at->format('d. m. Y.') }}</span>
-                      </td>
-
-                      {{-- Napomena --}}
-                      <td class="align-middle text-right">
-                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="napomena">{{ $item->note }}</span>
-                      </td>
-
-                      {{-- Delete button COMPONENT --}}
-                      <td>
-                        <x-delete-button :id="$item->id" model="napomena" />
-                      </td>
-                  <tr>
-                @endforeach
-              </tbody>
-            </table>
+      {{-- Paketi (70% desktop, 100% mobile) --}}
+      <div class="col-12 col-lg-8 mb-3">
+          <div class="card">
+              <div class="card-header" style="font-weight: 900; background-color: #007bff11;">
+                  Paketi
+              </div>
+              <div class="card-body" style="border: solid 4px #007bff11; min-height:200px;">
+                  <p class="text-muted">Ovdje ide sadržaj za pakete...</p>
+              </div>
           </div>
       </div>
+
+        {{-- Napomene (30% desktop, 100% mobile) --}}
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card">
+                <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">
+                    Napomene
+                </div>
+
+                <div class="card-body" style="border: solid 4px #ffc10711">
+                    <!-- Button to trigger the pop-up -->
+                    <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal">
+                        <i class="bi bi-file-earmark-plus"></i> Dodaj napomenu
+                    </button>
+
+                    <table class="table table-hover">
+                        <thead class="table-secondary">
+                            <tr>                          
+                                <th scope="col" style="width: 5%;">#</th>
+                                <th scope="col" style="width: 10%;">Datum</th>
+                                <th scope="col" style="width: 75%;">Napomena</th>
+                                <th style="width: 10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php ($count = 1)
+                            @foreach ($orderNotes as $item)
+                                <tr>
+                                    {{-- # --}}
+                                    <td class="align-middle text-right">{{ $count++ }}</td>
+
+                                    {{-- Datum --}}
+                                    <td class="align-middle text-right">
+                                        <span>{{ $item->created_at->format('d. m. Y.') }}</span>
+                                    </td>
+
+                                    {{-- Napomena --}}
+                                    <td class="align-middle text-right">
+                                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="napomena">{{ $item->note }}</span>
+                                    </td>
+
+                                    {{-- Delete button COMPONENT --}}
+                                    <td>
+                                        <x-delete-button :id="$item->id" model="napomena" />
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
+
   </div>
 </div>
 
