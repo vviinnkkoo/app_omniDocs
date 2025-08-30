@@ -329,7 +329,7 @@
           <div class="card-header d-flex align-items-center" style="font-weight: 900; background-color: #ffc10711;">
           <span class="me-2">Napomene</span>
           <button id="popupButton" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#expensesModal">
-            <i class="bi bi-plus-circle"></i>
+            <i class="bi bi-plus"></i>
           </button>
         </div>
 
