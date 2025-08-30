@@ -201,10 +201,7 @@
 
     {{-- Order item list part --}}
     <div class="col-xl-12">
-      <div class="card" style="margin-top: 30px;">  
-        <div class="card-header" style="font-weight: 900; background-color: #19875411">
-          Proizvodi
-        </div>
+      <div class="card" style="margin-top: 30px;">
         <div class="card-header d-flex align-items-center" style="font-weight: 900; background-color: #19875411;">
           <span class="me-2">Proizvodi</span>
           <button id="popupButton" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-weight: 900;">+</button>
