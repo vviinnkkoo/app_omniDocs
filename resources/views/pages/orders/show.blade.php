@@ -3,7 +3,7 @@
 @section('title', $order->id . ' - ' . $order->customer_name . ' - Uredi narudžbu' )
 
 @section('content')
-<div class="container mx-5">
+<div class="container-fluid mx-5">
   <div class="row g-3 justify-content-center">
     <div class="col-md-12">
       <div class="card">
