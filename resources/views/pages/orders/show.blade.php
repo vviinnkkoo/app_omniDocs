@@ -299,7 +299,6 @@
                               {{-- Delete button --}}
                               <td>
                                 <x-delete-button :id="$item->id" model="order-item-list" />
-                                {{-- <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="order-item-list"><i class="bi bi-x-lg"></i></button> --}}
                               </td>
                           <tr>
                   @endforeach
@@ -337,40 +336,33 @@
                         <i class="bi bi-file-earmark-plus"></i> Dodaj napomenu
                     </button>
 
-                    <table class="table table-hover">
-                        <thead class="table-secondary">
-                            <tr>                          
-                                <th scope="col" style="width: 5%;">#</th>
-                                <th scope="col" style="width: 10%;">Datum</th>
-                                <th scope="col" style="width: 75%;">Napomena</th>
-                                <th style="width: 10%;"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php ($count = 1)
-                            @foreach ($orderNotes as $item)
-                                <tr>
-                                    {{-- # --}}
-                                    <td class="align-middle text-right">{{ $count++ }}</td>
+                    <ul class="list-unstyled">
+                      @foreach ($orderNotes as $item)
+                        <li class="mb-3 p-3 rounded" 
+                            style="background:#f8f9fa; border:1px solid #dee2e6;">
+                          
+                          {{-- Header (broj + datum) --}}
+                          <div class="d-flex justify-content-between mb-2">
+                            <small class="text-muted">{{ $item->created_at->format('d. m. Y. H:i') }}</small>
+                          </div>
 
-                                    {{-- Datum --}}
-                                    <td class="align-middle text-right">
-                                        <span>{{ $item->created_at->format('d. m. Y.') }}</span>
-                                    </td>
+                          {{-- Napomena --}}
+                          <div class="mb-2">
+                            <span class="editable"
+                                  data-id="{{ $item->id }}"
+                                  data-field="note"
+                                  data-model="napomena">
+                              {{ $item->note }}
+                            </span>
+                          </div>
 
-                                    {{-- Napomena --}}
-                                    <td class="align-middle text-right">
-                                        <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="napomena">{{ $item->note }}</span>
-                                    </td>
-
-                                    {{-- Delete button COMPONENT --}}
-                                    <td>
-                                        <x-delete-button :id="$item->id" model="napomena" />
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                          {{-- Delete button --}}
+                          <div>
+                            <x-delete-button :id="$item->id" model="napomena" />
+                          </div>
+                        </li>
+                      @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
