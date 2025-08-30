@@ -408,7 +408,7 @@
 
             {{-- Product type --}}
             <div class="mb-3">
-              <label for="product_id">Vrsta proizvoda:</label><br>
+              <label for="product_id">Proizvod:</label><br>
               <select class="form-select searchable-select-modal" id="product_id" name="product_id">
                   <option selected>Odaberi proizvod...</option>
                   @foreach ($productTypes as $productType)
@@ -423,26 +423,26 @@
             {{-- Amount --}}
             <div class="mb-3">
               <label for="amount">Količina:</label>
-              <input type="number" class="form-control" placeholder="Unesi količinu proizvoda..." id="amount" name="amount" step="1">
+              <input type="number" class="form-control" placeholder="Unesi količinu proizvoda..." id="amount" name="amount" step="1" required>
             </div>
 
             {{-- Price --}}
             <div class="mb-3">
               <label for="price">Cijena:</label>
-              <input type="number" class="form-control" placeholder="Unesi cijenu proizvoda..." id="price" name="price" step=".01">
+              <input type="number" class="form-control" placeholder="Unesi cijenu proizvoda..." id="price" name="price" step=".01" required>
             </div>
 
             {{-- Discount --}}
             <div class="mb-3">
-              <label for="price">Popust:</label>
-              <input type="number" class="form-control" value="0" id="price" name="discount" step="1">
+              <label for="price">Popust (%):</label>
+              <input type="number" class="form-control" value="0" min="0" max="100" id="price" name="discount" step="1" required>
             </div>
             
             {{-- Product color --}}
             <div class="mb-3">
               <span style="display: block;">Boja proizvoda:</span>
                 @foreach ($colors as $color)
-                  <input type="radio" class="btn-check" name="color_id" autocomplete="off" value="{{ $color->id }} " id="color_{{ $color->id }}" />
+                  <input type="radio" class="btn-check" name="color_id" autocomplete="off" value="{{ $color->id }} " id="color_{{ $color->id }}" required>
                   <label class="btn btn-secondary btn-sm me-1 mb-1" for="color_{{ $color->id }}">{{ $color->name }}</label>
                 @endforeach
             </div>
