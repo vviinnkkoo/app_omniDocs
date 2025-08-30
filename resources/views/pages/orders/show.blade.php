@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="containerx" style="margin-left:5%; margin-right:5%">
-  <div class="row g-2 justify-content-center">
+  <div class="row g-3 justify-content-center">
     <div class="col-md-12">
       <div class="card">
 
@@ -308,10 +308,10 @@
     </div>
 
     {{-- Notes part --}}
-    <div class="row g-1" style="margin-top: 30px;">
+    <div class="row g-2" style="margin-top: 30px;">
 
       {{-- Paketi (70% desktop, 100% mobile) --}}
-      <div class="col-12 col-lg-8 mb-3">
+      <div class="col-12 col-lg-10 mb-3">
           <div class="card">
               <div class="card-header" style="font-weight: 900; background-color: #007bff11;">
                   Paketi
@@ -323,7 +323,7 @@
       </div>
 
       {{-- Napomene (30% desktop, 100% mobile) --}}
-      <div class="col-12 col-lg-4 mb-3">
+      <div class="col-12 col-lg-2 mb-3">
         <div class="card">
           <div class="card-header d-flex align-items-center" style="font-weight: 900; background-color: #ffc10711;">
             <span class="me-2">Napomene</span>
@@ -333,7 +333,7 @@
           <div class="card-body" style="border: solid 4px #ffc10711">
             <div class="row">
               @foreach ($orderNotes as $item)
-                <div class="col-12 col-md-6 mb-3 ajax-deletable"> {{-- 2 u redu na desktopu --}}
+                <div class="mb-3 ajax-deletable">
                   <div class="p-3 rounded" style="background:#f8f9fa; border:1px solid #dee2e6;">
 
                     {{-- Header (datum + delete) --}}
