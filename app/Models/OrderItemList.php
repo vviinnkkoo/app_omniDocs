@@ -13,7 +13,17 @@ class OrderItemList extends Model
     protected $table = 'order_item_list';
 
     // Fillable for checkbox
-    protected $fillable = ['is_done', 'note_on_invoice'];
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'amount',
+        'color_id',
+        'price',
+        'note',
+        'discount',
+        'is_done',
+        'note_on_invoice'
+    ];
     protected $casts = ['is_done' => 'boolean', 'note_on_invoice' => 'boolean'];
 
     public function order()
