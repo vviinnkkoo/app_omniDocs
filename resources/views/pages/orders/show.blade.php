@@ -311,23 +311,24 @@
     <div class="row g-2 d-flex align-items-stretch" style="margin-top: 30px;">
 
       {{-- Paketi (70% desktop, 100% mobile) --}}
-      <div class="col-12 col-lg-10 mb-3 d-flex">
+      <div class="col-12 col-lg-8 mb-3 d-flex">
           <div class="card flex-fill">
-              <div class="card-header" style="font-weight: 900; background-color: #007bff11;">
-                  Paketi
+              <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #007bff11;">
+                <span class="me-2">Paketi</span>
+                <button id="popupButton" class="btn btn-warning btn-sm fw-bolder" data-bs-toggle="modal" data-bs-target="">+</button>
               </div>
-              <div class="card-body" style="border: solid 4px #007bff11; min-height:200px;">
-                  <p class="text-muted">Ovdje ide sadržaj za pakete...</p>
+              <div class="card-body" style="border: solid 4px #007bff11;">
+                  <p class="text-muted">Ovdje idu paketi...</p>
               </div>
           </div>
       </div>
 
       {{-- Napomene (30% desktop, 100% mobile) --}}
-      <div class="col-12 col-lg-2 mb-3 d-flex">
+      <div class="col-12 col-lg-4 mb-3 d-flex">
         <div class="card flex-fill">
-          <div class="card-header d-flex align-items-center" style="font-weight: 900; background-color: #ffc10711;">
+          <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #ffc10711;">
             <span class="me-2">Napomene</span>
-            <button id="popupButton" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#expensesModal" style="font-weight: 900;">+</button>
+            <button id="popupButton" class="btn btn-warning btn-sm fw-bolder" data-bs-toggle="modal" data-bs-target="#expensesModal">+</button>
           </div>
 
           <div class="card-body" style="border: solid 4px #ffc10711">
