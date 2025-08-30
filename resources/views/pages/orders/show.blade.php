@@ -323,50 +323,47 @@
           </div>
       </div>
 
-        {{-- Napomene (30% desktop, 100% mobile) --}}
-        <div class="col-12 col-lg-4 mb-3">
-            <div class="card">
-                <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">
-                    Napomene
+      {{-- Napomene (30% desktop, 100% mobile) --}}
+      <div class="col-12 col-lg-4 mb-3">
+        <div class="card">
+          <div class="card-header" style="font-weight: 900; background-color: #ffc10711;">
+            Napomene
+          </div>
+
+          <div class="card-body" style="border: solid 4px #ffc10711">
+            <!-- Button to trigger the pop-up -->
+            <button id="popupButton" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#expensesModal">
+              <i class="bi bi-file-earmark-plus"></i> Dodaj napomenu
+            </button>
+
+            <div class="row">
+              @foreach ($orderNotes as $item)
+                <div class="col-12 col-md-6 mb-3"> {{-- 2 u redu na desktopu --}}
+                  <div class="p-3 rounded" style="background:#f8f9fa; border:1px solid #dee2e6;">
+
+                    {{-- Header (datum + delete) --}}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <small class="text-muted">{{ $item->created_at->format('d. m. Y. H:i') }}</small>
+                      <x-delete-button :id="$item->id" model="napomena" />
+                    </div>
+
+                    {{-- Napomena --}}
+                    <div>
+                      <span class="editable"
+                            data-id="{{ $item->id }}"
+                            data-field="note"
+                            data-model="napomena">
+                        {{ $item->note }}
+                      </span>
+                    </div>
+
+                  </div>
                 </div>
-
-                <div class="card-body" style="border: solid 4px #ffc10711">
-                    <!-- Button to trigger the pop-up -->
-                    <button id="popupButton" class="btn btn-warning" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#expensesModal">
-                        <i class="bi bi-file-earmark-plus"></i> Dodaj napomenu
-                    </button>
-
-                    <ul class="list-unstyled">
-                      @foreach ($orderNotes as $item)
-                        <li class="mb-3 p-3 rounded" 
-                            style="background:#f8f9fa; border:1px solid #dee2e6;">
-                          
-                          {{-- Header (broj + datum) --}}
-                          <div class="d-flex justify-content-between mb-2">
-                            <small class="text-muted">{{ $item->created_at->format('d. m. Y. H:i') }}</small>
-                          </div>
-
-                          {{-- Napomena --}}
-                          <div class="mb-2">
-                            <span class="editable"
-                                  data-id="{{ $item->id }}"
-                                  data-field="note"
-                                  data-model="napomena">
-                              {{ $item->note }}
-                            </span>
-                          </div>
-
-                          {{-- Delete button --}}
-                          <div>
-                            <x-delete-button :id="$item->id" model="napomena" />
-                          </div>
-                        </li>
-                      @endforeach
-                    </ul>
-                </div>
+              @endforeach
             </div>
+          </div>
         </div>
-
+      </div>
     </div>
 
   </div>
