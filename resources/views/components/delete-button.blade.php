@@ -1,4 +1,4 @@
-<button class="btn btn-danger delete-btn-x" 
+<button class="btn btn-sm btn-danger delete-btn-x" 
         data-id="{{ $id }}" 
         data-model="{{ $model }}"
         data-bs-toggle="modal" 
