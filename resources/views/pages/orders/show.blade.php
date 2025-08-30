@@ -431,6 +431,12 @@
               <label for="price">Cijena:</label>
               <input type="number" class="form-control" placeholder="Unesi cijenu proizvoda..." id="price" name="price" step=".01">
             </div>
+
+            {{-- Discount --}}
+            <div class="mb-3">
+              <label for="price">Popust:</label>
+              <input type="number" class="form-control" value="0" id="price" name="discount" step="1">
+            </div>
             
             {{-- Product color --}}
             <div class="mb-3">
