@@ -206,11 +206,12 @@
               <input type="date" class="form-control" id="date_deadline" name="date_deadline" required>
             </div>          
 
-            {{-- Sales channel --}}<div class="mb-3">
+            {{-- Sales channel --}}
+            <div class="mb-3">
               <span style="display: block;">Kanal prodaje:</span>
                 @foreach ($sources as $source)
-                  <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="option{{ $source->id }}" required>
-                  <label class="btn btn-light btn-sm me-1 mb-2" for="option{{ $source->id }}">{{ $source->name }}</label>
+                  <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="source{{ $source->id }}" required>
+                  <label class="btn btn-light btn-sm me-1 mb-2" for="source{{ $source->id }}">{{ $source->name }}</label>
                 @endforeach
             </div>      
 
@@ -218,8 +219,8 @@
             <div class="mb-3">
               <span style="display: block;">Način plaćanja:</span>
                 @foreach ($paymentTypes as $paymentType)
-                  <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" required>
-                  <label class="btn btn-light btn-sm me-1 mb-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
+                  <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="payment{{ $paymentType->id }}" required>
+                  <label class="btn btn-light btn-sm me-1 mb-1" for="payment{{ $paymentType->id }}">{{ $paymentType->name }}</label>
                 @endforeach
             </div>
 
