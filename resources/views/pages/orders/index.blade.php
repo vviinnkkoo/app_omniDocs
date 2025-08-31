@@ -175,18 +175,8 @@
           <div class="form-group">
 
             {{-- Customer --}}
-            {{--<div class="mb-3">
-              <label for="customer_id">Kupac:</label>
-              <select class="form-select searchable-select-modal" id="customer_id" name="customer_id" required>
-                <option disabled selected>Odaberi kupca...</option>
-                @foreach ($customers as $customer)
-                  <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->city }}</option>                                  
-                @endforeach
-              </select>
-            </div>--}}
-
             <div class="mb-3 omniselect-dropdown">
-                <label for="customer_id">Država:</label>
+                <label for="customer_id">Kupac:</label>
                 <input type="text" class="form-control omniselect"
                     data-name="customer_id"
                     placeholder="Pretraži kupce..."
@@ -216,22 +206,11 @@
               <input type="date" class="form-control" id="date_deadline" name="date_deadline" required>
             </div>          
 
-            {{-- Sales channel --}}
-            {{--<div class="mb-3">
-              <label for="source_id">Kanal prodaje:</label>
-              <select class="form-select searchable-select-modal" id="source_id" name="source_id" required>
-                <option disabled selected>Odaberi kanal prodaje...</option>
-                @foreach ($sources as $source)
-                  <option value="{{ $source->id }}">{{ $source->name }}</option>                                  
-                @endforeach
-              </select>
-            </div>--}}
-
-            <div class="mb-3">
+            {{-- Sales channel --}}<div class="mb-3">
               <span style="display: block;">Kanal prodaje:</span>
                 @foreach ($sources as $source)
                   <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="option{{ $source->id }}" required>
-                  <label class="btn btn-secondary btn-sm me-1 mb-1" for="option{{ $source->id }}">{{ $source->name }}</label>
+                  <label class="btn btn-light btn-sm me-1 mb-2" for="option{{ $source->id }}">{{ $source->name }}</label>
                 @endforeach
             </div>      
 
@@ -240,7 +219,7 @@
               <span style="display: block;">Način plaćanja:</span>
                 @foreach ($paymentTypes as $paymentType)
                   <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" required>
-                  <label class="btn btn-secondary btn-sm me-1 mb-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
+                  <label class="btn btn-light btn-sm me-1 mb-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
                 @endforeach
             </div>
 
