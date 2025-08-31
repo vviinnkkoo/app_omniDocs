@@ -217,7 +217,7 @@
             </div>          
 
             {{-- Sales channel --}}
-            <div class="mb-3">
+            {{--<div class="mb-3">
               <label for="source_id">Kanal prodaje:</label>
               <select class="form-select searchable-select-modal" id="source_id" name="source_id" required>
                 <option disabled selected>Odaberi kanal prodaje...</option>
@@ -225,6 +225,14 @@
                   <option value="{{ $source->id }}">{{ $source->name }}</option>                                  
                 @endforeach
               </select>
+            </div>--}}
+
+            <div class="mb-3">
+              <span style="display: block;">Kanal prodaje:</span>
+                @foreach ($paymentTypes as $paymentType)
+                  <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="option{{ $source->id }}" required>
+                  <label class="btn btn-secondary btn-sm me-2 mb-1" for="option{{ $source->id }}">{{ $source->name }}</label>
+                @endforeach
             </div>
 
             {{-- Delivery service --}}
