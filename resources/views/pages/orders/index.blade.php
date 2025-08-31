@@ -231,7 +231,7 @@
               <span style="display: block;">Kanal prodaje:</span>
                 @foreach ($sources as $source)
                   <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="option{{ $source->id }}" required>
-                  <label class="btn btn-secondary btn-sm me-1" for="option{{ $source->id }}">{{ $source->name }}</label>
+                  <label class="btn btn-secondary btn-sm me-1 mb-1" for="option{{ $source->id }}">{{ $source->name }}</label>
                 @endforeach
             </div>      
 
@@ -240,7 +240,7 @@
               <span style="display: block;">Način plaćanja:</span>
                 @foreach ($paymentTypes as $paymentType)
                   <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="option{{ $paymentType->id }}" required>
-                  <label class="btn btn-secondary btn-sm me-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
+                  <label class="btn btn-secondary btn-sm me-1 mb-1" for="option{{ $paymentType->id }}">{{ $paymentType->name }}</label>
                 @endforeach
             </div>
 
