@@ -3,7 +3,7 @@
 @section('title', 'Omnius Art | Narudžbe')
 
 @section('content')
-<div class="containerx" style="margin-left:5%; margin-right:5%">
+<div class="container-fluid px-5">
 
     <div class="row justify-content-center">
       <div class="col-md-12">
