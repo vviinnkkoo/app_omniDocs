@@ -410,7 +410,7 @@
           <div class="form-group">
 
             {{-- Product type --}}
-            <div class="mb-3">
+            {{--<div class="mb-3">
               <label for="product_id">Proizvod:</label><br>
               <select class="form-select searchable-select-modal" id="product_id" name="product_id">
                   <option selected>Odaberi proizvod...</option>
@@ -421,6 +421,30 @@
                       @endforeach
                   @endforeach
               </select>
+            </div>--}}
+
+            <div class="mb-3 omniselect-dropdown">
+                <label for="product_id">Proizvod:</label>
+                <input type="text" class="form-control omniselect"
+                      data-name="product_id"
+                      placeholder="Pretraži proizvode..."
+                      autocomplete="off"
+                      required>
+                <input type="hidden" name="product_id" class="custom-select-hidden">
+                <ul class="dropdown-menu w-100">
+                  @foreach ($productTypes as $type)
+                    {{-- Group label --}}
+                    <li class="dropdown-group">{{ $type->name }}</li>
+                    
+                    @foreach ($type->product as $product)
+                      <li>
+                        <a href="#" data-value="{{ $product->id }}">
+                          {{ $product->name }} >> {{ $product->default_price }} €
+                        </a>
+                      </li>
+                    @endforeach
+                  @endforeach
+                </ul>
             </div>
 
             {{-- Amount --}}
