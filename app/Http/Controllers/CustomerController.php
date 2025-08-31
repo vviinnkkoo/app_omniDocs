@@ -50,11 +50,15 @@ class CustomerController extends Controller
             'country_id' => 'required'
         ]);
 
-        Customer::create($request->only([
-            'name', 'oib', 'email', 'phone', 'address', 'house_number', 'city', 'postal', 'country_id'
-        ]));
+        try {
+            Customer::create($request->only([
+                'name', 'oib', 'email', 'phone', 'address', 'house_number', 'city', 'postal', 'country_id'
+            ]));
 
-        return redirect()->back();
+            return redirect()->back()->with('success', 'Kupac je uspješno dodan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Greška prilikom spremanja: ' . $e->getMessage());
+        }
     }
 
     public function update(Request $request, $id)
