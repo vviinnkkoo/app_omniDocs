@@ -365,18 +365,14 @@ if (refreshBtn) { // Check if element exists
 */
 document.querySelectorAll('.omniselect').forEach(input => {
     const container = input.closest('.omniselect-dropdown');
-    if (!container) return; // ako nema containera, preskoči
-
     const dropdown = container.querySelector('ul');
-    if (!dropdown) return; // ako nema ul, preskoči
-
-    const hiddenInput = container.querySelector('.custom-select-hidden');
+    const hiddenInput = container.querySelector('.omniselect-hidden');
 
     function filterOptions() {
         const val = input.value.toLowerCase();
         dropdown.querySelectorAll('li').forEach(li => {
             if (li.classList.contains('dropdown-group')) {
-                li.style.display = ''; // group labels uvijek vidljive
+                li.style.display = ''; // always show group label
                 return;
             }
             const text = li.textContent.toLowerCase();
@@ -397,6 +393,7 @@ document.querySelectorAll('.omniselect').forEach(input => {
     dropdown.querySelectorAll('li a').forEach(a => {
         a.addEventListener('click', e => {
             e.preventDefault();
+            // Remove leading/trailing whitespace and normalize multiple spaces
             const cleanText = a.textContent.replace(/\s+/g, ' ').trim();
             input.value = cleanText;
             hiddenInput.value = a.dataset.value;
