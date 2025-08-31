@@ -365,14 +365,18 @@ if (refreshBtn) { // Check if element exists
 */
 document.querySelectorAll('.omniselect').forEach(input => {
     const container = input.closest('.omniselect-dropdown');
+    if (!container) return; // preskoči ako nema container
+
     const dropdown = container.querySelector('ul');
-    const hiddenInput = container.querySelector('.omniselect-hidden');
+    if (!dropdown) return; // preskoči ako nema ul
+
+    const hiddenInput = container.querySelector('.custom-select-hidden');
 
     function filterOptions() {
         const val = input.value.toLowerCase();
         dropdown.querySelectorAll('li').forEach(li => {
             if (li.classList.contains('dropdown-group')) {
-                li.style.display = ''; // always show group label
+                li.style.display = ''; // group labels uvijek vidljive
                 return;
             }
             const text = li.textContent.toLowerCase();
@@ -393,10 +397,13 @@ document.querySelectorAll('.omniselect').forEach(input => {
     dropdown.querySelectorAll('li a').forEach(a => {
         a.addEventListener('click', e => {
             e.preventDefault();
-            // Remove leading/trailing whitespace and normalize multiple spaces
             const cleanText = a.textContent.replace(/\s+/g, ' ').trim();
             input.value = cleanText;
-            hiddenInput.value = a.dataset.value;
+
+            if (hiddenInput) {
+                hiddenInput.value = a.dataset.value;
+            }
+
             dropdown.classList.remove('show');
         });
     });
