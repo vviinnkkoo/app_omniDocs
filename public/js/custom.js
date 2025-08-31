@@ -389,7 +389,9 @@ document.querySelectorAll('.omniselect').forEach(input => {
     dropdown.querySelectorAll('li a').forEach(a => {
         a.addEventListener('click', e => {
             e.preventDefault();
-            input.value = a.textContent;
+            // Remove leading/trailing whitespace and normalize multiple spaces
+            const cleanText = a.textContent.replace(/\s+/g, ' ').trim();
+            input.value = cleanText;
             hiddenInput.value = a.dataset.value;
             dropdown.classList.remove('show');
         });
@@ -399,4 +401,3 @@ document.querySelectorAll('.omniselect').forEach(input => {
         if (!container.contains(e.target)) dropdown.classList.remove('show');
     });
 });
-
