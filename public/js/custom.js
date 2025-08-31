@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Vainlla JS update for select fields
+// Vanilla JS update for select fields
 document.addEventListener('DOMContentLoaded', function () {
     const editableSelects = document.querySelectorAll('.editable-select');
 
@@ -194,72 +194,143 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Ajax update for date fields
-$(".editable-date").on("click", function () {
-    const e = $(this).data("id"),
-        t = $(this).data("field"),
-        n = $(this).data("model"),
-        s = $(this).find('input[type="date"]').val(),
-        r = $("<input>", { type: "date", class: "form-control", style: "width:80%", value: s });
-    r.on("focus", function () {
-        $(this).attr("data-editing", "true");
-    }),
-        r.blur(function () {
-            if ($(this).attr("data-editing") === "true") {
-                const i = r.val();
-                $(this).html(i),
-                    $.ajax({
-                        type: "PUT",
-                        url: `/${n}/${e}`,
-                        data: { field: t, newValue: i },
-                        headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-                        success: function () {
-                            $(`[data-id="${e}"][data-field="${t}"]`).find('input[type="date"]').val(i);
+document.addEventListener('DOMContentLoaded', function () {
+    const editableDates = document.querySelectorAll('.editable-date');
+
+    editableDates.forEach(function (container) {
+        container.addEventListener('click', function () {
+            const id = container.dataset.id;
+            const field = container.dataset.field;
+            const model = container.dataset.model;
+
+            // get current value from input[type="date"] if exists
+            const currentInput = container.querySelector('input[type="date"]');
+            const currentValue = currentInput ? currentInput.value : '';
+
+            // create new date input
+            const dateInput = document.createElement('input');
+            dateInput.type = 'date';
+            dateInput.className = 'form-control';
+            dateInput.style.width = '80%';
+            dateInput.value = currentValue;
+            dateInput.dataset.editing = 'true';
+
+            // clear container and append input
+            container.innerHTML = '';
+            container.appendChild(dateInput);
+            dateInput.focus();
+
+            // blur event
+            dateInput.addEventListener('blur', function () {
+                if (dateInput.dataset.editing === 'true') {
+                    const newValue = dateInput.value;
+
+                    // update container
+                    container.innerHTML = newValue;
+
+                    // send AJAX PUT
+                    fetch(`/${model}/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
-                        error: function () {
-                            alert("Error updating the data.");
-                        },
-                    }),
-                    $(this).removeAttr("data-editing");
-            }
-        }),
-        $(this).html(r),
-        r.focus();
+                        body: JSON.stringify({ field: field, newValue: newValue })
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error updating the data.');
+                        // optionally update original hidden input if exists
+                        const origInput = document.querySelector(`.editable-date[data-id="${id}"][data-field="${field}"] input[type="date"]`);
+                        if (origInput) origInput.value = newValue;
+                    })
+                    .catch(() => alert('Error updating the data.'));
+
+                    delete dateInput.dataset.editing;
+                }
+            });
+
+            // optional: keydown for Enter / Escape
+            dateInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    dateInput.blur(); // confirm
+                } else if (e.key === 'Escape') {
+                    container.innerHTML = currentValue; // cancel
+                }
+            });
+        });
+    });
 });
 
 // Ajax update for datetime fields
-$(".editable-datetime").on("click", function () {
-    const e = $(this).data("id"),
-        t = $(this).data("field"),
-        n = $(this).data("model"),
-        s = $(this).find('input[type="datetime-local"]').val(),
-        r = $("<input>", { type: "datetime-local", class: "form-control", style: "width:80%", value: s });
-    r.on("focus", function () {
-        $(this).attr("data-editing", "true");
-    }),
-        r.blur(function () {
-            if ($(this).attr("data-editing") === "true") {
-                const i = r.val();
-                $(this).html(i),
-                    $.ajax({
-                        type: "PUT",
-                        url: `/${n}/${e}`,
-                        data: { field: t, newValue: i },
-                        headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-                        success: function () {
-                            $(`[data-id="${e}"][data-field="${t}"]`).find('input[type="date"]').val(i);
+document.addEventListener('DOMContentLoaded', function () {
+    const editableDateTimes = document.querySelectorAll('.editable-datetime');
+
+    editableDateTimes.forEach(function (container) {
+        container.addEventListener('click', function () {
+            const id = container.dataset.id;
+            const field = container.dataset.field;
+            const model = container.dataset.model;
+
+            // get current value from input[type="datetime-local"] if exists
+            const currentInput = container.querySelector('input[type="datetime-local"]');
+            const currentValue = currentInput ? currentInput.value : '';
+
+            // create new datetime-local input
+            const dtInput = document.createElement('input');
+            dtInput.type = 'datetime-local';
+            dtInput.className = 'form-control';
+            dtInput.style.width = '80%';
+            dtInput.value = currentValue;
+            dtInput.dataset.editing = 'true';
+
+            // replace container content with input
+            container.innerHTML = '';
+            container.appendChild(dtInput);
+            dtInput.focus();
+
+            // blur event
+            dtInput.addEventListener('blur', function () {
+                if (dtInput.dataset.editing === 'true') {
+                    const newValue = dtInput.value;
+
+                    // update container text
+                    container.innerHTML = newValue;
+
+                    // send AJAX PUT
+                    fetch(`/${model}/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
-                        error: function () {
-                            alert("Error updating the data.");
-                        },
-                    }),
-                    $(this).removeAttr("data-editing");
-            }
-        }),
-        $(this).html(r),
-        r.focus();
+                        body: JSON.stringify({ field: field, newValue: newValue })
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error updating the data.');
+                        // update original input if exists
+                        const origInput = document.querySelector(`.editable-datetime[data-id="${id}"][data-field="${field}"] input[type="datetime-local"]`);
+                        if (origInput) origInput.value = newValue;
+                    })
+                    .catch(() => alert('Error updating the data.'));
+
+                    delete dtInput.dataset.editing;
+                }
+            });
+
+            // keydown for Enter / Escape
+            dtInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    dtInput.blur(); // confirm
+                } else if (e.key === 'Escape') {
+                    container.innerHTML = currentValue; // cancel
+                }
+            });
+        });
+    });
 });
 
-// Ajax update for datetime fields on invoices
+
+/*Ajax update for datetime fields on invoices
 $(".editable-date-invoice").on("click", function () {
     const e = $(this).data("id"),
         t = $(this).data("field"),
@@ -295,61 +366,62 @@ $(".editable-date-invoice").on("click", function () {
             p = a.getSeconds();
         return `${c}.${u}.${f} - ${d}:${h}:${p}`;
     }
-});
+});*/
 
 // Ajax update checkbox state
-$(document).ready(function () {
-    $(".edit-checkbox").on("click", function () {
-        const e = $(this).closest(".order-item").data("id"),
-            t = $(this).is(":checked"),
-            n = $(this).closest(".order-item").data("model");
-        $.ajax({
-            type: "PUT",
-            url: `/${n}/status/${e}`,
-            data: { is_done: t },
-            headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-            success: function () {},
-            error: function () {
-                alert("Error updating the data.");
-            },
+document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.edit-checkbox');
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('click', function () {
+            const orderItem = checkbox.closest('.order-item');
+            const id = orderItem.dataset.id;
+            const model = orderItem.dataset.model;
+            const isDone = checkbox.checked;
+
+            fetch(`/${model}/status/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ is_done: isDone })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Error updating the data.');
+            })
+            .catch(() => alert('Error updating the data.'));
         });
     });
 });
 
 // Ajax update checkbox state for delivery services
-$(document).ready(function () {
-    $(".edit-checkbox-delivery-service").on("click", function () {
-        const e = $(this).closest(".delivery-service-item").data("id"),
-            t = $(this).is(":checked"),
-            n = $(this).closest(".delivery-service-item").data("model");
-        $.ajax({
-            type: "PUT",
-            url: `/${n}/status/${e}`,
-            data: { in_use: t },
-            headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-            success: function () {},
-            error: function () {
-                alert("Error updating the data.");
-            },
+document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.edit-checkbox-delivery-service');
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('click', function () {
+            const serviceItem = checkbox.closest('.delivery-service-item');
+            const id = serviceItem.dataset.id;
+            const model = serviceItem.dataset.model;
+            const inUse = checkbox.checked;
+
+            fetch(`/${model}/status/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ in_use: inUse })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Error updating the data.');
+            })
+            .catch(() => alert('Error updating the data.'));
         });
     });
 });
 
-$(function () {
-    $(".searchable-select").select2();
-});
-
-$(function () {
-    $(".searchable-select-modal").select2({ dropdownParent: $("#exampleModal") });
-});
-
-$(function () {
-    $(".searchable-select-modal2").select2({ dropdownParent: $("#expensesModal") });
-});
-
-$(function () {
-    $(".searchable-customer-modal").select2({ dropdownParent: $("#customerModal") });
-});
 
 let Pl = document.getElementById("btn-back-to-top");
 window.onscroll = function () {
