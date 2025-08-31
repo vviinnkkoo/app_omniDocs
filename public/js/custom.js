@@ -512,22 +512,38 @@ if (refreshBtn) { // Check if element exists
 */
 document.querySelectorAll('.omniselect').forEach(input => {
     const container = input.closest('.omniselect-dropdown');
-    if (!container) return; // preskoči ako nema container
+    if (!container) return;
 
     const dropdown = container.querySelector('ul');
-    if (!dropdown) return; // preskoči ako nema ul
+    if (!dropdown) return;
 
     const hiddenInput = container.querySelector('.omniselect-hidden');
 
     function filterOptions() {
         const val = input.value.toLowerCase();
+        const groups = {};
+
+        // prvo filtriraj sve li osim grupa
         dropdown.querySelectorAll('li').forEach(li => {
             if (li.classList.contains('dropdown-group')) {
-                li.style.display = ''; // group labels uvijek vidljive
+                groups[li.textContent.trim()] = false; // inicijalno nema vidljivih opcija
                 return;
             }
             const text = li.textContent.toLowerCase();
-            li.style.display = text.includes(val) ? '' : 'none';
+            const visible = text.includes(val);
+            li.style.display = visible ? '' : 'none';
+
+            // ako li pripada grupi, označi grupu kao vidljivu
+            const prevGroup = li.previousElementSibling;
+            if (prevGroup && prevGroup.classList.contains('dropdown-group') && visible) {
+                groups[prevGroup.textContent.trim()] = true;
+            }
+        });
+
+        // sada postavi display za grupe
+        dropdown.querySelectorAll('li.dropdown-group').forEach(groupLi => {
+            const groupName = groupLi.textContent.trim();
+            groupLi.style.display = groups[groupName] ? '' : 'none';
         });
     }
 
