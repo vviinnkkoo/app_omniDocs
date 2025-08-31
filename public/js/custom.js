@@ -98,51 +98,100 @@ document.addEventListener("click", function(event) {
     confirmBtn.onclick = onConfirm;
 });
 
-// Table search on keyup
-$(function () {
-    $("#search").on("keyup", function () {
-        const e = $(this).val().toLowerCase().split(" ");
-        $("table tbody tr").each(function () {
-            const t = $(this).text().toLowerCase();
-            let n = !0;
-            e.forEach(function (s) {
-                t.indexOf(s) === -1 && (n = !1);
-            }),
-                n ? $(this).show() : $(this).hide();
+// Table search on keyup (Vanilla JS)
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('search');
+    const tableRows = document.querySelectorAll('table tbody tr');
+
+    searchInput.addEventListener('keyup', function () {
+        const searchTerms = this.value.toLowerCase().split(' ');
+
+        tableRows.forEach(function (row) {
+            const rowText = row.textContent.toLowerCase();
+            let match = true;
+
+            searchTerms.forEach(function (term) {
+                if (rowText.indexOf(term) === -1) {
+                    match = false;
+                }
+            });
+
+            row.style.display = match ? '' : 'none';
         });
     });
 });
 
-// Ajax update for select fields
-$(".editable-select").each(function () {
-    const e = $(this).find("select"),
-        t = $(this).find("span"),
-        n = $(this).data("id"),
-        s = $(this).data("field"),
-        r = $(this).data("model");
-    let i;
-    e.hide(),
-        t.click(function () {
-            (i = e.val()), t.hide(), e.show(), e.focus();
-        }),
-        e.blur(function () {
-            const o = e.val();
-            o !== i
-                ? (t.text(e.find(":selected").text()).show(),
-                  e.hide(),
-                  $.ajax({
-                      type: "PUT",
-                      url: `/${r}/${n}`,
-                      data: { field: s, newValue: o },
-                      headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-                      success: function () {},
-                      error: function () {
-                          alert("Error updating the data.");
-                      },
-                  }))
-                : (e.val(i), t.show(), e.hide());
+// Vainlla JS update for select fields
+document.addEventListener('DOMContentLoaded', function () {
+    const editableSelects = document.querySelectorAll('.editable-select');
+
+    editableSelects.forEach(function (container) {
+        const select = container.querySelector('select');
+        const span = container.querySelector('span');
+        const id = container.dataset.id;
+        const field = container.dataset.field;
+        const model = container.dataset.model;
+
+        let initialValue;
+
+        // Hide select initially
+        select.style.display = 'none';
+
+        // Show select on span click
+        span.addEventListener('click', function () {
+            initialValue = select.value;
+            span.style.display = 'none';
+            select.style.display = '';
+            select.focus();
         });
+
+        // Function to confirm change
+        function confirmChange() {
+            const newValue = select.value;
+            if (newValue !== initialValue) {
+                span.textContent = select.options[select.selectedIndex].text;
+                span.style.display = '';
+                select.style.display = 'none';
+
+                // Send AJAX PUT
+                fetch(`/${model}/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ field: field, newValue: newValue })
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Error updating the data.');
+                })
+                .catch(() => alert('Error updating the data.'));
+            } else {
+                cancelChange();
+            }
+        }
+
+        // Function to cancel change
+        function cancelChange() {
+            select.value = initialValue;
+            span.style.display = '';
+            select.style.display = 'none';
+        }
+
+        // Blur event
+        select.addEventListener('blur', confirmChange);
+
+        // Keydown event for Enter / Escape
+        select.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                confirmChange();
+            } else if (e.key === 'Escape') {
+                cancelChange();
+            }
+        });
+    });
 });
+
 
 // Ajax update for date fields
 $(".editable-date").on("click", function () {
