@@ -316,6 +316,12 @@ function qS() {
     (document.body.scrollTop = 0), (document.documentElement.scrollTop = 0);
 }
 
+/*
+|--------------------------------------------------------------------------------------------
+| Code to fetch and update the latest invoice number based on the selected year
+|--------------------------------------------------------------------------------------------
+|
+*/
 const refreshBtn = document.getElementById("refresh-number-btn");
 
 if (refreshBtn) { // Check if element exists
@@ -346,3 +352,51 @@ if (refreshBtn) { // Check if element exists
             });
     });
 }
+
+/*
+|--------------------------------------------------------------------------------------------
+| Custom searchable dropdown for select inputs
+|--------------------------------------------------------------------------------------------
+|
+| This script turns any input with the class "omniselect" into a custom searchable dropdown.
+| It filters the list items in real time as the user types, allows selecting an item,
+| and stores the selected value in a hidden input for form submission.
+|
+*/
+document.querySelectorAll('.omniselect').forEach(input => {
+    const container = input.closest('.omni-dropdown');
+    const dropdown = container.querySelector('ul');
+    const hiddenInput = container.querySelector('.custom-select-hidden');
+
+    function filterOptions() {
+        const val = input.value.toLowerCase();
+        dropdown.querySelectorAll('li').forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(val) ? '' : 'none';
+        });
+    }
+
+    input.addEventListener('input', () => {
+        filterOptions();
+        dropdown.classList.add('show');
+    });
+
+    input.addEventListener('focus', () => {
+        filterOptions();
+        dropdown.classList.add('show');
+    });
+
+    dropdown.querySelectorAll('li a').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            input.value = a.textContent;
+            hiddenInput.value = a.dataset.value;
+            dropdown.classList.remove('show');
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if (!container.contains(e.target)) dropdown.classList.remove('show');
+    });
+});
+

@@ -222,3 +222,42 @@
     border-color: #a37d51;
     box-shadow: 0 0 15px #f7c99525;
 }
+
+/*
+|--------------------------------------------------------------------------------------------
+| Select dropdown styles
+|--------------------------------------------------------------------------------------------
+*/
+.omni-dropdown {
+    position: relative;
+}
+
+.omni-dropdown ul {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    max-height: 200px; /* visina dropdowna prije scrolla */
+    overflow-y: auto;
+    display: none; /* sakrij dok input nije fokusiran */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.omni-dropdown ul.show {
+    display: block;
+}
+
+.omni-dropdown ul li a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+}
+
+.omni-dropdown ul li a:hover {
+    background-color: #f0f0f0;
+}

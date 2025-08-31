@@ -41,7 +41,7 @@
         <input type="text" class="form-control" placeholder="Unesi poštanski broj..." id="postal" name="postal" required>
     </div>
 
-    <div class="mb-3">
+    {{--<div class="mb-3">
         <label for="country_id">Država:</label>
         <select class="form-select searchable-customer-modal" id="country_id" name="country_id" required>
         <option disabled selected>Odaberi državu...</option>
@@ -49,6 +49,25 @@
             <option value="{{ $country->id }}">{{ $country->name }}</option>                                  
         @endforeach
         </select>
+    </div>--}}
+
+    <div class="mb-3 omni-dropdown">
+        <label for="country_id">Država:</label>
+        <input type="text" class="form-control omniselect"
+            data-name="country_id"
+            placeholder="Pretraži državu..."
+            autocomplete="off"
+            required>
+        <input type="hidden" name="country_id" class="custom-select-hidden">
+        <ul class="dropdown-menu w-100">
+            @foreach ($countries as $country)
+                <li>
+                    <a href="#" data-value="{{ $country->id }}">
+                        {{ $country->name }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
     </div>
     
 </div>
