@@ -364,9 +364,9 @@ if (refreshBtn) { // Check if element exists
 |
 */
 document.querySelectorAll('.omniselect').forEach(input => {
-    const container = input.closest('.omni-dropdown');
+    const container = input.closest('.omniselect-dropdown');
     const dropdown = container.querySelector('ul');
-    const hiddenInput = container.querySelector('.custom-select-hidden');
+    const hiddenInput = container.querySelector('.omniselect-hidden');
 
     function filterOptions() {
         const val = input.value.toLowerCase();

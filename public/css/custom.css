@@ -228,11 +228,11 @@
 | Select dropdown styles
 |--------------------------------------------------------------------------------------------
 */
-.omni-dropdown {
+.omniselect-dropdown {
     position: relative;
 }
 
-.omni-dropdown ul {
+.omniselect-dropdown ul {
     position: absolute;
     z-index: 1000;
     width: 100%;
@@ -246,11 +246,11 @@
     background: #fff;
 }
 
-.omni-dropdown ul.show {
+.omniselect-dropdown ul.show {
     display: block;
 }
 
-.omni-dropdown ul li a {
+.omniselect-dropdown ul li a {
     display: block;
     padding: 5px 10px;
     text-decoration: none;
@@ -258,6 +258,6 @@
     cursor: pointer;
 }
 
-.omni-dropdown ul li a:hover {
+.omniselect-dropdown ul li a:hover {
     background-color: #f0f0f0;
 }

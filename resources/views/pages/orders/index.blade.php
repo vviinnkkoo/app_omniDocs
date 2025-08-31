@@ -175,7 +175,7 @@
           <div class="form-group">
 
             {{-- Customer --}}
-            <div class="mb-3">
+            {{--<div class="mb-3">
               <label for="customer_id">Kupac:</label>
               <select class="form-select searchable-select-modal" id="customer_id" name="customer_id" required>
                 <option disabled selected>Odaberi kupca...</option>
@@ -183,6 +183,25 @@
                   <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->city }}</option>                                  
                 @endforeach
               </select>
+            </div>--}}
+
+            <div class="mb-3 omniselect-dropdown">
+                <label for="customer_id">Država:</label>
+                <input type="text" class="form-control omniselect"
+                    data-name="customer_id"
+                    placeholder="Pretraži kupce..."
+                    autocomplete="off"
+                    required>
+                <input type="hidden" name="customer_id" class="omniselect-hidden">
+                <ul class="dropdown-menu w-100">
+                    @foreach ($customers as $customer)
+                        <li>
+                            <a href="#" data-value="{{ $customer->id }}">
+                                {{ $customer->name }} - {{ $customer->city }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
 
             {{-- Order date --}}
