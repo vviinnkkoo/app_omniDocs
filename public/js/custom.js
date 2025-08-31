@@ -517,7 +517,7 @@ document.querySelectorAll('.omniselect').forEach(input => {
     const dropdown = container.querySelector('ul');
     if (!dropdown) return; // preskoči ako nema ul
 
-    const hiddenInput = container.querySelector('.custom-select-hidden');
+    const hiddenInput = container.querySelector('.omniselect-hidden');
 
     function filterOptions() {
         const val = input.value.toLowerCase();
