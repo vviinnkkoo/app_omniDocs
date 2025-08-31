@@ -208,7 +208,7 @@
         </div>
         <div class="card-body" style=" border: solid 4px #19875411">
           <table class="table table-hover">
-            <thead class="table-secondary">
+            <thead class="table-light">
               <tr>                          
                 <th scope="col">#</th>
                 <th scope="col">Proizvod</th>
