@@ -229,7 +229,7 @@
 
             <div class="mb-3">
               <span style="display: block;">Kanal prodaje:</span>
-                @foreach ($paymentTypes as $paymentType)
+                @foreach ($sources as $source)
                   <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="option{{ $source->id }}" required>
                   <label class="btn btn-secondary btn-sm me-2 mb-1" for="option{{ $source->id }}">{{ $source->name }}</label>
                 @endforeach
