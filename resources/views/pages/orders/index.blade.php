@@ -243,7 +243,7 @@
               </select>
             </div>--}}
 
-            <div class="mb-3 omni-dropdown">
+            <div class="mb-3 omniselect-dropdown">
                 <label for="delivery_service_id">Dostavna služba:</label>
                 <input type="text" class="form-control omniselect"
                       data-name="delivery_service_id"
