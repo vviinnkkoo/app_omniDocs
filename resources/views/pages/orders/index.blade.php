@@ -232,7 +232,7 @@
                       placeholder="Pretraži dostavnu službu..."
                       autocomplete="off"
                       required>
-                <input type="hidden" name="delivery_service_id" class="custom-select-hidden">
+                <input type="hidden" name="delivery_service_id" class="omniselect-hidden">
                 <ul class="dropdown-menu w-100">
                   @foreach ($deliveryCompanies as $company)
                     {{-- Group label --}}

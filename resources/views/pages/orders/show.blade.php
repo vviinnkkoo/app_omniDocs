@@ -430,7 +430,7 @@
                       placeholder="Pretraži proizvode..."
                       autocomplete="off"
                       required>
-                <input type="hidden" name="product_id" class="custom-select-hidden">
+                <input type="hidden" name="product_id" class="omniselect-hidden">
                 <ul class="dropdown-menu w-100">
                   @foreach ($productTypes as $type)
                     {{-- Group label --}}
