@@ -261,3 +261,10 @@
 .omniselect-dropdown ul li a:hover {
     background-color: #f0f0f0;
 }
+.omniselect-dropdown ul li.dropdown-group {
+    font-weight: bold;
+    padding: 5px 10px;
+    cursor: default;
+    background-color: #f8f8f8;
+    color: #333;
+}

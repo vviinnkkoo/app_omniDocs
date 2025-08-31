@@ -225,7 +225,7 @@
             </div>
 
             {{-- Delivery service --}}
-            <div class="mb-3">
+            {{--<div class="mb-3">
               <label for="delivery_service_id">Dostavna služba:</label>
               <select class="form-select searchable-select-modal" id="delivery_service_id" name="delivery_service_id" required>
 
@@ -241,6 +241,32 @@
                 @endforeach
 
               </select>
+            </div>--}}
+
+            <div class="mb-3 omni-dropdown">
+                <label for="delivery_service_id">Dostavna služba:</label>
+                <input type="text" class="form-control omniselect"
+                      data-name="delivery_service_id"
+                      placeholder="Pretraži dostavnu službu..."
+                      autocomplete="off"
+                      required>
+                <input type="hidden" name="delivery_service_id" class="custom-select-hidden">
+                <ul class="dropdown-menu w-100">
+                  @foreach ($deliveryCompanies as $company)
+                    {{-- Group label --}}
+                    <li class="dropdown-group">{{ $company->name }}</li>
+                    
+                    @foreach ($company->deliveryServices as $service)
+                      @if ($service->in_use == 1)
+                        <li>
+                          <a href="#" data-value="{{ $service->id }}">
+                            {{ $service->name }} >> {{ $service->default_cost }} €
+                          </a>
+                        </li>
+                      @endif
+                    @endforeach
+                  @endforeach
+                </ul>
             </div>
 
           </div>

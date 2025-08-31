@@ -371,6 +371,10 @@ document.querySelectorAll('.omniselect').forEach(input => {
     function filterOptions() {
         const val = input.value.toLowerCase();
         dropdown.querySelectorAll('li').forEach(li => {
+            if (li.classList.contains('dropdown-group')) {
+                li.style.display = ''; // always show group label
+                return;
+            }
             const text = li.textContent.toLowerCase();
             li.style.display = text.includes(val) ? '' : 'none';
         });
