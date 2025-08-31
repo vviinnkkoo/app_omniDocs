@@ -155,7 +155,6 @@ class OrderController extends Controller
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
-        $workYears = WorkYears::orderBy('year')->get();
         $orderItemList = $order->orderItemList;
 
         return view('pages.orders.show', [
@@ -170,8 +169,7 @@ class OrderController extends Controller
             'products' => $products,
             'productTypes' => $productTypes,
             'colors' => $colors,
-            'latestReceiptNumber' => $latestReceiptNumber,
-            'workYears' => $workYears,
+            'latestReceiptNumber' => $latestReceiptNumber
         ]);
     }
 

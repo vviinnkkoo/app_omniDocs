@@ -160,7 +160,7 @@
 
 
 
-<!-- Order modal -->
+{{-- Order modal --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -169,7 +169,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- popup content -->
+        {{-- popup content --}}
         <form method="POST" action="/narudzbe" id="orderSubmission">
           {{ csrf_field() }}
           <div class="form-group">
@@ -225,24 +225,6 @@
             </div>
 
             {{-- Delivery service --}}
-            {{--<div class="mb-3">
-              <label for="delivery_service_id">Dostavna služba:</label>
-              <select class="form-select searchable-select-modal" id="delivery_service_id" name="delivery_service_id" required>
-
-                <option disabled selected>Odaberi dostavnu službu...</option>
-
-                @foreach ($deliveryCompanies as $company)
-                  <optgroup label="{{ $company->name }}">
-                    @foreach ($company->deliveryServices as $service)
-                      @if ($service->in_use == 1)
-                        <option value="{{ $service->id }}">{{ $service->name }} >> {{ $service->default_cost }} €</option>
-                      @endif
-                    @endforeach
-                @endforeach
-
-              </select>
-            </div>--}}
-
             <div class="mb-3 omniselect-dropdown">
                 <label for="delivery_service_id">Dostavna služba:</label>
                 <input type="text" class="form-control omniselect"
