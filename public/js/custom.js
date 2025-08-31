@@ -1,4 +1,8 @@
-// Ajax update for text fields with ENTER & ESC support
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update for text fields with ENTER & ESC support
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener("dblclick", function (event) {
     const target = event.target.closest(".editable");
     if (!target || target.classList.contains("editing")) return;
@@ -56,7 +60,11 @@ document.addEventListener("dblclick", function (event) {
     });
 });
 
-// Ajax delete records (vanilla JS) s fade-out efektom
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax delete records (vanilla JS) with fade-out effect
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener("click", function(event) {
     const deleteBtn = event.target.closest(".delete-btn-x");
     if (!deleteBtn) return;
@@ -98,30 +106,34 @@ document.addEventListener("click", function(event) {
     confirmBtn.onclick = onConfirm;
 });
 
-// Table search on keyup (Vanilla JS)
-document.addEventListener('DOMContentLoaded', function () {
+/*
+|--------------------------------------------------------------------------------------------
+| Table search on keyup
+|--------------------------------------------------------------------------------------------
+*/
+document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search');
-    const tableRows = document.querySelectorAll('table tbody tr');
 
-    searchInput.addEventListener('keyup', function () {
-        const searchTerms = this.value.toLowerCase().split(' ');
-
-        tableRows.forEach(function (row) {
-            const rowText = row.textContent.toLowerCase();
-            let match = true;
-
-            searchTerms.forEach(function (term) {
-                if (rowText.indexOf(term) === -1) {
-                    match = false;
-                }
+    if (searchInput) { // provjera da li element postoji
+        searchInput.addEventListener('keyup', function() {
+            const searchTerms = searchInput.value.toLowerCase().split(" ");
+            document.querySelectorAll('table tbody tr').forEach(function(row) {
+                const text = row.textContent.toLowerCase();
+                let match = true;
+                searchTerms.forEach(function(term) {
+                    if (!text.includes(term)) match = false;
+                });
+                row.style.display = match ? '' : 'none';
             });
-
-            row.style.display = match ? '' : 'none';
         });
-    });
+    }
 });
 
-// Vanilla JS update for select fields
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update for select fields
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const editableSelects = document.querySelectorAll('.editable-select');
 
@@ -192,8 +204,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-// Ajax update for date fields
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update for date fields
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const editableDates = document.querySelectorAll('.editable-date');
 
@@ -261,7 +276,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Ajax update for datetime fields
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update for datetime fields
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const editableDateTimes = document.querySelectorAll('.editable-datetime');
 
@@ -368,7 +387,11 @@ $(".editable-date-invoice").on("click", function () {
     }
 });*/
 
-// Ajax update checkbox state
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update for checkbox state
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.edit-checkbox');
 
@@ -395,7 +418,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Ajax update checkbox state for delivery services
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update checkbox state for delivery services
+|--------------------------------------------------------------------------------------------
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.edit-checkbox-delivery-service');
 
@@ -441,7 +468,6 @@ function qS() {
 |--------------------------------------------------------------------------------------------
 | Code to fetch and update the latest invoice number based on the selected year
 |--------------------------------------------------------------------------------------------
-|
 */
 const refreshBtn = document.getElementById("refresh-number-btn");
 
