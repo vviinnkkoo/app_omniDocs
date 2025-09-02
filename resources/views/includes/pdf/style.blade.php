@@ -8,7 +8,7 @@
 
     header {
         position: fixed;
-        top: -90px; /* Closer to zero and above moves it DOWN */
+        top: -80px; /* Closer to zero and above moves it DOWN */
         left: 0;
         right: 0;
         height: 100px;
@@ -31,8 +31,8 @@
     body {
         /*font-family: 'DejaVu Sans';*/
         /*font-family: 'Open Sans', sans-serif;*/
-        font-family: 'Nunito';
-        /*font-family: 'DejaVu Sans', 'sans-serif';*/
+        /* font-family: 'Nunito'; */
+        font-family: 'DejaVu Sans', 'sans-serif';
     }
     h4 {
         margin: 0;
