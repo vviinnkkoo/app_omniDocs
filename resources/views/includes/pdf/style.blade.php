@@ -1,25 +1,30 @@
 <style>
-    @page {
-        margin: 120px 60px 120px 60px; /* Top 120px because of header */
+   @page {
+    margin-top: 120px;   /* prostor za header */
+    margin-bottom: 100px; /* prostor za footer */
+    margin-left: 60px;
+    margin-right: 60px;
     }
+
     header {
         position: fixed;
-        top: 0;
+        top: -100px; /* isto kao margin-top */
         left: 0;
         right: 0;
-        height: 100px; /* Reserved position */
+        height: 100px;
         text-align: center;
     }
+
     footer {
-        position: fixed;
-        bottom: 0;
+        position: fixed; 
+        bottom: -100px; /* isto kao margin-bottom */
         left: 0;
         right: 0;
-        height: 90px;
+        height: 100px;
         border-top: solid 1px black;
         padding-top: 10px;
+        font-size: 0.7rem;
         text-align: center;
-        font-size: 0.5rem;
     }
     body {
         /*font-family: 'DejaVu Sans';*/
