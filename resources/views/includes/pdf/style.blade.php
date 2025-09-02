@@ -1,14 +1,14 @@
 <style>
    @page {
-    margin-top: 120px;   /* prostor za header */
-    margin-bottom: 100px; /* prostor za footer */
+    margin-top: 140px;   /* prostor za header */
+    margin-bottom: 80px; /* prostor za footer */
     margin-left: 60px;
     margin-right: 60px;
     }
 
     header {
         position: fixed;
-        top: -100px; /* isto kao margin-top */
+        top: -80px; /* Closer to zero and above moves it DOWN */
         left: 0;
         right: 0;
         height: 100px;
@@ -17,13 +17,13 @@
 
     footer {
         position: fixed; 
-        bottom: -100px; 
+        bottom: -120px; /* Closer to zero and above moves it UP */
         left: 0;
         right: 0;
         height: 100px;
         border-top: solid 1px black;
         padding-top: 10px;
-        font-size: 8px; /* probaj 8px ako želiš baš sitno */
+        font-size: 8px;
         line-height: 1.2;
         text-align: center;
         color: #000;
