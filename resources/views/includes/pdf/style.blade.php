@@ -17,14 +17,16 @@
 
     footer {
         position: fixed; 
-        bottom: -100px; /* isto kao margin-bottom */
+        bottom: -100px; 
         left: 0;
         right: 0;
         height: 100px;
         border-top: solid 1px black;
         padding-top: 10px;
-        font-size: 0.7rem;
+        font-size: 10px; /* probaj 8px ako želiš baš sitno */
+        line-height: 1.2;
         text-align: center;
+        color: #000;
     }
     body {
         /*font-family: 'DejaVu Sans';*/
