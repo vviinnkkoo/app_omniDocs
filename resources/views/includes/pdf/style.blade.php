@@ -8,7 +8,7 @@
 
     header {
         position: fixed;
-        top: -80px; /* Closer to zero and above moves it DOWN */
+        top: -90px; /* Closer to zero and above moves it DOWN */
         left: 0;
         right: 0;
         height: 100px;
