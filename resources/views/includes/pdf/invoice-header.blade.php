@@ -3,7 +3,7 @@
     <table class="w-full" style="border-bottom: solid 1px black">
         <tr>
             <td class="w-half">
-                <img src="{{ asset( $appSettings['invoice_logo'] ) }}" height="54" />
+                <img src="{{ public_path($appSettings['invoice_logo']) }}" height="54" />
             </td>
             <td class="w-half">
                 <h2>RAČUN br: <span class="gray-overlay">{{ $invoiceData['number'] }}-1-1</span></h2>
