@@ -31,7 +31,7 @@
     body {
         /*font-family: 'DejaVu Sans';*/
         /*font-family: 'Open Sans', sans-serif;*/
-        font-family: 'DejaVu Sans', 'sans-serif';
+        /*font-family: 'DejaVu Sans', 'sans-serif';*/
     }
     h4 {
         margin: 0;
