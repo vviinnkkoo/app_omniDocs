@@ -1,25 +1,24 @@
 <style>
     @page {
-        margin: 100px 60px;
+        margin: 120px 60px 120px 60px; /* Top 120px because of header */
     }
     header {
         position: fixed;
-        top: -60px;
-        left: 0px;
-        right: 0px;
-        height: 50px;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100px; /* Reserved position */
         text-align: center;
     }
     footer {
-        position: fixed; 
-        bottom: -90px; 
-        left: 0px; 
-        right: 0px;
-        height: 50px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 90px;
         border-top: solid 1px black;
         padding-top: 10px;
-        color: black;
-        text-align: center;            
+        text-align: center;
         font-size: 0.5rem;
     }
     body {
@@ -61,7 +60,7 @@
         margin-top: 2.25rem;
     }
     .margin-first {
-        margin-top: 2.25rem;
+        /* margin-top: 2.25rem;  Unused */
     }
     .margin-signatures {
         margin-top: 6rem;
