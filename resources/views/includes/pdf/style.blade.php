@@ -1,6 +1,6 @@
 <style>
    @page {
-    margin-top: 140px;   /* prostor za header */
+    margin-top: 120px;   /* prostor za header */
     margin-bottom: 80px; /* prostor za footer */
     margin-left: 60px;
     margin-right: 60px;
