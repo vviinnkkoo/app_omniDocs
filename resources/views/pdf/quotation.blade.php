@@ -54,8 +54,7 @@
     </div>
 
     {{-- PDF content - END --}}
-
-    @include('includes.pdf.shared.signature-stamp')
+    {{-- @include('includes.pdf.shared.signature-stamp') Slows rendering, removed for now --}}
 
 </body>
 </html>
