@@ -209,32 +209,29 @@ document.addEventListener('DOMContentLoaded', function () {
 | Ajax update for date fields
 |--------------------------------------------------------------------------------------------
 */
-document.addEventListener('DOMContentLoaded', function () {
-
-    function initEditableDate(container) {
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.editable-date').forEach(container => {
         const editBtn = container.querySelector('.edit-btn');
-        const spanText = container.querySelector('.date-text');
+        const span = container.querySelector('.date-text');
 
-        if (!editBtn || !spanText) return;
-
-        editBtn.addEventListener('click', function () {
+        editBtn.addEventListener('click', () => {
             const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
-            const currentValue = spanText.textContent.trim();
+            const inputValue = container.dataset.inputdate || '';
 
-            const dateInput = document.createElement('input');
-            dateInput.type = 'date';
-            dateInput.className = 'form-control';
-            dateInput.style.width = '80%';
-            dateInput.value = currentValue;
-            container.innerHTML = '';
-            container.appendChild(dateInput);
-            dateInput.focus();
+            // napravi date input
+            const input = document.createElement('input');
+            input.type = 'date';
+            input.className = 'form-control form-control-sm';
+            input.style.width = 'auto';
+            input.value = inputValue;
 
-            const save = () => {
-                const newValue = dateInput.value;
+            // zamijeni span s inputom
+            container.replaceChild(input, span);
+            input.focus();
 
+            const finishEdit = (newValue) => {
                 fetch(`/${model}/${id}`, {
                     method: 'PUT',
                     headers: {
@@ -243,36 +240,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: JSON.stringify({ field: field, newValue: newValue })
                 })
-                .then(response => {
-                    if (!response.ok) throw new Error('Error updating the data.');
+                .then(res => res.json())
+                .then(data => {
+                    container.dataset.inputdate = data.input_formatted;
 
-                    container.innerHTML = `
-                        <span class="date-text">${newValue}</span>
-                        <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
-                    `;
+                    const newSpan = document.createElement('span');
+                    newSpan.className = 'date-text';
+                    newSpan.textContent = data.formatted || '—';
 
-                    // ponovo inicijaliziraj edit
-                    initEditableDate(container);
+                    container.replaceChild(newSpan, input);
                 })
-                .catch(() => alert('Error updating the data.'));
+                .catch(() => {
+                    alert('Greška kod spremanja datuma.');
+                    container.replaceChild(span, input);
+                });
             };
 
-            dateInput.addEventListener('blur', save);
-            dateInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') save();
-                if (e.key === 'Escape') {
-                    container.innerHTML = `
-                        <span class="date-text">${currentValue}</span>
-                        <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
-                    `;
-                    initEditableDate(container);
-                }
+            // blur ili Enter spremi
+            input.addEventListener('blur', () => finishEdit(input.value));
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter') finishEdit(input.value);
+                if (e.key === 'Escape') container.replaceChild(span, input);
             });
         });
-    }
-
-    // pokreni inicijalizaciju za sve
-    document.querySelectorAll('.editable-date').forEach(initEditableDate);
+    });
 });
 
 /*

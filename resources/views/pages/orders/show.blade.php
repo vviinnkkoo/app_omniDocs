@@ -78,14 +78,16 @@
             </div>
 
             <div class="col">
-
+              {{-------------
+              Date ordered --}}
               <div class="mb-3">
                 <div>Naručeno:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_ordered" data-model="narudzbe">
                   <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_ordered }}">
                 </div>
               </div>
-
+              {{--------------
+              Deadline date --}}
               <div class="mb-3">
                 <div>Rok za dostavu:</div>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_deadline" data-model="narudzbe">
@@ -93,13 +95,13 @@
                 </div>
               </div>
 
+              {{-------------
+              Payment type --}}
               <div class="mb-3">                
                 <div>Način plaćanja:</div>
                 <div class="editable-select" data-id="{{ $order->id }}" data-field="payment_type_id" data-model="narudzbe">
-
                   <!-- Display the selected value -->
-                  <span class="gray-mark">{{ $order->paymentTypeName }}</span>
-                  
+                  <span class="gray-mark">{{ $order->paymentTypeName }}</span>                  
                   <!-- Hidden select element with options -->
                   <select class="edit-select form-select" style="display: none !important">
                     <option value="" selected>Odaberi način plaćanja...</option>
@@ -110,28 +112,39 @@
                 </div>
               </div>
 
-              {{-- Date sent --}}
+              {{-------------
+              Sales source --}}
               <div class="mb-3">
-                <div>Datum slanja:</div>
-                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_sent" data-model="narudzbe">
-                  <span class="date-text">{{ $order->input_formated_date_sent }}</span>
-                  <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">
-                    ✏️
-                  </button>
+                <div>Kanal prodaje:</div>
+                <div class="editable-select" data-id="{{ $order->id }}" data-field="source_id" data-model="narudzbe">
+                  <!-- Display the selected value -->
+                  <span class="gray-mark">{{ $order->source_name }}</span>                  
+                  <!-- Hidden select element with options -->
+                  <select class="edit-select form-select" style="display: none !important">
+                    <option value="" selected>Odaberi kanal prodaje...</option>
+                      @foreach ($sources as $source)
+                      <option value="{{ $source->id }}">{{ $source->name }}</option>
+                      @endforeach 
+                  </select>
                 </div>
               </div>
-
             </div>
 
             <div class="col">
 
-              <div class="mb-3">
-                <div>Datum slanja:</div>
-                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_sent" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_sent }}">
-                </div>
+              {{----------
+              Date sent --}}
+              <div class="editable-date" 
+                  data-id="{{ $order->id }}" 
+                  data-field="date_sent" 
+                  data-model="narudzbe" 
+                  data-inputdate="{{ $order->input_formated_date_sent }}">
+                <span class="date-text">{{ $order->formated_date_sent ?? '—' }}</span>
+                <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
               </div>
 
+              {{-----------------
+              Delivery company --}}
               <div class="mb-3">
                 <div>Dostavna služba:</div>
                   <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_service_id" data-model="narudzbe">
@@ -153,12 +166,12 @@
                           @endforeach
                       @endforeach
 
-                    </select>
-
-                    
+                    </select>                    
                   </div>
               </div>
 
+              {{--------------
+              Tracking code --}}
               <div class="mb-3">
                 <div>Kod za praćenje:</div>
                 <div>
@@ -173,6 +186,8 @@
 
             <div class="col">
 
+              {{--------------
+              Completion date --}}
               <div class="mb-3">
                 <span><i class="bi bi-check-circle-fill" style="color: green;"></i> Datum dostave / završetka:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="narudzbe">
@@ -180,14 +195,16 @@
                 </div>
               </div>
 
+              {{---------------
+              Canceling date --}}
               <div class="mb-3">
                 <span><i class="bi bi-x-circle-fill" style="color: red;"></i> Datum otkazivanja:</span>
                 <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="narudzbe">
                   <input type="date" class="form-control" style="width:80%;" value="{{ $order->input_formated_date_cancelled }}">
                 </div>                
               </div>
+            </div>   
 
-            </div>            
           </div>
         </div>
       </div>
