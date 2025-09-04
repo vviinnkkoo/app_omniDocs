@@ -142,7 +142,7 @@
                     data-model="narudzbe" 
                     data-inputdate="{{ $order->input_formated_date_sent }}">
                   <span class="date-text">{{ $order->formated_date_sent ?? '—' }}</span>
-                  <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
+                  <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;"><i class="bi bi-pencil-fill"></i></button>
                 </div>
               </div>
 
