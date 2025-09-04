@@ -135,7 +135,7 @@
               {{----------
               Date sent --}}
               <div class="mb-3">
-                <div>Dostavna služba:</div>
+                <div>Datum slanja:</div>
                 <div class="editable-date" 
                     data-id="{{ $order->id }}" 
                     data-field="date_sent" 
