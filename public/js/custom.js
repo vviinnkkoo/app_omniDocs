@@ -210,70 +210,69 @@ document.addEventListener('DOMContentLoaded', function () {
 |--------------------------------------------------------------------------------------------
 */
 document.addEventListener('DOMContentLoaded', function () {
-    const editableDates = document.querySelectorAll('.editable-date');
 
-    editableDates.forEach(function (container) {
-        container.addEventListener('click', function () {
+    function initEditableDate(container) {
+        const editBtn = container.querySelector('.edit-btn');
+        const spanText = container.querySelector('.date-text');
+
+        if (!editBtn || !spanText) return;
+
+        editBtn.addEventListener('click', function () {
             const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
+            const currentValue = spanText.textContent.trim();
 
-            // get current value from input[type="date"] if exists
-            const currentInput = container.querySelector('input[type="date"]');
-            const currentValue = currentInput ? currentInput.value : '';
-
-            // create new date input
             const dateInput = document.createElement('input');
             dateInput.type = 'date';
             dateInput.className = 'form-control';
             dateInput.style.width = '80%';
             dateInput.value = currentValue;
-            dateInput.dataset.editing = 'true';
-
-            // clear container and append input
             container.innerHTML = '';
             container.appendChild(dateInput);
             dateInput.focus();
 
-            // blur event
-            dateInput.addEventListener('blur', function () {
-                if (dateInput.dataset.editing === 'true') {
-                    const newValue = dateInput.value;
+            const save = () => {
+                const newValue = dateInput.value;
 
-                    // update container
-                    container.innerHTML = newValue;
+                fetch(`/${model}/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ field: field, newValue: newValue })
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Error updating the data.');
 
-                    // send AJAX PUT
-                    fetch(`/${model}/${id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({ field: field, newValue: newValue })
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Error updating the data.');
-                        // optionally update original hidden input if exists
-                        const origInput = document.querySelector(`.editable-date[data-id="${id}"][data-field="${field}"] input[type="date"]`);
-                        if (origInput) origInput.value = newValue;
-                    })
-                    .catch(() => alert('Error updating the data.'));
+                    container.innerHTML = `
+                        <span class="date-text">${newValue}</span>
+                        <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
+                    `;
 
-                    delete dateInput.dataset.editing;
-                }
-            });
+                    // ponovo inicijaliziraj edit
+                    initEditableDate(container);
+                })
+                .catch(() => alert('Error updating the data.'));
+            };
 
-            // optional: keydown for Enter / Escape
+            dateInput.addEventListener('blur', save);
             dateInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    dateInput.blur(); // confirm
-                } else if (e.key === 'Escape') {
-                    container.innerHTML = currentValue; // cancel
+                if (e.key === 'Enter') save();
+                if (e.key === 'Escape') {
+                    container.innerHTML = `
+                        <span class="date-text">${currentValue}</span>
+                        <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
+                    `;
+                    initEditableDate(container);
                 }
             });
         });
-    });
+    }
+
+    // pokreni inicijalizaciju za sve
+    document.querySelectorAll('.editable-date').forEach(initEditableDate);
 });
 
 /*

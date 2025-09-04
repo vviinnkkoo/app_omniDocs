@@ -110,20 +110,14 @@
                 </div>
               </div>
 
+              {{-- Date sent --}}
               <div class="mb-3">
-                <div>Kanal prodaje:</div>
-                <div class="editable-select" data-id="{{ $order->id }}" data-field="source_id" data-model="narudzbe">
-
-                  <!-- Display the selected value -->
-                  <span class="gray-mark">{{ $order->source_name }}</span>
-                  
-                  <!-- Hidden select element with options -->
-                  <select class="edit-select form-select" style="display: none !important">
-                    <option value="" selected>Odaberi kanal prodaje...</option>
-                      @foreach ($sources as $source)
-                      <option value="{{ $source->id }}">{{ $source->name }}</option>
-                      @endforeach 
-                  </select>
+                <div>Datum slanja:</div>
+                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_sent" data-model="narudzbe">
+                  <span class="date-text">{{ $order->input_formated_date_sent }}</span>
+                  <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">
+                    ✏️
+                  </button>
                 </div>
               </div>
 
@@ -410,19 +404,6 @@
           <div class="form-group">
 
             {{-- Product type --}}
-            {{--<div class="mb-3">
-              <label for="product_id">Proizvod:</label><br>
-              <select class="form-select searchable-select-modal" id="product_id" name="product_id">
-                  <option selected>Odaberi proizvod...</option>
-                  @foreach ($productTypes as $productType)
-                    <optgroup label="{{ $productType->name }}">
-                      @foreach ($productType->product as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }} :: {{ $product->default_price }} €</option>
-                      @endforeach
-                  @endforeach
-              </select>
-            </div>--}}
-
             <div class="mb-3 omniselect-dropdown">
                 <label for="product_id">Proizvod:</label>
                 <input type="text" class="form-control omniselect"
