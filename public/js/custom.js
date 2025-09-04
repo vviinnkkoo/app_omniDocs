@@ -214,20 +214,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const editBtn = container.querySelector('.edit-btn');
         const span = container.querySelector('.date-text');
 
+        if (!editBtn) return; // skip ako nema gumba
+
         editBtn.addEventListener('click', () => {
             const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
             const inputValue = container.dataset.inputdate || '';
 
-            // napravi date input
             const input = document.createElement('input');
             input.type = 'date';
             input.className = 'form-control form-control-sm';
             input.style.width = 'auto';
             input.value = inputValue;
 
-            // zamijeni span s inputom
             container.replaceChild(input, span);
             input.focus();
 
@@ -256,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             };
 
-            // blur ili Enter spremi
             input.addEventListener('blur', () => finishEdit(input.value));
             input.addEventListener('keydown', e => {
                 if (e.key === 'Enter') finishEdit(input.value);

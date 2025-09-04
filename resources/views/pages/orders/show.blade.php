@@ -134,13 +134,16 @@
 
               {{----------
               Date sent --}}
-              <div class="editable-date" 
-                  data-id="{{ $order->id }}" 
-                  data-field="date_sent" 
-                  data-model="narudzbe" 
-                  data-inputdate="{{ $order->input_formated_date_sent }}">
-                <span class="date-text">{{ $order->formated_date_sent ?? '—' }}</span>
-                <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
+              <div class="mb-3">
+                <div>Dostavna služba:</div>
+                <div class="editable-date" 
+                    data-id="{{ $order->id }}" 
+                    data-field="date_sent" 
+                    data-model="narudzbe" 
+                    data-inputdate="{{ $order->input_formated_date_sent }}">
+                  <span class="date-text">{{ $order->formated_date_sent ?? '—' }}</span>
+                  <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">✏️</button>
+                </div>
               </div>
 
               {{-----------------
