@@ -136,14 +136,7 @@
               Date sent --}}
               <div class="mb-3">
                 <div>Datum slanja:</div>
-                <div class="editable-date" 
-                    data-id="{{ $order->id }}" 
-                    data-field="date_sent" 
-                    data-model="narudzbe" 
-                    data-inputdate="{{ $order->input_formated_date_sent }}">
-                  <span class="date-text">{{ $order->formated_date_sent ?? 'Nema' }}</span>
-                  <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;"><i class="bi bi-pencil-fill"></i></button>
-                </div>
+                <x-editable-date :model="$order" field="date_sent" modelName="narudzbe" />
               </div>
 
               {{-----------------
