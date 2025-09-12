@@ -30,12 +30,11 @@ class Order extends Model
         'delivery_email',
     ];
 
-    public function setDeliveryWeightAttribute($value)
-    {
-        $this->attributes['delivery_weight'] = is_null($value) ? null : str_replace(',', '.', $value);
-
-    }
-
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function receipt(): HasOne
     {
         return $this->hasOne(Receipt::class);
@@ -83,7 +82,11 @@ class Order extends Model
         });
     }
 
-    // GET Accessors
+    /*
+    |--------------------------------------------------------------------------------------------
+    | GET accessors
+    |--------------------------------------------------------------------------------------------
+    */
     public function getPaymentTypeNameAttribute()
     {
         return $this->paymentType->name ?? null;
@@ -114,33 +117,41 @@ class Order extends Model
         return $this->deliveryService->deliveryCompany->name ?? null;
     }
 
-    // Date formatters (for DISPLAY purposes)
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Date formatters (for DISPLAY purposes)
+    |--------------------------------------------------------------------------------------------
+    */
     public function getFormatedDateSentAttribute()
     {
-        return $this->date_sent ? $this->date_sent->format('d. m. Y.') : null;
+        return $this->date_sent ? $this->date_sent->format('d.m.Y.') : null;
     }
 
     public function getFormatedDateOrderedAttribute()
     {
-        return $this->date_ordered ? $this->date_ordered->format('d. m. Y.') : null;
+        return $this->date_ordered ? $this->date_ordered->format('d.m.Y.') : null;
     }
 
     public function getFormatedDateDeadlineAttribute()
     {
-        return $this->date_deadline ? $this->date_deadline->format('d. m. Y.') : null;
+        return $this->date_deadline ? $this->date_deadline->format('d.m.Y.') : null;
     }
 
     public function getFormatedDateDeliveredAttribute()
     {
-        return $this->date_delivered ? $this->date_delivered->format('d. m. Y.') : null;
+        return $this->date_delivered ? $this->date_delivered->format('d.m.Y.') : null;
     }
 
     public function getFormatedDateCancelledAttribute()
     {
-        return $this->date_cancelled ? $this->date_cancelled->format('d. m. Y.') : null;
+        return $this->date_cancelled ? $this->date_cancelled->format('d.m.Y.') : null;
     }
 
-    // Date formatters (for INPUT purposes)
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Date formatters (for DATE INPUT purposes)
+    |--------------------------------------------------------------------------------------------
+    */
     public function getInputFormatedDateSentAttribute()
     {
         return $this->date_sent ? $this->date_sent->format('Y-m-d') : null;
@@ -166,7 +177,11 @@ class Order extends Model
         return $this->date_cancelled ? $this->date_cancelled->format('Y-m-d') : null;
     }
 
-    // Calculate days and deadlines
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Calculate days to deliver, left and deadlines, deadline color class
+    |--------------------------------------------------------------------------------------------
+    */
     public function getDaysToDeliverAttribute()
     {
         return $this->date_delivered ? $this->date_delivered->diffInDays($this->date_ordered) : null;
