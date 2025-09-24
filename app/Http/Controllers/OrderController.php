@@ -107,7 +107,7 @@ class OrderController extends Controller
 
         // Add extra information to orders using accessors
         foreach ($orders as $order) {
-            $order->total_amount = GlobalService::sumOrderItems(orderID: $order->id);
+            $order->total_amount = GlobalService::sumOrderItems(orderId: $order->id);
             $order->receipt_id = $receipts[$order->id] ?? null;
             $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
         }
@@ -134,7 +134,7 @@ class OrderController extends Controller
         ])->findOrFail($order_id);
 
         $order->delivery_cost = $order->deliveryService->default_cost;
-        $order->subtotal = GlobalService::sumOrderItems(orderID: $order_id);
+        $order->subtotal = GlobalService::sumOrderItems(orderId: $order_id);
         $order->total = $order->subtotal + $order->delivery_cost;
 
         // Fetch data for the view

@@ -49,7 +49,7 @@ class Customer extends Model
         $total = 0;
 
         foreach ($this->orders as $order) {
-            $total += GlobalService::sumOrderItems(orderID: $order->id);
+            $total += GlobalService::sumOrderItems(orderId: $order->id);
         }
 
         return number_format($total, 2, ',', '.');
