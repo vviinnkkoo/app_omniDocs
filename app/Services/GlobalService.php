@@ -54,7 +54,7 @@ class GlobalService
     {
         return DB::table('receipts')
             ->join('orders', 'receipts.order_id', '=', 'orders.id')
-            ->join('order_item_list', 'orders.id', '=', 'order_item_list.order_id')
+            ->join('order_item_lists', 'orders.id', '=', 'order_item_lists.order_id')
             ->where('receipts.is_cancelled', 0)
             ->where('receipts.year', $year)
             ->selectRaw(self::SUM_STATEMENT . ' as items_total')
@@ -124,7 +124,7 @@ class GlobalService
         return DB::table('kpr_item_list as k')
             ->join('receipts as r', 'k.receipt_id', '=', 'r.id')
             ->join('orders as o', 'r.order_id', '=', 'o.id')
-            ->join('order_item_list as oi', 'o.id', '=', 'oi.order_id')
+            ->join('order_item_lists as oi', 'o.id', '=', 'oi.order_id')
             ->join('delivery_services as d', 'o.delivery_service_id', '=', 'd.id')
             ->where('k.kpr_id', $kprId)
             ->where('r.is_cancelled', 0)
