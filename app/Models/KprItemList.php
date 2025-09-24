@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class KprItemList extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'receipt_id',
+        'kpr_id'
+    ];
 
-    protected $table = 'kpr_item_list';
-    protected $fillable = ['receipt_id', 'kpr_id'];
-
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function receipt()
     {
-        return $this->belongsTo(Receipt::class, 'receipt_id');
+        return $this->belongsTo(Receipt::class);
     }
 }

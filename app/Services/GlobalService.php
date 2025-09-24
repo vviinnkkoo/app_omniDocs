@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
@@ -12,94 +13,122 @@ use App\Models\Order;
 
 class GlobalService
 {
-    // Define the query strings as a constant
-    const SUM_QUERY = 'SUM(amount * price * ( ( 100 - discount ) / 100 )) as ';
-    const SUM_ALIAS = 'calculation';
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Formula for calculating sums and totals
+    |--------------------------------------------------------------------------------------------
+    */
+    const SUM_STATEMENT = 'SUM(amount * price * ((100 - discount) / 100))';
 
-
-    // Receipt :: Global functions
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Get the latest receipt number for the given year
+    |--------------------------------------------------------------------------------------------
+    */
     public static function getLatestReceiptNumber($year)
     {
         return (Receipt::where('year', $year)->orderBy('number', 'desc')->value('number')) + 1;
     }
 
-
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Calculate the total amount for a given receipt by its order ID
+    |--------------------------------------------------------------------------------------------
+    */
     public static function calculateReceiptTotal($id)
     {
         $order = Order::with(['deliveryService'])->findOrFail($id);
         $deliveryCost = $order->deliveryService->default_cost;
-        $subtotal = self::sumWholeOrder($id);
+        $subtotal = self::sumOrderItems(itemID: $id);
         $total = $subtotal + $deliveryCost;
 
         return $total;
     }
 
-    
-    public static function calculateTotalForAllReceiptsInYear($year)
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Calculate the total amount for all receipts in a given year
+    |--------------------------------------------------------------------------------------------
+    */
+    public static function calculateTotalForAllReceiptsInYear(int $year): float
     {
         return DB::table('receipts')
-        ->join('orders', 'receipts.order_id', '=', 'orders.id')
-        ->join('order_item_list', 'orders.id', '=', 'order_item_list.order_id')
-        ->where('receipts.is_cancelled', 0)
-        ->where('receipts.year', $year)
-        ->select(DB::raw(self::SUM_QUERY . self::SUM_ALIAS))
-        ->value(self::SUM_ALIAS) ?? 0;
+            ->join('orders', 'receipts.order_id', '=', 'orders.id')
+            ->join('order_item_list', 'orders.id', '=', 'order_item_list.order_id')
+            ->where('receipts.is_cancelled', 0)
+            ->where('receipts.year', $year)
+            ->selectRaw(self::SUM_STATEMENT . ' as items_total')
+            ->value('items_total') ?? 0;
     }
 
-
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Count all non-cancelled receipts in a given year
+    |--------------------------------------------------------------------------------------------
+    */
     public static function countReceipts($year)
     {
         return Receipt::where('is_cancelled', 0)->where('year', $year)->count();
     }
 
-
-    private static function getOrderItemSumQuery($alias)
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Sum items from an order, including discount and other values.
+    | Single function for both cases if orderId or itemId is provided.
+    |--------------------------------------------------------------------------------------------
+    */
+    public static function sumOrderItems(?int $orderId = null, ?int $itemId = null): float
     {
-        return self::SUM_QUERY . $alias;
+        $query = OrderItemList::query();
+
+        if ($orderId !== null) {
+            $query->where('order_id', $orderId);
+        }
+
+        if ($itemId !== null) {
+            $query->where('id', $itemId);
+        }
+
+        return $query
+            ->selectRaw(self::SUM_STATEMENT . ' as items_total')
+            ->value('items_total') ?? 0;
     }
 
-
-    // OrderItemList :: Global functions
-    public static function sumWholeOrder($id)
-    {
-        return OrderItemList::where('order_id', $id)
-            ->selectRaw(self::getOrderItemSumQuery(self::SUM_ALIAS))
-            ->pluck(self::SUM_ALIAS)
-            ->first();
-    }
-
-
-    public static function sumSingleOrderItem($id)
-    {        
-        return OrderItemList::where('id', $id)
-            ->selectRaw(self::getOrderItemSumQuery(self::SUM_ALIAS))
-            ->pluck(self::SUM_ALIAS)
-            ->first();
-    }
-
-
-    // KPR :: Global functions
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Sum all payments made in a given year
+    |--------------------------------------------------------------------------------------------
+    */
     public static function sumAllPaymentsInYear($year)
     {
         return Kpr::whereYear('date', $year)->sum('amount');
     }
 
-
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Count all payments made in a given year
+    |--------------------------------------------------------------------------------------------
+    */
     public static function countAllPaymentsInYear($year)
     {
         return Kpr::whereYear('date', $year)->count();
     }
 
-    
-    public static function sumAllReciepesFromKpr($id)
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Sum all receipts associated with a specific KPR entry by its ID
+    |--------------------------------------------------------------------------------------------
+    */
+    public static function sumAllReciepesFromKpr(int $kprId): float
     {
-        $kprItemList = KprItemList::where('kpr_id', $id)->get();
-        $totalSum = 0;
-
-        foreach ($kprItemList as $item) {
-            $totalSum += self::calculateReceiptTotal($item->receipt->order_id);            
-        }
-
-        return $totalSum;
+        return DB::table('kpr_item_list as k')
+            ->join('receipts as r', 'k.receipt_id', '=', 'r.id')
+            ->join('orders as o', 'r.order_id', '=', 'o.id')
+            ->join('order_item_list as oi', 'o.id', '=', 'oi.order_id')
+            ->join('delivery_services as d', 'o.delivery_service_id', '=', 'd.id')
+            ->where('k.kpr_id', $kprId)
+            ->where('r.is_cancelled', 0)
+            ->selectRaw('SUM((' . self::SUM_STATEMENT . ') + COALESCE(d.default_cost, 0)) as total_sum')
+            ->value('total_sum') ?? 0;
     }
 }

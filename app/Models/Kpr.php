@@ -2,21 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Kpr extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'payer',
+        'amount',
+        'origin',
+        'date',
+        'info',
+        'kpr_payment_type_id'
+    ];    
 
-    protected $fillable = ['payer', 'amount', 'origin', 'date', 'info', 'kpr_payment_type_id'];
-
-    public function setAmountAttribute($value)
-    {
-        $this->attributes['amount'] = is_null($value) ? null : str_replace(',', '.', $value);
-    }
-
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function receipt()
     {
         return $this->hasMany(Receipt::class);
@@ -24,11 +27,21 @@ class Kpr extends Model
 
     public function paymentType()
     {
-        return $this->belongsTo(KprPaymentType::class, 'kpr_payment_type_id');
+        return $this->belongsTo(KprPaymentType::class);
     }
 
     public function kprItemList()
     {
-        return $this->hasMany(KprItemList::class, 'kpr_id');
+        return $this->hasMany(KprItemList::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | SET accessors
+    |--------------------------------------------------------------------------------------------
+    */
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = is_null($value) ? null : str_replace(',', '.', $value);
     }
 }

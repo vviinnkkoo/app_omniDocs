@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Package extends Model
 {
-    protected $table = 'packages';
-
     protected $fillable = [
         'order_id',
         'delivery_service_id',
@@ -29,18 +27,26 @@ class Package extends Model
         'recipient_phone',
     ];
 
-    // Relacije
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class);
     }
 
     public function deliveryService()
     {
-        return $this->belongsTo(DeliveryService::class, 'delivery_service_id');
+        return $this->belongsTo(DeliveryService::class);
     }
 
-    // Accessor za status labelu
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------------------------
+    */
     public function getStatusLabelAttribute()
     {
         $labels = [

@@ -61,15 +61,15 @@ class Omnicontrol extends Controller
         $totalEarnings = $undeliveredEarnings = $currentMonthEarnings  = 0;
 
         foreach ($activeOrderIds as $orderId) {
-            $totalEarnings += GlobalService::sumWholeOrder($orderId); 
+            $totalEarnings += GlobalService::sumOrderItems(orderID: $orderId);
         }
 
         foreach ($undeliveredOrderIds as $orderId) {
-            $undeliveredEarnings += GlobalService::sumWholeOrder($orderId); 
+            $undeliveredEarnings += GlobalService::sumOrderItems(orderID: $orderId);
         }
 
         foreach ($thisMonthOrderIds as $orderId) {
-            $currentMonthEarnings += GlobalService::sumWholeOrder($orderId); 
+            $currentMonthEarnings += GlobalService::sumOrderItems(orderID: $orderId); 
         }
 
         $totalEarnings = number_format($totalEarnings, 2, ',');

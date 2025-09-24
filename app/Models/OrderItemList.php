@@ -2,17 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderItemList extends Model
 {
-    use HasFactory;
-
-    // Change default table name
-    protected $table = 'order_item_list';
-
-    // Fillable for checkbox
     protected $fillable = [
         'order_id',
         'product_id',
@@ -24,24 +17,37 @@ class OrderItemList extends Model
         'is_done',
         'note_on_invoice'
     ];
-    protected $casts = ['is_done' => 'boolean', 'note_on_invoice' => 'boolean'];
 
+    protected $casts = [
+        'is_done' => 'boolean',
+        'note_on_invoice' => 'boolean'
+    ];
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class);
     }
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
 
     public function color()
     {
-        return $this->belongsTo(Color::class, 'color_id');
+        return $this->belongsTo(Color::class);
     }
 
-    // SET Accessors
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Mutators
+    |--------------------------------------------------------------------------------------------
+    */
     public function setPriceAttribute($value)
     {
         $this->attributes['price'] = is_null($value) ? null : str_replace(',', '.', $value);
@@ -52,7 +58,11 @@ class OrderItemList extends Model
         $this->attributes['amount'] = is_null($value) ? null : str_replace(',', '.', $value);
     }
 
-    // GET Accessors
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------------------------
+    */
     public function getProductNameAttribute()
     {
         return $this->product->name ?? null;

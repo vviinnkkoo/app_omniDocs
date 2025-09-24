@@ -7,14 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
-    protected $casts = [
-        'date_cancelled' => 'datetime',
-        'date_delivered' => 'datetime',
-        'date_ordered' => 'datetime',
-        'date_sent' => 'datetime',
-        'date_deadline' => 'datetime'
-    ];
-
     protected $fillable = [
         'date_ordered',
         'date_deadline',
@@ -29,6 +21,14 @@ class Order extends Model
         'delivery_phone',
         'delivery_email',
     ];
+
+    protected $casts = [
+        'date_cancelled' => 'datetime',
+        'date_delivered' => 'datetime',
+        'date_ordered' => 'datetime',
+        'date_sent' => 'datetime',
+        'date_deadline' => 'datetime'
+    ];    
 
     /*
     |--------------------------------------------------------------------------------------------
@@ -52,29 +52,34 @@ class Order extends Model
 
     public function paymentType()
     {
-        return $this->belongsTo(PaymentType::class, 'payment_type_id');
+        return $this->belongsTo(PaymentType::class);
     }
 
     public function deliveryService()
     {
-        return $this->belongsTo(DeliveryService::class, 'delivery_service_id');
+        return $this->belongsTo(DeliveryService::class);
     }
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class);
     }
 
     public function source()
     {
-        return $this->belongsTo(Source::class, 'source_id');
+        return $this->belongsTo(Source::class);
     }
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'delivery_country_id');
+        return $this->belongsTo(Country::class);
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Order status checker
+    |--------------------------------------------------------------------------------------------
+    */
     public function isOrderDone()
     {
         return $this->orderItemList->every(function ($item) {
@@ -84,7 +89,7 @@ class Order extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | GET accessors
+    | Accessors
     |--------------------------------------------------------------------------------------------
     */
     public function getPaymentTypeNameAttribute()
@@ -119,7 +124,7 @@ class Order extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Date formatters (for DISPLAY purposes)
+    | Date formatters for display only
     |--------------------------------------------------------------------------------------------
     */
     public function getFormatedDateSentAttribute()
@@ -149,7 +154,7 @@ class Order extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Date formatters (for DATE INPUT purposes)
+    | Date formatters for date input value
     |--------------------------------------------------------------------------------------------
     */
     public function getInputFormatedDateSentAttribute()

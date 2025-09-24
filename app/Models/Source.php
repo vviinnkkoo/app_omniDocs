@@ -6,10 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Source extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name'
+    ];
     
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 }

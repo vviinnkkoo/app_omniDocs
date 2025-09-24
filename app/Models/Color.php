@@ -10,8 +10,13 @@ class Color extends Model
         'name'
     ];
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------------------------
+    */
     public function orders()
     {
-        return $this->hasMany('App\OrderItemList');
+        return $this->hasMany(OrderItemList::class);
     }
 }
