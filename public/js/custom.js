@@ -337,45 +337,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-/*Ajax update for datetime fields on invoices
-$(".editable-date-invoice").on("click", function () {
-    const e = $(this).data("id"),
-        t = $(this).data("field"),
-        n = $(this).data("model"),
-        s = $(this).find(".date-display"),
-        r = $(this).data("raw-date"),
-        i = $("<input>", { type: "datetime-local", class: "form-control", style: "width:80%", value: r });
-    s.html(i),
-        i.focus(),
-        i.blur(function () {
-            const l = i.val(),
-                a = o(l);
-            s.text(a),
-                i.remove(),
-                $.ajax({
-                    type: "PUT",
-                    url: `/${n}/${e}`,
-                    data: { field: t, newValue: l },
-                    headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
-                    success: function () {},
-                    error: function () {
-                        alert("Error updating the data.");
-                    },
-                });
-        });
-    function o(l) {
-        const a = new Date(l),
-            c = a.getDate(),
-            u = a.getMonth() + 1,
-            f = a.getFullYear(),
-            d = a.getHours(),
-            h = a.getMinutes(),
-            p = a.getSeconds();
-        return `${c}.${u}.${f} - ${d}:${h}:${p}`;
-    }
-});*/
-
 /*
 |--------------------------------------------------------------------------------------------
 | Ajax update for checkbox state
@@ -438,7 +399,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
+/*
+|--------------------------------------------------------------------------------------------
+| Scroll to top button
+|--------------------------------------------------------------------------------------------
+*/
 let Pl = document.getElementById("btn-back-to-top");
 window.onscroll = function () {
     WS();
@@ -459,7 +424,6 @@ function qS() {
 |--------------------------------------------------------------------------------------------
 */
 const refreshBtn = document.getElementById("refresh-number-btn");
-
 if (refreshBtn) { // Check if element exists
     refreshBtn.addEventListener("click", function () {
         const numberInput = document.getElementById("number");
