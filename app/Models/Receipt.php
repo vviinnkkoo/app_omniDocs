@@ -42,15 +42,15 @@ class Receipt extends Model
     | Accessors
     |--------------------------------------------------------------------------------------------
     */
-    public function getIsCancelledAttribute(): bool
-    {
-        return $this->canceller()->exists();
-    }
+    //public function getIsCancelledAttribute(): bool
+    //{
+    //    return $this->canceller()->exists();
+    //}
 
-    public function getIsCancellingAttribute(): bool
-    {
-        return self::where('cancelled_receipt_id', $this->id)->exists();
-    }
+    //public function getIsCancellingAttribute(): bool
+    //{
+    //    return self::where('cancelled_receipt_id', $this->id)->exists();
+    //}
 
     public function getHasPaymentAttribute(): bool
     {
