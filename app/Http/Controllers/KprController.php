@@ -43,7 +43,7 @@ class KprController extends Controller
         }
 
         $kprs = $query->orderBy('date')->paginate(25);
-        $paymentMethods = KprPaymentType::all();
+        $paymentMethods = PaymentType::all();
 
         foreach ($kprs as $index => $item) {
             $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
