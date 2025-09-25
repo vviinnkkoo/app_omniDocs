@@ -55,7 +55,7 @@ class KprController extends Controller
 
         return view('pages.kpr.index', compact('kprs', 'year', 'paymentMethods'));
     }
-    
+
 
     public function show($id)
     {
@@ -82,7 +82,7 @@ class KprController extends Controller
             $invoiceList->pluck('receipt.order_id')->filter()
         )->unique();
 
-        $totals = DB::table('order_item_list')
+        $totals = DB::table('order_item_lists')
             ->select('order_id', DB::raw('SUM(price * amount) as total'))
             ->whereIn('order_id', $orderIds)
             ->groupBy('order_id')
