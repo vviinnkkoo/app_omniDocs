@@ -120,7 +120,7 @@ class KprController extends Controller
                 ->withErrors($validator);
         }
 
-        Kpr::create($request->only(['payer', 'amount', 'origin', 'date', 'info', 'kpr_payment_type_id']));
+        Kpr::create($request->only(['payer', 'amount', 'origin', 'date', 'info', 'payment_type_id']));
 
         return redirect()->back();
     }

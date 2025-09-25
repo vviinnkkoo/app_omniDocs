@@ -12,7 +12,7 @@ class Kpr extends Model
         'origin',
         'date',
         'info',
-        'kpr_payment_type_id'
+        'payment_type_id'
     ];    
 
     /*
@@ -20,14 +20,14 @@ class Kpr extends Model
     | Relationships
     |--------------------------------------------------------------------------------------------
     */
+    public function paymentType()
+    {
+        return $this->belongsTo(PaymentType::class);
+    }
+
     public function receipt()
     {
         return $this->hasMany(Receipt::class);
-    }
-
-    public function paymentType()
-    {
-        return $this->belongsTo(KprPaymentType::class);
     }
 
     public function kprItemList()
