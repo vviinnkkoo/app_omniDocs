@@ -121,7 +121,7 @@ class GlobalService
     */
     public static function sumAllReciepesFromKpr(int $kprId): float
     {
-        return DB::table('kpr_item_list as k')
+        return DB::table('kpr_item_lists as k')
             ->join('receipts as r', 'k.receipt_id', '=', 'r.id')
             ->join('orders as o', 'r.order_id', '=', 'o.id')
             ->join('order_item_lists as oi', 'o.id', '=', 'oi.order_id')
