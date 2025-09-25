@@ -100,6 +100,7 @@ class KprController extends Controller
                 'number' => $receipt->number,
                 'customerName' => $receipt->order->customer->name,
                 //'total' => number_format($totals[$receipt->order_id] ?? 0, 2, ',', '.'),
+                'total' => 0,
                 'trackingCode' => $receipt->order->tracking_code
             ];
         }
