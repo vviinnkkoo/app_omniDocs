@@ -55,55 +55,73 @@ class KprController extends Controller
 
         return view('pages.kpr.index', compact('kprs', 'year', 'paymentMethods'));
     }
-
-
+    
 
     public function show($id)
     {
         $kprInstance = Kpr::with([
             'kprItemList.receipt.order.customer'
         ])->findOrFail($id);
-    
+
         $invoiceList = $kprInstance->kprItemList;
         $year = Carbon::parse($kprInstance->date)->year;
-    
-        $existingReceiptIds = KprItemList::where('kpr_id', $id)
-            ->pluck('receipt_id')
-            ->toArray();
-    
-        $receipts = Receipt::where('year', $year)
+
+        // ID-jevi računa koji su već dodani u KPR
+        $existingReceiptIds = $invoiceList->pluck('receipt_id')->filter()->toArray();
+
+        // Dohvat recepata koji nisu dodani u KPR
+        $receipts = Receipt::with('order.customer')
+            ->where('year', $year)
             ->where('is_cancelled', 0)
             ->whereNotIn('id', $existingReceiptIds)
             ->orderBy('number')
             ->get();
 
+        // Batch dohvat total-a za sve order_id (iz recepata i invoiceList)
+        $orderIds = $receipts->pluck('order_id')->merge(
+            $invoiceList->pluck('receipt.order_id')->filter()
+        )->unique();
+
+        $totals = DB::table('order_item_list')
+            ->select('order_id', DB::raw('SUM(price * amount) as total'))
+            ->whereIn('order_id', $orderIds)
+            ->groupBy('order_id')
+            ->pluck('total', 'order_id');
+
         $count = 1;
-    
+
+        // Formiranje opcija recepata
         $receiptOptions = [];
-        
         foreach ($receipts as $receipt) {
             $receiptOptions[] = [
                 'id' => $receipt->id,
                 'number' => $receipt->number,
                 'customerName' => $receipt->order->customer->name,
-                'total' => number_format(GlobalService::calculateReceiptTotal($receipt->order_id), 2, ',', '.'),
+                'total' => number_format($totals[$receipt->order_id] ?? 0, 2, ',', '.'),
                 'trackingCode' => $receipt->order->tracking_code
             ];
         }
-    
+
+        // Obogaćivanje invoiceList sa podacima za view
         foreach ($invoiceList as $item) {
             $item->receiptNumber = $item->receipt->number;
             $item->customerName = $item->receipt->order->customer->name;
             $item->orderId = $item->receipt->order_id;
             $item->trackingCode = $item->receipt->order->tracking_code;
             $item->receiptDate = Carbon::parse($item->receipt->created_at)->format('d.m.Y - H:i:s');
-            $item->receiptsTotal = number_format (GlobalService::calculateReceiptTotal($item->receipt->order_id), 2, ',', '.');
+            $item->receiptsTotal = number_format($totals[$item->receipt->order_id] ?? 0, 2, ',', '.');
             $item->receiptID = $item->receipt->id;
         }
-    
-        return view('pages.kpr.show', compact('kprInstance', 'year', 'invoiceList', 'receipts', 'receiptOptions', 'count'));
-    }
-    
+
+        return view('pages.kpr.show', compact(
+            'kprInstance',
+            'year',
+            'invoiceList',
+            'receipts',
+            'receiptOptions',
+            'count'
+        ));
+    }    
 
     public function store(Request $request)
     {
