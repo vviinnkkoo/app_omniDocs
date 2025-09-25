@@ -102,8 +102,7 @@ class KprController extends Controller
                 'id' => $receipt->id,
                 'number' => $receipt->number,
                 'customerName' => $receipt->order->customer->name,
-                //'total' => number_format($totals[$receipt->order_id] ?? 0, 2, ',', '.'),
-                'total' => 0,
+                'total' => number_format($totals[$receipt->order_id] ?? 0, 2, ',', '.'),
                 'trackingCode' => $receipt->order->tracking_code
             ];
         }
@@ -115,7 +114,7 @@ class KprController extends Controller
             $item->orderId = $item->receipt->order_id;
             $item->trackingCode = $item->receipt->order->tracking_code;
             $item->receiptDate = Carbon::parse($item->receipt->created_at)->format('d.m.Y - H:i:s');
-            //$item->receiptsTotal = number_format($totals[$item->receipt->order_id] ?? 0, 2, ',', '.');
+            $item->receiptsTotal = number_format($totals[$item->receipt->order_id] ?? 0, 2, ',', '.');
             $item->receiptID = $item->receipt->id;
         }
 
