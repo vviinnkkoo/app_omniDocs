@@ -15,10 +15,10 @@ class GlobalService
 {
     /*
     |--------------------------------------------------------------------------------------------
-    | Formula for calculating sums and totals
+    | Formula for calculating item sum
     |--------------------------------------------------------------------------------------------
     */
-    const SUM_STATEMENT = 'SUM(amount * price * ((100 - discount) / 100))';
+    const SUM_FORMULA = '(amount * price * ((100 - discount) / 100))';
 
     /*
     |--------------------------------------------------------------------------------------------
@@ -40,9 +40,7 @@ class GlobalService
         $order = Order::with(['deliveryService'])->findOrFail($id);
         $deliveryCost = $order->deliveryService->default_cost;
         $subtotal = self::sumOrderItems(orderId: $id);
-        $total = $subtotal + $deliveryCost;
-
-        return $total;
+        return $subtotal + $deliveryCost;
     }
 
     /*
@@ -57,7 +55,7 @@ class GlobalService
             ->join('order_item_lists', 'orders.id', '=', 'order_item_lists.order_id')
             ->where('receipts.is_cancelled', 0)
             ->where('receipts.year', $year)
-            ->selectRaw(self::SUM_STATEMENT . ' as items_total')
+            ->selectRaw('SUM(' . self::SUM_FORMULA . ') as items_total')
             ->value('items_total') ?? 0;
     }
 
@@ -73,8 +71,8 @@ class GlobalService
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Sum items from an order, including discount and other values.
-    | Single function for both cases if orderId or itemId is provided.
+    | Sum items from an order, including discount and other values
+    | Single function for both cases if orderId or itemId is provided
     |--------------------------------------------------------------------------------------------
     */
     public static function sumOrderItems(?int $orderId = null, ?int $itemId = null): float
@@ -90,7 +88,7 @@ class GlobalService
         }
 
         return $query
-            ->selectRaw(self::SUM_STATEMENT . ' as items_total')
+            ->selectRaw('SUM(' . self::SUM_FORMULA . ') as items_total')
             ->value('items_total') ?? 0;
     }
 
@@ -128,7 +126,7 @@ class GlobalService
             ->join('delivery_services as d', 'o.delivery_service_id', '=', 'd.id')
             ->where('k.kpr_id', $kprId)
             ->where('r.is_cancelled', 0)
-            ->selectRaw('SUM((' . self::SUM_STATEMENT . ') + COALESCE(d.default_cost, 0)) as total_sum')
+            ->selectRaw('SUM(' . self::SUM_FORMULA . ' + COALESCE(d.default_cost, 0)) as total_sum')
             ->value('total_sum') ?? 0;
     }
 }
