@@ -69,7 +69,10 @@ class KprController extends Controller
         $year = Carbon::parse($kprInstance->date)->year;
 
         // ID-jevi računa koji su već dodani u KPR
-        $existingReceiptIds = $invoiceList->pluck('receipt_id')->filter()->toArray();
+        $existingReceiptIds = KprItemList::whereNotNull('receipt_id')
+            ->distinct()
+            ->pluck('receipt_id')
+            ->toArray();
 
         // Dohvat recepata koji nisu dodani u KPR
         $receipts = Receipt::with('order.customer')
