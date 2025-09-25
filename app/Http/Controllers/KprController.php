@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Models\Kpr;
 use App\Models\KprItemList;
 use App\Models\Receipt;
-use App\Models\KprPaymentType;
+use App\Models\PaymentType;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
