@@ -123,13 +123,11 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="kpr_payment_type_id">Mjesto uplate:</label><br>
-                  <select class="form-select searchable-select-modal" id="kpr_payment_type_id" name="kpr_payment_type_id">
-                      <option selected>Upišite mjesto uplate...</option>
-                      @foreach ($paymentMethods as $method)
-                          <option value="{{ $method->id }}">{{ $method->name }}</option>                                    
-                      @endforeach
-                  </select>
+                  <span style="display: block;">Način plaćanja:</span>
+                  @foreach ($paymentMethods as $method)
+                    <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $method->id }} " id="payment{{ $method->id }}" required>
+                    <label class="btn btn-light btn-sm me-1 mb-1" for="payment{{ $method->id }}">{{ $method->name }}</label>
+                  @endforeach
                 </div>
 
                 <div class="mb-3">
