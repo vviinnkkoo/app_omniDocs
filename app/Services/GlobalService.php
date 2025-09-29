@@ -122,14 +122,8 @@ class GlobalService
     */
     public static function sumAllReciepesFromKpr(int $kprId): float
     {
-        return DB::table('kpr_item_lists as k')
-            ->join('receipts as r', 'k.receipt_id', '=', 'r.id')
-            ->join('orders as o', 'r.order_id', '=', 'o.id')
-            ->join('order_item_lists as oi', 'o.id', '=', 'oi.order_id')
-            ->join('delivery_services as d', 'o.delivery_service_id', '=', 'd.id')
-            ->where('k.kpr_id', $kprId)
-            ->where('r.is_cancelled', 0)
-            ->selectRaw('SUM(' . self::itemSumFormula() . ' + COALESCE(d.default_cost, 0)) as total_sum')
-            ->value('total_sum') ?? 0;
+        return KprItemList::where('kpr_id', $kprId)
+            ->get()
+            ->sum(fn($item) => self::calculateReceiptTotal($item->receipt->order_id));
     }
 }
