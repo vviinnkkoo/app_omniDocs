@@ -18,7 +18,10 @@ class GlobalService
     | Formula for calculating item sum
     |--------------------------------------------------------------------------------------------
     */
-    const SUM_FORMULA = '(amount * price * ((100 - discount) / 100))';
+    public static function itemSumFormula(): string
+    {
+        return '(amount * price * ((100 - discount) / 100))';
+    }
 
     /*
     |--------------------------------------------------------------------------------------------
@@ -55,7 +58,7 @@ class GlobalService
             ->join('order_item_lists', 'orders.id', '=', 'order_item_lists.order_id')
             ->where('receipts.is_cancelled', 0)
             ->where('receipts.year', $year)
-            ->selectRaw('SUM(' . self::SUM_FORMULA . ') as items_total')
+            ->selectRaw('SUM(' . self::itemSumFormula() . ') as items_total')
             ->value('items_total') ?? 0;
     }
 
@@ -88,7 +91,7 @@ class GlobalService
         }
 
         return $query
-            ->selectRaw('SUM(' . self::SUM_FORMULA . ') as items_total')
+            ->selectRaw('SUM(' . self::itemSumFormula() . ') as items_total')
             ->value('items_total') ?? 0;
     }
 
@@ -126,7 +129,7 @@ class GlobalService
             ->join('delivery_services as d', 'o.delivery_service_id', '=', 'd.id')
             ->where('k.kpr_id', $kprId)
             ->where('r.is_cancelled', 0)
-            ->selectRaw('SUM(' . self::SUM_FORMULA . ' + COALESCE(d.default_cost, 0)) as total_sum')
+            ->selectRaw('SUM(' . self::itemSumFormula() . ' + COALESCE(d.default_cost, 0)) as total_sum')
             ->value('total_sum') ?? 0;
     }
 }

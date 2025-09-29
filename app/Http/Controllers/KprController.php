@@ -88,7 +88,10 @@ class KprController extends Controller
         )->unique();
 
         $totals = DB::table('order_item_lists')
-            ->select('order_id', DB::raw('SUM(price * amount) as total'))
+            ->select(
+                'order_id',
+                DB::raw('SUM(' . GlobalService::itemSumFormula() . ') as total')
+            )
             ->whereIn('order_id', $orderIds)
             ->groupBy('order_id')
             ->pluck('total', 'order_id');
