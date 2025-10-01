@@ -25,10 +25,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @php ($count = 1)
                         @foreach ($paymentTypes as $paymentType)
                                 <tr>
-                                    <td class="align-middle text-right">{{ $count++ }}</td>
+                                    <td class="align-middle text-right">{{ {{ $paymentType->firstItem() + $loop->index }} }}</td>
                                     <td class="align-middle text-right">
                                       <span class="editable" data-id="{{ $paymentType->id }}" data-field="type_name" data-model="payment-type">{{ $paymentType->name }}</span>
                                     </td>

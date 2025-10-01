@@ -40,12 +40,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @php ($count = 1)
                         @foreach ($customers as $customer)
                                 <tr>
 
                                     <td class="align-middle">
-                                      {{ $count++ }}
+                                      {{ {{ $customer->firstItem() + $loop->index }} }}
                                     </td>
 
                                     <td class="align-middle">
