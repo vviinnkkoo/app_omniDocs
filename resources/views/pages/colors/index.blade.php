@@ -22,7 +22,7 @@
                       <thead class="table-dark">
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Boja proizvoda</th>
+                          <th scope="col">Boja / Opis proizvoda</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -32,7 +32,7 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $color->id }}" data-field="color_name" data-model="color">{{ $color->color_name }}</span>
+                                      <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="color">{{ $color->name }}</span>
                                     </td>
                                     <td>
                                       <button class="btn btn-danger delete-btn-x" data-id="{{ $color->id }}" data-model="color"><i class="bi bi-x-lg"></i>
@@ -68,7 +68,7 @@
               <div class="form-group">
 
                   <label for="color">Boja:</label>
-                  <input type="text" class="form-control" placeholder="Unesi novu boju..." id="color" name="color">
+                  <input type="text" class="form-control" placeholder="Unesi novu boju..." id="color" name="name">
 
               </div>
         </form>
@@ -84,5 +84,3 @@
 @include('includes.deleteconfirmation')
 
 @endsection
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
