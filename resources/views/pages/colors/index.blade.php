@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Omnius Art | Boje proizvoda')
+@section('title', 'Omnius Art | Boje / Opisi proizvoda')
 
 @section('content')
 <div class="container">
@@ -8,8 +8,6 @@
     <div class="row justify-content-center">
         <div class="col-xl-12">          
             <div class="card">
-
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
 
                 <div class="card-body">
 
@@ -32,10 +30,10 @@
                                 <tr>
                                     <td class="align-middle text-right">{{ $count++ }}</td>
                                     <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="color">{{ $color->name }}</span>
+                                      <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
                                     </td>
                                     <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $color->id }}" data-model="color"><i class="bi bi-x-lg"></i>
+                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $color->id }}" data-model="opis"><i class="bi bi-x-lg"></i>
                                       </button>
                                     </td>
                                 <tr>
@@ -63,7 +61,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/boje-proizvoda" id="colorSubmission">
+        <form method="POST" action="/opis" id="colorSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 
