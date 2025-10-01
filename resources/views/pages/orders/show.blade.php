@@ -185,20 +185,17 @@
               {{--------------
               Completion date --}}
               <div class="mb-3">
-                <span><i class="bi bi-check-circle-fill" style="color: green;"></i> Datum dostave / završetka:</span>
-                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_delivered" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%;" value="{{ $order->input_formated_date_delivered }}">
-                </div>
+                <div>Datum dostave / završetka:</div>
+                <x-editable-date :model="$order" field="date_delivered" modelName="narudzbe" />
               </div>
 
               {{---------------
               Canceling date --}}
               <div class="mb-3">
-                <span><i class="bi bi-x-circle-fill" style="color: red;"></i> Datum otkazivanja:</span>
-                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_cancelled" data-model="narudzbe">
-                  <input type="date" class="form-control" style="width:80%;" value="{{ $order->input_formated_date_cancelled }}">
-                </div>                
+                <div>Datum otkazivanja:</div>
+                <x-editable-date :model="$order" field="date_cancelled" modelName="narudzbe" />
               </div>
+              
             </div>   
 
           </div>

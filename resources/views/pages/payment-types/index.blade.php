@@ -9,8 +9,6 @@
         <div class="col-xl-12">          
             <div class="card">
 
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
-
                 <div class="card-body">
 
                   <!-- Button to trigger the pop-up -->

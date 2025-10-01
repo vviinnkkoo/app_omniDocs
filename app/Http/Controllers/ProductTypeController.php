@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\ProductType;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 
 class ProductTypeController extends Controller
@@ -17,57 +13,44 @@ class ProductTypeController extends Controller
         $this->middleware('auth');
     }
     
-    
-    public function show() {
-        $productTypes = ProductType::get()->sortBy('id');
-        
-        return view('productTypes', [
-            'productTypes' => $productTypes
-            ]);
+    public function index()
+    {
+        $productTypes = ProductType::orderBy('id')->get();
+
+        return view('pages.payment-types.index', compact('productTypes'));
     }
 
-
-    public function save (Request $request) {
-        $validator = Validator::make($request->all(), [
-        'name' => 'required'
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
-            if ($validator->fails()) {
-                return redirect('/vrste-proizvoda')
-                    ->withInput()
-                    ->withErrors($validator);
-            }
-        $productType = new ProductType;
-        $productType->name = $request->name;
-        $productType->save();
-    
-        return redirect('/vrste-proizvoda');
-    }
 
+        ProductType::create($request->only('name'));
+
+        return redirect()
+            ->back()
+            ->with('success', 'Vrsta proizvoda uspješno dodana!');
+    }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'field' => 'in:name',
+            'newValue' => 'required|string|max:255'
+        ]);
+
         $productType = ProductType::findOrFail($id);
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-        $productType->$field = $newValue;
+        $productType->{$request->field} = $request->newValue;
         $productType->save();
 
-        return response()->json(['message' => 'Payment type updated successfully']);
+        return response()->json(['status' => 'success', 'message' => 'Product type updated successfully']);
     }
 
-
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id): JsonResponse
     {
-        $record = ProductType::findOrFail($id);
-
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return ProductType::findOrFail($id)->delete()
+            ? response()->json(['status' => 'success', 'message' => 'Record deleted successfully'])
+            : response()->json(['status' => 'error', 'message' => 'Error deleting the record'], 500);
     }
 }

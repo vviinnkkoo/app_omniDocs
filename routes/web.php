@@ -49,7 +49,8 @@ Route::resources([
     'napomena' => OrderNoteController::class,
     'proizvodi' => ProductController::class,
     'radne-godine' => WorkYearsController::class,
-    'opis' => ColorController::class
+    'opis' => ColorController::class,
+    'nacin-placanja' => PaymentTypeController::class,
 ]);
 
 // Bolean switch routes - CHECKBOX STATUS CHANGE
@@ -80,12 +81,6 @@ Route::get('/kanali-prodaje', [SourceController::class, 'show']);
 Route::post('/kanali-prodaje', [SourceController::class, 'save']);
 Route::put('/update-source/{id}', [SourceController::class, 'update']);
 Route::delete('/delete-source/{id}', [SourceController::class, 'destroy'])->name('source.delete');
-
-// Product types //
-Route::get('/vrste-proizvoda', [ProductTypeController::class, 'show']);
-Route::post('/vrste-proizvoda', [ProductTypeController::class, 'save']);
-Route::put('/update-product-type/{id}', [ProductTypeController::class, 'update']);
-Route::delete('/delete-product-type/{id}', [ProductTypeController::class, 'destroy'])->name('product_type.delete');
 
 // PDF render //
 Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);

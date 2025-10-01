@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Color;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 
 class ColorController extends Controller
@@ -17,46 +13,47 @@ class ColorController extends Controller
         $this->middleware('auth');
     }
     
-    public function index() {
-        $colors = Color::get()->sortBy('id');
+    public function index()
+    {
+        $colors = Color::orderBy('id')->get();
+
         return view('pages.colors.index', compact('colors'));
     }
 
-    public function save (Request $request) {
-        $validator = Validator::make($request->all(), [
-        'name' => 'required'
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors($validator);
-        }
+        Color::create($request->only('name'));
 
-        Color::create($request->all());
-
-        return redirect()->back()->with('success', 'Boja ili opis proizvoda uspješno dodan!');
+        return redirect()
+            ->back()
+            ->with('success', 'Boja ili opis proizvoda uspješno dodan!');
     }
 
     public function update(Request $request, $id)
     {
-        $color = Color::findOrFail($id);
+        $request->validate([
+            'field' => 'in:name',
+            'newValue' => 'required|string|max:255'
+        ]);
 
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-        $color->$field = $newValue;
+        $color = Color::findOrFail($id);
+        $color->{$request->field} = $request->newValue;
         $color->save();
 
-        return response()->json(['message' => 'Payment type updated successfully']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Boja ili opis proizvoda uspješno ažuriran!'
+        ]);
     }
 
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id): JsonResponse
     {
-        $record = Color::findOrFail($id);
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return Color::findOrFail($id)->delete()
+            ? response()->json(['status' => 'success', 'message' => 'Record deleted successfully'])
+            : response()->json(['status' => 'error', 'message' => 'Error deleting the record'], 500);
     }
 }
