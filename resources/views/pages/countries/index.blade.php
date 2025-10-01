@@ -27,7 +27,7 @@
                       <tbody>
                         @foreach ($countries as $country)
                                 <tr>
-                                    <td class="align-middle text-right">{{ {{ $country->firstItem() + $loop->index }} }}</td>
+                                    <td class="align-middle text-right">{{ $country->firstItem() + $loop->index }}</td>
                                     <td class="align-middle text-right">
                                       <span class="editable" data-id="{{ $country->id }}" data-field="name" data-model="drzave-poslovanja">{{ $country->name }}</span>
                                     </td>

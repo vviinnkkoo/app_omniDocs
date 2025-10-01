@@ -29,7 +29,7 @@
               @foreach ($deliveryServices as $deliveryService)
                 <tr>
                     <td class="align-middle text-right">
-                      {{ {{ $deliveryService->firstItem() + $loop->index }} }}
+                      {{ $deliveryService->firstItem() + $loop->index }}
                     </td>
 
                     <td class="align-middle text-right">
