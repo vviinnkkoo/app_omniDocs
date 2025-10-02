@@ -17,7 +17,7 @@ class ProductTypeController extends Controller
     {
         $productTypes = ProductType::orderBy('id')->paginate(25);
 
-        return view('pages.payment-types.index', compact('productTypes'));
+        return view('pages.product-types.index', compact('productTypes'));
     }
 
     public function store(Request $request)
