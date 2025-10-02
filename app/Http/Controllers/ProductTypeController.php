@@ -15,7 +15,7 @@ class ProductTypeController extends Controller
     
     public function index()
     {
-        $productTypes = ProductType::orderBy('id')->get();
+        $productTypes = ProductType::orderBy('id')->paginate(25);
 
         return view('pages.payment-types.index', compact('productTypes'));
     }

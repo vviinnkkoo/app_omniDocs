@@ -18,7 +18,7 @@ class DeliveryServiceController extends Controller
     
     public function index(Request $request)
     {
-        $deliveryServices = DeliveryService::with('deliveryCompany')->orderBy('delivery_company_id')->orderBy('name')->get();
+        $deliveryServices = DeliveryService::with('deliveryCompany')->orderBy('delivery_company_id')->orderBy('name')->paginate(25);
         $deliveryCompanies = DeliveryCompany::orderBy('id')->get();
         
         return view('pages.delivery-services.index', [
