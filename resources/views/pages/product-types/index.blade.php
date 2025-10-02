@@ -29,10 +29,10 @@
                           <tr>
                               <td class="align-middle text-right">{{ $productTypes->firstItem() + $loop->index }}</td>
                               <td class="align-middle text-right">
-                                <span class="editable" data-id="{{ $productType->id }}" data-field="name" data-model="update-product-type">{{ $productType->name }}</span>
+                                <span class="editable" data-id="{{ $productType->id }}" data-field="name" data-model="vrste-proizvoda">{{ $productType->name }}</span>
                               </td>
                               <td>
-                                <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="delete-product-type"><i class="bi bi-x-lg"></i>
+                                <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="vrste-proizvoda"><i class="bi bi-x-lg"></i>
                                 </button>
                               </td>
                           <tr>
