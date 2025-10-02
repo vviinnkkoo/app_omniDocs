@@ -22,23 +22,46 @@ use App\Http\Controllers\KprController;
 use App\Http\Controllers\KprItemListController;
 use App\Http\Controllers\OrderNoteController;
 
+/*
+|--------------------------------------------------------------------------------------------
+| Auth routes
+|--------------------------------------------------------------------------------------------
+*/
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 Route::get('/prijava-u-app', [LoginController::class, 'showLoginForm'])->name('auth.login')->middleware('throttle:3,1');
 Route::post('/prijava-u-app', [LoginController::class, 'login'])->middleware('throttle:3,1');
 
-// Index page
+/*
+|--------------------------------------------------------------------------------------------
+| Index page route
+|--------------------------------------------------------------------------------------------
+*/
 Route::get('/', [Omnicontrol::class, 'index']);
 
-// Custom routes //
+/*
+|--------------------------------------------------------------------------------------------
+| Custom routes
+|--------------------------------------------------------------------------------------------
+*/
 Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index_by_year'); // Index override for the invoice view
-Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index_by_year');
+Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index_by_year'); // Index override for the KPR view
 Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.index_by_type'); // Filter orders by type or customer
-Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems']);
+Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems']); // Production items view
+Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']); // Production items grouped by color
+Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']); // Production items grouped by product
 
-// JSON data routes for AJAX calls
+/*
+|--------------------------------------------------------------------------------------------
+| JSON data routes for AJAX calls
+|--------------------------------------------------------------------------------------------
+*/
 Route::get('/racuni/zadnji-broj/{year}', [ReceiptController::class, 'getLatestNumber'])->name('racuni.getLatestNumber');
 
-// Resource routes
+/*
+|--------------------------------------------------------------------------------------------
+| Resource routes
+|--------------------------------------------------------------------------------------------
+*/
 Route::resources([
     'dostavne-usluge' => DeliveryServiceController::class,
     'kupci' => CustomerController::class,
@@ -51,40 +74,53 @@ Route::resources([
     'radne-godine' => WorkYearsController::class,
     'opis' => ColorController::class,
     'nacin-placanja' => PaymentTypeController::class,
-    'vrste-proizvoda' => ProductTypeController::class
+    'vrste-proizvoda' => ProductTypeController::class,
+    'kanali-prodaje' => SourceController::class,
+    'paketi' => PackageController::class
 ]);
 
-// Bolean switch routes - CHECKBOX STATUS CHANGE
+/*
+|--------------------------------------------------------------------------------------------
+| Bolean switch routes - CHECKBOX STATUS CHANGE
+|--------------------------------------------------------------------------------------------
+*/
 Route::put('/note-on-invoice/status/{id}', [OrderItemListController::class, 'updateNoteOnInvoiceStatus']);
 Route::put('/order-item-list/status/{id}', [OrderItemListController::class, 'updateIsDoneStatus']);
 Route::put('/racuni/status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']);
 Route::put('dostavne-usluge/status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']);
 
-// Invoices //
+/*
+|--------------------------------------------------------------------------------------------
+| Invoice routes
+|--------------------------------------------------------------------------------------------
+*/
 Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
 Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('kpr-item-list.delete');
 
-// Order item lists //
+/*
+|--------------------------------------------------------------------------------------------
+| Order item list routes
+|--------------------------------------------------------------------------------------------
+*/
 Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
-Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']);
-Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
 Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);
 Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('order-item-list.delete');
 
-// Sources, sales channels //
-Route::get('/kanali-prodaje', [SourceController::class, 'show']);
-Route::post('/kanali-prodaje', [SourceController::class, 'save']);
-Route::put('/update-source/{id}', [SourceController::class, 'update']);
-Route::delete('/delete-source/{id}', [SourceController::class, 'destroy'])->name('source.delete');
-
-// PDF render //
+/*
+|--------------------------------------------------------------------------------------------
+| PDF rendering routs
+|--------------------------------------------------------------------------------------------
+*/
 Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);
 Route::get('/dokument/{mode}/{id}', [DoomPDFController::class, 'generateDocument']);
 Route::get('/etikete', [DoomPDFController::class, 'shippingLabels']);
 Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
 
-// LABELS   //
-// Shipping //
+/*
+|--------------------------------------------------------------------------------------------
+| Shipping labels
+|--------------------------------------------------------------------------------------------
+*/
 Route::get('/dostavne-etikete', [PrintLabelController::class, 'showShippingLabels']);
 Route::post('/dostavne-etikete', [PrintLabelController::class, 'saveShippingLabel']);
 Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('shipping_label.delete');

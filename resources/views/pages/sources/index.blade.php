@@ -9,8 +9,6 @@
         <div class="col-xl-12">          
             <div class="card">
 
-                {{-- <div class="card-header">{{ __('Dostavne službe') }}</div> --}}
-
                 <div class="card-body">
 
                   <!-- Button to trigger the pop-up -->
@@ -28,19 +26,25 @@
                       </thead>
                       <tbody>
                         @foreach ($sources as $source)
-                                <tr>
-                                    <td class="align-middle text-right">{{ $sources->firstItem() + $loop->index }}</td>
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $source->id }}" data-field="name" data-model="source">{{ $source->name }}</span>
-                                    </td>
-                                    <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $source->id }}" data-model="source"><i class="bi bi-x-lg"></i>
-                                      </button>
-                                    </td>
-                                <tr>
+                          <tr>
+                              <td class="align-middle text-right">{{ $sources->firstItem() + $loop->index }}</td>
+                              <td class="align-middle text-right">
+                                <span class="editable" data-id="{{ $source->id }}" data-field="name" data-model="kanali-prodaje">{{ $source->name }}</span>
+                              </td>
+                              <td>
+                                <button class="btn btn-danger delete-btn-x" data-id="{{ $source->id }}" data-model="kanali-prodaje"><i class="bi bi-x-lg"></i>
+                                </button>
+                              </td>
+                          <tr>
                         @endforeach
                       </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center">
+                      {{ $sources->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>

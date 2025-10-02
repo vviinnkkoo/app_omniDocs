@@ -228,19 +228,18 @@
                 </tr>
               </thead>
               <tbody>
-                @php ($count = 1)
                 @foreach ($orderItemList as $item)
                   <tr>
                     {{-- # --}}
-                    <td class="align-middle text-right">{{ $count++ }}</td>
+                    <td class="align-middle text-right">{{ $orderItemList->firstItem() + $loop->index }}</td>
 
                     {{-- Proizvod --}}
                     <td class="align-middle text-right">
                       <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
-                        <!-- Display the selected value -->
+                        {{-- Display the selected value --}}
                         <span>{{ $item->productName }}</span>
                         
-                        <!-- Hidden select element with options -->
+                        {{-- Hidden select element with options --}}
                         <select class="edit-select form-select" style="display: none !important">
                           <option value="" selected>Odaberi proizvod...</option>
                             @foreach ($products as $product)
@@ -253,10 +252,10 @@
                     {{-- Boja --}}
                     <td class="align-middle text-right">
                       <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
-                        <!-- Display the selected value -->
+                        {{-- Display the selected value --}}
                         <span>{{ $item->colorName }}</span>
                         
-                        <!-- Hidden select element with options -->
+                        {{-- Hidden select element with options --}}
                         <select class="edit-select form-select" style="display: none !important">
                           <option value="" selected>Odaberi boju...</option>
                             @foreach ($colors as $color)
