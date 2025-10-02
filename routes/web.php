@@ -51,7 +51,7 @@ Route::resources([
     'radne-godine' => WorkYearsController::class,
     'opis' => ColorController::class,
     'nacin-placanja' => PaymentTypeController::class,
-    'vrsta-proizvoda' => ProductTypeController::class
+    'vrste-proizvoda' => ProductTypeController::class
 ]);
 
 // Bolean switch routes - CHECKBOX STATUS CHANGE
