@@ -231,7 +231,7 @@
                 @foreach ($orderItemList as $item)
                   <tr>
                     {{-- # --}}
-                    <td class="align-middle text-right">{{ $orderItemList->firstItem() + $loop->index }}</td>
+                    <td class="align-middle text-right">{{ $loop->iteration }}</td>
 
                     {{-- Proizvod --}}
                     <td class="align-middle text-right">
