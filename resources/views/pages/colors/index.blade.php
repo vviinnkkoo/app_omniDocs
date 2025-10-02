@@ -24,7 +24,7 @@
                 <tbody>
                   @foreach ($colors as $color)
                     <tr>
-                      <td class="align-middle text-right">{{ {{ $color->firstItem() + $loop->index }} }}</td>
+                      <td class="align-middle text-right">{{ {{ $colors->firstItem() + $loop->index }} }}</td>
                       <td class="align-middle text-right">
                         <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
                       </td>

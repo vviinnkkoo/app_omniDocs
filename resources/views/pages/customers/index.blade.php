@@ -44,7 +44,7 @@
                                 <tr>
 
                                     <td class="align-middle">
-                                      {{ $customer->firstItem() + $loop->index }}
+                                      {{ $customers->firstItem() + $loop->index }}
                                     </td>
 
                                     <td class="align-middle">

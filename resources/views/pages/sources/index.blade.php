@@ -27,10 +27,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @php ($count = 1)
                         @foreach ($sources as $source)
                                 <tr>
-                                    <td class="align-middle text-right">{{ $count++ }}</td>
+                                    <td class="align-middle text-right">{{ $sources->firstItem() + $loop->index }}</td>
                                     <td class="align-middle text-right">
                                       <span class="editable" data-id="{{ $source->id }}" data-field="name" data-model="source">{{ $source->name }}</span>
                                     </td>

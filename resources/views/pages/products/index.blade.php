@@ -34,10 +34,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @php ($count = 1)
                         @foreach ($products as $product)
                                 <tr>
-                                    <td class="align-middle text-right">{{ $count++ }}</td>
+                                    <td class="align-middle text-right">{{ $products->firstItem() + $loop->index }}</td>
                                     <td class="align-middle text-right">
                                       <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="update-product">{{ $product->name }}</span>
                                     </td>
