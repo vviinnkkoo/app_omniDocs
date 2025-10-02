@@ -25,21 +25,26 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @php ($count = 1)
                         @foreach ($productTypes as $productType)
-                                <tr>
-                                    <td class="align-middle text-right">{{ $count++ }}</td>
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $productType->id }}" data-field="name" data-model="update-product-type">{{ $productType->name }}</span>
-                                    </td>
-                                    <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="delete-product-type"><i class="bi bi-x-lg"></i>
-                                      </button>
-                                    </td>
-                                <tr>
+                          <tr>
+                              <td class="align-middle text-right">{{ $productTypes->firstItem() + $loop->index }}</td>
+                              <td class="align-middle text-right">
+                                <span class="editable" data-id="{{ $productType->id }}" data-field="name" data-model="update-product-type">{{ $productType->name }}</span>
+                              </td>
+                              <td>
+                                <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="delete-product-type"><i class="bi bi-x-lg"></i>
+                                </button>
+                              </td>
+                          <tr>
                         @endforeach
                       </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-center">
+                      {{ $productTypes->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>
