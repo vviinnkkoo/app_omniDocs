@@ -155,7 +155,7 @@ class OrderController extends Controller
         $productTypes = ProductType::orderBy('id')->get();
         $colors = Color::orderBy('id')->get();
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
-        $orderItemList = $order->orderItemList;
+        $orderItemList = $order->orderItemList->paginate(25);;
 
         return view('pages.orders.show', [
             'order' => $order,
