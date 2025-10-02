@@ -51,6 +51,7 @@ Route::resources([
     'radne-godine' => WorkYearsController::class,
     'opis' => ColorController::class,
     'nacin-placanja' => PaymentTypeController::class,
+    'vrsta-proizvoda' => ProductTypeController::class
 ]);
 
 // Bolean switch routes - CHECKBOX STATUS CHANGE
@@ -69,12 +70,6 @@ Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItem
 Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']);
 Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);
 Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('order-item-list.delete');
-
-// Payment types //
-Route::get('/nacin-placanja', [PaymentTypeController::class, 'show']);
-Route::post('/nacin-placanja', [PaymentTypeController::class, 'save']);
-Route::put('/update-payment-type/{id}', [PaymentTypeController::class, 'updatePaymentType']);
-Route::delete('/delete-payment-type/{id}', [PaymentTypeController::class, 'destroy'])->name('payment_type.delete');
 
 // Sources, sales channels //
 Route::get('/kanali-prodaje', [SourceController::class, 'show']);
