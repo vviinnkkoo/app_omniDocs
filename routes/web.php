@@ -94,7 +94,7 @@ Route::put('dostavne-usluge/status/{id}', [DeliveryServiceController::class, 'up
 | Invoice routes
 |--------------------------------------------------------------------------------------------
 */
-Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'add']);    
+Route::post('/invoice-to-kpr/{id}', [KprItemListController::class, 'store']);    
 Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])->name('kpr-item-list.delete');
 
 /*
@@ -102,7 +102,7 @@ Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])-
 | Order item list routes
 |--------------------------------------------------------------------------------------------
 */
-Route::post('update-order-products/{id}', [OrderItemListController::class, 'add']);
+Route::post('update-order-products/{id}', [OrderItemListController::class, 'store']);
 Route::put('/order-item-list/{id}', [OrderItemListController::class, 'update']);
 Route::delete('/order-item-list/{id}', [OrderItemListController::class, 'destroy'])->name('order-item-list.delete');
 

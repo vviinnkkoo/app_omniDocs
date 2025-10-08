@@ -17,7 +17,7 @@ class OrderItemListController extends Controller
         $this->middleware('auth');
     }
     
-    public function add(Request $request, $order_id) {
+    public function store(Request $request, $order_id) {
         OrderItemList::create(array_merge(
             $request->validate([
                 'product_id' => 'required',
@@ -76,8 +76,7 @@ class OrderItemListController extends Controller
 
         return view('productionItems', [
             'items' => $items,
-            'title' => $title,
-            'count' => 1,
+            'title' => $title
         ]);
 
     }

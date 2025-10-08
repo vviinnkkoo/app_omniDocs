@@ -19,7 +19,7 @@ class KprItemListController extends Controller
     }
 
     
-    public function add(Request $request, $id)
+    public function store(Request $request, $id)
     {
         $validated = $request->validate([
             'receipt_id' => 'required',
@@ -30,7 +30,7 @@ class KprItemListController extends Controller
             'kpr_id' => $id,
         ]);
 
-        return back();
+        return redirect()->back()->with('success', 'Račun je uspješno dodan!');
     }
 
 

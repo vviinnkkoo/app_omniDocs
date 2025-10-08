@@ -262,26 +262,6 @@
   </div>
 </div>
 
-<!-- Customer Modal -->
-<div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="customerModalLabel">Novi kupac</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- popup content -->
-        <form method="POST" action="/kupci" id="customerSubmission">
-          @include('includes.form-fields-customers')
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-        <button type="submit" class="btn btn-primary" form="customerSubmission">Spremi</button>
-      </div>
-    </div>
-  </div>
-</div>
+@include('includes.modals.add-customer')
 
 @endsection
