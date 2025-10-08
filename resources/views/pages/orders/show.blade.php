@@ -19,5 +19,5 @@
   @include('pages.orders.includes.show.modals.add-note')
   @include('pages.orders.includes.show.modals.add-product')
   @include('pages.orders.includes.show.modals.add-invoice')
-  @include('includes.deleteconfirmation')
+  @include('includes.modals.delete-confirmation')
 @endsection

@@ -125,6 +125,6 @@
 </div>
 
 @include('includes.modals.add-customer')
-@include('includes.deleteconfirmation')
+@include('includes.modals.delete-confirmation')
 
 @endsection

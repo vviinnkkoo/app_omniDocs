@@ -112,6 +112,6 @@
   </div>
 </div>
 
-@include('includes.deleteconfirmation')
+@include('includes.modals.delete-confirmation')
 
 @endsection
