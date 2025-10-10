@@ -98,18 +98,12 @@
             {{-- Date ordered --}}
             <div class="mb-3">
                 <div>Naručeno:</div>
-                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_ordered" data-model="narudzbe">
-                    <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_ordered }}">
-                </div>
                 <x-editable-date :model="$order" field="date_ordered" modelName="narudzbe" />
             </div>
 
             {{-- Deadline date --}}
             <div class="mb-3">
                 <div>Rok za dostavu:</div>
-                <div class="editable-date" data-id="{{ $order->id }}" data-field="date_deadline" data-model="narudzbe">
-                    <input type="date" class="form-control" style="width:80%" value="{{ $order->input_formated_date_deadline }}">
-                </div>
                 <x-editable-date :model="$order" field="date_deadline" modelName="narudzbe" />
             </div>
 
