@@ -1,4 +1,4 @@
-{{-- Order info --}}
+{{-- Order info header --}}
 <div class="card-header d-flex align-items-center" style="font-weight: 900;">
 
     {{-- Header left side --}}
@@ -41,6 +41,7 @@
     <a class="btn bg-info btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
 </div>
 
+{{-- Order details --}}
 <div class="card-body">
     <div class="row">
         <div class="col">

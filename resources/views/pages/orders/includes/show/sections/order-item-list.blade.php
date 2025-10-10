@@ -1,4 +1,4 @@
-{{-- Order item list part --}}
+{{-- Order item list --}}
 <div class="col-xl-12">
     <div class="card" style="margin-top: 30px;">
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #19875411;">
