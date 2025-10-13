@@ -13,12 +13,19 @@ class ColorController extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
-    {
-        $colors = Color::orderBy('id')->paginate(25);
+    public function index(Request $request)
+        {
+            $search = $request->input('search');
+            $query = Color::query();
 
-        return view('pages.colors.index', compact('colors'));
-    }
+            if ($search) {
+                $query->where('name', 'like', "%{$search}%")
+            }
+
+            $colors = $query->orderBy('id')->paginate(25);
+
+            return view('pages.colors.index', compact('colors', 'search'));
+        }
 
     public function store(Request $request)
     {
@@ -29,8 +36,7 @@ class ColorController extends Controller
         Color::create($request->only('name'));
 
         return redirect()
-            ->back()
-            ->with('success', 'Boja ili opis proizvoda uspješno dodan!');
+            ->back()->with('success', 'Boja ili opis proizvoda uspješno dodan!');
     }
 
     public function update(Request $request, $id)
