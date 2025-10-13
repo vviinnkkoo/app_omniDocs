@@ -18,7 +18,7 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Boja / Opis proizvoda</th>
-                  <th></th>
+                  <th style="width:1%; white-space:nowrap"></th>
                 </tr>
               </thead>
               <tbody>
@@ -28,7 +28,7 @@
                     <td class="align-middle">
                       <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
                     </td>
-                    <td class="align-middle text-middle">
+                    <td class="align-middle text-center">
                       <x-delete-button :id="$color->id" model="opis" />
                     </td>
                   </tr>
