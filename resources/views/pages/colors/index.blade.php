@@ -18,17 +18,17 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Boja / Opis proizvoda</th>
-                  <th class="w-auto px-2"></th>
+                  <th class="col"></th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($colors as $color)
                   <tr>
-                    <td class="align-middle text-right">{{ $colors->firstItem() + $loop->index }}</td>
-                    <td class="align-middle text-right">
+                    <td class="align-middle">{{ $colors->firstItem() + $loop->index }}</td>
+                    <td class="align-middle">
                       <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
                     </td>
-                    <td class="px-2">
+                    <td class="align-middle w-auto px-2">
                       <x-delete-button :id="$color->id" model="opis" />
                     </td>
                   </tr>
