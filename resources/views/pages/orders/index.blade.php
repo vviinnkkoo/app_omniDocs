@@ -37,7 +37,7 @@
 
                   @include('pages.orders.includes.index.sections.order-list')
 
-                  <!-- Pagination Links -->
+                  {{-- Pagination Links --}}
                   <div class="d-flex justify-content-center">
                     {{ $orders->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
                   </div>
