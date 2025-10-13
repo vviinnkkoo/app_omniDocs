@@ -12,8 +12,6 @@
                   <!-- Button to trigger the pop-up -->
                   <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
 
-                  {{-- @include('includes.tablesearch') --}}
-
                   <form method="GET" action="/kupci" class="mb-3">
                     <div class="input-group w-25 float-end">
                         <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
@@ -35,8 +33,7 @@
                           <th scope="col">PBR</th>
                           <th scope="col">Sveukupno naručeno</th>
                           <th></th>
-                          <th></th>
-                          
+                          <th></th>                          
                         </tr>
                       </thead>
                       <tbody>
@@ -124,7 +121,7 @@
     </div>
 </div>
 
-@include('includes.modals.add-customer')
-@include('includes.modals.delete-confirmation')
+@include('includes.shared.modals.add-customer')
+@include('includes.shared.modals.delete-confirmation')
 
 @endsection

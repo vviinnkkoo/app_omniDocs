@@ -122,6 +122,6 @@
   </div>
 </div>
 
-@include('includes.modals.delete-confirmation')
+@include('includes.shared.modals.delete-confirmation')
 
 @endsection
