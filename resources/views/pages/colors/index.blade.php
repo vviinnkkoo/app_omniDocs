@@ -28,7 +28,7 @@
                     <td class="align-middle">
                       <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
                     </td>
-                    <td class="align-middle text-end">
+                    <td class="align-middle text-middle">
                       <x-delete-button :id="$color->id" model="opis" />
                     </td>
                   </tr>
