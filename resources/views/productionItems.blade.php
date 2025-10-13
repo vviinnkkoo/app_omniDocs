@@ -38,7 +38,7 @@
                                       @if (isset($item->id))
                                           {{ $item->id }}
                                       @else
-                                          {{ $count++ }}
+                                          {{ $loop->iteration }}
                                       @endif
                                     </td>
 
