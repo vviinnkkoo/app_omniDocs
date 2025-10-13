@@ -13,29 +13,34 @@
 
             <x-search-form/>
 
-              <table class="table table-hover">
-                <thead class="table-dark">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Boja / Opis proizvoda</th>
+                  <th class="w-auto px-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($colors as $color)
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Boja / Opis proizvoda</th>
-                    <th></th>
+                    <td class="align-middle text-right">{{ $colors->firstItem() + $loop->index }}</td>
+                    <td class="align-middle text-right">
+                      <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
+                    </td>
+                    <td class="px-2">
+                      <x-delete-button :id="$color->id" model="opis" />
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  @foreach ($colors as $color)
-                    <tr>
-                      <td class="align-middle text-right">{{ $colors->firstItem() + $loop->index }}</td>
-                      <td class="align-middle text-right">
-                        <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
-                      </td>
-                      <td>
-                        <button class="btn btn-danger delete-btn-x" data-id="{{ $color->id }}" data-model="opis"><i class="bi bi-x-lg"></i>
-                        </button>
-                      </td>
-                    <tr>
-                  @endforeach
-                </tbody>
-              </table>
+                @endforeach
+              </tbody>
+            </table>
+
+            {{-- Pagination Links --}}
+            <div class="d-flex justify-content-center">
+              {{ $colors->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
+            </div>
+
           </div>
         </div>
       </div>
@@ -43,11 +48,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="colorModal" tabindex="-1" aria-labelledby="colorModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nova boja proizvoda</h5>
+        <h5 class="modal-title" id="colorModalLabel">Nova boja/opis proizvoda</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
