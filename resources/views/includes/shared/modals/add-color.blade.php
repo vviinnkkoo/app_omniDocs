@@ -8,13 +8,13 @@
       </div>
       <div class="modal-body">
         {{-- Popup content --}}
-        <form method="POST" action="/opis" id="colorSubmission">
+        <form method="POST" action="{{ route('opis.store') }}" id="colorSubmission">
           {{ csrf_field() }}
               <div class="form-group">
-                
+
                 <div class="mb-3">
-                  <label for="color">Boja:</label>
-                  <input type="text" class="form-control" placeholder="Unesi novu boju..." id="color" name="name">
+                  <label for="color">Boja / opis:</label>
+                  <input type="text" class="form-control" placeholder="Unesi novu boju ili opis proizvoda..." id="color" name="name">
                 </div>
 
               </div>

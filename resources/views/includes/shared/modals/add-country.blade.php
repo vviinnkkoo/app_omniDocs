@@ -7,14 +7,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{-- Form for adding a new country --}}
-        <form method="POST" action="/drzave-poslovanja" id="countrySubmission">
+        {{-- Popup content --}}
+        <form method="POST" action="{{ route('drzave-poslovanja.store') }}" id="countrySubmission">
           {{ csrf_field() }}
             <div class="form-group">
 
               <div class="mb-3">
                 <label for="name">Naziv države:</label>
-                <input type="text" class="form-control" placeholder="Unesi državu poslovanja" id="name" name="name">
+                <input type="text" class="form-control" placeholder="Unesi novu državu poslovanja..." id="name" name="name">
               </div>
 
             </div>
