@@ -1,4 +1,4 @@
-{{-- Customer Modal --}}
+{{-- New customer modal --}}
 <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{-- popup content --}}
+        {{-- Popup content --}}
         <form method="POST" action="{{ route('kupci.store') }}" id="customerSubmission">
           {{ csrf_field() }}
           <div class="form-group">

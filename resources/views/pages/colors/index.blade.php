@@ -9,7 +9,7 @@
         <div class="card">
           <div class="card-body">
             <!-- Button to trigger the pop-up -->
-            <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova boja proizvoda</button>
+            <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#colorModal"><i class="bi bi-file-earmark-plus"></i> Nova boja proizvoda</button>
 
             <x-search-form/>
 
@@ -36,10 +36,7 @@
               </tbody>
             </table>
 
-            {{-- Pagination Links --}}
-            <div class="d-flex justify-content-center">
-              {{ $colors->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
-            </div>
+            <x-table-pagination :items="$colors" />
 
           </div>
         </div>
