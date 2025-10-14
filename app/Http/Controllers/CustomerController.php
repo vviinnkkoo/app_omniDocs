@@ -22,25 +22,21 @@ class CustomerController extends Controller
         if ($search) {
             $query->where(function($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%")
-                      ->orWhere('phone', 'like', "%{$search}%")
-                      ->orWhere('address', 'like', "%{$search}%")
-                      ->orWhere('postal', 'like', "%{$search}%")
-                      ->orWhere('city', 'like', "%{$search}%")
-                      ->orWhereHas('country', function($query) use ($search) {
-                        $query->where('name', 'like', "%{$search}%");
-                      });
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%")
+                    ->orWhere('postal', 'like', "%{$search}%")
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhereHas('country', function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
             });
         }
 
         $customers = $query->with('country', 'orders')->withCount('orders')->orderBy('id')->paginate(25);
         $countries = Country::orderBy('id')->get();
 
-        return view('pages.customers.index', [
-            'customers' => $customers,
-            'countries' => $countries,
-            'search' => $search
-        ]);
+        return view('pages.customers.index', compact ('customers', 'countries', 'search'));
     }
 
     public function store(Request $request)

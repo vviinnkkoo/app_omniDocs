@@ -18,11 +18,16 @@ class CountryController extends Controller
 
     public function index()
     {
-        $countries = Country::orderBy('id')->paginate(25);
-        
-        return view('pages.countries.index', [
-            'countries' => $countries
-            ]);
+        $search = $request->input('search');
+        $query = Country::query();
+
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $colors = $query->orderBy('id')->paginate(25);
+
+        return view('pages.countries.index', compact('countries', 'search'));
     }
 
     public function store (Request $request)

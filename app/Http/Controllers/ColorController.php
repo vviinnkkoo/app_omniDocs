@@ -14,18 +14,18 @@ class ColorController extends Controller
     }
     
     public function index(Request $request)
-        {
-            $search = $request->input('search');
-            $query = Color::query();
+    {
+        $search = $request->input('search');
+        $query = Color::query();
 
-            if ($search) {
-                $query->where('name', 'like', "%{$search}%");
-            }
-
-            $colors = $query->orderBy('id')->paginate(25);
-
-            return view('pages.colors.index', compact('colors', 'search'));
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
         }
+
+        $colors = $query->orderBy('id')->paginate(25);
+
+        return view('pages.colors.index', compact('colors', 'search'));
+    }
 
     public function store(Request $request)
     {
