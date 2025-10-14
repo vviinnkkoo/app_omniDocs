@@ -25,7 +25,7 @@ class CountryController extends Controller
             $query->where('name', 'like', "%{$search}%");
         }
 
-        $colors = $query->orderBy('id')->paginate(25);
+        $countries = $query->orderBy('id')->paginate(25);
 
         return view('pages.countries.index', compact('countries', 'search'));
     }
