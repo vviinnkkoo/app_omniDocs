@@ -59,7 +59,7 @@ class ColorController extends Controller
     public function destroy($id): JsonResponse
     {
         return Color::findOrFail($id)->delete()
-            ? response()->json(['status' => 'success', 'message' => 'Record deleted successfully'])
-            : response()->json(['status' => 'error', 'message' => 'Error deleting the record'], 500);
+            ? response()->json(['status' => 'success', 'message' => 'Uspjšno obrisano.'])
+            : response()->json(['status' => 'error', 'message' => 'Dogodila se pogreška kod brisanja.'], 500);
     }
 }

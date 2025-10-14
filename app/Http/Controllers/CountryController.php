@@ -59,16 +59,13 @@ class CountryController extends Controller
 
         $country->update([$validated['field'] => $validated['newValue']]);        
 
-        return response()->json(['message' => 'Izmjenjeni podaci su uspješno spremljeni.']);
+        return response()->json(['status' => 'success', 'message' => 'Izmjenjeni podaci su uspješno spremljeni.']);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id): JsonResponse
     {
-        $record = Country::findOrFail($id);
-
-        if ($record->delete()) {
-            return redirect()->back()->with('warning', 'Država uspješno obrisana.');
-        }
-        return redirect()->back()->with('error', 'Država nije obrisana.');
+        return Country::findOrFail($id)->delete()
+            ? response()->json(['status' => 'success', 'message' => 'Uspjšno obrisano.'])
+            : response()->json(['status' => 'error', 'message' => 'Dogodila se pogreška kod brisanja.'], 500);
     }
 }
