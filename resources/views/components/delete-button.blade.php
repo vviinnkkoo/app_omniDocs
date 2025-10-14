@@ -3,5 +3,5 @@
         data-model="{{ $model }}"
         data-bs-toggle="modal" 
         data-bs-target="#confirmationModal">
-    X
+    <i class="bi bi-x-lg"></i>
 </button>

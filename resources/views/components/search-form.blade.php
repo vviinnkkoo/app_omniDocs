@@ -13,7 +13,7 @@
     </button>
 
     @if (request('search'))
-      <a href="{{ $action }}" class="btn btn-outline-secondary">
+      <a href="{{ $action }}" class="btn btn-danger">
         <i class="bi bi-x-lg"></i>
       </a>
     @endif
