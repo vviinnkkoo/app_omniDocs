@@ -9,6 +9,8 @@ use App\Traits\RecordManagement;
 class ColorController extends Controller
 {
     use RecordManagement;
+    protected $modelClass = \App\Models\Color::class;
+
 
     public function __construct()
     {
