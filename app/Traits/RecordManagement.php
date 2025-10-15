@@ -19,7 +19,7 @@ trait RecordManagement
      * @param  array  $fillableFields
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateRecord($modelClass, Request $request, $id, array $allowedFields): JsonResponse
+    public function updateRecord(string $modelClass, Request $request, $id, array $allowedFields): JsonResponse
     {
         $validated = $request->validate([
             'field' => 'required|string|in:' . implode(',', $allowedFields),
@@ -42,7 +42,7 @@ trait RecordManagement
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteRecord($modelClass, $id): JsonResponse
+    public function deleteRecord(string $modelClass, $id): JsonResponse
     {
         return $modelClass::findOrFail($id)->delete()
             ? response()->json(['status' => 'success', 'message' => 'Uspješno obrisano.'])
