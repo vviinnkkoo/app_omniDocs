@@ -45,11 +45,11 @@ class ColorController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->updateRecord(Country::class, $request, $id, ['name']);
+        return $this->updateRecord($request, $id, ['name']);
     }
 
     public function destroy($id)
     {
-        return $this->deleteRecord(Country::class, $id);
+        return $this->deleteRecord($id);
     }
 }
