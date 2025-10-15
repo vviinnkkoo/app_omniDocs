@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Country;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\JsonResponse;
 
 class CountryController extends Controller
 {
@@ -30,22 +27,17 @@ class CountryController extends Controller
         return view('pages.countries.index', compact('countries', 'search'));
     }
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-        'name' => 'required'
+        $request->validate([
+            'name' => 'required'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator);
-        }
+        Country::create([
+            'name' => $request->name
+        ]);
 
-        Country::create($request->only([
-            'name'
-        ]));
-    
         return redirect()->back()->with('success', 'Država uspješno dodana.');
-
     }
 
     public function update(Request $request, $id)
