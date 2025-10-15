@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Color;
-use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class ColorController extends Controller
 {
+    use RecordManagement;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -41,25 +43,11 @@ class ColorController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'field' => 'in:name',
-            'newValue' => 'required|string|max:255'
-        ]);
-
-        $color = Color::findOrFail($id);
-        $color->{$request->field} = $request->newValue;
-        $color->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Boja ili opis proizvoda uspješno ažuriran!'
-        ]);
+        return $this->updateRecord(Country::class, $request, $id, ['name']);
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy($id)
     {
-        return Color::findOrFail($id)->delete()
-            ? response()->json(['status' => 'success', 'message' => 'Uspjšno obrisano.'])
-            : response()->json(['status' => 'error', 'message' => 'Dogodila se pogreška kod brisanja.'], 500);
+        return $this->deleteRecord(Country::class, $id);
     }
 }

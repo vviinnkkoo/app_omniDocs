@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Country;
-use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class CountryController extends Controller
 {
+    use RecordManagement;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -42,22 +44,11 @@ class CountryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $country = Country::findOrFail($id);
-
-        $validated = $request->validate([
-            'field' => 'required|in:name',
-            'newValue' => 'required'
-        ]);
-
-        $country->update([$validated['field'] => $validated['newValue']]);        
-
-        return response()->json(['status' => 'success', 'message' => 'Izmjenjeni podaci su uspješno spremljeni.']);
+        return $this->updateRecord(Country::class, $request, $id, ['name']);
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy($id)
     {
-        return Country::findOrFail($id)->delete()
-            ? response()->json(['status' => 'success', 'message' => 'Uspjšno obrisano.'])
-            : response()->json(['status' => 'error', 'message' => 'Dogodila se pogreška kod brisanja.'], 500);
+        return $this->deleteRecord(Country::class, $id);
     }
 }
