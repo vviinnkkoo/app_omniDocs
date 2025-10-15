@@ -12,24 +12,16 @@ trait RecordManagement
     | Update a single field of a model.
     |--------------------------------------------------------------------------------------------
     */
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  \Illuminate\Http\Request  $request
-     * @param  array  $fillableFields
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function updateRecord(string $modelClass, Request $request, $id, array $allowedFields): JsonResponse
+    public function updateRecord(Request $request, $id, array $allowedFields): JsonResponse
     {
         $validated = $request->validate([
             'field' => 'required|string|in:' . implode(',', $allowedFields),
-            'newValue' => 'nullable'
+            'newValue' => 'required'
         ]);
 
-        $model = $modelClass::findOrFail($id);
-        $model->update([$validated['field'] => $validated['newValue']]);
-
-        return response()->json(['status' => 'success', 'message' => 'Izmjene su uspješno spremljene.']);
+        return $this->modelClass::whereKey($id)->update([$validated['field'] => $validated['newValue']])
+            ? response()->json(['status' => 'success', 'message' => 'Uspješno izmjenjeno.'])
+            : response()->json(['status' => 'error', 'message' => 'Greška prilikom izmjene.'], 500);
     }
 
     /*
@@ -37,14 +29,9 @@ trait RecordManagement
     | Delete a field in the model.
     |--------------------------------------------------------------------------------------------
     */
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function deleteRecord(string $modelClass, $id): JsonResponse
+    public function deleteRecord($id): JsonResponse
     {
-        return $modelClass::findOrFail($id)->delete()
+        return $this->modelClass::findOrFail($id)->delete()
             ? response()->json(['status' => 'success', 'message' => 'Uspješno obrisano.'])
             : response()->json(['status' => 'error', 'message' => 'Greška pri brisanju.'], 500);
     }
