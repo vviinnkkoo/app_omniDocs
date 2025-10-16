@@ -12,17 +12,17 @@ trait RecordManagement
     | Create a new record.
     |--------------------------------------------------------------------------------------------
     */
-    public function createRecord(array $data, string $successMsg = 'Uspješno dodano.'): JsonResponse
+    public function createRecord(array $data, string $successMsg = 'Uspješno dodano.')
     {
         try {
             $this->modelClass::create($data);
-            return response()->json(['status' => 'success', 'message' => $successMsg]);
+            return redirect()->back()->with('success', $successMsg);
         } catch (\Throwable $e) {
-            Log::error('Greška prilikom kreiranja zapisa: ' . $e->getMessage());
-            return response()->json(['status' => 'error', 'message' => 'Dogodila se greška prilikom spremanja zapisa.'], 500);
+            \Log::error('Greška prilikom kreiranja zapisa: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Greška prilikom spremanja zapisa.');
         }
     }
-    
+
     /*
     |--------------------------------------------------------------------------------------------
     | Update a single field of a model.
