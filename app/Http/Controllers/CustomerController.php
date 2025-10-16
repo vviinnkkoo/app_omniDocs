@@ -24,7 +24,7 @@ class CustomerController extends Controller
     {
         $search = $request->input('search');
 
-        $customers = Customer::search(
+        $customers = Customer::query()->search(
                 $search,
                 ['name', 'email', 'phone', 'address', 'postal', 'city'],
                 ['country' => ['name']]
