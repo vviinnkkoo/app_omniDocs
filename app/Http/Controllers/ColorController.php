@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Color;
+
 use App\Traits\RecordManagement;
 
 class ColorController extends Controller
 {
     use RecordManagement;
     protected $modelClass = \App\Models\Color::class;
-
 
     public function __construct()
     {
@@ -33,14 +34,11 @@ class ColorController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255'
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
 
-        Color::create($request->only('name'));
-
-        return redirect()
-            ->back()->with('success', 'Boja ili opis proizvoda uspješno dodan!');
+        return $this->createRecord($data, 'Boja ili opis proizvoda uspješno dodan!');
     }
 
     public function update(Request $request, $id)

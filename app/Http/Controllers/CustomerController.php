@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Customer;
 use App\Models\Country;
-use Illuminate\Support\Facades\Validator;
+
+use App\Traits\RecordManagement;
 
 class CustomerController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = \App\Models\Customer::class;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -41,44 +46,28 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'country_id' => 'required'
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'oib' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'house_number' => 'nullable|string|max:20',
+            'city' => 'nullable|string|max:255',
+            'postal' => 'nullable|string|max:20',
+            'country_id' => 'required|integer',
         ]);
 
-        try {
-            Customer::create($request->only([
-                'name', 'oib', 'email', 'phone', 'address', 'house_number', 'city', 'postal', 'country_id'
-            ]));
-
-            return redirect()->back()->with('success', 'Kupac je uspješno dodan.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Greška prilikom spremanja: ' . $e->getMessage());
-        }
+        return $this->createRecord($data, 'Kupac je uspješno dodan.');
     }
 
     public function update(Request $request, $id)
     {
-        $customer = Customer::findOrFail($id);
-
-        $validated = $request->validate([
-            'field' => 'required|in:name,oib,email,phone,address,house_number,city,postal,country_id',
-            'newValue' => 'required'
-        ]);
-
-        $customer->update([$validated['field'] => $validated['newValue']]);
-
-        return response()->json(['message' => 'Izmjenjeni podaci su uspješno spremljeni.']);
+        return $this->updateRecord($request, $id, ['name, oib, email, phone, address, house_number, city, postal,country_id']);
     }
 
     public function destroy($id)
     {
-        $record = Customer::findOrFail($id);
-
-        if (!$record->delete()) {
-            abort(500, 'Brisanje trenutno nije moguće.');
-        }
-
-        return response()->json(['message' => 'Uspješno obrisano.']);
+        return $this->deleteRecord($id);
     }
 }

@@ -100,7 +100,7 @@
       
               <div class="mb-3">
                   <label for="company_id">Dostavna služba:</label><br>
-                  <select class="form-select searchable-select-modal" id="company_id" name="company_id">
+                  <select class="form-select searchable-select-modal" id="delivery_company_id" name="delivery_company_id">
                       <option selected>Odaberi dostavnu službu</option>
                       @foreach ($deliveryCompanies as $deliveryCompany)
                           <option value="{{ $deliveryCompany->id }}">{{ $deliveryCompany->name }}</option>

@@ -9,6 +9,22 @@ trait RecordManagement
 { 
     /*
     |--------------------------------------------------------------------------------------------
+    | Create a new record.
+    |--------------------------------------------------------------------------------------------
+    */
+    public function createRecord(array $data, string $successMsg = 'Uspješno dodano.'): JsonResponse
+    {
+        try {
+            $this->modelClass::create($data);
+            return response()->json(['status' => 'success', 'message' => $successMsg]);
+        } catch (\Throwable $e) {
+            Log::error('Greška prilikom kreiranja zapisa: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Dogodila se greška prilikom spremanja zapisa.'], 500);
+        }
+    }
+    
+    /*
+    |--------------------------------------------------------------------------------------------
     | Update a single field of a model.
     |--------------------------------------------------------------------------------------------
     */

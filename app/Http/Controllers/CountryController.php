@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Country;
+
 use App\Traits\RecordManagement;
 
 class CountryController extends Controller
 {
     use RecordManagement;
     protected $modelClass = \App\Models\Country::class;
-
 
     public function __construct()
     {
@@ -33,15 +34,11 @@ class CountryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required'
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
 
-        Country::create([
-            'name' => $request->name
-        ]);
-
-        return redirect()->back()->with('success', 'Država uspješno dodana.');
+        return $this->createRecord($data, 'Država uspješno dodana.');
     }
 
     public function update(Request $request, $id)
