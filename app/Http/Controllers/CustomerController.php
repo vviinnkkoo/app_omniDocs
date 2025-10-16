@@ -8,10 +8,11 @@ use App\Models\Customer;
 use App\Models\Country;
 
 use App\Traits\RecordManagement;
+use App\Traits\HasSearch;
 
 class CustomerController extends Controller
 {
-    use RecordManagement;
+    use RecordManagement, HasSearch;
     protected $modelClass = \App\Models\Customer::class;
 
     public function __construct()
@@ -22,26 +23,20 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $query = Customer::query();
 
-        if ($search) {
-            $query->where(function($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('phone', 'like', "%{$search}%")
-                    ->orWhere('address', 'like', "%{$search}%")
-                    ->orWhere('postal', 'like', "%{$search}%")
-                    ->orWhere('city', 'like', "%{$search}%")
-                    ->orWhereHas('country', function($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%");
-                });
-            });
-        }
+        $customers = Customer::search(
+                $search,
+                ['name', 'email', 'phone', 'address', 'postal', 'city'],
+                ['country' => ['name']]
+            )
+            ->with('country', 'orders')
+            ->withCount('orders')
+            ->orderBy('id')
+            ->paginate(25);
 
-        $customers = $query->with('country', 'orders')->withCount('orders')->orderBy('id')->paginate(25);
         $countries = Country::orderBy('id')->get();
 
-        return view('pages.customers.index', compact ('customers', 'countries', 'search'));
+        return view('pages.customers.index', compact('customers', 'countries', 'search'));
     }
 
     public function store(Request $request)
@@ -49,7 +44,7 @@ class CustomerController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'oib' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'email' => 'sometimes|email|max:255',
             'phone' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:255',
             'house_number' => 'nullable|string|max:20',
@@ -58,7 +53,7 @@ class CustomerController extends Controller
             'country_id' => 'required|integer',
         ]);
 
-        return $this->createRecord($data, 'Kupac je uspješno dodan.');
+        return $this->createRecord($data, 'Novi kupac je uspješno dodan.');
     }
 
     public function update(Request $request, $id)
