@@ -23,20 +23,26 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $query = Customer::query();
 
-        $customers = Customer::query()->search(
-                $search,
-                ['name', 'email', 'phone', 'address', 'postal', 'city'],
-                ['country' => ['name']]
-            )
-            ->with('country', 'orders')
-            ->withCount('orders')
-            ->orderBy('id')
-            ->paginate(25);
+        if ($search) {
+            $query->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%")
+                    ->orWhere('postal', 'like', "%{$search}%")
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhereHas('country', function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            });
+        }
 
+        $customers = $query->with('country', 'orders')->withCount('orders')->orderBy('id')->paginate(25);
         $countries = Country::orderBy('id')->get();
 
-        return view('pages.customers.index', compact('customers', 'countries', 'search'));
+        return view('pages.customers.index', compact ('customers', 'countries', 'search'));
     }
 
     public function store(Request $request)
