@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Customer;
 use App\Models\Country;
-
 use App\Traits\RecordManagement;
-use App\Traits\HasSearch;
 
 class CustomerController extends Controller
 {
-    use RecordManagement, HasSearch;
+    use RecordManagement;
     protected $modelClass = \App\Models\Customer::class;
 
     public function __construct()

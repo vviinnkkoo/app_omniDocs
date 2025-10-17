@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Color;
-
 use App\Traits\RecordManagement;
 
 class ColorController extends Controller
@@ -21,13 +19,10 @@ class ColorController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $query = Color::query();
 
-        if ($search) {
-            $query->where('name', 'like', "%{$search}%");
-        }
-
-        $colors = $query->orderBy('id')->paginate(25);
+        $colors = Color::search($search, ['name'])
+                    ->orderBy('id')
+                    ->paginate(25);
 
         return view('pages.colors.index', compact('colors', 'search'));
     }

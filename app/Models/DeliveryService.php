@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasSearch;
 
 class DeliveryService extends Model
 {
+    use HasSearch;
+    
     protected $fillable = [
         'name',
         'delivery_company_id',

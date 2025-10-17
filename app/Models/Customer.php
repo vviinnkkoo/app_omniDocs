@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Services\GlobalService;
+use App\Traits\HasSearch;
 
 class Customer extends Model
 {
-
+    use HasSearch;
+    
     protected $fillable = [
         'name',
         'oib',

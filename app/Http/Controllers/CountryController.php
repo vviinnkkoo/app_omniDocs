@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Country;
-
 use App\Traits\RecordManagement;
 
 class CountryController extends Controller
