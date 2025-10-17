@@ -20,13 +20,21 @@ class DeliveryServiceController extends Controller
     
     public function index(Request $request)
     {
-        $deliveryServices = DeliveryService::with('deliveryCompany')->orderBy('delivery_company_id')->orderBy('name')->paginate(25);
+        $search = $request->input('search');
+
+        $deliveryServices = DeliveryService::search(
+                                $search,
+                                ['name'],
+                                ['deliveryCompany' => ['name']]
+                            )
+                            ->with('deliveryCompany')
+                            ->orderBy('delivery_company_id')
+                            ->orderBy('name')
+                            ->paginate(25);
+
         $deliveryCompanies = DeliveryCompany::orderBy('id')->get();
-        
-        return view('pages.delivery-services.index', [
-            'deliveryServices' => $deliveryServices,
-            'deliveryCompanies' => $deliveryCompanies
-        ]);
+
+        return view('pages.delivery-services.index', compact('deliveryServices', 'deliveryCompanies', 'search'));
     }
 
     public function store(Request $request)
