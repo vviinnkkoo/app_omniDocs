@@ -3,100 +3,86 @@
 @section('title', 'Omnius Art | Knjiga prometa')
 
 @section('content')
-<div class="containerx" style="margin-left:15%; margin-right:15%">
+<div class="container-fluid px-2 px-lg-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-12">          
+      <div class="card">
 
-    <div class="row justify-content-center">
-        <div class="col-xl-12">          
-            <div class="card">
+        <div class="card-body">
 
-                <div class="card-body">
+          <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova uplata</button>
 
-                  <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova uplata</button>
+          <x-search-form/>
 
-                  <form method="GET" action="/knjiga-prometa/godina/{{$year}}" class="mb-3">
-                    <div class="input-group w-25 float-end">
-                        <input type="text" name="search" class="form-control" placeholder="Upiši traženi pojam..." value="{{ request('search') }}">
-                        <button type="submit" class="btn btn-primary">Pretraži</button>
-                    </div>
-                  </form>
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Platitelj</th>
+                  <th scope="col">Datum</th>
+                  <th scope="col">Mjesto uplate</th>
+                  <th scope="col">Broj naloga</th>
+                  <th scope="col">Opis</th>
+                  <th scope="col">Iznos</th>
+                  <th scope="col">Povezani računi</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
 
-                    <table class="table table-hover">
-                      <thead class="table-dark">
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Platitelj</th>
-                          <th scope="col">Datum</th>
-                          <th scope="col">Mjesto uplate</th>
-                          <th scope="col">Broj naloga</th>
-                          <th scope="col">Opis</th>
-                          <th scope="col">Iznos</th>
-                          <th scope="col">Povezani računi</th>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                @foreach ($kprs as $item)
+                  <tr class="{{ $item->exists ? 'kpr-has-receipt' : 'kpr-no-receipt' }}">
 
-                        @foreach ($kprs as $item)
-                          <tr class="{{ $item->exists ? 'kpr-has-receipt' : 'kpr-no-receipt' }}">
+                    <td class="align-middle text-start">{{ {{ $item->firstItem() + $loop->index }} }}</td>
 
-                            <td class="align-middle text-start">{{ $item->index }}</td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ $item->payer }}</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->payer }}</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ $item->date }}</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->date }}</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ $item->paymentTypeName }}</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->paymentTypeName }}</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ $item->origin }}</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->origin }}</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ $item->info }}</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ $item->info }}</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ number_format($item->amount, 2, ',', '.') }} €</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ number_format($item->amount, 2, ',', '.') }} €</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display">{{ number_format($item->receiptsTotal, 2, ',', '.') }} €</div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display">{{ number_format($item->receiptsTotal, 2, ',', '.') }} €</div>
-                            </td>
+                    <td class="align-middle text-start">
+                      <div class="date-display"><a href="{{ route('knjiga-prometa.show', $item->id) }}" class="btn btn-success">Uredi</a></div>
+                    </td>
 
-                            <td class="align-middle text-start">
-                              <div class="date-display"><a href="{{ route('knjiga-prometa.show', $item->id) }}" class="btn btn-success">Uredi</a></div>
-                            </td>
+                    <td>
+                      <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="knjiga-prometa"><i class="bi bi-x-lg"></i></button>
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
 
-                            <td>
-                              <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="knjiga-prometa"><i class="bi bi-x-lg"></i></button>
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+            <x-table-pagination :items="$kprs"/>
 
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-center">
-                      {{ $kprs->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
-                    </div>
-
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-
-
-                    
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,7 +94,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="/knjiga-prometa" id="paymentSubmission">
+        <form method="POST" action="{{route(knjiga-prometa.store)}}" id="paymentSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 

@@ -22,42 +22,27 @@ class KprController extends Controller
         $this->middleware('auth');
     }
 
-
     public function index(Request $request, $year = null)
     {
+        $year = $year ?? now()->year;
         $search = $request->input('search');
-        $query = Kpr::query();
 
-        if ($search) {
-            $query->where(function($query) use ($search) {
-                $query->where('payer', 'like', "%{$search}%")
-                    ->orWhere('amount', 'like', "%{$search}%")
-                    ->orWhere('origin', 'like', "%{$search}%")
-                    ->orWhere('date', 'like', "%{$search}%")
-                    ->orWhere('info', 'like', "%{$search}%");
-            });
-        }
+        $kprs = Kpr::search($search, ['payer', 'amount', 'origin', 'date', 'info'])
+                    ->whereYear('date', $year)
+                    ->orderBy('date')
+                    ->paginate(25);
 
-        if (!is_null($year)) {
-            $query->whereYear('date', $year);
-        } else {
-            $year = Carbon::now()->year;
-        }
-
-        $kprs = $query->orderBy('date')->paginate(25);
         $paymentMethods = PaymentType::all();
 
-        foreach ($kprs as $index => $item) {
+        foreach ($kprs as $item) {
             $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
             $item->date = Carbon::parse($item->date)->format('d.m.Y');
-            $item->paymentTypeName = $item->paymentType->name;
+            $item->paymentTypeName = $item->paymentType->name ?? '';
             $item->receiptsTotal = GlobalService::sumAllReciepesFromKpr($item->id);
-            $item->index = $kprs->firstItem() + $index;
         }
 
-        return view('pages.kpr.index', compact('kprs', 'year', 'paymentMethods'));
+        return view('pages.kpr.index', compact('kprs', 'year', 'paymentMethods', 'search'));
     }
-
 
     public function show($id)
     {
