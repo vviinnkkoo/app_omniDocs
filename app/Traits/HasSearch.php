@@ -21,22 +21,22 @@ trait HasSearch
      */
     public function scopeSearch(Builder $query, ?string $search, array $columns = [], array $relations = [])
     {
-        if (!$search) {
-            return $query;
-        }
+        if (!$search) return $query;
 
         $query->where(function ($q) use ($search, $columns, $relations) {
-            // Search main model columns
+            // Glavni model
             foreach ($columns as $column) {
                 $q->orWhere($column, 'like', "%{$search}%");
             }
 
-            // Search related models
+            // Relacije
             foreach ($relations as $relation => $relColumns) {
-                $q->orWhereHas($relation, function ($relQuery) use ($search, $relColumns) {
-                    foreach ($relColumns as $col) {
-                        $relQuery->orWhere($col, 'like', "%{$search}%");
-                    }
+                $q->orWhere(function ($relWrap) use ($relation, $search, $relColumns) {
+                    $relWrap->whereHas($relation, function ($relQuery) use ($search, $relColumns) {
+                        foreach ($relColumns as $col) {
+                            $relQuery->orWhere($col, 'like', "%{$search}%");
+                        }
+                    });
                 });
             }
         });
