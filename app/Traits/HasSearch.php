@@ -24,12 +24,12 @@ trait HasSearch
         if (!$search) return $query;
 
         $query->where(function ($q) use ($search, $columns, $relations) {
-            // Glavni model
+            // Main model columns
             foreach ($columns as $column) {
                 $q->orWhere($column, 'like', "%{$search}%");
             }
 
-            // Relacije
+            // Relation columns
             foreach ($relations as $relation => $relColumns) {
                 $q->orWhereHas($relation, function ($relQuery) use ($search, $relColumns) {
                     $relQuery->where(function ($nested) use ($search, $relColumns) {
