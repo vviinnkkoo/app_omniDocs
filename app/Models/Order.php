@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Traits\HasSearch;
 
 class Order extends Model
 {
+    use HasSearch;
+    
     protected $fillable = [
         'date_ordered',
         'date_deadline',

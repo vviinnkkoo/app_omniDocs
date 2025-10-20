@@ -3,9 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasSearch;
 
 class PaymentType extends Model
 {
+    use HasSearch;
+    
+    protected $fillable = [
+        'name'
+    ];
+
     /*
     |--------------------------------------------------------------------------------------------
     | Relationships

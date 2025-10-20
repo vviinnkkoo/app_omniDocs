@@ -3,9 +3,12 @@
 namespace App\Modules\Packages\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasSearch;
 
 class Package extends Model
 {
+    use HasSearch;
+    
     protected $fillable = [
         'order_id',
         'delivery_service_id',

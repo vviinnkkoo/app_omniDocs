@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasSearch;
 
 class Product extends Model
 {
+    use HasSearch;
+    
     protected $fillable = [
         'name',
         'product_type_id',

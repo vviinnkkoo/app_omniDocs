@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasSearch;
 
 class Receipt extends Model
 {
+    use HasSearch;
+    
     protected $fillable = [
         'is_cancelled',
         'number',
