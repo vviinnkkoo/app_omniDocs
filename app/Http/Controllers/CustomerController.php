@@ -55,7 +55,7 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->updateRecord($request, $id, ['name, oib, email, phone, address, house_number, city, postal,country_id']);
+        return $this->updateRecord($request, $id, ['name', 'oib', 'email', 'phone', 'address', 'house_number', 'city', 'postal', 'country_id']);
     }
 
     public function destroy($id)
