@@ -31,10 +31,10 @@ trait HasSearch
 
             // Relacije
             foreach ($relations as $relation => $relColumns) {
-                $q->orWhere(function ($relWrap) use ($relation, $search, $relColumns) {
-                    $relWrap->whereHas($relation, function ($relQuery) use ($search, $relColumns) {
+                $q->orWhereHas($relation, function ($relQuery) use ($search, $relColumns) {
+                    $relQuery->where(function ($nested) use ($search, $relColumns) {
                         foreach ($relColumns as $col) {
-                            $relQuery->orWhere($col, 'like', "%{$search}%");
+                            $nested->orWhere($col, 'like', "%{$search}%");
                         }
                     });
                 });
