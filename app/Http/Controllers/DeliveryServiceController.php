@@ -50,7 +50,7 @@ class DeliveryServiceController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->updateRecord($request, $id, ['name, delivery_company_id, default_cost']);
+        return $this->updateRecord($request, $id, ['name', 'delivery_company_id', 'default_cost']);
     }
 
     public function destroy($id)
