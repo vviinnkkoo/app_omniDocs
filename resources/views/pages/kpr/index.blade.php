@@ -94,7 +94,7 @@
       </div>
       <div class="modal-body">
         <!-- popup content -->
-        <form method="POST" action="{{route(knjiga-prometa.store)}}" id="paymentSubmission">
+        <form method="POST" action="{{route('knjiga-prometa.store')}}" id="paymentSubmission">
           {{ csrf_field() }}
               <div class="form-group">
 
