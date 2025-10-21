@@ -28,18 +28,18 @@ class KprController extends Controller
         $search = $request->input('search');
 
         $kprs = Kpr::search($search, ['payer', 'amount', 'origin', 'date', 'info'])
-                    ->whereYear('date', $year)
-                    ->orderBy('date')
-                    ->paginate(25);
+            ->whereYear('date', $year)
+            ->orderBy('date')
+            ->paginate(25)
+            ->through(function ($item) {
+                $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
+                $item->date = Carbon::parse($item->date)->format('d.m.Y');
+                $item->paymentTypeName = $item->paymentType->name ?? '';
+                $item->receiptsTotal = GlobalService::sumAllReciepesFromKpr($item->id);
+                return $item;
+            });
 
         $paymentMethods = PaymentType::all();
-
-        foreach ($kprs as $item) {
-            $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
-            $item->date = Carbon::parse($item->date)->format('d.m.Y');
-            $item->paymentTypeName = $item->paymentType->name ?? '';
-            $item->receiptsTotal = GlobalService::sumAllReciepesFromKpr($item->id);
-        }
 
         return view('pages.kpr.index', compact('kprs', 'year', 'paymentMethods', 'search'));
     }

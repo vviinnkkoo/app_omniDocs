@@ -34,7 +34,7 @@
                 @foreach ($kprs as $item)
                   <tr class="{{ $item->exists ? 'kpr-has-receipt' : 'kpr-no-receipt' }}">
 
-                    <td class="align-middle text-start">{{ $item->firstItem() + $loop->index }}</td>
+                    <td class="align-middle text-start">{{ $item->index }}</td>
 
                     <td class="align-middle text-start">
                       <div class="date-display">{{ $item->payer }}</div>
