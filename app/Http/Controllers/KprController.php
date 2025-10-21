@@ -27,7 +27,9 @@ class KprController extends Controller
         $year = $year ?? now()->year;
         $search = $request->input('search');
 
-        $kprs = Kpr::search($search, ['payer', 'amount', 'origin', 'date', 'info'])
+        $kprs = Kpr::search($search,
+            ['payer', 'amount', 'origin', 'date', 'info'],
+            ['paymentType' => ['name']])
             ->whereYear('date', $year)
             ->orderBy('date')
             ->paginate(25)
