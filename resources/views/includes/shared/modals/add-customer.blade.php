@@ -24,7 +24,7 @@
 
             <div class="mb-3">
               <label for="email">Email:</label>
-              <input type="email" class="form-control" placeholder="Unesi email..." id="email" name="email" value="- - -" required>
+              <input type="text" class="form-control" placeholder="Unesi email..." id="email" name="email" value="- - -" required>
             </div>
 
             <div class="mb-3">
