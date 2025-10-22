@@ -202,7 +202,7 @@ class OrderController extends Controller
             'delivery_email' => $customer->email,
         ]);
 
-        return redirect(route('narudzbe.show'), $order->id);
+        return redirect()->route('narudzbe.show', $order);
     }
 
     public function update(Request $request, $id)
