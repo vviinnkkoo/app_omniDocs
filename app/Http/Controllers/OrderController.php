@@ -208,7 +208,8 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         return $this->updateRecord($request, $id, [
-            'date_ordered', 'date_deadline', 'customer_id', 
+            'date_ordered', 'date_deadline', 'customer_id',
+            'date_sent', 'date_delivered', 'date_cancelled',
             'source_id', 'delivery_service_id', 'payment_type_id',
             'delivery_address', 'delivery_city', 'delivery_country_id',
             'delivery_postal', 'delivery_phone', 'delivery_email'
