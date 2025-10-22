@@ -19,6 +19,11 @@ class DoomPDFController extends Controller
         $this->middleware('auth');
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Custom PDF generation methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function generateDocument($mode, $id)
     {
         $methods = [

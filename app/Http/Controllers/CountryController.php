@@ -16,6 +16,11 @@ class CountryController extends Controller
         $this->middleware('auth');
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request)
     {
         $search = $request->input('search');

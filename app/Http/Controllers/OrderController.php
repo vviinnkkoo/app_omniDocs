@@ -19,18 +19,25 @@ use App\Models\OrderNote;
 use App\Models\Receipt;
 use App\Models\KprItemList;
 use App\Models\WorkYears;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\JsonResponse;
 use App\Services\GlobalService;
+use App\Traits\RecordManagement;
 
 class OrderController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = Order::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request, $type, $customerId = null)
     {
         $search = $request->input('search');
@@ -118,7 +125,6 @@ class OrderController extends Controller
         ));
     }
 
-
     public function show($order_id)
     {
         $order = Order::with([
@@ -196,27 +202,29 @@ class OrderController extends Controller
             'delivery_email' => $customer->email,
         ]);
 
-        return redirect('/narudzbe/' . $order->id);
+        return redirect(route('narudzbe.show'), $order->id);
     }
 
     public function update(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-        $order->$field = $newValue;
-        $order->save();
-
-        return response()->json(['message' => 'Delivery service updated successfully']);
+        return $this->updateRecord($request, $id, [
+            'date_ordered', 'date_deadline', 'customer_id', 
+            'source_id', 'delivery_service_id', 'payment_type_id',
+            'delivery_address', 'delivery_city', 'delivery_country_id',
+            'delivery_postal', 'delivery_phone', 'delivery_email'
+        ]);
     }
 
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id)
     {
-        return Order::findOrFail($id)->delete()
-            ? response()->json(['message' => 'Record deleted successfully'])
-            : response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Custom methods for this controller
+    |--------------------------------------------------------------------------------------------
+    */
     private function getReceiptAndKprData($orders)
     {
         $orderIds = $orders->pluck('id')->toArray();

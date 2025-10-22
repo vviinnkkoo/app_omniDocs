@@ -19,13 +19,16 @@ use Illuminate\Http\RedirectResponse;
 
 class Omnicontrol extends Controller
 {
-    // Protect all functions and redirect to login if necessary
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    // Display index page
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index()
     {        
         $activeOrderIds = Order::whereNull('date_cancelled')->pluck('id');

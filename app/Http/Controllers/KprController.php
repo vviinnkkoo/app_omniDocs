@@ -14,14 +14,23 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 use App\Services\GlobalService;
+use App\Traits\RecordManagement;
 
 class KprController extends Controller
-{
+{    
+    use RecordManagement;
+    protected $modelClass = \App\Models\KprController::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request, $year = null)
     {
         $year = $year ?? now()->year;
@@ -120,42 +129,27 @@ class KprController extends Controller
 
     public function store(Request $request)
     {
-        $date = Carbon::parse($request->date);
-
-        $validator = Validator::make($request->all(), [
-            'date' => 'required',
-            'amount' => 'required'
+        $data = $request->validate([
+            'date' => 'required|date',
+            'amount' => 'required|numeric',
+            'payer' => 'nullable|string|max:255',
+            'origin' => 'nullable|string|max:255',
+            'info' => 'nullable|string|max:255',
+            'payment_type_id' => 'nullable|integer|exists:payment_types,id',
         ]);
 
-        if ($validator->fails()) {
-            return redirect('/knjiga-prometa/' . $date->year)
-                ->withInput()
-                ->withErrors($validator);
-        }
-
-        Kpr::create($request->only(['payer', 'amount', 'origin', 'date', 'info', 'payment_type_id']));
-
-        return redirect()->back();
+        return $this->createRecord($data, 'Zapis u knjizi prometa uspješno dodan!');
     }
-
 
     public function update(Request $request, $id)
     {
-        $record = Kpr::findOrFail($id);
-        $record->update([$request->input('field') => $request->input('newValue')]);
-
-        return response()->json(['message' => 'Payment type updated successfully']);
+        return $this->updateRecord($request, $id, [
+            'payer', 'amount', 'origin', 'date', 'info', 'payment_type_id'
+        ]);
     }
 
-
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id)
     {
-        $record = Kpr::findOrFail($id);
-
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 }

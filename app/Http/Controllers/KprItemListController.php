@@ -10,34 +10,36 @@ use App\Models\KprItemList;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class KprItemListController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = KprItemList::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    
-    public function store(Request $request, $id)
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
+    public function store(Request $request, $kprId)
     {
-        $validated = $request->validate([
+        $data = $request->validate([
             'receipt_id' => 'required',
         ]);
-        
-        KprItemList::create([
-            'receipt_id' => $validated['receipt_id'],
-            'kpr_id' => $id,
-        ]);
 
-        return redirect()->back()->with('success', 'Račun je uspješno dodan!');
+        $data['kpr_id'] = $kprId;
+
+        return $this->createRecord($data, 'Račun je uspješno dodan!');
     }
 
-
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id): JsonResponse
     {
-        return KprItemList::findOrFail($id)->delete()
-            ? response()->json(['message' => 'Record deleted successfully'])
-            : response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 }

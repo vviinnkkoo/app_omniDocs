@@ -18,19 +18,23 @@ class DeliveryServiceController extends Controller
         $this->middleware('auth');
     }
     
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request)
     {
         $search = $request->input('search');
 
-        $deliveryServices = DeliveryService::search(
-                                $search,
-                                ['name'],
-                                ['deliveryCompany' => ['name']]
-                            )
-                            ->with('deliveryCompany')
-                            ->orderBy('delivery_company_id')
-                            ->orderBy('name')
-                            ->paginate(25);
+        $deliveryServices = DeliveryService::search($search,
+                ['name'],
+                ['deliveryCompany' => ['name']]
+            )
+            ->with('deliveryCompany')
+            ->orderBy('delivery_company_id')
+            ->orderBy('name')
+            ->paginate(25);
 
         $deliveryCompanies = DeliveryCompany::orderBy('id')->get();
 

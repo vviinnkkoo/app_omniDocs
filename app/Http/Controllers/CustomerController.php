@@ -17,6 +17,11 @@ class CustomerController extends Controller
         $this->middleware('auth');
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -41,7 +46,7 @@ class CustomerController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'oib' => 'nullable|string|max:20',
-            'email' => 'sometimes|email|max:255',
+            'email' => 'sometimes|string|max:255',
             'phone' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:255',
             'house_number' => 'nullable|string|max:20',
