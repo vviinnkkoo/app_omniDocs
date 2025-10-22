@@ -23,6 +23,7 @@ class Order extends Model
         'delivery_postal',
         'delivery_phone',
         'delivery_email',
+        'tracking_code',
     ];
 
     protected $casts = [

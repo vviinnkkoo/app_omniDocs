@@ -212,7 +212,8 @@ class OrderController extends Controller
             'date_sent', 'date_delivered', 'date_cancelled',
             'source_id', 'delivery_service_id', 'payment_type_id',
             'delivery_address', 'delivery_city', 'delivery_country_id',
-            'delivery_postal', 'delivery_phone', 'delivery_email'
+            'delivery_postal', 'delivery_phone', 'delivery_email',
+            'tracking_code'
         ]);
     }
 
