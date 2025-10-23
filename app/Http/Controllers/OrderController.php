@@ -224,7 +224,7 @@ class OrderController extends Controller
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Custom methods for this controller
+    | Custom methods used by this controller
     |--------------------------------------------------------------------------------------------
     */
     private function getReceiptAndKprData($orders)

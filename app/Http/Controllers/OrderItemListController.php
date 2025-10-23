@@ -16,7 +16,12 @@ class OrderItemListController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function store(Request $request, $order_id) {
         OrderItemList::create(array_merge(
             $request->validate([
@@ -106,6 +111,11 @@ class OrderItemListController extends Controller
         return response()->json(['message' => 'Error deleting the record'], 500);
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Custom methods used by this controller
+    |--------------------------------------------------------------------------------------------
+    */
     public function updateIsDoneStatus(Request $request, $id)
     {
         $orderItem = OrderItemList::findOrFail($id);
@@ -118,7 +128,6 @@ class OrderItemListController extends Controller
         $orderItem->update(['note_on_invoice' => !$orderItem->note_on_invoice]);
     }
 
-    // SUM colors
     public static function productColors() {
         $items = OrderItemList::select('product_id', \DB::raw('SUM(amount) as amount'))
             ->whereHas('order', function ($query) {
