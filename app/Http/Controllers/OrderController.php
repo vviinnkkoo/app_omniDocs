@@ -237,7 +237,7 @@ class OrderController extends Controller
         $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
     }
 
-    private function getOrderData()
+    private function getOrderData($order)
     {
         return [
             'sources' => Source::orderBy('id')->get(),
