@@ -83,56 +83,21 @@ class OrderController extends Controller
 
     public function show($order_id)
     {
-        $order = Order::with([
-            'customer',
-            'paymentType',
-            'source',
-            'deliveryService.deliveryCompany',
-            'country',
-            'orderItemList.product',
-            'orderItemList.product.productType',
-            'orderItemList.color',
-            'orderNote'
-        ])->findOrFail($order_id);
+        $order = $this->getOrderWithRelations($order_id);
 
-        $order->delivery_cost = $order->deliveryService->default_cost;
-        $order->subtotal = GlobalService::sumOrderItems(orderId: $order_id);
-        $order->total = $order->subtotal + $order->delivery_cost;
+        $this->calculateOrderTotals($order);
 
-        // Fetch data for the view
-        $data = $this->getReceiptAndKprData($order);
-        $receipts = $data['receiptIds'];
-        $kprIds = $data['kprIds'];
+        $this->attachReceiptsAndKpr($order);
 
-        // Condition checks
-        $order->receipt_id = $receipts[$order->id] ?? null;
-        $order->is_paid = isset($order->receipt_id) && isset($kprs[$order->receipt_id]);
+        $formData = $this->getFormData();
 
-        $sources = Source::orderBy('id')->get();
-        $deliveryServices = DeliveryService::orderBy('id')->get();
-        $deliveryCompanies = DeliveryCompany::has('deliveryServices')->orderBy('id')->get();
-        $paymentTypes = PaymentType::orderBy('id')->get();
-        $countries = Country::orderBy('id')->get();
-        $products = Product::orderBy('name')->get();
-        $productTypes = ProductType::orderBy('id')->get();
-        $colors = Color::orderBy('id')->get();
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
-        $orderItemList = $order->orderItemList;
 
-        return view('pages.orders.show', [
-            'order' => $order,
-            'sources' => $sources,
-            'deliveryServices' => $deliveryServices,
-            'deliveryCompanies' => $deliveryCompanies,
-            'paymentTypes' => $paymentTypes,
-            'countries' => $countries,
-            'orderItemList' => $orderItemList,
-            'orderNotes' => $order->orderNote,
-            'products' => $products,
-            'productTypes' => $productTypes,
-            'colors' => $colors,
-            'latestReceiptNumber' => $latestReceiptNumber
-        ]);
+        return view('pages.orders.show', compact(
+            'order',
+            'latestReceiptNumber',
+            ...array_keys($formData)
+        ))->with($formData);
     }
 
     public function store(Request $request)
@@ -238,6 +203,53 @@ class OrderController extends Controller
             'deliveryCompanies' => DeliveryCompany::whereHas('deliveryServices')->orderBy('id')->get(),
             'paymentTypes' => PaymentType::orderBy('id')->get(),
             'countries' => Country::orderBy('id')->get(),
+        ];
+    }
+
+    private function getOrderWithRelations($order_id)
+    {
+        return Order::with([
+            'customer',
+            'paymentType',
+            'source',
+            'deliveryService.deliveryCompany',
+            'country',
+            'orderItemList.product.productType',
+            'orderItemList.color',
+            'orderNote'
+        ])->findOrFail($order_id);
+    }
+
+    private function calculateOrderTotals($order)
+    {
+        $order->delivery_cost = $order->deliveryService->default_cost;
+        $order->subtotal = GlobalService::sumOrderItems(orderId: $order->id);
+        $order->total = $order->subtotal + $order->delivery_cost;
+    }
+
+    private function attachReceiptsAndKpr($order)
+    {
+        $data = $this->getReceiptAndKprData($order);
+        $receipts = $data['receiptIds'];
+        $kprIds = $data['kprIds'];
+
+        $order->receipt_id = $receipts[$order->id] ?? null;
+        $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
+    }
+
+    private function getFormData()
+    {
+        return [
+            'sources' => Source::orderBy('id')->get(),
+            'deliveryServices' => DeliveryService::orderBy('id')->get(),
+            'deliveryCompanies' => DeliveryCompany::has('deliveryServices')->orderBy('id')->get(),
+            'paymentTypes' => PaymentType::orderBy('id')->get(),
+            'countries' => Country::orderBy('id')->get(),
+            'products' => Product::orderBy('name')->get(),
+            'productTypes' => ProductType::orderBy('id')->get(),
+            'colors' => Color::orderBy('id')->get(),
+            'orderItemList' => $order->orderItemList,
+            'orderNotes' => $order->orderNote,
         ];
     }
 }
