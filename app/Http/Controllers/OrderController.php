@@ -95,9 +95,8 @@ class OrderController extends Controller
 
         return view('pages.orders.show', compact(
             'order',
-            'latestReceiptNumber',
-            ...array_keys($orderData)
-        ));
+            'latestReceiptNumber'
+        ))->with($orderData);
     }
 
     public function store(Request $request)
