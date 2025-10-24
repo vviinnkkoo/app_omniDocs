@@ -89,14 +89,14 @@ class OrderController extends Controller
 
         $this->attachReceiptsAndKpr($order);
 
-        $formData = $this->getFormData();
+        $orderData = $this->getOrderData();
 
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
 
         return view('pages.orders.show', compact(
             'order',
             'latestReceiptNumber',
-            ...array_keys($formData)
+            ...array_keys($orderData)
         ))->with($formData);
     }
 
@@ -237,7 +237,7 @@ class OrderController extends Controller
         $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
     }
 
-    private function getFormData()
+    private function getOrderData()
     {
         return [
             'sources' => Source::orderBy('id')->get(),
