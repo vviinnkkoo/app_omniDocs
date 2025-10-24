@@ -89,7 +89,7 @@ class OrderController extends Controller
 
         $this->attachReceiptsAndKpr($order);
 
-        $orderData = $this->getOrderData();
+        $orderData = $this->getOrderData($order);
 
         $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
 
