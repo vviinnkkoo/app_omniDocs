@@ -97,7 +97,7 @@ class OrderController extends Controller
             'order',
             'latestReceiptNumber',
             ...array_keys($orderData)
-        ))->with($formData);
+        ));
     }
 
     public function store(Request $request)
