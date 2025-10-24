@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Customer;
@@ -19,7 +20,6 @@ use App\Models\OrderNote;
 use App\Models\Receipt;
 use App\Models\KprItemList;
 use App\Models\WorkYears;
-use Illuminate\Support\Facades\DB;
 use App\Services\GlobalService;
 use App\Traits\RecordManagement;
 
@@ -41,86 +41,42 @@ class OrderController extends Controller
     public function index(Request $request, $type, $customerId = null)
     {
         $search = $request->input('search');
-        $query = Order::query();
 
-        // Search functionality
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('tracking_code', 'like', "%{$search}%")
-                    ->orWhere('delivery_postal', 'like', "%{$search}%")
-                    ->orWhere('delivery_city', 'like', "%{$search}%")
-                    ->orWhereHas('paymentType', function ($query) use ($search) {
-                        $query->where('name', 'like', "%{$search}%");
-                    })
-                    ->orWhereHas('deliveryService.deliveryCompany', function ($query) use ($search) {
-                        $query->where('name', 'like', "%{$search}%");
-                    })
-                    ->orWhereHas('customer', function ($query) use ($search) {
-                        $query->where('name', 'like', "%{$search}%");
-                    });
-            });
+        $query = $this->buildBaseQuery($search);
+
+        if ($type === 'kupac' && !$customerId) {
+            return redirect()->back()->with(['error' => 'Nije odabran kupac ili šifra kupca nije ispravna.']);
         }
 
-        // Filter by defined types
-        switch ($type) {
-            case 'sve':
-                $orders = $query->orderBy('id')->paginate(25);
-                break;
-            case 'poslane':
-                $orders = $query->whereNotNull('date_sent')
-                    ->whereNull('date_delivered')
-                    ->whereNull('date_cancelled')
-                    ->orderBy('id')
-                    ->paginate(25);
-                break;
-            case 'neodradene':
-                $orders = $query->whereNull('date_sent')
-                    ->whereNull('date_cancelled')
-                    ->orderBy('id')
-                    ->paginate(25);
-                break;
-            case 'otkazane':
-                $orders = $query->whereNotNull('date_cancelled')
-                    ->orderBy('id')
-                    ->paginate(25);
-                break;
-            case 'kupac':
-                if ($customerId) {
-                    $orders = $query->where('customer_id', $customerId)
-                        ->orderBy('id')
-                        ->paginate(25);
-                } else {
-                    return redirect()->back()->with(['error' => 'Nije odabran kupac ili šifra kupca nije ispravna.']);
-                }
-                break;
-            default:
-                return;
-        }
+        $this->applyTypeFilter($query, $type, $customerId);
 
-        // Fetch data for the view
+        $orders = $query->orderBy('id')->paginate(25);
+
         $data = $this->getReceiptAndKprData($orders);
-        $receipts = $data['receiptId'];
+        $receipts = $data['receiptIds'];
         $kprIds = $data['kprIds'];
 
-        // Get other required data for the view
-        $customers = Customer::orderBy('id')->get();
-        $sources = Source::orderBy('id')->get();
-        $deliveryServices = DeliveryService::where('in_use', true)->orderBy('name')->get();
-        $deliveryCompanies = DeliveryCompany::whereHas('deliveryServices')->orderBy('id')->get();
-        $paymentTypes = PaymentType::orderBy('id')->get();
-        $countries = Country::orderBy('id')->get();
-        $today = Carbon::now();
+        [
+            'customers' => $customers,
+            'sources' => $sources,
+            'deliveryServices' => $deliveryServices,
+            'deliveryCompanies' => $deliveryCompanies,
+            'paymentTypes' => $paymentTypes,
+            'countries' => $countries,
+        ] = $this->getFormData();
+
+        $today = now();
         $currentUrl = url()->current();
 
-        // Add extra information to orders using accessors
-        foreach ($orders as $order) {
+        $orders->getCollection()->transform(function ($order) use ($receipts, $kprIds) {
             $order->total_amount = GlobalService::sumOrderItems(orderId: $order->id);
             $order->receipt_id = $receipts[$order->id] ?? null;
             $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
-        }
+            return $order;
+        });
 
         return view('pages.orders.index', compact(
-            'orders', 'customers', 'sources', 'deliveryServices', 
+            'orders', 'customers', 'sources', 'deliveryServices',
             'deliveryCompanies', 'paymentTypes', 'countries', 'today', 'currentUrl'
         ));
     }
@@ -229,18 +185,59 @@ class OrderController extends Controller
     */
     private function getReceiptAndKprData($orders)
     {
-        $orderIds = $orders->pluck('id')->toArray();
+        $orderIds = $orders->pluck('id');
 
-        $receiptId = Receipt::whereIn('order_id', $orderIds)
+        $receiptIds = Receipt::whereIn('order_id', $orderIds)
             ->where('is_cancelled', 0)
             ->pluck('id', 'order_id');
 
-        $kprIds = KprItemList::whereIn('receipt_id', $receiptId->values())
-            ->pluck('receipt_id', 'receipt_id');
+        $kprIds = KprItemList::whereIn('receipt_id', $receiptIds->values())
+            ->pluck('receipt_id')
+            ->flip();
 
+        return compact('receiptIds', 'kprIds');
+    }
+
+    private function buildBaseQuery($search)
+    {
+        return Order::search($search, [
+            'tracking_code',
+            'delivery_postal',
+            'delivery_city',
+        ], [
+            'paymentType' => ['name'],
+            'deliveryService.deliveryCompany' => ['name'],
+            'customer' => ['name'],
+        ]);
+    }
+
+    private function applyTypeFilter($query, $type, $customerId)
+    {
+        match ($type) {
+            'sve' => $query,
+            'poslane' => $query
+                ->whereNotNull('date_sent')
+                ->whereNull('date_delivered')
+                ->whereNull('date_cancelled'),
+            'neodradene' => $query
+                ->whereNull('date_sent')
+                ->whereNull('date_cancelled'),
+            'otkazane' => $query
+                ->whereNotNull('date_cancelled'),
+            'kupac' => $query->where('customer_id', $customerId),
+            default => abort(404),
+        };
+    }
+
+    private function getFormData()
+    {
         return [
-            'receiptId' => $receiptId,
-            'kprIds' => $kprIds
+            'customers' => Customer::orderBy('id')->get(),
+            'sources' => Source::orderBy('id')->get(),
+            'deliveryServices' => DeliveryService::where('in_use', true)->orderBy('name')->get(),
+            'deliveryCompanies' => DeliveryCompany::whereHas('deliveryServices')->orderBy('id')->get(),
+            'paymentTypes' => PaymentType::orderBy('id')->get(),
+            'countries' => Country::orderBy('id')->get(),
         ];
     }
 }
