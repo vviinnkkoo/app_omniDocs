@@ -13,7 +13,7 @@ use App\Traits\RecordManagement;
 class OrderItemListController extends Controller
 {    
     use RecordManagement;
-    protected $modelClass = App\Models\OrderItemList::class;
+    protected $modelClass = \App\Models\OrderItemList::class;
 
     public function __construct()
     {

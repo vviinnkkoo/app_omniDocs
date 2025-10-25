@@ -25,7 +25,7 @@ use App\Traits\RecordManagement;
 class OrderController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = App\Models\Order::class;
+    protected $modelClass = \App\Models\Order::class;
 
     public function __construct()
     {
