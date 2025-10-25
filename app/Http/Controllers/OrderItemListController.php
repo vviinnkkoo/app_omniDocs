@@ -28,13 +28,13 @@ class OrderItemListController extends Controller
     public function store(Request $request)
     {
         try {
-            $decryptedOrderId = Crypt::decryptString($request->input('order_id'));
+            $decryptedOrderId = (int) Crypt::decryptString($request->input('order_id'));
         } catch (DecryptException $e) {
             return redirect()->back()->with('error', 'Neispravan ID narudžbe.');
         }
 
-        if (!is_numeric($decryptedOrderId) || !Order::where('id', $decryptedOrderId)->exists()) {
-            return redirect()->back()->with('error', 'Narudžba ne postoji.');
+        if ($decryptedOrderId <= 0 || !Order::where('id', $decryptedOrderId)->exists()) {
+            return redirect()->back()->with('error', 'Narudžba ne postoji ili je unesena kriva oznaka narudžbe.');
         }
 
         $data = $request->validate([
