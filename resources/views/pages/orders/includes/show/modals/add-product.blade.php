@@ -8,11 +8,14 @@
       </div>
       <div class="modal-body">
         {{-- Popup content --}}
-        <form method="POST" action="/update-order-products/{{ $order->id}}" id="productForOrderSubmission">
+        <form method="POST" action="{{ route('narudzbe-proizvodi.store') }}" id="productForOrderSubmission">
           {{ csrf_field() }}
           <div class="form-group">
 
-            {{-- Product type --}}
+            {{-- Hidden order ID --}}
+            <input type="hidden" name="order_id" value="{{ Crypt::encryptString($order->id) }}" required>
+
+            {{-- Product --}}
             <div class="mb-3 omniselect-dropdown">
                 <label for="product_id">Proizvod:</label>
                 <input type="text" class="form-control omniselect"

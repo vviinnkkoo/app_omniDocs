@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
+use App\Models\Order;
 use App\Models\OrderItemList;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class OrderItemListController extends Controller
-{
+{    
+    use RecordManagement;
+    protected $modelClass = App\Models\OrderItemList::class;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,20 +25,70 @@ class OrderItemListController extends Controller
     | CRUD methods
     |--------------------------------------------------------------------------------------------
     */
-    public function store(Request $request, $order_id) {
-        OrderItemList::create(array_merge(
-            $request->validate([
-                'product_id' => 'required',
-                'amount' => 'required',
-                'color_id' => 'required',
-                'price' => 'required',
-                'note' => 'nullable|string',
-                'discount' => 'nullable|numeric|min:0|max:100'
-            ]),
-            ['order_id' => $order_id]
-        ));
+    public function store(Request $request)
+    {
+        try {
+            $decryptedOrderId = Crypt::decryptString($request->input('order_id'));
+        } catch (DecryptException $e) {
+            return redirect()->back()->with('error', 'Neispravan ID narudžbe.');
+        }
 
-        return back()->with('success', 'Proizvod je uspješno dodan.');
+        if (!is_numeric($decryptedOrderId) || !Order::where('id', $decryptedOrderId)->exists()) {
+            return redirect()->back()->with('error', 'Narudžba ne postoji.');
+        }
+
+        $data = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'color_id'   => 'required|exists:colors,id',
+            'amount'     => 'required',
+            'price'      => 'required',
+            'note'       => 'nullable|string',
+            'discount'   => 'nullable|numeric|min:0|max:100',
+        ]);
+
+        $data['order_id'] = $decryptedOrderId;
+
+
+        return $this->createRecord($data, 'Proizvod je uspješno dodan!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        return $this->updateRecord($request, $id, [
+            'product_id', 'amount', 'color_id', 'price', 'note', 'discount'
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        return $this->deleteRecord($id);
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Custom methods used by this controller
+    |--------------------------------------------------------------------------------------------
+    */
+    public function updateIsDoneStatus(Request $request, $id)
+    {
+        $orderItem = OrderItemList::findOrFail($id);
+        $orderItem->update(['is_done' => !$orderItem->is_done]);
+    }
+
+    public function updateNoteOnInvoiceStatus(Request $request, $id)
+    {
+        $orderItem = OrderItemList::findOrFail($id);
+        $orderItem->update(['note_on_invoice' => !$orderItem->note_on_invoice]);
+    }
+
+    public static function productColors() {
+        $items = OrderItemList::select('product_id', \DB::raw('SUM(amount) as amount'))
+            ->whereHas('order', function ($query) {
+                $query->whereNull('date_sent')->whereNull('date_cancelled');
+            })
+            ->groupBy(['product_id'])
+            ->get();
+        $title = "Količine za izradu - po proizvodu";
     }
 
     public function showProductionItems($mode) {
@@ -84,57 +137,5 @@ class OrderItemListController extends Controller
             'title' => $title
         ]);
 
-    }
-
-    public function update(Request $request, $id)
-    {
-        $record = OrderItemList::findOrFail($id);
-
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-
-        $record->$field = $newValue;
-        $record->save();
-
-        return response()->json(['message' => 'Payment type updated successfully']);
-    }
-
-    public function destroy(Request $request, $id): JsonResponse
-    {
-        $record = OrderItemList::findOrFail($id);
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-        return response()->json(['message' => 'Error deleting the record'], 500);
-    }
-
-    /*
-    |--------------------------------------------------------------------------------------------
-    | Custom methods used by this controller
-    |--------------------------------------------------------------------------------------------
-    */
-    public function updateIsDoneStatus(Request $request, $id)
-    {
-        $orderItem = OrderItemList::findOrFail($id);
-        $orderItem->update(['is_done' => !$orderItem->is_done]);
-    }
-
-    public function updateNoteOnInvoiceStatus(Request $request, $id)
-    {
-        $orderItem = OrderItemList::findOrFail($id);
-        $orderItem->update(['note_on_invoice' => !$orderItem->note_on_invoice]);
-    }
-
-    public static function productColors() {
-        $items = OrderItemList::select('product_id', \DB::raw('SUM(amount) as amount'))
-            ->whereHas('order', function ($query) {
-                $query->whereNull('date_sent')->whereNull('date_cancelled');
-            })
-            ->groupBy(['product_id'])
-            ->get();
-        $title = "Količine za izradu - po proizvodu";
     }
 }

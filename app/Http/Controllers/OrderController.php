@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Customer;
@@ -26,7 +25,7 @@ use App\Traits\RecordManagement;
 class OrderController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = Order::class;
+    protected $modelClass = App\Models\Order::class;
 
     public function __construct()
     {

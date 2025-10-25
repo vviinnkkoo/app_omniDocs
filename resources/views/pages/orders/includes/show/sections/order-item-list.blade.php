@@ -29,7 +29,7 @@
                                 <td class="align-middle text-right">{{ $loop->iteration }}</td>
                                 {{-- Ime proizvoda --}}
                                 <td class="align-middle text-right">
-                                    <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="order-item-list">
+                                    <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
                                     <span>{{ $item->productName }}</span>                                    
                                     {{-- Hidden select element with options --}}
@@ -43,7 +43,7 @@
                                 </td>
                                 {{-- Boja --}}
                                 <td class="align-middle text-right">
-                                    <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="order-item-list">
+                                    <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
                                     <span>{{ $item->colorName }}</span>                                    
                                     {{-- Hidden select element with options --}}
@@ -57,19 +57,19 @@
                                 </td>
                                 {{-- Količina --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="order-item-list">{{ $item->formattedAmount }}</span> {{ $item->unit }}
+                                    <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="narudzbe-proizvodi">{{ $item->formattedAmount }}</span> {{ $item->unit }}
                                 </td>
                                 {{-- Cijena --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="order-item-list">{{ $item->price }}</span> €
+                                    <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="narudzbe-proizvodi">{{ $item->price }}</span> €
                                 </td>
                                 {{-- Popust --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="order-item-list">{{ $item->discount }}</span> %
+                                    <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="narudzbe-proizvodi">{{ $item->discount }}</span> %
                                 </td>
                                 {{-- Opis --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="order-item-list">{{ $item->note }}</span>
+                                    <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="narudzbe-proizvodi">{{ $item->note }}</span>
                                 </td>
                                 {{-- Prikaz napomene na računu --}}
                                 <td class="align-middle text-right">
@@ -79,13 +79,13 @@
                                 </td>
                                 {{-- Status izrade --}}
                                 <td class="align-middle text-right">
-                                    <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="order-item-list">
+                                    <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="narudzbe-proizvodi">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
                                     </div>
                                 </td>
                                 {{-- Delete button --}}
                                 <td>
-                                    <x-delete-button :id="$item->id" model="order-item-list" />
+                                    <x-delete-button :id="$item->id" model="narudzbe-proizvodi" />
                                 </td>
                             <tr>
                         @endforeach
