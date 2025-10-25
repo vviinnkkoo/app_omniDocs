@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\KprItemList;
+
 use App\Traits\RecordManagement;
 
 class KprItemListController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = \App\Models\KprItemList::class;
+    protected $modelClass = KprItemList::class;
 
     public function __construct()
     {

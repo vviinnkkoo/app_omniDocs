@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Customer;
 use App\Models\Country;
+
 use App\Traits\RecordManagement;
 
 class CustomerController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = \App\Models\Customer::class;
+    protected $modelClass = Customer::class;
 
     public function __construct()
     {

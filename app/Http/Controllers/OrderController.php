@@ -3,29 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Carbon\Carbon;
+
 use App\Models\Order;
+use App\Models\OrderItemList;
+use App\Models\OrderNote;
 use App\Models\Customer;
 use App\Models\Source;
 use App\Models\DeliveryService;
 use App\Models\DeliveryCompany;
 use App\Models\PaymentType;
 use App\Models\Country;
-use App\Models\OrderItemList;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Color;
-use App\Models\OrderNote;
 use App\Models\Receipt;
 use App\Models\KprItemList;
 use App\Models\WorkYears;
+
 use App\Services\GlobalService;
+
 use App\Traits\RecordManagement;
 
 class OrderController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = \App\Models\Order::class;
+    protected $modelClass = Order::class;
 
     public function __construct()
     {

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Country;
+
 use App\Traits\RecordManagement;
 
 class CountryController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = \App\Models\Country::class;
+    protected $modelClass = Country::class;
 
     public function __construct()
     {

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Color;
+
 use App\Traits\RecordManagement;
 
 class ColorController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = \App\Models\Color::class;
+    protected $modelClass = Color::class;
 
     public function __construct()
     {

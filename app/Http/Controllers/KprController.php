@@ -1,25 +1,25 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use Carbon\Carbon;
+
 use App\Models\Kpr;
 use App\Models\KprItemList;
 use App\Models\Receipt;
 use App\Models\PaymentType;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\JsonResponse;
+
 use App\Services\GlobalService;
+
 use App\Traits\RecordManagement;
 
 class KprController extends Controller
 {    
     use RecordManagement;
-    protected $modelClass = \App\Models\KprController::class;
+    protected $modelClass = Kpr::class;
 
     public function __construct()
     {

@@ -4,18 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\OrderItemList;
-use App\Models\Order;
-use App\Models\DeliveryService;
-use App\Models\Receipt;
-use App\Models\WorkYears;
-use App\Services\GlobalService;
-
 use Carbon\Carbon;
 
-use App\Http\Controllers\Controller;
-use App\Models\Flight;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Order;
+use App\Models\WorkYears;
+
+use App\Services\GlobalService;
 
 class Omnicontrol extends Controller
 {
