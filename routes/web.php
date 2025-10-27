@@ -55,10 +55,10 @@ Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productio
 | Boolean switch routes - CHECKBOX STATUS CHANGE
 |--------------------------------------------------------------------------------------------
 */
-Route::put('/promjena-statusa/napomena-racun/{id}', [OrderItemListController::class, 'updateNoteOnInvoiceStatus']); // Izmjeni rute i u java scriptu
-Route::put('/promjena-statusa/status-izrade/{id}', [OrderItemListController::class, 'updateIsDoneStatus']); // Izmjeni rute i u java scriptu
-Route::put('/promjena-statusa/status/{id}', [ReceiptController::class, 'updateIsCancelledStatus']); // Izmjeni rute i u java scriptu
-Route::put('promjena-statusa/status/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']); // Izmjeni rute i u java scriptu
+Route::put('/promjena-statusa/napomena/{id}', [OrderItemListController::class, 'updateNoteOnInvoiceStatus']); // Izmjeni rute i u java scriptu
+Route::put('/promjena-statusa/izrada/{id}', [OrderItemListController::class, 'updateIsDoneStatus']); // Izmjeni rute i u java scriptu
+Route::put('/promjena-statusa/storno/{id}', [ReceiptController::class, 'updateIsCancelledStatus']); // Izmjeni rute i u java scriptu
+Route::put('promjena-statusa/vidljivost/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']); // Izmjeni rute i u java scriptu
 
 /*
 |--------------------------------------------------------------------------------------------

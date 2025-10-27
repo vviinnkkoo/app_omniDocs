@@ -70,7 +70,7 @@
 
                                     <td class="align-middle text-right">
                                         @if (isset($item->id))
-                                            <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="order-item-list">
+                                            <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="izrada">
                                               <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
                                             </div>
                                         @else

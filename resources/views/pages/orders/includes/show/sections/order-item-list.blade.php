@@ -73,13 +73,13 @@
                                 </td>
                                 {{-- Prikaz napomene na računu --}}
                                 <td class="align-middle text-right">
-                                    <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="note-on-invoice">
+                                    <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="napomena">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="note_on_invoice" id="flexSwitchCheckDefault" {{ $item->note_on_invoice ? 'checked' : '' }}>
                                     </div>
                                 </td>
                                 {{-- Status izrade --}}
                                 <td class="align-middle text-right">
-                                    <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="narudzbe-proizvodi">
+                                    <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="izrada">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
                                     </div>
                                 </td>
