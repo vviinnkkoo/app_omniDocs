@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const model = orderItem.dataset.model;
             const isDone = checkbox.checked;
 
-            fetch(`/status/${model}/${id}`, {
+            fetch(`/promjena-statusa/${model}/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
