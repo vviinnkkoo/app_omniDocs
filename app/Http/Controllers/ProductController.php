@@ -7,30 +7,32 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductType;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class ProductController extends Controller
 {
+    use RecordManagement;
+    $modelClass = Product::class;
+    
     public function __construct()
     {
         $this->middleware('auth');
     }
     
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $query = Product::query();
 
-        if ($search) {
-            $query->where(function($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                      ->orWhereHas('productType', function($query) use ($search) {
-                        $query->where('name', 'like', "%{$search}%");
-                      });
-            });
-        }
+        $query = Product::search(
+            $search,
+            ['name'],
+            ['productType' => ['name']]
+        );
 
         $products = $query->orderBy('name')->paginate(25);
         $productTypes = ProductType::orderBy('id')->get();
@@ -40,42 +42,22 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validated = $request->validate([
             'name' => 'required',
             'product_type_id' => 'required|exists:product_types,id',
             'default_price' => 'required|numeric',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors($validator);
-        }
-
-        Product::create($request->all());
-
-        return redirect()->back()->with('success', 'Proizvod je uspješno dodan.');
+        return $this->createRecord($validated, 'Proizvod je uspješno dodan.');
     }
 
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
-
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-        $product->$field = $newValue;
-        $product->save();
-
-        return response()->json(['message' => 'Payment type updated successfully']);
+        return $this->updateRecord($request, $id, ['name', 'product_type_id', 'default_price']);
     }
 
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id)
     {
-        $record = Product::findOrFail($id);
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 }

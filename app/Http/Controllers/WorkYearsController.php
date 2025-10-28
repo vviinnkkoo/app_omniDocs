@@ -6,64 +6,45 @@ use Illuminate\Http\Request;
 
 use App\Models\WorkYears;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class WorkYearsController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = WorkYears::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function index() {        
-        return view('pages.work-years.index');
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        $workYears = WorkYears::search($search, ['year'])
+                        ->orderBy('year', 'desc')
+                        ->paginate(25);
+
+        return view('pages.work-years.index', compact('workYears', 'search'));
     }
 
-    public function store (Request $request) {
-        $validator = Validator::make($request->all(), [
-        'year' => 'required'
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'year' => 'required|integer',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->with('error', 'Molimo unesite radnu godinu.')
-                ->withInput();
-        }
-
-        WorkYears::create($request->all());
-    
-        return redirect()->back()
-            ->with('success', 'Radna godina je uspješno dodana.');
+        return $this->createRecord($data, 'Radna godina je uspješno dodana!');
     }
 
     public function update(Request $request, $id)
     {
-        $source = WorkYears::findOrFail($id);
-
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-
-        $source->$field = $newValue;
-        $source->save();
-
-        return response()->json(['message' => 'Payment type updated successfully']);
+        return $this->updateRecord($request, $id, ['year']);
     }
 
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id)
     {
-        $record = WorkYears::findOrFail($id);
-
-        if (!$record) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 }

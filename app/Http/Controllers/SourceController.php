@@ -6,59 +6,50 @@ use Illuminate\Http\Request;
 
 use App\Models\Source;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\JsonResponse;
+use App\Traits\RecordManagement;
 
 class SourceController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = Source::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
-    public function index() {
-        $sources = Source::get()->sortBy('id');
-        return view('pages.sources.index', compact('sources'));
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        $sources = Source::search($search, ['name'])
+            ->orderBy('id')
+            ->paginate(25);
+
+        return view('pages.sources.index', compact('sources', 'search'));
     }
 
-    public function store (Request $request) {
-        $validator = Validator::make($request->all(), [
-        'name' => 'required'
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors($validator);
-        }
-
-        Source::store($request->all());
-
-        return redirect()->back()->with('success', 'Novi kanal prodaje uspješno dodan.');
+        return $this->createRecord($data, 'Novi izvor prodaje uspješno je dodan!');
     }
 
     public function update(Request $request, $id)
     {
-
-        $source = Source::findOrFail($id);
-
-        $field = $request->input('field');
-        $newValue = $request->input('newValue');
-        $source->$field = $newValue;
-        $source->save();
-
-        return response()->json(['message' => 'Payment type updated successfully']);
+        return $this->updateRecord($request, $id);
     }
 
-    public function destroy(Request $request, $id): JsonResponse
+    public function destroy($id)
     {
-
-        $record = Source::findOrFail($id);
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 }

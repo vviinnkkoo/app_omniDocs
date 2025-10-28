@@ -3,88 +3,113 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Carbon\Carbon;
+
 use App\Models\Receipt;
 use App\Models\Order;
 use App\Models\DeliveryService;
 use App\Models\OrderItemList;
 use App\Models\WorkYears;
 use App\Models\KprItemList;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
+
 use App\Services\GlobalService;
+
+use App\Traits\RecordManagement;
 
 class ReceiptController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = Receipt::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
-
-    public function index($year = null)
+    
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
+    public function index(Request $request, $year = null)
     {
-        if (is_null($year)) {
-            $years = WorkYears::orderBy('year', 'desc')->first();
-        } else {
-            $years = Carbon::now()->year;
-        }
+        $year = $year ?? now()->year;
 
-        $orderIdsWithReceipts = Receipt::where('is_cancelled', 0)->pluck('order_id')->toArray(); // Get all order IDs that have receipts
-        $orders = Order::whereNotIn('id', $orderIdsWithReceipts)->with('customer')->get(); // Get all orders that do not have receipts
-        $receipts = Receipt::with('kprItem')->where('year', $year)->orderBy('number')->paginate(25);
-        $latest = GlobalService::getLatestReceiptNumber($year);
+        $search = $request->input('search');
 
-        foreach ($receipts as $receipt) {
+        $receipts = Receipt::search($search, 
+            ['number', 'year', 'is_cancelled'], 
+            ['order.customer' => ['name'], 'order.paymentType' => ['name']]
+        )
+        ->where('year', $year)
+        ->with(['order.customer', 'order.paymentType', 'kprItem'])
+        ->orderBy('number')
+        ->paginate(25)
+        ->through(function ($receipt) {
             $receipt->customerName = $receipt->order->customer->name ?? '';
             $receipt->paymentTypeName = $receipt->order->paymentType->name ?? '';
-            $receipt->formatedDateCreatedAt = Carbon::parse($receipt->created_at)->format('d.m.Y - H:i:s');
-            $receipt->totalAmount = GlobalService::calculateReceiptTotal($receipt->order_id); // Get total amount
-            if (!is_null($receipt->cancelled_receipt_id)) { $receipt->totalAmount *= -1; } // Invert total amount if receipt is cancelling another receipt
-            $receipt->totalAmount = number_format($receipt->totalAmount, 2, ','); // Format total amount for display
-        }
+            $receipt->formatedDateCreatedAt = $receipt->created_at->format('d.m.Y - H:i:s');
 
-        return view('pages.receipts.index', compact(
-            'receipts', 'orders', 'latest'
-        ));
+            $total = GlobalService::calculateReceiptTotal($receipt->order_id);
+            if ($receipt->cancelled_receipt_id) {
+                $total *= -1;
+            }
+
+            $receipt->totalAmount = number_format($total, 2, ',');
+
+            return $receipt;
+        });
+
+        $orderIdsWithReceipts = Receipt::where('is_cancelled', 0)->pluck('order_id');
+
+        $orders = Order::whereNotIn('id', $orderIdsWithReceipts)
+            ->with('customer:id,name')
+            ->get();
+
+        $latest = GlobalService::getLatestReceiptNumber($year);
+
+        return view('pages.receipts.index', compact('receipts', 'orders', 'latest'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'order_id' => 'required',
-            'year' => 'required',
-            'number' => 'required'
+        $data = $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'year' => 'required|integer',
+            'number' => 'required|integer'
         ]);
-    
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Molimo popunite sva polja.');
-        }
-    
-        $exists = Receipt::where('year', $request->year)
-                         ->where('number', $request->number)
-                         ->exists();
-    
+
+        $exists = Receipt::where('year', $data['year'])
+                        ->where('number', $data['number'])
+                        ->exists();
+
         if ($exists) {
-            return redirect()->back()->withInput()->with('error', "Račun s brojem {$request->number} već postoji u {$request->year}. godini.");
+            return redirect()->back()
+                ->withInput()
+                ->with('error', "Račun s brojem {$data['number']} već postoji u {$data['year']}. godini.");
         }
-    
-        Receipt::create($request->only('number', 'order_id', 'year'));
-    
-        return redirect()->back()->with('success', "Račun broj {$request->number} uspješno je dodan u {$request->year}. godinu!");
+
+        return $this->createRecord(
+            $data, "Račun broj {$data['number']} uspješno je dodan u {$data['year']}. godinu!"
+        );
     }
     
-
-    public function destroy(Request $request, $id): JsonResponse
+    public function update(Request $request, $id)
     {
-        $record = Receipt::findOrFail($id);
-
-        if ($record->delete()) {
-            return response()->json(['message' => 'Record deleted successfully']);
-        }
-
-        return response()->json(['message' => 'Error deleting the record'], 500);
+        return $this->updateRecord($request, $id, ['order_id', 'year', 'number']);
     }
 
+    public function destroy($id)
+    {
+        return $this->deleteRecord($id);
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Custom methods used by this controller
+    |--------------------------------------------------------------------------------------------
+    */
     public function updateIsCancelledStatus(Request $request, $id)
     {
         $receipt = Receipt::findOrFail($id);
@@ -93,11 +118,7 @@ class ReceiptController extends Controller
 
     public function getLatestNumber($year)
     {
-        $latest = GlobalService::getLatestReceiptNumber($year);
-
-        return response()->json([
-            'latest' => $latest
-        ]);
+        return response()->json(['latest' => GlobalService::getLatestReceiptNumber($year)]);
     }
 
 }

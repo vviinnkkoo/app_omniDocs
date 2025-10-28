@@ -4,53 +4,51 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProductType;
-use Illuminate\Http\JsonResponse;
+
+use App\Traits\RecordManagement;
 
 class ProductTypeController extends Controller
 {
+    use RecordManagement;
+    protected $modelClass = ProductType::class;
+
     public function __construct()
     {
         $this->middleware('auth');
     }
     
-    public function index()
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
+    public function index(Request $request)
     {
-        $productTypes = ProductType::orderBy('id')->paginate(25);
+        $search = $request->input('search');
 
-        return view('pages.product-types.index', compact('productTypes'));
+        $query = ProductType::search($search, ['name']);
+
+        $productTypes = $query->orderBy('id')->paginate(25);
+
+        return view('pages.product-types.index', compact('productTypes', 'search'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255'
         ]);
 
-        ProductType::create($request->only('name'));
-
-        return redirect()
-            ->back()
-            ->with('success', 'Vrsta proizvoda uspješno dodana!');
+        return $this->createRecord($validated, 'Nova vrsta proizvoda uspješno dodana!');
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'field' => 'in:name',
-            'newValue' => 'required|string|max:255'
-        ]);
-
-        $productType = ProductType::findOrFail($id);
-        $productType->{$request->field} = $request->newValue;
-        $productType->save();
-
-        return response()->json(['status' => 'success', 'message' => 'Product type updated successfully']);
+        return $this->updateRecord($request, $id, ['name']);
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy($id)
     {
-        return ProductType::findOrFail($id)->delete()
-            ? response()->json(['status' => 'success', 'message' => 'Record deleted successfully'])
-            : response()->json(['status' => 'error', 'message' => 'Error deleting the record'], 500);
+        return $this->deleteRecord($id);
     }
 }
