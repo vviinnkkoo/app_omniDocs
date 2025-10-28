@@ -4,46 +4,42 @@
 
 @section('content')
 <div class="container">
-
     <div class="row justify-content-center">
-        <div class="col-xl-12">          
+        <div class="col-xl-12">
             <div class="card">
-
                 <div class="card-body">
-
-                  <!-- Button to trigger the pop-up -->
                   <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Novi kanal prodaje</button>
 
-                  @include('includes.tablesearch')
+                  <x-search-form/>
 
-                    <table class="table table-hover">
-                      <thead class="table-dark">
+                  <table class="table table-hover">
+                    <thead class="table-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Kanal prodaje</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($sources as $source)
                         <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Kanal prodaje</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($sources as $source)
-                          <tr>
-                              <td class="align-middle text-right">{{ $sources->firstItem() + $loop->index }}</td>
-                              <td class="align-middle text-right">
-                                <span class="editable" data-id="{{ $source->id }}" data-field="name" data-model="kanali-prodaje">{{ $source->name }}</span>
-                              </td>
-                              <td>
-                                <button class="btn btn-danger delete-btn-x" data-id="{{ $source->id }}" data-model="kanali-prodaje"><i class="bi bi-x-lg"></i>
-                                </button>
-                              </td>
-                          <tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                          <td class="align-middle text-right">
+                            {{ $sources->firstItem() + $loop->index }}
+                          </td>
 
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-center">
-                      {{ $sources->appends(['search' => request('search')])->links('pagination::bootstrap-5') }}
-                    </div>
+                          <td class="align-middle text-right">
+                            <span class="editable" data-id="{{ $source->id }}" data-field="name" data-model="kanali-prodaje">{{ $source->name }}</span>
+                          </td>
+
+                          <td>
+                            <x-delete-button :id="$source->id" model="kanali-prodaje" />
+                          </td>
+                        <tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+
+                  <x-table-pagination :items="$workYears" />
 
                 </div>
             </div>
