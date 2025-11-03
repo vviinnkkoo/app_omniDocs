@@ -97,7 +97,7 @@
   </div>
 </div>
 
-@include('pages.receipts.includes.index.modals.add-receipt')
+@include('pages.receipts.includes.index.modals.add-invoice')
 @include('includes.shared.modals.delete-confirmation')
 
 @endsection
