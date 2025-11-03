@@ -9,15 +9,16 @@
       <div class="modal-body">
         {{-- Popup content --}}
         <form method="POST" action="{{ route('drzave-poslovanja.store') }}" id="countrySubmission">
-          {{ csrf_field() }}
-            <div class="form-group">
+          @csrf
+          <div class="form-group">
 
-              <div class="mb-3">
-                <label for="name">Naziv države:</label>
-                <input type="text" class="form-control" placeholder="Unesi novu državu poslovanja..." id="name" name="name">
-              </div>
-
+            {{-- Country name --}}
+            <div class="mb-3">
+              <label for="name">Naziv države:</label>
+              <input type="text" class="form-control" placeholder="Unesi novu državu poslovanja..." id="name" name="name">
             </div>
+
+          </div>
         </form>
       </div>
       <div class="modal-footer">

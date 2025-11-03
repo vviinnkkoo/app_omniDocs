@@ -9,7 +9,7 @@
       <div class="modal-body">
         {{-- Popup content --}}
         <form method="POST" action="{{ route('narudzbe-proizvodi.store') }}" id="productForOrderSubmission">
-          {{ csrf_field() }}
+          @csrf
           <div class="form-group">
 
             {{-- Hidden order ID --}}

@@ -83,7 +83,7 @@
                   </td>
 
                   <td>
-                    <a href="/narudzbe/prikaz/kupac/{{ $customer->id }}" class="btn btn-primary"><i class="bi bi-box-arrow-up-right"></i>
+                    <a href="{{ route('narudzbe.index_by_type', ['type' => 'kupac', 'customerId' => $customer->id]) }}" class="btn btn-primary">
                       </i> Sve narudžbe <span class="badge badge-secondary" style="background-color:darkgreen">{{ $customer->orders_count }}</span>
                     </a>
                   </td>

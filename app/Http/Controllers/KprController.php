@@ -42,13 +42,13 @@ class KprController extends Controller
             ->whereYear('date', $year)
             ->orderBy('date')
             ->paginate(25)
-            ->through(function ($item) {
-                $item->exists = KprItemList::where('kpr_id', $item->id)->exists();
-                $item->date = Carbon::parse($item->date)->format('d.m.Y');
-                $item->paymentTypeName = $item->paymentType->name ?? '';
-                $item->receiptsTotal = GlobalService::sumAllReciepesFromKpr($item->id);
-                return $item;
-            });
+            ->through(fn ($item) => tap($item, fn ($i) => {
+                $i->exists = KprItemList::where('kpr_id', $i->id)->exists();
+                $i->date = Carbon::parse($i->date)->format('d.m.Y');
+                $i->payment_type_name = $i->paymentType->name ?? '';
+                $i->formated_amount = number_format($i->amount, 2, ',', '.');
+                $i->formated_receipts_total = number_format(GlobalService::sumAllReciepesFromKpr($i->id), 2, ',', '.');
+            }));
 
         $paymentMethods = PaymentType::all();
 
@@ -92,9 +92,7 @@ class KprController extends Controller
             ->groupBy('order_id')
             ->pluck('total', 'order_id');
 
-        $count = 1;
-
-        // Formiranje opcija recepata
+        // Formiranje opcija računa
         $receiptOptions = [];
         foreach ($receipts as $receipt) {
             $receiptOptions[] = [
@@ -122,8 +120,7 @@ class KprController extends Controller
             'year',
             'invoiceList',
             'receipts',
-            'receiptOptions',
-            'count'
+            'receiptOptions'
         ));
     }    
 

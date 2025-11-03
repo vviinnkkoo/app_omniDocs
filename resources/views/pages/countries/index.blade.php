@@ -47,7 +47,7 @@
   </div>
 </div>
 
-@include('includes.shared.modals.add-country')
+@include('pages.countries.includes.index.modals.add-country')
 @include('includes.shared.modals.delete-confirmation')
 
 @endsection

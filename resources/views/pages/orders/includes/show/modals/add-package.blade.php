@@ -7,8 +7,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvori"></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="/shipments" id="shipmentSubmission">
-          {{ csrf_field() }}
+        {{-- Popup content --}}
+        <form method="POST" action="{{ route('paketi.store') }}" id="shipmentSubmission">
+          @csrf
           <div class="form-group">
 
             {{-- Order ID --}}

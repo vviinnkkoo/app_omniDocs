@@ -47,7 +47,7 @@
   </div>
 </div>
 
-@include('includes.shared.modals.add-color')
+@include('pages.colors.includes.index.modals.add-color')
 @include('includes.shared.modals.delete-confirmation')
 
 @endsection

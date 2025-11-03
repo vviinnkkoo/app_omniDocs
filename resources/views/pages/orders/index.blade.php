@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-body">
 
-            {{-- New order and customer buttons, search bar section --}}
+          {{-- New order and customer buttons, search bar section --}}
           <div class="clearfix mb-3">
             <button id="popupButton" class="btn btn-primary float-start mb-2" data-bs-toggle="modal" data-bs-target="#newOrderModal">
               <i class="bi bi-file-earmark-plus"></i> Nova narudžba
@@ -19,6 +19,7 @@
             </button>
 
             <x-search-form/>
+
           </div>
 
           {{-- Order type filter buttons --}}

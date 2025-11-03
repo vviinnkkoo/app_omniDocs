@@ -28,14 +28,18 @@ class DeliveryServiceController extends Controller
     {
         $search = $request->input('search');
 
-        $deliveryServices = DeliveryService::search($search,
+        $deliveryServices = DeliveryService::search(
+                $search,
                 ['name'],
                 ['deliveryCompany' => ['name']]
             )
             ->with('deliveryCompany')
             ->orderBy('delivery_company_id')
             ->orderBy('name')
-            ->paginate(25);
+            ->paginate(25)
+            ->through(fn ($item) => tap($item, fn ($i) => 
+                $i->delivery_company_name = $i->deliveryCompany?->name ?? ''
+            ));
 
         $deliveryCompanies = DeliveryCompany::orderBy('id')->get();
 
