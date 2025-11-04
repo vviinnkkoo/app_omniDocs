@@ -35,9 +35,16 @@ trait RecordManagement
             'newValue' => 'required'
         ]);
 
-        return $this->modelClass::whereKey($id)->update([$validated['field'] => $validated['newValue']])
-            ? response()->json(['status' => 'success', 'message' => 'Uspješno izmjenjeno.'])
-            : response()->json(['status' => 'error', 'message' => 'Greška prilikom izmjene.'], 500);
+    try {
+            $record = $this->modelClass::findOrFail($id);
+            $record->{$validated['field']} = $validated['newValue'];
+            $record->save();
+
+            return response()->json(['status' => 'success', 'message' => 'Uspješno izmijenjeno.']);
+        } catch (\Throwable $e) {
+            \Log::error('Greška prilikom izmjene zapisa: ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Greška prilikom izmjene zapisa.'], 500);
+        }
     }
 
     /*

@@ -43,7 +43,5 @@ class DeliveryService extends Model
     public function setDefaultCostAttribute($value)
     {
         $this->attributes['default_cost'] = is_null($value) ? null : str_replace(',', '.', $value);
-
     }
-
 }

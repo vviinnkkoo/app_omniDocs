@@ -23,6 +23,7 @@
             <tbody>
               @foreach ($colors as $color)
                 <tr>
+
                   <td class="align-middle">
                     {{ $colors->firstItem() + $loop->index }}
                   </td>
@@ -34,6 +35,7 @@
                   <td class="align-middle text-center px-4">
                     <x-delete-button :id="$color->id" model="opis" />
                   </td>
+                  
                 </tr>
               @endforeach
             </tbody>
