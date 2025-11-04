@@ -23,13 +23,13 @@
               <tbody>
                 @foreach ($paymentTypes as $paymentType)
                   <tr>
-                    
+
                     <td class="align-middle text-right">
                       {{ $paymentTypes->firstItem() + $loop->index }}
                     </td>
 
                     <td class="align-middle text-right">
-                      <span class="editable" data-id="{{ $paymentType->id }}" data-field="type_name" data-model="nacin-placanja">{{ $paymentType->name }}</span>
+                      <span class="editable" data-id="{{ $paymentType->id }}" data-field="name" data-model="nacin-placanja">{{ $paymentType->name }}</span>
                     </td>
 
                     <td>
