@@ -36,7 +36,7 @@
               </tbody>
             </table>
 
-            <x-table-pagination :items="$productTypes" />
+            <x-table-pagination :items="$paymentTypes" />
 
         </div>
       </div>
