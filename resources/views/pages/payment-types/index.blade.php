@@ -23,14 +23,20 @@
               <tbody>
                 @foreach ($paymentTypes as $paymentType)
                   <tr>
-                    <td class="align-middle text-right">{{ $paymentTypes->firstItem() + $loop->index }}</td>
+                    
                     <td class="align-middle text-right">
-                      <span class="editable" data-id="{{ $paymentType->id }}" data-field="type_name" data-model="payment-type">{{ $paymentType->name }}</span>
+                      {{ $paymentTypes->firstItem() + $loop->index }}
                     </td>
+
+                    <td class="align-middle text-right">
+                      <span class="editable" data-id="{{ $paymentType->id }}" data-field="type_name" data-model="nacin-placanja">{{ $paymentType->name }}</span>
+                    </td>
+
                     <td>
-                      <button class="btn btn-danger delete-btn-x" data-id="{{ $paymentType->id }}" data-model="payment-type"><i class="bi bi-x-lg"></i>
+                      <button class="btn btn-danger delete-btn-x" data-id="{{ $paymentType->id }}" data-model="nacin-placanja"><i class="bi bi-x-lg"></i>
                       </button>
                     </td>
+
                   <tr>
                 @endforeach
               </tbody>
