@@ -61,7 +61,7 @@
 
                     <td class="align-middle text-right">
                       {{-- Is used selector --}}
-                      <div class="form-check form-switch delivery-service-item" data-id="{{ $deliveryService->id }}" data-model="dostavne-usluge">
+                      <div class="form-check form-switch delivery-service-item" data-id="{{ $deliveryService->id }}" data-model="vidljivost-dostave">
                         <input class="form-check-input edit-checkbox-delivery-service" type="checkbox" name="in_use" id="flexSwitchCheckDefault" {{ $deliveryService->in_use ? 'checked' : '' }}>
                       </div>
                     </td>
