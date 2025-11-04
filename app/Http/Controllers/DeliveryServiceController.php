@@ -66,4 +66,15 @@ class DeliveryServiceController extends Controller
     {
         return $this->deleteRecord($id);
     }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Custom methods used by this controller
+    |--------------------------------------------------------------------------------------------
+    */
+    public function updateVisibility(Request $request, $id)
+    {
+        $receipt = DeliveryService::findOrFail($id);
+        $receipt->update(['in_use' => !$receipt->in_use]);
+    }
 }

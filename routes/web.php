@@ -58,7 +58,7 @@ Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productio
 Route::put('/promjena-statusa/napomena/{id}', [OrderItemListController::class, 'updateNoteOnInvoiceStatus']); // Izmjeni rute i u java scriptu
 Route::put('/promjena-statusa/izrada/{id}', [OrderItemListController::class, 'updateIsDoneStatus']); // Izmjeni rute i u java scriptu
 Route::put('/promjena-statusa/storno/{id}', [ReceiptController::class, 'updateIsCancelledStatus']); // Izmjeni rute i u java scriptu
-Route::put('promjena-statusa/vidljivost-dostave/{id}', [DeliveryServiceController::class, 'updateIsUsedStatus']); // Izmjeni rute i u java scriptu
+Route::put('promjena-statusa/vidljivost-dostave/{id}', [DeliveryServiceController::class, 'updateVisibility']); // Izmjeni rute i u java scriptu
 
 /*
 |--------------------------------------------------------------------------------------------
