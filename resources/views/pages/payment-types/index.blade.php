@@ -17,21 +17,24 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Način plaćanja</th>
-                  <th></th>
+                  <th style="delete-column"></th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($paymentTypes as $paymentType)
                   <tr>
 
+                    {{-- Index number --}}
                     <td class="align-middle text-right">
                       {{ $paymentTypes->firstItem() + $loop->index }}
                     </td>
 
+                    {{-- Payment type name --}}
                     <td class="align-middle text-right">
                       <span class="editable" data-id="{{ $paymentType->id }}" data-field="name" data-model="nacin-placanja">{{ $paymentType->name }}</span>
                     </td>
 
+                    {{-- Delete button --}}
                     <td class="align-middle text-center px-4">
                       <x-delete-button :id="$paymentType->id" model="nacin-placanja" />
                     </td>
