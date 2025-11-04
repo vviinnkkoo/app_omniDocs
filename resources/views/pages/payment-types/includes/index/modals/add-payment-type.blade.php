@@ -1,4 +1,4 @@
-<!-- Payment type modal -->
+{{-- Payment type modal --}}
 <div class="modal fade" id="paymentTypeModal" tabindex="-1" aria-labelledby="paymentTypeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
