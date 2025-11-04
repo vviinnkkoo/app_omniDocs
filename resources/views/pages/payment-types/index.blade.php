@@ -17,7 +17,7 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Način plaćanja</th>
-                  <th style="delete-column"></th>
+                  <th class="delete-column"></th>
                 </tr>
               </thead>
               <tbody>
