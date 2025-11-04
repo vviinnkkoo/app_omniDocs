@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const model = serviceItem.dataset.model;
             const inUse = checkbox.checked;
 
-            fetch(`/${model}/status/${id}`, {
+            fetch(`/promjena-statusa/${model}/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
