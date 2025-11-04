@@ -32,9 +32,8 @@
                       <span class="editable" data-id="{{ $paymentType->id }}" data-field="name" data-model="nacin-placanja">{{ $paymentType->name }}</span>
                     </td>
 
-                    <td>
-                      <button class="btn btn-danger delete-btn-x" data-id="{{ $paymentType->id }}" data-model="nacin-placanja"><i class="bi bi-x-lg"></i>
-                      </button>
+                    <td class="align-middle text-center px-4">
+                      <x-delete-button :id="$paymentType->id" model="nacin-placanja" />
                     </td>
 
                   <tr>
