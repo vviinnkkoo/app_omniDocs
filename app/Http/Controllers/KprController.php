@@ -37,18 +37,21 @@ class KprController extends Controller
         $search = $request->input('search');
 
         $kprs = Kpr::search($search,
-            ['payer', 'amount', 'origin', 'date', 'info'],
-            ['paymentType' => ['name']])
+                ['payer', 'amount', 'origin', 'date', 'info'],
+                ['paymentType' => ['name']]
+            )
             ->whereYear('date', $year)
             ->orderBy('date')
             ->paginate(25)
-            ->through(fn ($item) => tap($item, fn ($i) => {
-                $i->exists = KprItemList::where('kpr_id', $i->id)->exists();
-                $i->date = Carbon::parse($i->date)->format('d.m.Y');
-                $i->payment_type_name = $i->paymentType->name ?? '';
-                $i->formated_amount = number_format($i->amount, 2, ',', '.');
-                $i->formated_receipts_total = number_format(GlobalService::sumAllReciepesFromKpr($i->id), 2, ',', '.');
-            }));
+            ->through(function ($item) {
+                return tap($item, function ($i) {
+                    $i->exists = KprItemList::where('kpr_id', $i->id)->exists();
+                    $i->date = Carbon::parse($i->date)->format('d.m.Y');
+                    $i->payment_type_name = $i->paymentType->name ?? '';
+                    $i->formated_amount = number_format($i->amount, 2, ',', '.');
+                    $i->formated_receipts_total = number_format(GlobalService::sumAllReciepesFromKpr($i->id), 2, ',', '.');
+                });
+            });
 
         $paymentMethods = PaymentType::all();
 
