@@ -32,34 +32,43 @@
             <tbody>
               @foreach ($customers as $customer)
                 <tr>
+
+                  {{-- Index --}}
                   <td class="align-middle">
                     {{ $customers->firstItem() + $loop->index }}
                   </td>
 
+                  {{-- Name --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="name" data-model="kupci">{{ $customer->name }}</span>
                   </td>
 
+                  {{-- Email --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="email" data-model="kupci">{{ $customer->email }}</span>
                   </td>
 
+                  {{-- Phone --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="phone" data-model="kupci">{{ $customer->phone }}</span>
                   </td>
 
+                  {{-- Address --}}
                   <td class="align-middle text-end">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="address" data-model="kupci">{{ $customer->address }}</span>
                   </td>
 
+                  {{-- House number --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="house_number" data-model="kupci">{{ $customer->house_number }}</span>
                   </td>
 
+                  {{-- City --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="city" data-model="kupci">{{ $customer->city }}</span>
                   </td>
 
+                  {{-- Country --}}
                   <td class="align-middle">
                     <div class="editable-select" data-id="{{ $customer->id }}" data-field="country_id" data-model="kupci">                          
                       {{-- Display the selected value --}}
@@ -74,20 +83,24 @@
                     </div>
                   </td>
 
+                  {{-- Postal code --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
                   </td>
 
+                  {{-- Total ordered amount --}}
                   <td class="align-middle text-end">
                     <span>{{ $customer->formattedTotalOrderedAmount }} €</span>
                   </td>
 
+                  {{-- All orders button --}}
                   <td>
                     <a href="{{ route('narudzbe.index_by_type', ['type' => 'kupac', 'customerId' => $customer->id]) }}" class="btn btn-primary">
                       </i> Sve narudžbe <span class="badge badge-secondary" style="background-color:darkgreen">{{ $customer->orders_count }}</span>
                     </a>
                   </td>
 
+                  {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
                     <x-delete-button :id="$customer->id" model="kupci" />
                   </td>

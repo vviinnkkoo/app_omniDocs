@@ -12,34 +12,39 @@
 
           <x-search-form/>
 
-            <table class="table table-hover">
-              <thead class="table-dark">
+          <table class="table table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Godina</th>
+                <th class="delete-column"></th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($years as $year)
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Godina</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($years as $year)
-                  <tr>
-                    <td class="align-middle text-right">
-                      {{ $years->firstItem() + $loop->index }}
-                    </td>
 
-                    <td class="align-middle text-right">
-                      <span class="editable" data-id="{{ $year->id }}" data-field="year" data-model="radne-godine">{{ $year->year }}</span>
-                    </td>
+                  {{-- Index --}}
+                  <td class="align-middle text-right">
+                    {{ $years->firstItem() + $loop->index }}
+                  </td>
 
-                    <td>
-                      <x-delete-button :id="$year->id" model="radne-godine" />
-                    </td>
-                  <tr>
-                @endforeach
-              </tbody>
-            </table>
+                  {{-- Year --}}
+                  <td class="align-middle text-right">
+                    <span class="editable" data-id="{{ $year->id }}" data-field="year" data-model="radne-godine">{{ $year->year }}</span>
+                  </td>
 
-            <x-table-pagination :items="$years" />
+                  {{-- Delete --}}
+                  <td class="align-middle text-center px-4">
+                    <x-delete-button :id="$year->id" model="radne-godine" />
+                  </td>
+
+                <tr>
+              @endforeach
+            </tbody>
+          </table>
+
+          <x-table-pagination :items="$years" />
             
         </div>
       </div>

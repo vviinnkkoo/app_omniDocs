@@ -23,17 +23,22 @@
             <tbody>
               @foreach ($countries as $country)
                 <tr>
+
+                  {{-- Index --}}
                   <td class="align-middle text-right">
                     {{ $countries->firstItem() + $loop->index }}
                   </td>
 
+                  {{-- Country name --}}
                   <td class="align-middle text-right">
                     <span class="editable" data-id="{{ $country->id }}" data-field="name" data-model="drzave-poslovanja">{{ $country->name }}</span>
                   </td>
 
+                  {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
                     <x-delete-button :id="$country->id" model="drzave-poslovanja" />
                   </td>
+
                 </tr>
               @endforeach
             </tbody>

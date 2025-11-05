@@ -26,7 +26,7 @@
                   <th scope="col">Iznos</th>
                   <th scope="col">Povezani računi</th>
                   <th></th>
-                  <th></th>
+                  <th class="delete-column"></th>
                 </tr>
               </thead>
               <tbody>
@@ -34,45 +34,56 @@
                 @foreach ($kprs as $item)
                   <tr class="{{ $item->exists ? 'kpr-has-receipt' : 'kpr-no-receipt' }}">
 
+                    {{-- Index --}}
                     <td class="align-middle text-start">
                       {{ $item->index }}
                     </td>
 
+                    {{-- Payer name --}}
                     <td class="align-middle text-start">
                       <div class="date-display">{{ $item->payer }}</div>
                     </td>
 
+                    {{-- Date of payment --}}
                     <td class="align-middle text-start">
                       <div class="date-display">{{ $item->date }}</div>
                     </td>
 
+                    {{-- Payment type --}}
                     <td class="align-middle text-start">
                       <div class="date-display">{{ $item->payment_type_name }}</div>
                     </td>
 
+                    {{-- Payment reference number --}}
                     <td class="align-middle text-start">
                       <div class="date-display">{{ $item->origin }}</div>
                     </td>
 
+                    {{-- Description --}}
                     <td class="align-middle text-start">
                       <div class="date-display">{{ $item->info }}</div>
                     </td>
 
+                    {{-- Amount --}}
                     <td class="align-middle text-start">
-                      <div class="date-display">{{ $formated_amount }} €</div>
+                      <div class="date-display">{{ $item->formated_amount }} €</div>
                     </td>
 
+                    {{-- Related receipts total --}}
                     <td class="align-middle text-start">
-                      <div class="date-display">{{ $formated_receipts_total }} €</div>
+                      <div class="date-display">{{ $item->formated_receipts_total }} €</div>
                     </td>
 
+                    {{-- Edit button --}}
                     <td class="align-middle text-start">
                       <div class="date-display"><a href="{{ route('knjiga-prometa.show', $item->id) }}" class="btn btn-success">Uredi</a></div>
                     </td>
 
-                    <td>
-                      <button class="btn btn-danger delete-btn-x" data-id="{{ $item->id }}" data-model="knjiga-prometa"><i class="bi bi-x-lg"></i></button>
+                    {{-- Delete button --}}
+                    <td class="align-middle text-center px-4">
+                      <x-delete-button :id="$country->id" model="knjiga-prometa" />
                     </td>
+
                   </tr>
                 @endforeach
               </tbody>

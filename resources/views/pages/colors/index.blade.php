@@ -24,14 +24,17 @@
               @foreach ($colors as $color)
                 <tr>
 
+                  {{-- Index --}}
                   <td class="align-middle">
                     {{ $colors->firstItem() + $loop->index }}
                   </td>
 
+                  {{-- Color name --}}
                   <td class="align-middle">
                     <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
                   </td>
 
+                  {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
                     <x-delete-button :id="$color->id" model="opis" />
                   </td>
