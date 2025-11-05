@@ -10,7 +10,7 @@
 
         <div class="card-body">
 
-          <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Nova uplata</button>
+          <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#paymentModal"><i class="bi bi-file-earmark-plus"></i> Nova uplata</button>
 
           <x-search-form/>
 
