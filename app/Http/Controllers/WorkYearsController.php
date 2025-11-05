@@ -18,15 +18,20 @@ class WorkYearsController extends Controller
         $this->middleware('auth');
     }
 
+    /*
+    |--------------------------------------------------------------------------------------------
+    | CRUD methods
+    |--------------------------------------------------------------------------------------------
+    */
     public function index(Request $request)
     {
         $search = $request->input('search');
 
-        $workYears = WorkYears::search($search, ['year'])
+        $years = WorkYears::search($search, ['year'])
                         ->orderBy('year', 'desc')
                         ->paginate(25);
 
-        return view('pages.work-years.index', compact('workYears', 'search'));
+        return view('pages.work-years.index', compact('years', 'search'));
     }
 
     public function store(Request $request)

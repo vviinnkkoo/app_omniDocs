@@ -21,10 +21,10 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($workYears as $year)
+                @foreach ($years as $year)
                   <tr>
                     <td class="align-middle text-right">
-                      {{ $workYears->firstItem() + $loop->index }}
+                      {{ $years->firstItem() + $loop->index }}
                     </td>
 
                     <td class="align-middle text-right">
@@ -32,14 +32,14 @@
                     </td>
 
                     <td>
-                      <x-delete-button :id="$color->id" model="radne-godine" />
+                      <x-delete-button :id="$year->id" model="radne-godine" />
                     </td>
                   <tr>
                 @endforeach
               </tbody>
             </table>
 
-            <x-table-pagination :items="$workYears" />
+            <x-table-pagination :items="$years" />
             
         </div>
       </div>
