@@ -80,7 +80,7 @@
 
       <div class="card" style="margin-top: 15px;">
         <div class="card-body">
-          <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#paymentModalLabel"><i class="bi bi-file-earmark-plus"></i> Poveži račun</button>
+          <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Poveži račun</button>
 
           @include('includes.tablesearch')
 
