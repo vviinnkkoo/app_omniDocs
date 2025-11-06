@@ -107,16 +107,18 @@ class KprController extends Controller
             ];
         }
 
-        // Obogaćivanje invoiceList sa podacima za view
-        foreach ($invoiceList as $item) {
-            $item->receiptNumber = $item->receipt->number;
-            $item->customerName = $item->receipt->order->customer->name;
-            $item->orderId = $item->receipt->order_id;
-            $item->trackingCode = $item->receipt->order->tracking_code;
-            $item->receiptDate = Carbon::parse($item->receipt->created_at)->format('d.m.Y - H:i:s');
-            $item->receiptsTotal = number_format(($totals[$item->receipt->order_id] ?? 0) + ($item->receipt->order->deliveryService->default_cost ?? 0), 2, ',', '.');
-            $item->receiptID = $item->receipt->id;
-        }
+        $invoiceList->through(fn($item) => tap($item, function($i) use ($totals) {
+            $i->receiptNumber = $i->receipt->number;
+            $i->customerName = $i->receipt->order->customer->name;
+            $i->orderId = $i->receipt->order_id;
+            $i->trackingCode = $i->receipt->order->tracking_code;
+            $i->receiptDate = $i->receipt->created_at->format('d.m.Y - H:i:s');
+            $i->receiptsTotal = number_format(
+                ($totals[$i->receipt->order_id] ?? 0) + ($i->receipt->order->deliveryService->default_cost ?? 0),
+                2, ',', '.'
+            );
+            $i->receiptID = $i->receipt->id;
+        }));
 
         return view('pages.kpr.show', compact(
             'kprInstance',
