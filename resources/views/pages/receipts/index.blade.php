@@ -44,7 +44,7 @@
 
                     {{-- Order link --}}
                     <td class="align-middle text-right">
-                      <a href="{{ route('narudzbe', $receipt->order_id) }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $receipt->order_id }}</span></a>                                    
+                      <a href="{{ route('narudzbe.show', $receipt->order_id) }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $receipt->order_id }}</span></a>                                    
                     </td>
 
                     {{-- Payment type --}}
