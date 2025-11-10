@@ -41,7 +41,7 @@
                     </td>
 
                     <td class="align-middle text-right">
-                      <a href="/narudzbe/{{ $receipt->order_id }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $receipt->order_id }}</span></a>                                    
+                      <a href="{{ route('narudzbe', $receipt->order_id) }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $receipt->order_id }}</span></a>                                    
                     </td>
 
                     <td class="align-middle text-right">
@@ -70,7 +70,7 @@
 
                     <td>
                       @if ( $receipt->hasPayment )
-                        <a href="/knjiga-prometa/{{ $receipt->paymentId }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
+                        <a href="{{ route('knjiga-prometa', $receipt->paymentId) }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
                           </i> Uplata <span class="badge badge-secondary" style="background-color:darkred">ID: {{ $receipt->paymentId }}</span>
                         </a>
                       @endif
@@ -78,11 +78,11 @@
                     
 
                     <td>
-                      <a href="/dokument/racun/{{$receipt->id}}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                      <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $receipt->id]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                     </td>
 
                     <td>
-                      <button class="btn btn-danger delete-btn-x" data-id="{{ $receipt->id }}" data-model="racuni"><i class="bi bi-x-lg"></i></button>
+                      <x-delete-button :id="$receipt->id" model="racuni" />
                     </td>
                   <tr>
                 @endforeach

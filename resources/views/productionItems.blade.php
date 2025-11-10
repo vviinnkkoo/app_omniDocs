@@ -80,7 +80,7 @@
 
                                     <td class="align-middle text-right">
                                         @if (isset($item->id))                                   
-                                            <a href="/narudzbe/{{ $item->order_id }}" class="btn btn-sm btn-primary">Narudžba {{ $item->order_id }} <i class="bi bi-arrow-right-circle-fill"></i></a>
+                                            <a href="{{ route('narudzbe.show', $item->order_id) }}" class="btn btn-sm btn-primary">Narudžba {{ $item->order_id }} <i class="bi bi-arrow-right-circle-fill"></i></a>
                                         @endif
                                     </td>
                                     

@@ -46,7 +46,7 @@ Route::get('/', [Omnicontrol::class, 'index']);
 Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.indexByYear'); // Index override for the invoice view
 Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.indexByYear'); // Index override for the KPR view
 Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.indexByType'); // Filter orders by type or customer
-Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems']); // Production items view
+Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems'])->name('proizvodi.inProduction'); // Production items view
 Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']); // Production items grouped by color
 Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']); // Production items grouped by product
 

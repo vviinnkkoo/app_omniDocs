@@ -2,7 +2,7 @@
 <div class="card-header d-flex align-items-center" style="font-weight: 900;">
 
     {{-- Header left side --}}
-    <a class="gray-mark-extra" href="/narudzbe/prikaz/neodradene"><i class="bi bi-arrow-left"></i></a>
+    <a class="gray-mark-extra" href="{{ route('narudzbe.indexByType', ['type' => 'neodradene']) }}"><i class="bi bi-arrow-left"></i></a>
 
     <span style="font-size:100%; margin-left:10px;">
         Narudžba: {{$order->id}}
@@ -28,7 +28,7 @@
     {{-- Invoice check START --}}
     <span class="ms-auto">Račun:
     @isset($order->receipt_id)
-        <a href="/dokument/racun/{{ $order->receipt_id }}" target="_blank"
+        <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->receipt_id]) }}" target="_blank"
         class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }} btn-sm"><i class="bi bi-filetype-pdf"></i> {{ $order->is_paid ? 'Plaćen' : 'Nenaplaćen' }}</a>
     @else
         <button id="popupButton" class="btn btn-primary btn-sm" style="font-weight:bold;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Izradi</button>
@@ -37,8 +37,8 @@
 
     {{-- Invoice check END --}}
     <div style="width:4px; background-color:#333; margin-left:10px;"></div>
-    <a class="btn bg-warning btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/ponuda/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
-    <a class="btn bg-info btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="/dokument/otpremnica/{{$order->id}}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
+    <a class="btn bg-warning btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="{{ route('generate.document', ['mode' => 'ponuda', 'id' => $order->id]) }}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Ponuda</a>
+    <a class="btn bg-info btn-sm" style="margin-left:10px; color:#333; font-weight:bold;" href="{{ route('generate.document', ['mode' => 'otpremnica', 'id' => $order->id]) }}" target="_blank"><i class="bi bi-file-pdf-fill"></i> Otpremnica</a>
 </div>
 
 {{-- Order details --}}
