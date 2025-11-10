@@ -121,19 +121,23 @@
                     {{ $invoiceItem->trackingCode }}
                   </td>
 
+                  {{-- Issue Date --}}
                   <td class="align-middle text-right">
                     <div class="date-display">{{ $invoiceItem->receiptDate }}</div>
                   </td>
 
+                  {{-- Total Amount --}}
                   <td class="align-middle text-right">
                     {{ $invoiceItem->receiptsTotal }} €
                   </td>
 
+                  {{-- Generate PDF document button --}}
                   <td>
                     <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $invoiceItem->receiptID]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                     </button>
                   </td>
 
+                  {{-- Delete button --}}
                   <td>
                     <button class="btn btn-danger delete-btn-x" data-id="{{ $invoiceItem->id }}" data-model="kpr-item-list"><i class="bi bi-x-lg"></i></button>
                   </td>
