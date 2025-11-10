@@ -12,7 +12,7 @@ use App\Traits\RecordManagement;
 class ProductController extends Controller
 {
     use RecordManagement;
-    $modelClass = Product::class;
+    protected $modelClass = Product::class;
     
     public function __construct()
     {
