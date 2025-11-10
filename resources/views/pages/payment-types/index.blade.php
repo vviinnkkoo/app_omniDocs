@@ -39,7 +39,7 @@
                       <x-delete-button :id="$paymentType->id" model="nacin-placanja" />
                     </td>
 
-                  <tr>
+                  </tr>
                 @endforeach
               </tbody>
             </table>

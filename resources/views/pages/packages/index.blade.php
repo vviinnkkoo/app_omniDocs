@@ -4,45 +4,44 @@
 
 @section('content')
 <div class="container">
+  <div class="row justify-content-center">
+    <div class="col-xl-12">          
+      <div class="card">
+        <div class="card-body">
+          <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova boja proizvoda</button>
 
-    <div class="row justify-content-center">
-        <div class="col-xl-12">          
-            <div class="card">
+          {{-- Table search --}}
 
-                <div class="card-body">
+          <table class="table table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Boja / Opis proizvoda</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($colors as $color)
+                <tr>
+                  <td class="align-middle text-right">{{ $color->firstItem() + $loop->index }}</td>
+                  <td class="align-middle text-right">
+                    <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger delete-btn-x" data-id="{{ $color->id }}" data-model="opis"><i class="bi bi-x-lg"></i>
+                    </button>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
 
-                  <!-- Button to trigger the pop-up -->
-                  <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova boja proizvoda</button>
+          {{-- Pagination Links --}}
 
-                  @include('includes.tablesearch')
-
-                    <table class="table table-hover">
-                      <thead class="table-dark">
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Boja / Opis proizvoda</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($colors as $color)
-                                <tr>
-                                    <td class="align-middle text-right">{{ $color->firstItem() + $loop->index }}</td>
-                                    <td class="align-middle text-right">
-                                      <span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>
-                                    </td>
-                                    <td>
-                                      <button class="btn btn-danger delete-btn-x" data-id="{{ $color->id }}" data-model="opis"><i class="bi bi-x-lg"></i>
-                                      </button>
-                                    </td>
-                                <tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal -->

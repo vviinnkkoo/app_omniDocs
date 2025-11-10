@@ -95,7 +95,7 @@
                       <x-delete-button :id="$receipt->id" model="racuni" />
                     </td>
 
-                  <tr>
+                  </tr>
                 @endforeach
               </tbody>
             </table>

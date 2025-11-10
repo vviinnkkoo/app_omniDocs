@@ -25,9 +25,11 @@
                     <tbody>
                         @foreach ($orderItemList as $item)
                             <tr>
-                                {{-- Broj --}}
+
+                                {{-- Number --}}
                                 <td class="align-middle text-right">{{ $loop->iteration }}</td>
-                                {{-- Ime proizvoda --}}
+
+                                {{-- Product name --}}
                                 <td class="align-middle text-right">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
@@ -41,7 +43,8 @@
                                     </select>
                                     </div>
                                 </td>
-                                {{-- Boja --}}
+
+                                {{-- Color --}}
                                 <td class="align-middle text-right">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
@@ -55,39 +58,47 @@
                                     </select>
                                     </div>
                                 </td>
-                                {{-- Količina --}}
+
+                                {{-- Amount --}}
                                 <td class="align-middle text-right">
                                     <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="narudzbe-proizvodi">{{ $item->formattedAmount }}</span> {{ $item->unit }}
                                 </td>
-                                {{-- Cijena --}}
+
+                                {{-- Price --}}
                                 <td class="align-middle text-right">
                                     <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="narudzbe-proizvodi">{{ $item->price }}</span> €
                                 </td>
-                                {{-- Popust --}}
+
+                                {{-- Discount percentage --}}
                                 <td class="align-middle text-right">
                                     <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="narudzbe-proizvodi">{{ $item->discount }}</span> %
                                 </td>
-                                {{-- Opis --}}
+
+                                {{-- Info --}}
                                 <td class="align-middle text-right">
                                     <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="narudzbe-proizvodi">{{ $item->note }}</span>
                                 </td>
-                                {{-- Prikaz napomene na računu --}}
+
+                                {{-- Show info on invoice checkbox --}}
                                 <td class="align-middle text-right">
                                     <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="napomena">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="note_on_invoice" id="flexSwitchCheckDefault" {{ $item->note_on_invoice ? 'checked' : '' }}>
                                     </div>
                                 </td>
-                                {{-- Status izrade --}}
+
+                                {{-- Production status --}}
                                 <td class="align-middle text-right">
                                     <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="izrada">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
                                     </div>
                                 </td>
+                                
                                 {{-- Delete button --}}
                                 <td>
                                     <x-delete-button :id="$item->id" model="narudzbe-proizvodi" />
                                 </td>
-                            <tr>
+
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

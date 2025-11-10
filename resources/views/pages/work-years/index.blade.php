@@ -39,7 +39,7 @@
                     <x-delete-button :id="$year->id" model="radne-godine" />
                   </td>
 
-                <tr>
+                </tr>
               @endforeach
             </tbody>
           </table>

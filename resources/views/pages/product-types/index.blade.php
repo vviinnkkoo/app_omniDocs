@@ -39,7 +39,7 @@
                     <x-delete-button :id="$productType->id" model="vrste-proizvoda" />
                   </td>
 
-                <tr>
+                </tr>
               @endforeach
             </tbody>
           </table>

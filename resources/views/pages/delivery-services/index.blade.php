@@ -73,7 +73,7 @@
                       <x-delete-button :id="$deliveryService->id" model="dostavne-usluge" />
                     </td>
                     
-                <tr>
+                  </tr>
               @endforeach
             </tbody>
           </table>
