@@ -17,29 +17,34 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Kanal prodaje</th>
-                        <th></th>
+                        <th class="delete-column"></th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach ($sources as $source)
                         <tr>
+
+                          {{-- Index number --}}
                           <td class="align-middle text-right">
                             {{ $sources->firstItem() + $loop->index }}
                           </td>
 
+                          {{-- Source name --}}
                           <td class="align-middle text-right">
                             <span class="editable" data-id="{{ $source->id }}" data-field="name" data-model="kanali-prodaje">{{ $source->name }}</span>
                           </td>
 
-                          <td>
+                          {{-- Delete button --}}
+                          <td class="align-middle text-center px-4">
                             <x-delete-button :id="$source->id" model="kanali-prodaje" />
                           </td>
+
                         <tr>
                       @endforeach
                     </tbody>
                   </table>
 
-                  <x-table-pagination :items="$workYears" />
+                  <x-table-pagination :items="$sources" />
 
                 </div>
             </div>

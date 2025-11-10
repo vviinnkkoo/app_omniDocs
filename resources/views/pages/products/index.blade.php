@@ -19,40 +19,49 @@
                 <th scope="col">Naziv proizvoda</th>
                 <th scope="col">Vrsta</th>
                 <th scope="col">Standardna cijena</th>
-                <th></th>
+                <th class="delete-column"></th>
               </tr>
             </thead>
             <tbody>
               @foreach ($products as $product)
                 <tr>
-                  <td class="align-middle text-right">{{ $products->firstItem() + $loop->index }}</td>
-                  <td class="align-middle text-right">
-                    <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="update-product">{{ $product->name }}</span>
-                  </td>
-                  <td class="align-middle text-right">
-                    <div class="editable-select" data-id="{{ $product->id }}" data-field="product_type_id" data-model="update-product">
-                    
 
-                      <!-- Display the selected value -->
-                      <span>{{ App\Models\ProductType::find($product->product_type_id)->name }}</span>
+                  {{-- Index --}}
+                  <td class="align-middle text-right">
+                    {{ $products->firstItem() + $loop->index }}
+                  </td>
+
+                  {{-- Name --}}
+                  <td class="align-middle text-right">
+                    <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="proizvodi">{{ $product->name }}</span>
+                  </td>
+
+                  {{-- Product type select --}}
+                  <td class="align-middle text-right">
+                    <div class="editable-select" data-id="{{ $product->id }}" data-field="product_type_id" data-model="proizvodi">
+                      {{-- Display the selected value --}}
+                      <span>{{ $product->productType->name ?? 'Nije definirano' }}</span>
                       
-                      <!-- Hidden select element with options -->
+                      {{-- Hidden select element with options --}}
                       <select class="edit-select form-select" style="display: none !important">
                         <option value="" selected>Odaberi vrstu proizvoda...</option>
                           @foreach ($productTypes as $productType)
-                          <option value="{{ $productType->id }}">{{ $productType->name }}</option>                                  
+                          <option value="{{ $productType->id }}">{{ $productType->name }}</option>
                           @endforeach 
                       </select>
                     </div>
+                  </td>
 
-                  </td>
+                  {{-- Default price --}}
                   <td class="align-middle text-right">
-                    <span class="editable" data-id="{{ $product->id }}" data-field="default_price" data-model="update-product">{{ $product->default_price }}</span> €
+                    <span class="editable" data-id="{{ $product->id }}" data-field="default_price" data-model="proizvodi">{{ $product->default_price }}</span> €
                   </td>
-                  <td>
-                    <button class="btn btn-danger delete-btn-x" data-id="{{ $product->id }}" data-model="delete-product"><i class="bi bi-x-lg"></i>
-                    </button>
+
+                  {{-- Delete button --}}
+                  <td class="align-middle text-center px-4">
+                    <x-delete-button :id="$product->id" model="proizvodi" />
                   </td>
+
                 <tr>
               @endforeach
             </tbody>

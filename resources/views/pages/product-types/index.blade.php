@@ -17,20 +17,28 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Vrsta proizvoda</th>
-                <th></th>
+                <th class="delete-column"></th>
               </tr>
             </thead>
             <tbody>
               @foreach ($productTypes as $productType)
                 <tr>
-                    <td class="align-middle text-right">{{ $productTypes->firstItem() + $loop->index }}</td>
-                    <td class="align-middle text-right">
-                      <span class="editable" data-id="{{ $productType->id }}" data-field="name" data-model="vrste-proizvoda">{{ $productType->name }}</span>
-                    </td>
-                    <td>
-                      <button class="btn btn-danger delete-btn-x" data-id="{{ $productType->id }}" data-model="vrste-proizvoda"><i class="bi bi-x-lg"></i>
-                      </button>
-                    </td>
+
+                  {{-- Index --}}
+                  <td class="align-middle text-right">
+                    {{ $productTypes->firstItem() + $loop->index }}
+                  </td>
+
+                  {{-- Name --}}
+                  <td class="align-middle text-right">
+                    <span class="editable" data-id="{{ $productType->id }}" data-field="name" data-model="vrste-proizvoda">{{ $productType->name }}</span>
+                  </td>
+
+                  {{-- Delete button --}}
+                  <td class="align-middle text-center px-4">
+                    <x-delete-button :id="$productType->id" model="vrste-proizvoda" />
+                  </td>
+
                 <tr>
               @endforeach
             </tbody>

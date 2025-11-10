@@ -28,11 +28,12 @@ class ProductController extends Controller
     {
         $search = $request->input('search');
 
-        $query = Product::search(
-            $search,
-            ['name'],
-            ['productType' => ['name']]
-        );
+        $query = Product::with('productType')
+            ->search(
+                $search,
+                ['name'],
+                ['productType' => ['name']]
+            );
 
         $products = $query->orderBy('name')->paginate(25);
         $productTypes = ProductType::orderBy('id')->get();
