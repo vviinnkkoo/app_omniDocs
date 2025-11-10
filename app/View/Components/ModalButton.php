@@ -30,7 +30,7 @@ class ModalButton extends Component
     ) {
         $this->target = $target;
         $this->toggle = $toggle ?? 'modal';
-        $this->icon = $icon ?? 'bi bi-plus';
+        $this->icon = $icon ?? 'bi bi-plus-circle-fill';
         $this->text = $text ?? 'Dodaj zapis';
         $this->class = $class ?? 'btn btn-primary mb-3';
     }
