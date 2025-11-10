@@ -95,7 +95,7 @@
 
                   {{-- All orders button --}}
                   <td>
-                    <a href="{{ route('narudzbe.index_by_type', ['type' => 'kupac', 'customerId' => $customer->id]) }}" class="btn btn-primary">
+                    <a href="{{ route('narudzbe.indexByType', ['type' => 'kupac', 'customerId' => $customer->id]) }}" class="btn btn-primary">
                       </i> Sve narudžbe <span class="badge badge-secondary" style="background-color:darkgreen">{{ $customer->orders_count }}</span>
                     </a>
                   </td>

@@ -27,7 +27,7 @@
 
                     <td class="align-middle text-right">{{ $order->id }}</td>
 
-                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="/narudzbe/{{ $order->id }}">{{ $order->customer_name }}
+                    <td class="align-middle text-right"><a class="btn btn-sm btn-primary position-relative" href="{{ route('narudzbe.show', $order->id) }}">{{ $order->customer_name }}
                         @if ($order->isOrderDone() && is_null($order->date_sent))
                             <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                             <i class="bi bi-check"></i>
@@ -96,7 +96,8 @@
                     {{-- Has invoice --}}
                     <td class="align-middle text-right">
                         @isset($order->receipt_id)
-                        <a href="/dokument/racun/{{ $order->receipt_id }}" target="_blank" 
+                        
+                        <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->receipt_id]) }}" target="_blank" 
                             class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }}">
                             <i class="bi bi-filetype-pdf"></i></a>
                         @else

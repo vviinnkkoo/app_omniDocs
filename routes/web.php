@@ -43,9 +43,9 @@ Route::get('/', [Omnicontrol::class, 'index']);
 | Custom routes
 |--------------------------------------------------------------------------------------------
 */
-Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.index_by_year'); // Index override for the invoice view
-Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.index_by_year'); // Index override for the KPR view
-Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.index_by_type'); // Filter orders by type or customer
+Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.indexByYear'); // Index override for the invoice view
+Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.indexByYear'); // Index override for the KPR view
+Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.indexByType'); // Filter orders by type or customer
 Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems']); // Production items view
 Route::get('/u-izradi-po-boji', [OrderItemListController::class, 'productionItemsGroupByColor']); // Production items grouped by color
 Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productionItemsGroupByProduct']); // Production items grouped by product
@@ -104,7 +104,7 @@ Route::delete('/kpr-item-list/{id}', [KprItemListController::class, 'destroy'])-
 |--------------------------------------------------------------------------------------------
 */
 Route::get('/racun/{id}', [DoomPDFController::class, 'invoice']);
-Route::get('/dokument/{mode}/{id}', [DoomPDFController::class, 'generateDocument']);
+Route::get('/dokument/{mode}/{id}', [DoomPDFController::class, 'generateDocument'])->name('generate.document');
 Route::get('/etikete', [DoomPDFController::class, 'shippingLabels']);
 Route::get('/p10m/{id}', [DoomPDFController::class, 'p10mLabels']);
 

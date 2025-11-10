@@ -11,7 +11,7 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header fw-bold">
-          <a class="gray-mark-extra" href="/knjiga-prometa/godina/{{ $year}}"><i class="bi bi-arrow-left"></i></a> Uplata: {{$kprInstance->id}} - {{ $year }}
+          <a class="gray-mark-extra" href="{{ route('knjiga-prometa.indexByYear', $year) }}"><i class="bi bi-arrow-left"></i></a> Uplata: {{$kprInstance->id}} - {{ $year }}
         </div>
         <div class="card-body">
           <div class="row">
@@ -101,18 +101,22 @@
               @foreach ($invoiceList as $invoiceItem)
                 <tr>
 
+                  {{-- Invoice Number --}}
                   <td class="align-middle text-right">
                     {{ $invoiceItem->receiptNumber }}
                   </td>
 
+                  {{-- Customer Name --}}
                   <td class="align-middle text-right">
                     <span>{{ $invoiceItem->customerName }}</span>
                   </td>
 
+                  {{-- Order ID --}}
                   <td class="align-middle text-right">
-                    <a href="/uredi-narudzbu/{{ $invoiceItem->orderId }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $invoiceItem->orderId }}</span></a>
+                    <a href="{{ route('narudzbe.show', $invoiceItem->orderId) }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $invoiceItem->orderId }}</span></a>
                   </td>
-
+                  
+                  {{-- Tracking Code --}}
                   <td class="align-middle text-right">
                     {{ $invoiceItem->trackingCode }}
                   </td>
@@ -126,7 +130,7 @@
                   </td>
 
                   <td>
-                    <a href="/racun/{{ $invoiceItem->receiptID }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                    <a href="{{ route('racuni.show', $invoiceItem->receiptID) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                     </button>
                   </td>
 
