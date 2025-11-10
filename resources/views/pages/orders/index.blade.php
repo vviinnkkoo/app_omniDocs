@@ -24,10 +24,10 @@
 
           {{-- Order type filter buttons --}}
           <div class="clearfix mb-3">
-            <a class="btn btn-primary btn-sm float-start" href="{{ route(narudzbe.indexByType, ['type' => 'sve']) }}">Sve narudžbe</a>
-            <a class="btn btn-success btn-sm ms-1 float-start" href="{{ route(narudzbe.indexByType, ['type' => 'poslane']) }}">Poslane narudžbe</a>
-            <a class="btn btn-warning btn-sm ms-1 float-start" href="{{ route(narudzbe.indexByType, ['type' => 'neodradene']) }}">Neodrađene narudžbe</a>
-            <a class="btn btn-danger btn-sm ms-1 float-start" href="{{ route(narudzbe.indexByType, ['type' => 'otkazane']) }}">Otkazane</a>
+            <a class="btn btn-primary btn-sm float-start" href="{{ route('narudzbe.indexByType', ['type' => 'sve']) }}">Sve narudžbe</a>
+            <a class="btn btn-success btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'poslane']) }}">Poslane narudžbe</a>
+            <a class="btn btn-warning btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'neodradene']) }}">Neodrađene narudžbe</a>
+            <a class="btn btn-danger btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'otkazane']) }}">Otkazane</a>
           </div>
 
           @include('pages.orders.includes.index.sections.order-list')
