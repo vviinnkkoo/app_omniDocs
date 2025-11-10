@@ -130,7 +130,7 @@
                   </td>
 
                   <td>
-                    <a href="{{ route('racuni.show', $invoiceItem->receiptID) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                    <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $invoiceItem->receiptID]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                     </button>
                   </td>
 
