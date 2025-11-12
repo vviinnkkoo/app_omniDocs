@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvori"></button>
       </div>
       <div class="modal-body">
-        Da li ste sigurni da želite obrisati ovaj podatak? Ova akcija je nepovratna.
+        Da li ste sigurni da želite obrisati ovaj podatak? <b>Ova akcija je nepovratna!</b>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Odustani</button>
