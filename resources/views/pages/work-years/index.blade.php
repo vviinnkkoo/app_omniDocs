@@ -8,8 +8,8 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova radna godina</button>
-
+          
+          <x-modal-button target="#exampleModal" text="Nova radna godina"/>
           <x-search-form/>
 
           <table class="table table-hover">

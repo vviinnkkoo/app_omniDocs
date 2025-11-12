@@ -80,8 +80,8 @@
 
       <div class="card" style="margin-top: 15px;">
         <div class="card-body">
-          <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Poveži račun</button>
-
+          
+          <x-modal-button target="#invoiceModal" text="Poveži račun"/>
           @include('includes.tablesearch')
 
           <table class="table table-hover">

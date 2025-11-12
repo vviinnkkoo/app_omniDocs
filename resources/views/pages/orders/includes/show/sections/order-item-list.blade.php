@@ -3,7 +3,7 @@
     <div class="card" style="margin-top: 30px;">
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #19875411;">
             <span class="me-2">Proizvodi</span>
-            <button id="popupButton" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-weight: 900;">+</button>
+            <x-modal-button target="#exampleModal" text="+"/>
         </div>
         <div class="card-body" style=" border: solid 4px #19875411">
             <div class="table-responsive-md">

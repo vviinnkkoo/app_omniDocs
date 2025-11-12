@@ -8,8 +8,8 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <button id="popupButton" class="btn btn-primary float-start" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#customerModal"><i class="bi bi-file-earmark-plus"></i> Novi kupac</button>
-
+          
+          <x-modal-button target="#customerModal" text="Novi kupac"/>
           <x-search-form/>
             
           <table class="table table-hover" id="escalation">

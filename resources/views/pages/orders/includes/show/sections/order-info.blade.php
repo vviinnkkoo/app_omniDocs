@@ -31,7 +31,7 @@
         <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->receipt_id]) }}" target="_blank"
         class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }} btn-sm"><i class="bi bi-filetype-pdf"></i> {{ $order->is_paid ? 'Plaćen' : 'Nenaplaćen' }}</a>
     @else
-        <button id="popupButton" class="btn btn-primary btn-sm" style="font-weight:bold;" data-bs-toggle="modal" data-bs-target="#invoiceModal"><i class="bi bi-file-earmark-plus"></i> Izradi</button>
+        <x-modal-button target="invoiceModal" text="Izradi"/>
     @endisset
     </span>
 

@@ -1,14 +1,14 @@
 {{-- Modal for notes --}}
-<div class="modal fade" id="expensesModal" tabindex="-1" aria-labelledby="expensesModal" aria-hidden="true">
+<div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="expensesModalLabel">Dodaj novu napomenu</h5>
+        <h5 class="modal-title" id="noteModalLabel">Dodaj novu napomenu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- Popup content --}}
-        <form method="POST" action="{{ route('napomena.store') }}" id="noteForOrderSubmission">
+        <form method="POST" action="{{ route('napomena.store') }}" id="orderNoteSubmission">
           @csrf
           <div class="form-group">
 
@@ -26,7 +26,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-        <button type="submit" class="btn btn-primary" form="noteForOrderSubmission">Spremi</button>
+        <button type="submit" class="btn btn-primary" form="orderNoteSubmission">Spremi</button>
       </div>
     </div>
   </div>

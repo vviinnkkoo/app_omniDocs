@@ -8,10 +8,8 @@
     <div class="col-md-12">          
       <div class="card">
         <div class="card-body">
-        
-          <!-- Button to trigger the pop-up -->
-          <button id="popupButton" class="btn btn-primary" style="margin-bottom:20px;" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-file-earmark-plus"></i> Nova dostavna služba</button>
-
+          
+          <x-modal-button target="#exampleModal" text="Nova dostavna služba"/>
           <x-search-form/>
             
           <table class="table table-hover">
