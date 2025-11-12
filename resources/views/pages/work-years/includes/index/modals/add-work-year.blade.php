@@ -1,14 +1,14 @@
 {{-- Work year modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addWorkYearModal" tabindex="-1" aria-labelledby="addWorkYearModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Novi kanal prodaje</h5>
+        <h5 class="modal-title" id="addWorkYearModalLabel">Novi kanal prodaje</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- Popup content --}}
-        <form method="POST" action="{{ route('radne-godine.store') }}" id="sourceSubmission">
+        <form method="POST" action="{{ route('radne-godine.store') }}" id="workYearSubmission">
           @csrf
           <div class="form-group">
 
@@ -23,7 +23,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-        <button type="submit" class="btn btn-primary" form="sourceSubmission">Spremi</button>
+        <button type="submit" class="btn btn-primary" form="workYearSubmission">Spremi</button>
       </div>
     </div>
   </div>

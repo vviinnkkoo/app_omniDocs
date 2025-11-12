@@ -8,7 +8,7 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">                  
-          <x-modal-button target="#exampleModal" text="Nova etiketa"/>
+          <x-modal-button target="#shippingLabelsModal" text="Nova etiketa"/>
           <a class="btn btn-success" style="margin-bottom:20px; margin-left:10px;" href="/etikete" target="_blank"><i class="bi bi-printer"></i> Ispiši etikete</a>
 
           <a class="btn btn-danger" style="margin-bottom:20px; margin-left:10px;" href="/obrisi-etikete"><i class="bi bi-trash3"></i> Obriši etikete</a>
@@ -72,11 +72,11 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="shippingLabelsModal" tabindex="-1" aria-labelledby="shippingLabelsModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nova etiketa</h5>
+        <h5 class="modal-title" id="shippingLabelsModalLabel">Nova etiketa</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

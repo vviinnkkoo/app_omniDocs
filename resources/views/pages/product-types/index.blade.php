@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-body">
           
-          <x-modal-button target="#noteModal" text="Nova vrsta proizvoda"/>
+          <x-modal-button target="#addProductTypeModal" text="Nova vrsta proizvoda"/>
           <x-search-form />
 
           <table class="table table-hover">

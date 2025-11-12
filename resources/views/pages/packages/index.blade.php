@@ -8,7 +8,7 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <x-modal-button target="#exampleModal" text="Novi paket"/>
+          <x-modal-button target="#addPackageModal" text="Novi paket"/>
 
           {{-- Table search --}}
 
@@ -45,17 +45,17 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addPackageModal" tabindex="-1" aria-labelledby="addPackageModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nova boja proizvoda</h5>
+        <h5 class="modal-title" id="addPackageModalLabel">Nova boja proizvoda</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- popup content -->
         <form method="POST" action="/opis" id="colorSubmission">
-          {{ csrf_field() }}
+          @csrf
               <div class="form-group">
 
               </div>
