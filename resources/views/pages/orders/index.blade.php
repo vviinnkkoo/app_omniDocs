@@ -7,26 +7,27 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-
         <div class="card-body">
-          <x-modal-button class="btn btn-primary float-start ms-2 mb-2" target="#addOrderModal" text="Nova narudžba"/>
-          <x-modal-button class="btn btn-primary float-start ms-2 mb-2" target="#addCustomerModal" text="Novi kupac"/>
+
+          {{-- Action buttons and search form --}}
+          <x-modal-button target="#addOrderModal" text="Nova narudžba"/>
+          <x-modal-button target="#addCustomerModal" text="Novi kupac"/>
           <x-search-form/>
+
+          {{-- Order type filter buttons --}}
+          <div class="clearfix mb-3">
+            <a class="btn btn-primary btn-sm float-start" href="{{ route('narudzbe.indexByType', ['type' => 'sve']) }}">Sve narudžbe</a>
+            <a class="btn btn-success btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'poslane']) }}">Poslane narudžbe</a>
+            <a class="btn btn-warning btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'neodradene']) }}">Neodrađene narudžbe</a>
+            <a class="btn btn-danger btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'otkazane']) }}">Otkazane</a>
+          </div>
+
+          {{-- Order list --}}
+          @include('pages.orders.includes.index.sections.order-list')
+
+          <x-table-pagination :items="$orders" />
+
         </div>
-
-        {{-- Order type filter buttons --}}
-        <div class="clearfix mb-3">
-          <a class="btn btn-primary btn-sm float-start" href="{{ route('narudzbe.indexByType', ['type' => 'sve']) }}">Sve narudžbe</a>
-          <a class="btn btn-success btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'poslane']) }}">Poslane narudžbe</a>
-          <a class="btn btn-warning btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'neodradene']) }}">Neodrađene narudžbe</a>
-          <a class="btn btn-danger btn-sm ms-1 float-start" href="{{ route('narudzbe.indexByType', ['type' => 'otkazane']) }}">Otkazane</a>
-        </div>
-
-        {{-- Order list --}}
-        @include('pages.orders.includes.index.sections.order-list')
-
-        <x-table-pagination :items="$orders" />
-
       </div>
     </div>
   </div>
