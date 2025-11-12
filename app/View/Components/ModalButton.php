@@ -12,27 +12,26 @@ class ModalButton extends Component
     public string $text;
     public string $class;
 
-    /*
-    ** Values used by this component can be optional or required:
-    **     target  → REQUIRED
-    **     toggle  → optional
-    **     icon    → optional
-    **     text    → optional
-    **     class   → optional
-    */
-
     public function __construct(
         string $target,
         ?string $toggle = null,
         ?string $icon = null,
         ?string $text = null,
-        ?string $class = null
+        ?string $extraClass = null,
+        ?string $replaceClass = null
     ) {
+        $defaultClasses = 'btn btn-primary mb-3';
+
         $this->target = $target;
         $this->toggle = $toggle ?? 'modal';
         $this->icon = $icon ?? 'bi bi-plus-lg';
         $this->text = $text ?? 'Dodaj zapis';
-        $this->class = $class ?? 'btn btn-primary mb-3';
+
+        if ($replaceClass) {
+            $this->class = trim($replaceClass);
+        } else {
+            $this->class = trim($defaultClasses . ' ' . ($extraClass ?? ''));
+        }
     }
 
     public function render()
