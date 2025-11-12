@@ -20,7 +20,7 @@ class ModalButton extends Component
         ?string $extraClass = null,
         ?string $replaceClass = null
     ) {
-        $defaultClasses = 'btn btn-primary mb-3';
+        $defaultClasses = 'btn btn-primary';
 
         $this->target = $target;
         $this->toggle = $toggle ?? 'modal';
