@@ -1,5 +1,5 @@
 {{-- New country modal --}}
-<div class="modal fade" id="countryModal" tabindex="-1" aria-labelledby="ountryModalLabel" aria-hidden="true">
+<div class="modal fade" id="addCountryModal" tabindex="-1" aria-labelledby="ountryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

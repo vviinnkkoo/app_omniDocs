@@ -1,9 +1,9 @@
 <!-- New color modal -->
-<div class="modal fade" id="colorModal" tabindex="-1" aria-labelledby="colorModalLabel" aria-hidden="true">
+<div class="modal fade" id="addColorModal" tabindex="-1" aria-labelledby="addColorModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="colorModalLabel">Nova boja/opis proizvoda</h5>
+        <h5 class="modal-title" id="addColorModalLabel">Nova boja/opis proizvoda</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

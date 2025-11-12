@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-body">
           
-          <x-modal-button target="#customerModal" text="Novi kupac"/>
+          <x-modal-button target="#addCustomerModal" text="Novi kupac"/>
           <x-search-form/>
             
           <table class="table table-hover" id="escalation">

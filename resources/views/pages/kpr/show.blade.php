@@ -81,7 +81,7 @@
       <div class="card" style="margin-top: 15px;">
         <div class="card-body">
           
-          <x-modal-button target="#invoiceModal" text="Poveži račun"/>
+          <x-modal-button target="#addInvoiceModal" text="Poveži račun"/>
           @include('includes.tablesearch')
 
           <table class="table table-hover">

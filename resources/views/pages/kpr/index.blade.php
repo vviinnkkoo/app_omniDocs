@@ -10,7 +10,7 @@
 
         <div class="card-body">
           
-          <x-modal-button target="#paymentModal" text="Nova uplata"/>
+          <x-modal-button target="#addPaymentModal" text="Nova uplata"/>
           <x-search-form/>
 
             <table class="table table-hover">

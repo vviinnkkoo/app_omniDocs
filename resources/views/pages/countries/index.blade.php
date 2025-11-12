@@ -8,7 +8,7 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <x-modal-button target="#countryModal" text="Nova država"/>
+          <x-modal-button target="#addCountryModal" text="Nova država"/>
           <x-search-form/>
 
           <table class="table table-hover">
