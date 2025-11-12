@@ -9,8 +9,8 @@
       <div class="card">
 
         <div class="card-body">
-          <x-modal-button class="btn btn-primary float-start ms-2 mb-2" target="#newOrderModal" text="Nova narudžba"/>
-          <x-modal-button class="btn btn-primary float-start ms-2 mb-2" target="#customerModal" text="Novi kupac"/>
+          <x-modal-button class="btn btn-primary float-start ms-2 mb-2" target="#addOrderModal" text="Nova narudžba"/>
+          <x-modal-button class="btn btn-primary float-start ms-2 mb-2" target="#addCustomerModal" text="Novi kupac"/>
           <x-search-form/>
         </div>
 
