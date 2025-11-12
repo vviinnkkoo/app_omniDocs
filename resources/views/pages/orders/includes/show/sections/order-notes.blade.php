@@ -4,7 +4,7 @@
 
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #ffc10711;">
             <span class="me-2">Napomene</span>
-            <x-modal-button target="#addNoteModal" text="+"/>
+            <x-modal-button extraClass="btn-sm" target="#addNoteModal" text=""/>
         </div>
 
         <div class="card-body" style="border: solid 4px #ffc10711">

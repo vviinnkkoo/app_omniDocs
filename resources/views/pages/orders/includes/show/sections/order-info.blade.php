@@ -31,7 +31,7 @@
         <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->receipt_id]) }}" target="_blank"
         class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }} btn-sm"><i class="bi bi-filetype-pdf"></i> {{ $order->is_paid ? 'Plaćen' : 'Nenaplaćen' }}</a>
     @else
-        <x-modal-button class="btn bg-primary btn-sm" target="addInvoiceModal" text="Izradi"/>
+        <x-modal-button extraClass="btn-sm" target="addInvoiceModal" text="Izradi"/>
     @endisset
     </span>
 
