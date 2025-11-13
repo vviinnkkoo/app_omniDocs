@@ -9,8 +9,8 @@
       <div class="card">
         <div class="card-body">
           
-          <x-buttons.modal-button target="#paymentTypeModal" text="Novi način plaćanja"/>
-          <x-search-form />
+          <x-buttons.open-modal target="#paymentTypeModal" text="Novi način plaćanja"/>
+          <x-misc.search-form />
 
           <table class="table table-hover">
             <thead class="table-dark">
@@ -36,7 +36,7 @@
 
                   {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
-                    <x-buttons.delete-button :id="$paymentType->id" model="nacin-placanja" />
+                    <x-buttons.delete-item :id="$paymentType->id" model="nacin-placanja" />
                   </td>
 
                 </tr>
@@ -44,7 +44,7 @@
             </tbody>
           </table>
 
-          <x-table-pagination :items="$paymentTypes" />
+          <x-misc.table-pagination :items="$paymentTypes" />
 
         </div>
       </div>

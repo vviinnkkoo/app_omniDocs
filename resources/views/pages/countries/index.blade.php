@@ -8,8 +8,8 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <x-buttons.modal-button target="#addCountryModal" text="Nova država"/>
-          <x-search-form/>
+          <x-buttons.open-modal target="#addCountryModal" text="Nova država"/>
+          <x-misc.search-form/>
 
           <table class="table table-hover">
             <thead class="table-dark">
@@ -35,7 +35,7 @@
 
                   {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
-                    <x-buttons.delete-button :id="$country->id" model="drzave-poslovanja" />
+                    <x-buttons.delete-item :id="$country->id" model="drzave-poslovanja" />
                   </td>
 
                 </tr>
@@ -43,7 +43,7 @@
             </tbody>
           </table>
 
-          <x-table-pagination :items="$countries" />
+          <x-misc.table-pagination :items="$countries" />
 
         </div>
       </div>

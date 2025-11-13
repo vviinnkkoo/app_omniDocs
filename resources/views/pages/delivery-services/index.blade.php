@@ -9,8 +9,8 @@
       <div class="card">
         <div class="card-body">
           
-          <x-buttons.modal-button target="#addDeliveryServiceModal" text="Nova dostavna služba"/>
-          <x-search-form/>
+          <x-buttons.open-modal target="#addDeliveryServiceModal" text="Nova dostavna služba"/>
+          <x-misc.search-form/>
             
           <table class="table table-hover">
             <thead class="table-dark">
@@ -68,7 +68,7 @@
 
                     {{-- Delete button --}}
                     <td class="align-middle text-center px-4">
-                      <x-buttons.delete-button :id="$deliveryService->id" model="dostavne-usluge" />
+                      <x-buttons.delete-item :id="$deliveryService->id" model="dostavne-usluge" />
                     </td>
                     
                   </tr>
@@ -76,7 +76,7 @@
             </tbody>
           </table>
 
-          <x-table-pagination :items="$deliveryServices" />
+          <x-misc.table-pagination :items="$deliveryServices" />
 
         </div>
       </div>

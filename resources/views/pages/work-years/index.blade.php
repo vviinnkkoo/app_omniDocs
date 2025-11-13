@@ -9,8 +9,8 @@
       <div class="card">
         <div class="card-body">
           
-          <x-buttons.modal-button target="#addWorkYearModal" text="Nova radna godina"/>
-          <x-search-form/>
+          <x-buttons.open-modal target="#addWorkYearModal" text="Nova radna godina"/>
+          <x-misc.search-form/>
 
           <table class="table table-hover">
             <thead class="table-dark">
@@ -36,7 +36,7 @@
 
                   {{-- Delete --}}
                   <td class="align-middle text-center px-4">
-                    <x-buttons.delete-button :id="$year->id" model="radne-godine" />
+                    <x-buttons.delete-item :id="$year->id" model="radne-godine" />
                   </td>
 
                 </tr>
@@ -44,7 +44,7 @@
             </tbody>
           </table>
 
-          <x-table-pagination :items="$years" />
+          <x-misc.table-pagination :items="$years" />
             
         </div>
       </div>

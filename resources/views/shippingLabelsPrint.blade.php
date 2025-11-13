@@ -8,7 +8,7 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">                  
-          <x-buttons.modal-button target="#shippingLabelsModal" text="Nova etiketa"/>
+          <x-buttons.open-modal target="#shippingLabelsModal" text="Nova etiketa"/>
           <a class="btn btn-success" style="margin-bottom:20px; margin-left:10px;" href="/etikete" target="_blank"><i class="bi bi-printer"></i> Ispiši etikete</a>
 
           <a class="btn btn-danger" style="margin-bottom:20px; margin-left:10px;" href="/obrisi-etikete"><i class="bi bi-trash3"></i> Obriši etikete</a>

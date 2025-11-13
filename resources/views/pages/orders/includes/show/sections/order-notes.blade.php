@@ -4,7 +4,7 @@
 
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #ffc10711;">
             <span class="me-2">Napomene</span>
-            <x-buttons.modal-button extraClass="btn-sm" target="#addNoteModal" text=""/>
+            <x-buttons.open-modal extraClass="btn-sm" target="#addNoteModal" text=""/>
         </div>
 
         <div class="card-body" style="border: solid 4px #ffc10711">
@@ -16,7 +16,7 @@
                     {{-- Header (datum + delete) --}}
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <small class="text-muted">{{ $item->created_at->format('d. m. Y. H:i') }}</small>
-                        <x-buttons.delete-button :id="$item->id" model="napomena" />
+                        <x-buttons.delete-item :id="$item->id" model="napomena" />
                     </div>
 
                     {{-- Note --}}

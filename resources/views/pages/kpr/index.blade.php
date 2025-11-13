@@ -10,8 +10,8 @@
 
         <div class="card-body">
           
-          <x-buttons.modal-button target="#addPaymentModal" text="Nova uplata"/>
-          <x-search-form/>
+          <x-buttons.open-modal target="#addPaymentModal" text="Nova uplata"/>
+          <x-misc.search-form/>
 
             <table class="table table-hover">
               <thead class="table-dark">
@@ -80,7 +80,7 @@
 
                     {{-- Delete button --}}
                     <td class="align-middle text-center px-4">
-                      <x-buttons.delete-button :id="$item->id" model="knjiga-prometa" />
+                      <x-buttons.delete-item :id="$item->id" model="knjiga-prometa" />
                     </td>
 
                   </tr>
@@ -88,7 +88,7 @@
               </tbody>
             </table>
 
-            <x-table-pagination :items="$kprs"/>
+            <x-misc.table-pagination :items="$kprs"/>
 
         </div>
       </div>

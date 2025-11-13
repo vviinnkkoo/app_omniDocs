@@ -10,9 +10,9 @@
         <div class="card-body">
 
           {{-- Action buttons and search form --}}
-          <x-buttons.modal-button target="#addOrderModal" text="Nova narudžba"/>
-          <x-buttons.modal-button target="#addCustomerModal" text="Novi kupac"/>
-          <x-search-form/>
+          <x-buttons.open-modal target="#addOrderModal" text="Nova narudžba"/>
+          <x-buttons.open-modal target="#addCustomerModal" text="Novi kupac"/>
+          <x-misc.search-form/>
 
           {{-- Order type filter buttons --}}
           <div class="clearfix mb-2 mt-2">
@@ -25,7 +25,7 @@
           {{-- Order list --}}
           @include('pages.orders.includes.index.sections.order-list')
 
-          <x-table-pagination :items="$orders" />
+          <x-misc.table-pagination :items="$orders" />
 
         </div>
       </div>

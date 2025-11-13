@@ -3,7 +3,7 @@
     <div class="card mt-3">
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #19875411;">
             <span class="me-2">Proizvodi</span>
-            <x-buttons.modal-button extraClass="btn-sm" target="#addProductModal" text=""/>
+            <x-buttons.open-modal extraClass="btn-sm" target="#addProductModal" text=""/>
         </div>
         <div class="card-body" style=" border: solid 4px #19875411">
             <div class="table-responsive-md">
@@ -95,7 +95,7 @@
                                 
                                 {{-- Delete button --}}
                                 <td>
-                                    <x-buttons.delete-button :id="$item->id" model="narudzbe-proizvodi" />
+                                    <x-buttons.delete-item :id="$item->id" model="narudzbe-proizvodi" />
                                 </td>
 
                             </tr>

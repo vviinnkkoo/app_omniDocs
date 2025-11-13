@@ -9,8 +9,8 @@
       <div class="card">
         <div class="card-body">
           
-          <x-buttons.modal-button target="#addProductModal" text="Novi proizvod"/>
-          <x-search-form />
+          <x-buttons.open-modal target="#addProductModal" text="Novi proizvod"/>
+          <x-misc.search-form />
 
           <table class="table table-hover">
             <thead class="table-dark">
@@ -59,7 +59,7 @@
 
                   {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
-                    <x-buttons.delete-button :id="$product->id" model="proizvodi" />
+                    <x-buttons.delete-item :id="$product->id" model="proizvodi" />
                   </td>
 
                 </tr>
@@ -67,7 +67,7 @@
             </tbody>
           </table>
 
-          <x-table-pagination :items="$products" />
+          <x-misc.table-pagination :items="$products" />
 
         </div>
       </div>

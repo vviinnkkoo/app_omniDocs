@@ -8,8 +8,8 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <x-buttons.modal-button target="#addColorModal" text="Dodaj opis/boju"/>
-          <x-search-form/>
+          <x-buttons.open-modal target="#addColorModal" text="Dodaj opis/boju"/>
+          <x-misc.search-form/>
 
           <table class="table table-hover">
             <thead class="table-dark">
@@ -35,7 +35,7 @@
 
                   {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
-                    <x-buttons.delete-button :id="$color->id" model="opis" />
+                    <x-buttons.delete-item :id="$color->id" model="opis" />
                   </td>
                   
                 </tr>
@@ -43,7 +43,7 @@
             </tbody>
           </table>
 
-          <x-table-pagination :items="$colors" />
+          <x-misc.table-pagination :items="$colors" />
           
         </div>
       </div>
