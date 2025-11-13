@@ -95,7 +95,7 @@
                                 
                                 {{-- Delete button --}}
                                 <td>
-                                    <x-delete-button :id="$item->id" model="narudzbe-proizvodi" />
+                                    <x-buttons.delete-button :id="$item->id" model="narudzbe-proizvodi" />
                                 </td>
 
                             </tr>

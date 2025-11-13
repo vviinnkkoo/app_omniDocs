@@ -16,7 +16,7 @@
                     {{-- Header (datum + delete) --}}
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <small class="text-muted">{{ $item->created_at->format('d. m. Y. H:i') }}</small>
-                        <x-delete-button :id="$item->id" model="napomena" />
+                        <x-buttons.delete-button :id="$item->id" model="napomena" />
                     </div>
 
                     {{-- Note --}}

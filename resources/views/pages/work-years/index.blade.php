@@ -36,7 +36,7 @@
 
                   {{-- Delete --}}
                   <td class="align-middle text-center px-4">
-                    <x-delete-button :id="$year->id" model="radne-godine" />
+                    <x-buttons.delete-button :id="$year->id" model="radne-godine" />
                   </td>
 
                 </tr>

@@ -102,7 +102,7 @@
 
                   {{-- Delete button --}}
                   <td class="align-middle text-center px-4">
-                    <x-delete-button :id="$customer->id" model="kupci" />
+                    <x-buttons.delete-button :id="$customer->id" model="kupci" />
                   </td>
                 </tr>
               @endforeach
