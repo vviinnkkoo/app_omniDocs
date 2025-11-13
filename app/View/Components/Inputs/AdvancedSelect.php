@@ -4,7 +4,7 @@ namespace App\View\Components\Inputs;
 
 use Illuminate\View\Component;
 
-class SelectInput extends Component
+class AdvancedSelect extends Component
 {
     public $name;
     public $label;
