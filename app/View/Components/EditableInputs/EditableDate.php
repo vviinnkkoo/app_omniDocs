@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\EditableDate;
 
 use Illuminate\View\Component;
 
@@ -19,6 +19,6 @@ class EditableDate extends Component
 
     public function render()
     {
-        return view('components.editable-date');
+        return view('components.editable-inputs.editable-date');
     }
 }

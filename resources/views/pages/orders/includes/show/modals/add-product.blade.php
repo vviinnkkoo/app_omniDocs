@@ -16,29 +16,7 @@
             <input type="hidden" name="order_id" value="{{ Crypt::encryptString($order->id) }}" required>
 
             {{-- Product --}}
-            <div class="mb-3 omniselect-dropdown">
-                <label for="product_id">Proizvod:</label>
-                <input type="text" class="form-control omniselect"
-                      data-name="product_id"
-                      placeholder="Pretraži proizvode..."
-                      autocomplete="off"
-                      required>
-                <input type="hidden" name="product_id" class="omniselect-hidden">
-                <ul class="dropdown-menu w-100">
-                  @foreach ($productTypes as $type)
-                    {{-- Group label --}}
-                    <li class="dropdown-group">{{ $type->name }}</li>
-                    
-                    @foreach ($type->product as $product)
-                      <li>
-                        <a href="#" data-value="{{ $product->id }}">
-                          {{ $product->name }} >> {{ $product->default_price }} €
-                        </a>
-                      </li>
-                    @endforeach
-                  @endforeach
-                </ul>
-            </div>
+            <x-inputs.select-input name="product_id" label="Proizvod" :items="$productTypes" grouped="true" placeholder="Pretraži proizvode..." />
 
             {{-- Amount --}}
             <div class="mb-3">
