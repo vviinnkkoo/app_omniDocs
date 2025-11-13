@@ -475,25 +475,24 @@ document.querySelectorAll('.omniselect').forEach(input => {
     function filterOptions() {
         const val = input.value.toLowerCase();
         const groups = {};
+        let currentGroup = null;
 
-        // prvo filtriraj sve li osim grupa
         dropdown.querySelectorAll('li').forEach(li => {
             if (li.classList.contains('dropdown-group')) {
-                groups[li.textContent.trim()] = false; // inicijalno nema vidljivih opcija
+                currentGroup = li.textContent.trim();
+                groups[currentGroup] = false; // inicijalno nema vidljivih
                 return;
             }
+
             const text = li.textContent.toLowerCase();
             const visible = text.includes(val);
             li.style.display = visible ? '' : 'none';
 
-            // ako li pripada grupi, označi grupu kao vidljivu
-            const prevGroup = li.previousElementSibling;
-            if (prevGroup && prevGroup.classList.contains('dropdown-group') && visible) {
-                groups[prevGroup.textContent.trim()] = true;
+            if (visible && currentGroup) {
+                groups[currentGroup] = true;
             }
         });
 
-        // sada postavi display za grupe
         dropdown.querySelectorAll('li.dropdown-group').forEach(groupLi => {
             const groupName = groupLi.textContent.trim();
             groupLi.style.display = groups[groupName] ? '' : 'none';
