@@ -4,7 +4,7 @@ namespace App\View\Components\Buttons;
 
 use Illuminate\View\Component;
 
-class ModalButton extends Component
+class OpenModal extends Component
 {
     public string $target;
     public string $toggle;
@@ -36,6 +36,6 @@ class ModalButton extends Component
 
     public function render()
     {
-        return view('components.buttons.modal-button');
+        return view('components.buttons.open-modal');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Misc;
 
 use Illuminate\View\Component;
 
@@ -25,6 +25,6 @@ class SearchForm extends Component
 
     public function render()
     {
-        return view('components.search-form');
+        return view('components.misc.search-form');
     }
 }

@@ -4,7 +4,7 @@ namespace App\View\Components\EditableDate;
 
 use Illuminate\View\Component;
 
-class EditableDate extends Component
+class Date extends Component
 {
     public $model;
     public $field;
@@ -19,6 +19,6 @@ class EditableDate extends Component
 
     public function render()
     {
-        return view('components.editable-inputs.editable-date');
+        return view('components.editable.date');
     }
 }

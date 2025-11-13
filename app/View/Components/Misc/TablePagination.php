@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Misc;
 
 use Illuminate\View\Component;
 
@@ -15,6 +15,6 @@ class TablePagination extends Component
 
     public function render()
     {
-        return view('components.table-pagination');
+        return view('components.misc.table-pagination');
     }
 }

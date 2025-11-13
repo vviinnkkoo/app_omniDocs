@@ -98,13 +98,13 @@
             {{-- Date ordered --}}
             <div class="mb-3">
                 <div>Naručeno:</div>
-                <x-editable-date :model="$order" field="date_ordered" modelName="narudzbe" />
+                <x-editable-inputs.editable-date :model="$order" field="date_ordered" modelName="narudzbe" />
             </div>
 
             {{-- Deadline date --}}
             <div class="mb-3">
                 <div>Rok za dostavu:</div>
-                <x-editable-date :model="$order" field="date_deadline" modelName="narudzbe" />
+                <x-editable-inputs.editable-date :model="$order" field="date_deadline" modelName="narudzbe" />
             </div>
 
             {{-- Payment type --}}
@@ -146,7 +146,7 @@
             {{-- Date sent --}}
             <div class="mb-3">
                 <div>Datum slanja:</div>
-                <x-editable-date :model="$order" field="date_sent" modelName="narudzbe" />
+                <x-editable-inputs.editable-date :model="$order" field="date_sent" modelName="narudzbe" />
             </div>
 
             {{-- Delivery company --}}
@@ -186,12 +186,12 @@
             {{-- Completion date --}}
             <div class="mb-3">
                 <div>Datum dostave / završetka:</div>
-                <x-editable-date :model="$order" field="date_delivered" modelName="narudzbe" />
+                <x-editable-inputs.editable-date :model="$order" field="date_delivered" modelName="narudzbe" />
             </div>
             {{-- Canceling date --}}
             <div class="mb-3">
                 <div>Datum otkazivanja:</div>
-                <x-editable-date :model="$order" field="date_cancelled" modelName="narudzbe" />
+                <x-editable-inputs.editable-date :model="$order" field="date_cancelled" modelName="narudzbe" />
             </div>
         </div>
 
