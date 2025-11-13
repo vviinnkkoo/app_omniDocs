@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-body">
           
-          <x-modal-button target="#addWorkYearModal" text="Nova radna godina"/>
+          <x-buttons.modal-button target="#addWorkYearModal" text="Nova radna godina"/>
           <x-search-form/>
 
           <table class="table table-hover">

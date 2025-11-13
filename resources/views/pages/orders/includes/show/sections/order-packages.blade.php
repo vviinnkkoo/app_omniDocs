@@ -4,7 +4,7 @@
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #007bff11;">
             <span class="me-2">Paketi</span>
 
-            <x-modal-button extraClass="btn-sm" target="#addPackageModal" text=""/>
+            <x-buttons.modal-button extraClass="btn-sm" target="#addPackageModal" text=""/>
         
         </div>
         <div class="card-body" style="border: solid 4px #007bff11;">

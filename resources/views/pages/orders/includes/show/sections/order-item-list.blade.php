@@ -3,7 +3,7 @@
     <div class="card mt-3">
         <div class="card-header d-flex align-items-center fw-bolder" style="background-color: #19875411;">
             <span class="me-2">Proizvodi</span>
-            <x-modal-button extraClass="btn-sm" target="#addProductModal" text=""/>
+            <x-buttons.modal-button extraClass="btn-sm" target="#addProductModal" text=""/>
         </div>
         <div class="card-body" style=" border: solid 4px #19875411">
             <div class="table-responsive-md">

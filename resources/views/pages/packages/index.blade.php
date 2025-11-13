@@ -8,7 +8,7 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <x-modal-button target="#addPackageModal" text="Novi paket"/>
+          <x-buttons.modal-button target="#addPackageModal" text="Novi paket"/>
 
           {{-- Table search --}}
 

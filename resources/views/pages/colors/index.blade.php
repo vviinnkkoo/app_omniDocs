@@ -8,7 +8,7 @@
     <div class="col-xl-12">          
       <div class="card">
         <div class="card-body">
-          <x-modal-button target="#addColorModal" text="Dodaj opis/boju"/>
+          <x-buttons.modal-button target="#addColorModal" text="Dodaj opis/boju"/>
           <x-search-form/>
 
           <table class="table table-hover">

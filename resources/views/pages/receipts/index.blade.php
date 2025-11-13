@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-body">
 
-          <x-modal-button target="#addInvoiceModal" text="Novi račun"/>
+          <x-buttons.modal-button target="#addInvoiceModal" text="Novi račun"/>
           <x-search-form/>
 
             <table class="table table-hover">

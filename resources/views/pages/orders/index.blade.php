@@ -10,8 +10,8 @@
         <div class="card-body">
 
           {{-- Action buttons and search form --}}
-          <x-modal-button target="#addOrderModal" text="Nova narudžba"/>
-          <x-modal-button target="#addCustomerModal" text="Novi kupac"/>
+          <x-buttons.modal-button target="#addOrderModal" text="Nova narudžba"/>
+          <x-buttons.modal-button target="#addCustomerModal" text="Novi kupac"/>
           <x-search-form/>
 
           {{-- Order type filter buttons --}}
