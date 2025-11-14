@@ -16,7 +16,15 @@
             <input type="hidden" name="order_id" value="{{ Crypt::encryptString($order->id) }}" required>
 
             {{-- Product --}}
-            <x-inputs.advanced-select name="product_id" label="Proizvod" :items="$productTypes" :grouped="true" placeholder="Pretraži proizvode..." :required="true"/>
+            <x-inputs.advanced-select
+              name="product_id"
+              label="Proizvod"              
+              grouped="true"
+              children="product"
+              :items="$productTypes"
+              :item-label="fn($item) => $item->name . ' >> ' . $item->default_price . ' €'"
+              :required="true"
+            />
 
             {{-- Amount --}}
             <div class="mb-3">

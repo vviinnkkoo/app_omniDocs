@@ -16,10 +16,19 @@
         @if ($grouped)
             @foreach ($items as $group)
                 <li class="dropdown-group">{{ $group->name }}</li>
-                @foreach ($group->product as $item)
+
+                @php
+                    $children = is_callable($children) ? $children($group) : ($children ? $group->{$children} : []);
+                @endphp
+
+                @foreach ($children as $item)
                     <li>
                         <a href="#" data-value="{{ $item->id }}">
-                            {{ $item->name }} >> {{ $item->default_price }} €
+                            {{
+                                $itemLabel 
+                                    ? (is_callable($itemLabel) ? $itemLabel($item) : $item->{$itemLabel}) 
+                                    : $item->name
+                            }}
                         </a>
                     </li>
                 @endforeach
@@ -28,7 +37,11 @@
             @foreach ($items as $item)
                 <li>
                     <a href="#" data-value="{{ $item->id }}">
-                        {{ $item->name }}
+                        {{
+                            $itemLabel 
+                                ? (is_callable($itemLabel) ? $itemLabel($item) : $item->{$itemLabel}) 
+                                : $item->name
+                        }}
                     </a>
                 </li>
             @endforeach

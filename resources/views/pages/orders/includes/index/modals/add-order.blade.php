@@ -13,24 +13,13 @@
           <div class="form-group">
 
             {{-- Customer --}}
-            <div class="mb-3 omniselect-dropdown">
-                <label for="customer_id">Kupac:</label>
-                <input type="text" class="form-control omniselect"
-                    data-name="customer_id"
-                    placeholder="Pretraži kupce..."
-                    autocomplete="off"
-                    required>
-                <input type="hidden" name="customer_id" class="omniselect-hidden">
-                <ul class="dropdown-menu w-100">
-                    @foreach ($customers as $customer)
-                        <li>
-                            <a href="#" data-value="{{ $customer->id }}">
-                                {{ $customer->name }} - {{ $customer->city }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+            <x-inputs.advanced-select
+              name="customer_id"
+              label="Kupac"
+              :items="$customers"
+              :item-label="fn($item) => $item->name . ' - ' . $item->city"
+              :required="true"
+            />
 
             {{-- Order date --}}
             <div class="mb-3">
