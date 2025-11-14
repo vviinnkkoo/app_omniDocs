@@ -8,8 +8,8 @@
       </div>
       <div class="modal-body">
         {{-- Popup content --}}
-        <form method="POST" action="/narudzbe" id="orderSubmission">
-          {{ csrf_field() }}
+        <form method="POST" action="{{ route('narudzbe.store') }}" id="orderSubmission">
+          @csrf
           <div class="form-group">
 
             {{-- Customer --}}
