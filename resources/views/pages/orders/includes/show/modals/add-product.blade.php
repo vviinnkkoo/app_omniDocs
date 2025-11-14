@@ -36,14 +36,8 @@
               <input type="number" class="form-control" value="0" min="0" max="100" id="discount" name="discount" step="1" required>
             </div>
             
-            {{-- Product color --}}
-            <div class="mb-3">
-              <span style="display: block;">Boja proizvoda:</span>
-                @foreach ($colors as $color)
-                  <input type="radio" class="btn-check" name="color_id" autocomplete="off" value="{{ $color->id }} " id="color_{{ $color->id }}" required>
-                  <label class="btn btn-light btn-sm me-1 mb-1" for="color_{{ $color->id }}">{{ $color->name }}</label>
-                @endforeach
-            </div>
+            {{-- Product color --}}            
+            <x-inputs.advanced-radio name="color_id" label="Boja proizvoda" :items="$colors" :required="true"/>
 
             {{-- Product note --}}
             <div class="mb-3">
