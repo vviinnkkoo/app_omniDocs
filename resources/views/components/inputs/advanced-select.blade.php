@@ -1,4 +1,5 @@
 {{-- resources/views/components/inputs/advanced-select.blade.php --}}
+
 <div class="mb-3 omniselect-dropdown">
     @if ($label)
         <label for="{{ $name }}">{{ $label }}:</label>
@@ -19,10 +20,7 @@
                 <li class="dropdown-group">{{ $group->name }}</li>
 
                 @php
-                    // ovo očekuje da je children property/relacija 'product' ili proslijeđeno preko closurea u komponenti
-                    $children = isset($children) 
-                                ? (is_callable($children) ? $children($group) : ($group->{$children} ?? []))
-                                : ($group->product ?? []);
+                    $children = $group->items ?? $group->product ?? [];
                 @endphp
 
                 @foreach ($children as $item)

@@ -13,12 +13,13 @@
           <div class="form-group">
 
             {{-- Customer --}}
-            <x-inputs.advanced-select
-              name="customer_id"
-              label="Kupac"
-              :items="$customers"
-              :item-label="fn($item) => $item->name . ' - ' . $item->city"
-              :required="true"
+            <x-inputs.advanced-select 
+                name="customer_id"
+                :items="$customers"
+                label="Kupac"
+                placeholder="Pretraži kupce..."
+                :required="true"
+                :renderItem="fn($c) => $c->name . ' - ' . $c->city"
             />
 
             {{-- Order date --}}
