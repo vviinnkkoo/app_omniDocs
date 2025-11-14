@@ -8,7 +8,7 @@ use Illuminate\View\View;
 class AdvancedSelect extends Component
 {
     public $name;
-    public $label;        // dodano
+    public $label;
     public $items;
     public $grouped;
     public $placeholder;
@@ -18,7 +18,7 @@ class AdvancedSelect extends Component
     public function __construct(
         string $name,
         $items = [],
-        string $label = '',            // dodano i postavljeno poslije items radi retro kompatibilnosti
+        string $label = '',
         bool $grouped = false,
         string $placeholder = '',
         bool $required = false,
@@ -26,7 +26,7 @@ class AdvancedSelect extends Component
     ) {
         $this->name = $name;
         $this->items = $items;
-        $this->label = $label;               // assign
+        $this->label = $label;
         $this->grouped = $grouped;
         $this->placeholder = $placeholder;
         $this->required = $required;
