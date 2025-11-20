@@ -14,6 +14,7 @@ class AdvancedSelect extends Component
     public $placeholder;
     public $required;
     public $renderItem;
+    public $childrenKey;
 
     public function __construct(
         string $name,
@@ -22,7 +23,8 @@ class AdvancedSelect extends Component
         bool $grouped = false,
         string $placeholder = '',
         bool $required = false,
-        $renderItem = null
+        $renderItem = null,
+        string $childrenKey = 'items'
     ) {
         $this->name = $name;
         $this->items = $items;
@@ -31,6 +33,7 @@ class AdvancedSelect extends Component
         $this->placeholder = $placeholder;
         $this->required = $required;
         $this->renderItem = $renderItem;
+        $this->childrenKey = $childrenKey;
     }
 
     public function render(): View

@@ -53,6 +53,17 @@
             </div>
 
             {{-- Delivery service --}}
+            <x-inputs.advanced-select 
+                name="delivery_service_id"
+                :items="$deliveryCompanies"
+                grouped="true"
+                childrenKey="deliveryServices"
+                label="Dostavna služba"
+                placeholder="Traži..."
+                :required="true"
+                :renderItem="fn($i) => $i->name . ' >> ' . $i->default_cost . ' €'"
+            />
+
             <div class="mb-3 omniselect-dropdown">
                 <label for="delivery_service_id">Dostavna služba:</label>
                 <input type="text" class="form-control omniselect"

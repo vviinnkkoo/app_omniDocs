@@ -1,5 +1,3 @@
-{{-- resources/views/components/inputs/advanced-select.blade.php --}}
-
 <div class="mb-3 omniselect-dropdown">
     @if ($label)
         <label for="{{ $name }}">{{ $label }}:</label>
@@ -20,7 +18,7 @@
                 <li class="dropdown-group">{{ $group->name }}</li>
 
                 @php
-                    $children = $group->items ?? $group->product ?? [];
+                    $children = $group->{$childrenKey} ?? [];
                 @endphp
 
                 @foreach ($children as $item)
@@ -31,6 +29,7 @@
                     </li>
                 @endforeach
             @endforeach
+
         @else
             @foreach ($items as $item)
                 <li>
