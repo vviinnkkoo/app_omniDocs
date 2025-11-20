@@ -35,10 +35,10 @@
             </div>          
 
             {{-- Sales channel --}}
-            <x-inputs.pillow-buttons name="source_id" :items="$sources" type="radio" labelText="Kanal prodaje" :required="true"/>
+            <x-inputs.advanced-radio name="source_id" label="Kanal prodaje" :items="$sources" :required="true"/>
 
             {{-- Payment type --}}
-            <x-inputs.pillow-buttons name="payment_type_id" :items="$paymentTypes" type="radio" labelText="Način plaćanja" :required="true"/>
+            <x-inputs.advanced-radio name="payment_type_id" label="Način plaćanja" :items="$paymentTypes" :required="true"/>
 
             {{-- Delivery service --}}
             <x-inputs.advanced-select 
