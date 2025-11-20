@@ -18,8 +18,9 @@
             {{-- Product --}}
             <x-inputs.advanced-select 
                 name="product_id"
-                :items="$productTypes"
+                :items="$products"
                 grouped="true"
+                childrenKey="productTypes"
                 label="Proizvod"
                 placeholder="Pretraži proizvode..."
                 :required="true"
