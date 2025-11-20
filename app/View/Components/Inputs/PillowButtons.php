@@ -18,7 +18,7 @@ class PillowButtons extends Component
 
     public function __construct(
         string $name,
-        array $items = [],
+        $items,
         string $type = 'radio',
         bool $required = false,
         string $labelClass = 'btn btn-light btn-sm me-1 mb-1',
