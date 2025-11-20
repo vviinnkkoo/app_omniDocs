@@ -59,35 +59,10 @@
                 grouped="true"
                 childrenKey="deliveryServices"
                 label="Dostavna služba"
-                placeholder="Traži..."
+                placeholder="Pretraži dostavnu usluge..."
                 :required="true"
                 :renderItem="fn($i) => $i->name . ' >> ' . $i->default_cost . ' €'"
             />
-
-            <div class="mb-3 omniselect-dropdown">
-                <label for="delivery_service_id">Dostavna služba:</label>
-                <input type="text" class="form-control omniselect"
-                      data-name="delivery_service_id"
-                      placeholder="Pretraži dostavnu službu..."
-                      autocomplete="off"
-                      required>
-                <input type="hidden" name="delivery_service_id" class="omniselect-hidden">
-                <ul class="dropdown-menu w-100">
-                  @foreach ($deliveryCompanies as $company)
-                    {{-- Group label --}}
-                    <li class="dropdown-group">{{ $company->name }}</li>
-                    @foreach ($company->deliveryServices as $service)
-                      @if ($service->in_use == 1)
-                        <li>
-                          <a href="#" data-value="{{ $service->id }}">
-                            {{ $service->name }} >> {{ $service->default_cost }} €
-                          </a>
-                        </li>
-                      @endif
-                    @endforeach
-                  @endforeach
-                </ul>
-            </div>
 
           </div>
         </form>
