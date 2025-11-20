@@ -35,22 +35,10 @@
             </div>          
 
             {{-- Sales channel --}}
-            <div class="mb-3">
-              <span style="display: block;">Kanal prodaje:</span>
-                @foreach ($sources as $source)
-                  <input type="radio" class="btn-check" name="source_id" autocomplete="off" value="{{ $source->id }} " id="source{{ $source->id }}" required>
-                  <label class="btn btn-light btn-sm me-1 mb-2" for="source{{ $source->id }}">{{ $source->name }}</label>
-                @endforeach
-            </div>      
+            <x-inputs.pillow-buttons name="source_id" :items="$sources" type="radio" labelText="Kanal prodaje" :required="true"/>
 
             {{-- Payment type --}}
-            <div class="mb-3">
-              <span style="display: block;">Način plaćanja:</span>
-                @foreach ($paymentTypes as $paymentType)
-                  <input type="radio" class="btn-check" name="payment_type_id" autocomplete="off" value="{{ $paymentType->id }} " id="payment{{ $paymentType->id }}" required>
-                  <label class="btn btn-light btn-sm me-1 mb-1" for="payment{{ $paymentType->id }}">{{ $paymentType->name }}</label>
-                @endforeach
-            </div>
+            <x-inputs.pillow-buttons name="payment_type_id" :items="$paymentTypes" type="radio" labelText="Način plaćanja" :required="true"/>
 
             {{-- Delivery service --}}
             <x-inputs.advanced-select 
