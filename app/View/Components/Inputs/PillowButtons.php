@@ -9,23 +9,13 @@ class PillowButtons extends Component
 {
     public $name;
     public $items;
-    public $type; // radio ili checkbox
+    public $type;
     public $required;
     public $labelClass;
     public $inputClass;
     public $wrapperClass;
     public $labelText;
 
-    /**
-     * @param string $name
-     * @param array $items
-     * @param string $type
-     * @param bool $required
-     * @param string $labelClass
-     * @param string $inputClass
-     * @param string $wrapperClass
-     * @param string $labelText
-     */
     public function __construct(
         string $name,
         array $items = [],
