@@ -53,6 +53,16 @@
             </div>
 
             {{-- Delivery service --}}
+            <x-inputs.advanced-select 
+                name="delivery_service_id"
+                :items="$deliveryServices"
+                grouped="true"
+                label="Proizvod"
+                placeholder="Pretraži dostavne usluge..."
+                :required="true"
+                :renderItem="fn($i) => $i->name . ' >> ' . $i->default_cost . ' €'"
+            />
+
             <div class="mb-3 omniselect-dropdown">
                 <label for="delivery_service_id">Dostavna služba:</label>
                 <input type="text" class="form-control omniselect"
@@ -65,7 +75,6 @@
                   @foreach ($deliveryCompanies as $company)
                     {{-- Group label --}}
                     <li class="dropdown-group">{{ $company->name }}</li>
-                    
                     @foreach ($company->deliveryServices as $service)
                       @if ($service->in_use == 1)
                         <li>
