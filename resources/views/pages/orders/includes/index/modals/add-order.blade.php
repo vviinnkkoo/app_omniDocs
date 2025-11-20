@@ -55,7 +55,7 @@
             {{-- Delivery service --}}
             <x-inputs.advanced-select 
                 name="delivery_service_id"
-                :items="$deliveryServices"
+                :items="$deliveryCompanies"
                 grouped="true"
                 label="Proizvod"
                 placeholder="Pretraži dostavne usluge..."
