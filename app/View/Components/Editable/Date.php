@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\EditableDate;
+namespace App\View\Components\Editable;
 
 use Illuminate\View\Component;
 
