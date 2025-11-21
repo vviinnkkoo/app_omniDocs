@@ -16,7 +16,11 @@ class Kpr extends Model
         'date',
         'info',
         'payment_type_id'
-    ];    
+    ];
+
+    protected $casts = [
+        'date' => 'datetime',
+    ];
 
     /*
     |--------------------------------------------------------------------------------------------
