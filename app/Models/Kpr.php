@@ -47,4 +47,24 @@ class Kpr extends Model
     {
         $this->attributes['amount'] = is_null($value) ? null : str_replace(',', '.', $value);
     }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Date formatters for display only
+    |--------------------------------------------------------------------------------------------
+    */
+    public function getFormatedDateAttribute()
+    {
+        return $this->date ? $this->date->format('d.m.Y.') : null;
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Date formatters for date input value
+    |--------------------------------------------------------------------------------------------
+    */
+    public function getInputFormatedDateAttribute()
+    {
+        return $this->date ? $this->date->format('Y-m-d') : null;
+    }
 }
