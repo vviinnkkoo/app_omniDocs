@@ -17,24 +17,20 @@
           <div class="row">
             <div class="col">
 
+              {{-- Payer --}}
               <div class="mb-3">
                 <div>
                   <h5 class="fw-bold">Platitelj:</h5>
-                </div>              
+                </div>
                 <div>
                   <span class="editable" data-id="{{ $kprInstance->id }}" data-field="payer" data-model="knjiga-prometa">{{ $kprInstance->payer }}</span>
                 </div>
               </div>
 
-              <div class="mb-3">
-                <div>
-                  <h5 class="fw-bold">Datum:</h5>
-                </div>
-                <div class="editable-date" data-id="{{ $kprInstance->id }}" data-field="date" data-model="knjiga-prometa">
-                  <input type="date" class="form-control" style="width:40%" value="{{ $kprInstance->date }}">
-                </div>
-              </div>
+              {{-- Payment date --}}
+              <x-editable.date :model="$kprInstance" label="Datum:" field="date" modelName="knjiga-prometa" />
 
+              {{-- Amount --}}
               <div class="mb-3">
                 <div>
                   <h5 class="fw-bold">Iznos:</h5>

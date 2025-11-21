@@ -96,16 +96,10 @@
         <div class="col">
 
             {{-- Date ordered --}}
-            <div class="mb-3">
-                <div>Naručeno:</div>
-                <x-editable.date :model="$order" field="date_ordered" modelName="narudzbe" />
-            </div>
+            <x-editable.date :model="$order" label="Naručeno:" field="date_ordered" modelName="narudzbe" />
 
             {{-- Deadline date --}}
-            <div class="mb-3">
-                <div>Rok za dostavu:</div>
-                <x-editable.date :model="$order" field="date_deadline" modelName="narudzbe" />
-            </div>
+            <x-editable.date :model="$order" label="Rok za dostavu:" field="date_deadline" modelName="narudzbe" />
 
             {{-- Payment type --}}
             <div class="mb-3">                
@@ -144,10 +138,7 @@
         <div class="col">
 
             {{-- Date sent --}}
-            <div class="mb-3">
-                <div>Datum slanja:</div>
-                <x-editable.date :model="$order" field="date_sent" modelName="narudzbe" />
-            </div>
+            <x-editable.date :model="$order" label="Datum slanja:" field="date_sent" modelName="narudzbe" />
 
             {{-- Delivery company --}}
             <div class="mb-3">
@@ -180,20 +171,17 @@
                     </span>
                 </div>
             </div>
+
         </div>
 
         <div class="col">
-            {{-- Completion date --}}
-            <div class="mb-3">
-                <div>Datum dostave / završetka:</div>
-                <x-editable.date :model="$order" field="date_delivered" modelName="narudzbe" />
-            </div>
-            {{-- Canceling date --}}
-            <div class="mb-3">
-                <div>Datum otkazivanja:</div>
-                <x-editable.date :model="$order" field="date_cancelled" modelName="narudzbe" />
-            </div>
-        </div>
 
+            {{-- Completion date --}}
+            <x-editable.date :model="$order" label="Datum dostave / završetka:" field="date_delivered" modelName="narudzbe" />
+
+            {{-- Canceling date --}}
+            <x-editable.date :model="$order" label="Datum otkazivanja:" field="date_cancelled" modelName="narudzbe" />
+
+        </div>
     </div>
 </div>
