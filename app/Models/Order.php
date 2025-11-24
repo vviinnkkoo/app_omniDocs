@@ -193,27 +193,24 @@ class Order extends Model
     */
     public function getDaysToDeliverAttribute()
     {
-        return $this->date_delivered ? $this->date_delivered->diffInDays($this->date_ordered) : null;
+        return $this->date_delivered?->diffInDays($this->date_ordered);
     }
 
     public function getDaysLeftAttribute()
     {
-        if (!$this->date_deadline || $this->date_deadline->isPast()) {
-            return null;
-        }
-
-        return now()->diffInDays($this->date_deadline);
+        return $this->date_deadline?->isFuture()
+            ? now()->diffInDays($this->date_deadline)
+            : null;
     }
 
     public function getDeadlineClassAttribute()
     {
-        if ($this->days_left <= 5) {
-            return 'btn-danger';
-        } elseif ($this->days_left <= 10) {
-            return 'btn-warning';
-        }
-
-        return 'btn-success';
+        return match (true) {
+            $this->days_left <= 2  => 'btn-dark',
+            $this->days_left <= 5  => 'btn-danger',
+            $this->days_left <= 10 => 'btn-warning',
+            default                => 'btn-success',
+        };
     }
 
 }
