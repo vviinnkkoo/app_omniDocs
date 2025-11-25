@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // blur event
             dtInput.addEventListener('blur', function () {
                 if (dtInput.dataset.editing === 'true') {
-                    const newValue = dtInput.value;
+                    const newValue = dtInput.value || null;
 
                     // update container text
                     container.innerHTML = newValue;
