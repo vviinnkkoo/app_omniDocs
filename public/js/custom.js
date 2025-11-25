@@ -210,67 +210,6 @@ document.addEventListener('DOMContentLoaded', function () {
 |--------------------------------------------------------------------------------------------
 */
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.editable-date').forEach(container => {
-        const editBtn = container.querySelector('.edit-btn');
-        const span = container.querySelector('.date-text');
-
-        if (!editBtn) return; // skip ako nema gumba
-
-        editBtn.addEventListener('click', () => {
-            const id = container.dataset.id;
-            const field = container.dataset.field;
-            const model = container.dataset.model;
-            const inputValue = container.dataset.inputdate || '';
-
-            const input = document.createElement('input');
-            input.type = 'date';
-            input.className = 'form-control form-control-sm';
-            input.style.width = 'auto';
-            input.value = inputValue;
-
-            container.replaceChild(input, span);
-            input.focus();
-
-            const finishEdit = (newValue) => {
-                fetch(`/${model}/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ field: field, newValue: newValue })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    container.dataset.inputdate = data.input_formatted;
-
-                    const newSpan = document.createElement('span');
-                    newSpan.className = 'date-text';
-                    newSpan.textContent = data.formatted || '—';
-
-                    container.replaceChild(newSpan, input);
-                })
-                .catch(() => {
-                    alert('Greška kod spremanja datuma.');
-                    container.replaceChild(span, input);
-                });
-            };
-
-            input.addEventListener('blur', () => finishEdit(input.value));
-            input.addEventListener('keydown', e => {
-                if (e.key === 'Enter') finishEdit(input.value);
-                if (e.key === 'Escape') container.replaceChild(span, input);
-            });
-        });
-    });
-});
-
-/*
-|--------------------------------------------------------------------------------------------
-| Ajax update for datetime fields
-|--------------------------------------------------------------------------------------------
-*/
-document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.editable-date').forEach(container => {
 
@@ -355,6 +294,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+/*
+|--------------------------------------------------------------------------------------------
+| Ajax update for datetime fields
+|--------------------------------------------------------------------------------------------
+*/
+document.addEventListener('DOMContentLoaded', function () {
+    const editableDateTimes = document.querySelectorAll('.editable-datetime');
+
+    editableDateTimes.forEach(function (container) {
+        container.addEventListener('click', function () {
+            const id = container.dataset.id;
+            const field = container.dataset.field;
+            const model = container.dataset.model;
+
+            // get current value from input[type="datetime-local"] if exists
+            const currentInput = container.querySelector('input[type="datetime-local"]');
+            const currentValue = currentInput ? currentInput.value : '';
+
+            // create new datetime-local input
+            const dtInput = document.createElement('input');
+            dtInput.type = 'datetime-local';
+            dtInput.className = 'form-control';
+            dtInput.style.width = '80%';
+            dtInput.value = currentValue;
+            dtInput.dataset.editing = 'true';
+
+            // replace container content with input
+            container.innerHTML = '';
+            container.appendChild(dtInput);
+            dtInput.focus();
+
+            // blur event
+            dtInput.addEventListener('blur', function () {
+                if (dtInput.dataset.editing === 'true') {
+                    const newValue = dtInput.value;
+
+                    // update container text
+                    container.innerHTML = newValue;
+
+                    // send AJAX PUT
+                    fetch(`/${model}/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ field: field, newValue: newValue })
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error updating the data.');
+                        // update original input if exists
+                        const origInput = document.querySelector(`.editable-datetime[data-id="${id}"][data-field="${field}"] input[type="datetime-local"]`);
+                        if (origInput) origInput.value = newValue;
+                    })
+                    .catch(() => alert('Error updating the data.'));
+
+                    delete dtInput.dataset.editing;
+                }
+            });
+
+            // keydown for Enter / Escape
+            dtInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    dtInput.blur(); // confirm
+                } else if (e.key === 'Escape') {
+                    container.innerHTML = currentValue; // cancel
+                }
+            });
+        });
+    });
+});
 
 /*
 |--------------------------------------------------------------------------------------------
