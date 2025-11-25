@@ -209,51 +209,65 @@ document.addEventListener('DOMContentLoaded', function () {
 | Ajax update for date fields
 |--------------------------------------------------------------------------------------------
 */
-document.addEventListener('DOMContentLoaded', function () {
-    const editableDates = document.querySelectorAll('.editable-date');
-
-    editableDates.forEach(function (container) {
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.editable-date').forEach(container => {
         const editBtn = container.querySelector('.edit-btn');
         const spanText = container.querySelector('.date-text');
 
-        editBtn.addEventListener('click', function (e) {
+        editBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            if (container.querySelector('input[type="date"]')) return; // već edit
 
-            const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
-            const originalFormatted = spanText.textContent;
-            const originalInputValue = container.dataset.inputdate;
+            const id = container.dataset.id;
 
-            // create input
+            // current value iz formated_{field} -> YYYY-MM-DD
+            let currentValue = container.dataset.inputdate || '';
+
+            // kreiraj input + buttons
             const input = document.createElement('input');
             input.type = 'date';
             input.className = 'form-control form-control-sm d-inline-block';
             input.style.width = '180px';
-            input.value = originalInputValue || '';
+            input.value = currentValue;
 
-            // create confirm button ✔
             const confirmBtn = document.createElement('button');
             confirmBtn.className = 'btn btn-success btn-sm ms-1';
             confirmBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
 
-            // create cancel button ✖
             const cancelBtn = document.createElement('button');
             cancelBtn.className = 'btn btn-danger btn-sm ms-1';
             cancelBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
 
-            // clear container & insert input + actions
-            container.innerHTML = '';
+            // hide span + pencil
+            spanText.style.display = 'none';
+            editBtn.style.display = 'none';
+
             container.appendChild(input);
             container.appendChild(confirmBtn);
             container.appendChild(cancelBtn);
-
             input.focus();
 
-            // confirm logic (save)
-            const confirm = () => {
-                const newValue = input.value;
+            // helper za formatiranje YYYY-MM-DD -> D. M. YYYY
+            function formatYmdToDmy(ymd) {
+                if (!ymd) return 'Nema';
+                const [y, m, d] = ymd.split('-');
+                return `${parseInt(d)}. ${parseInt(m)}. ${y}`;
+            }
 
+            function resetUi(value) {
+                input.remove();
+                confirmBtn.remove();
+                cancelBtn.remove();
+                spanText.textContent = value;
+                spanText.style.display = '';
+                editBtn.style.display = '';
+            }
+
+            // AJAX update
+            function saveValue() {
+                const newValue = input.value;
                 fetch(`/${model}/${id}`, {
                     method: 'PUT',
                     headers: {
@@ -262,50 +276,35 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: JSON.stringify({ field: field, newValue: newValue })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    // restore UI
-                    container.innerHTML = `
-                        <span class="date-text">${data.formatted}</span>
-                        <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                    `;
-                    container.dataset.inputdate = data.input;
-                    rebind(); // re-enable editing
+                .then(response => {
+                    if (!response.ok) throw new Error('Error updating');
+                    return response.json();
                 })
-                .catch(() => alert('Greška pri spremanju datuma.'));
-            };
+                .then(() => {
+                    container.dataset.inputdate = newValue; // update dataset
+                    resetUi(formatYmdToDmy(newValue));
+                })
+                .catch(() => {
+                    spanText.textContent = 'Pogreška';
+                    setTimeout(() => {
+                        resetUi(formatYmdToDmy(currentValue));
+                    }, 2000);
+                });
+            }
 
-            // cancel logic (restore original)
-            const cancel = () => {
-                container.innerHTML = `
-                    <span class="date-text">${originalFormatted}</span>
-                    <button class="edit-btn btn btn-sm btn-light" style="border:none; background:none; cursor:pointer;">
-                        <i class="bi bi-pencil-fill"></i>
-                    </button>
-                `;
-                rebind();
-            };
+            confirmBtn.addEventListener('click', saveValue);
+            cancelBtn.addEventListener('click', () => resetUi(formatYmdToDmy(currentValue)));
 
-            // button click events
-            confirmBtn.addEventListener('click', confirm);
-            cancelBtn.addEventListener('click', cancel);
-
-            // keyboard events
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') confirm();
-                if (e.key === 'Escape') cancel();
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') saveValue();
+                else if (e.key === 'Escape') resetUi(formatYmdToDmy(currentValue));
             });
+
+            input.addEventListener('blur', () => saveValue());
         });
     });
-
-    // rebind for newly inserted edit buttons
-    function rebind() {
-        const event = new Event('DOMContentLoaded');
-        document.dispatchEvent(event);
-    }
 });
+
 
 /*
 |--------------------------------------------------------------------------------------------
