@@ -236,13 +236,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // create confirm button
             const confirmBtn = document.createElement('button');
+            confirmBtn.type = 'button';
             confirmBtn.className = 'btn btn-success btn-sm me-1';
-            confirmBtn.innerHTML = '✅';
+            confirmBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
 
             // create cancel button
             const cancelBtn = document.createElement('button');
+            cancelBtn.type = 'button';
             cancelBtn.className = 'btn btn-danger btn-sm';
-            cancelBtn.innerHTML = '❌';
+            cancelBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
 
             // append
             container.appendChild(dtInput);
@@ -264,9 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // confirm
             const confirmEdit = () => {
-                const newValue = dtInput.value;
-                if (!newValue) return resetToOld();
-
+                const newValue = dtInput.value || null; // ako je prazno, null
                 fetch(`/${model}/${id}`, {
                     method: 'PUT',
                     headers: {
@@ -277,12 +277,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(res => {
                     if (!res.ok) throw new Error('Error updating');
-                    // format date for display: d. m. Y
-                    const formatted = new Date(newValue);
-                    const day = formatted.getDate();
-                    const month = formatted.getMonth() + 1;
-                    const year = formatted.getFullYear();
-                    const display = `${day}. ${month}. ${year}`;
+
+                    let display = 'Nema';
+                    if (newValue) {
+                        const formatted = new Date(newValue);
+                        const day = formatted.getDate();
+                        const month = formatted.getMonth() + 1;
+                        const year = formatted.getFullYear();
+                        display = `${day}.${month}.${year}`;
+                    }
+
                     container.dataset.inputdate = newValue;
                     container.dataset.formateddate = display;
 
