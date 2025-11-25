@@ -209,65 +209,64 @@ document.addEventListener('DOMContentLoaded', function () {
 | Ajax update for date fields
 |--------------------------------------------------------------------------------------------
 */
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.editable-date').forEach(container => {
-        const editBtn = container.querySelector('.edit-btn');
-        const spanText = container.querySelector('.date-text');
+document.addEventListener('DOMContentLoaded', function () {
+    const editableDates = document.querySelectorAll('.editable-date');
 
-        editBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (container.querySelector('input[type="date"]')) return; // već edit
+    editableDates.forEach(container => {
+        const dateText = container.querySelector('.date-text');
+        const pencilBtn = container.querySelector('.edit-btn');
 
+        pencilBtn.addEventListener('click', () => {
+            const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
-            const id = container.dataset.id;
+            const currentSQLValue = container.dataset.inputdate;
+            const currentDisplayValue = container.dataset.formateddate;
 
-            // current value iz formated_{field} -> YYYY-MM-DD
-            let currentValue = container.dataset.inputdate || '';
+            // clear container
+            container.innerHTML = '';
 
-            // kreiraj input + buttons
-            const input = document.createElement('input');
-            input.type = 'date';
-            input.className = 'form-control form-control-sm d-inline-block';
-            input.style.width = '180px';
-            input.value = currentValue;
+            // create input
+            const dtInput = document.createElement('input');
+            dtInput.type = 'date';
+            dtInput.className = 'form-control form-control-sm d-inline-block me-2';
+            dtInput.style.width = '180px';
+            dtInput.value = currentSQLValue || '';
+            dtInput.dataset.editing = 'true';
 
+            // create confirm button
             const confirmBtn = document.createElement('button');
-            confirmBtn.className = 'btn btn-success btn-sm ms-1';
-            confirmBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
+            confirmBtn.className = 'btn btn-success btn-sm me-1';
+            confirmBtn.innerHTML = '✅';
 
+            // create cancel button
             const cancelBtn = document.createElement('button');
-            cancelBtn.className = 'btn btn-danger btn-sm ms-1';
-            cancelBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+            cancelBtn.className = 'btn btn-danger btn-sm';
+            cancelBtn.innerHTML = '❌';
 
-            // hide span + pencil
-            spanText.style.display = 'none';
-            editBtn.style.display = 'none';
-
-            container.appendChild(input);
+            // append
+            container.appendChild(dtInput);
             container.appendChild(confirmBtn);
             container.appendChild(cancelBtn);
-            input.focus();
+            dtInput.focus();
 
-            // helper za formatiranje YYYY-MM-DD -> D. M. YYYY
-            function formatYmdToDmy(ymd) {
-                if (!ymd) return 'Nema';
-                const [y, m, d] = ymd.split('-');
-                return `${parseInt(d)}. ${parseInt(m)}. ${y}`;
-            }
+            const resetToOld = () => {
+                container.innerHTML = '';
+                const span = document.createElement('span');
+                span.className = 'date-text';
+                span.textContent = currentDisplayValue;
+                container.appendChild(span);
+                container.appendChild(pencilBtn);
+            };
 
-            function resetUi(value) {
-                input.remove();
-                confirmBtn.remove();
-                cancelBtn.remove();
-                spanText.textContent = value;
-                spanText.style.display = '';
-                editBtn.style.display = '';
-            }
+            // cancel
+            cancelBtn.addEventListener('click', resetToOld);
 
-            // AJAX update
-            function saveValue() {
-                const newValue = input.value;
+            // confirm
+            const confirmEdit = () => {
+                const newValue = dtInput.value;
+                if (!newValue) return resetToOld();
+
                 fetch(`/${model}/${id}`, {
                     method: 'PUT',
                     headers: {
@@ -276,34 +275,56 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify({ field: field, newValue: newValue })
                 })
-                .then(response => {
-                    if (!response.ok) throw new Error('Error updating');
-                    return response.json();
-                })
-                .then(() => {
-                    container.dataset.inputdate = newValue; // update dataset
-                    resetUi(formatYmdToDmy(newValue));
+                .then(res => {
+                    if (!res.ok) throw new Error('Error updating');
+                    // format date for display: d. m. Y
+                    const formatted = new Date(newValue);
+                    const day = formatted.getDate();
+                    const month = formatted.getMonth() + 1;
+                    const year = formatted.getFullYear();
+                    const display = `${day}. ${month}. ${year}`;
+                    container.dataset.inputdate = newValue;
+                    container.dataset.formateddate = display;
+
+                    container.innerHTML = '';
+                    const span = document.createElement('span');
+                    span.className = 'date-text';
+                    span.textContent = display;
+                    container.appendChild(span);
+                    container.appendChild(pencilBtn);
                 })
                 .catch(() => {
-                    spanText.textContent = 'Pogreška';
-                    setTimeout(() => {
-                        resetUi(formatYmdToDmy(currentValue));
-                    }, 2000);
+                    container.innerHTML = '';
+                    const span = document.createElement('span');
+                    span.className = 'date-text text-danger';
+                    span.textContent = 'pogreška';
+                    container.appendChild(span);
+                    container.appendChild(pencilBtn);
+                    setTimeout(() => resetToOld(), 2000);
                 });
-            }
+            };
 
-            confirmBtn.addEventListener('click', saveValue);
-            cancelBtn.addEventListener('click', () => resetUi(formatYmdToDmy(currentValue)));
+            confirmBtn.addEventListener('click', confirmEdit);
 
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') saveValue();
-                else if (e.key === 'Escape') resetUi(formatYmdToDmy(currentValue));
+            // enter key
+            dtInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') confirmEdit();
+                else if (e.key === 'Escape') resetToOld();
             });
 
-            input.addEventListener('blur', () => saveValue());
+            // blur save
+            dtInput.addEventListener('blur', e => {
+                // check if focus moved to confirm or cancel, then ignore
+                setTimeout(() => {
+                    if (!container.contains(document.activeElement)) {
+                        confirmEdit();
+                    }
+                }, 100);
+            });
         });
     });
 });
+
 
 
 /*
