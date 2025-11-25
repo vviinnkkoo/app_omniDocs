@@ -5,8 +5,7 @@
          data-id="{{ $model->id }}"
          data-field="{{ $field }}"
          data-model="{{ $modelName }}"
-         data-value="{{ $model->{'input_formated_' . $field} }}"
-         style="cursor:pointer;">
+         data-value="{{ $model->{'input_formated_' . $field} }}">
 
         <span class="date-text">
             {{ $model->{'formated_' . $field} ?? 'Nema' }}
