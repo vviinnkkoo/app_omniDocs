@@ -257,10 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Accept": "application/json",
                         "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
                     },
-                    body: JSON.stringify({
-                        field: field,
-                        newValue: newValue
-                    })
+                    body: JSON.stringify({ field: field, newValue: newValue || '' })
                 })
                 .then(async res => {
                     if (!res.ok) throw new Error();
