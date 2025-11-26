@@ -59,7 +59,7 @@ import './modules/scrollToTop.js';
 | Code to fetch and update the latest invoice number based on the selected year
 |--------------------------------------------------------------------------------------------
 */
-import './modules/updateInvoiceNumber.js';
+import './modules/updateInvoiceLastNumber.js';
 
 /*
 |--------------------------------------------------------------------------------------------
