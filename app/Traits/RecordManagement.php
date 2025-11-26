@@ -32,7 +32,7 @@ trait RecordManagement
     {
         $validated = $request->validate([
             'field' => 'required|string|in:' . implode(',', $allowedFields),
-            'newValue' => 'required'
+            'newValue' => 'nullable'
         ]);
 
     try {
