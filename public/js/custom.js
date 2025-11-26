@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
             input.focus();
 
             const finishEdit = (rawValue) => {
-                const newValue = rawValue; // "" ako je prazno → backend to spasi kao null
+                const newValue = rawValue === "" ? null : rawValue;
 
                 fetch(`/${model}/${id}`, {
                     method: "PUT",
@@ -287,6 +287,8 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             confirmBtn.addEventListener("click", () => finishEdit(input.value));
+            input.addEventListener("blur", () => finishEdit(input.value));
+
             input.addEventListener("keydown", e => {
                 if (e.key === "Enter") finishEdit(input.value);
                 if (e.key === "Escape") {
@@ -295,6 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     container.appendChild(editBtn);
                 }
             });
+
             cancelBtn.addEventListener("click", () => {
                 container.innerHTML = "";
                 container.appendChild(span);
