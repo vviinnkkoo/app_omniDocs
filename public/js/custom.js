@@ -209,127 +209,100 @@ document.addEventListener('DOMContentLoaded', function () {
 | Ajax update for date fields
 |--------------------------------------------------------------------------------------------
 */
-document.addEventListener('DOMContentLoaded', function () {
-    const editableDates = document.querySelectorAll('.editable-date');
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".editable-date").forEach(container => {
+        const editBtn = container.querySelector(".edit-btn");
+        const span = container.querySelector(".date-text");
 
-    editableDates.forEach(container => {
-        const dateText = container.querySelector('.date-text');
-        const pencilBtn = container.querySelector('.edit-btn');
+        if (!editBtn) return;
 
-        pencilBtn.addEventListener('click', () => {
+        editBtn.addEventListener("click", () => {
             const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
-            const currentSQLValue = container.dataset.inputdate;
-            const currentDisplayValue = container.dataset.formateddate;
+            const inputValue = container.dataset.inputdate || "";
 
-            // clear container
-            container.innerHTML = '';
+            const input = document.createElement("input");
+            input.type = "date";
+            input.className = "form-control form-control-sm d-inline-block me-2";
+            input.style.width = "160px";
+            input.value = inputValue;
 
-            // create input
-            const dtInput = document.createElement('input');
-            dtInput.type = 'date';
-            dtInput.className = 'form-control form-control-sm d-inline-block me-2';
-            dtInput.style.width = '180px';
-            dtInput.value = currentSQLValue || '';
-            dtInput.dataset.editing = 'true';
+            const btnWrapper = document.createElement("div");
+            btnWrapper.className = "d-inline-flex gap-1";
 
-            // create confirm button
-            const confirmBtn = document.createElement('button');
-            confirmBtn.type = 'button';
-            confirmBtn.className = 'btn btn-success btn-sm me-1';
-            confirmBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
+            const confirmBtn = document.createElement("button");
+            confirmBtn.className = "btn btn-sm btn-success";
+            confirmBtn.innerHTML = `<i class="bi bi-check-lg"></i>`;
 
-            // create cancel button
-            const cancelBtn = document.createElement('button');
-            cancelBtn.type = 'button';
-            cancelBtn.className = 'btn btn-danger btn-sm';
-            cancelBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+            const cancelBtn = document.createElement("button");
+            cancelBtn.className = "btn btn-sm btn-secondary";
+            cancelBtn.innerHTML = `<i class="bi bi-x-lg"></i>`;
 
-            // append
-            container.appendChild(dtInput);
-            container.appendChild(confirmBtn);
-            container.appendChild(cancelBtn);
-            dtInput.focus();
+            btnWrapper.appendChild(confirmBtn);
+            btnWrapper.appendChild(cancelBtn);
 
-            const resetToOld = () => {
-                container.innerHTML = '';
-                const span = document.createElement('span');
-                span.className = 'date-text';
-                span.textContent = currentDisplayValue;
-                container.appendChild(span);
-                container.appendChild(pencilBtn);
-            };
+            container.innerHTML = "";
+            container.appendChild(input);
+            container.appendChild(btnWrapper);
+            input.focus();
 
-            // cancel
-            cancelBtn.addEventListener('click', resetToOld);
+            const finishEdit = (rawValue) => {
+                const newValue = rawValue; // "" ako je prazno → backend to spasi kao null
 
-            // confirm
-            const confirmEdit = () => {
-                const newValue = dtInput.value || null; // ako je prazno, null
                 fetch(`/${model}/${id}`, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
                     },
-                    body: JSON.stringify({ field: field, newValue: newValue })
+                    body: JSON.stringify({
+                        field: field,
+                        newValue: newValue
+                    })
                 })
-                .then(res => {
-                    if (!res.ok) throw new Error('Error updating');
+                .then(async res => {
+                    if (!res.ok) throw new Error();
+                    return res.json();
+                })
+                .then(data => {
+                    const formatted = data.formatted || "Nema";
+                    container.dataset.inputdate = data.input_formatted || "";
 
-                    let display = 'Nema';
-                    if (newValue) {
-                        const formatted = new Date(newValue);
-                        const day = formatted.getDate();
-                        const month = formatted.getMonth() + 1;
-                        const year = formatted.getFullYear();
-                        display = `${day}.${month}.${year}`;
-                    }
+                    const newSpan = document.createElement("span");
+                    newSpan.className = "date-text me-2";
+                    newSpan.textContent = formatted;
 
-                    container.dataset.inputdate = newValue;
-                    container.dataset.formateddate = display;
-
-                    container.innerHTML = '';
-                    const span = document.createElement('span');
-                    span.className = 'date-text';
-                    span.textContent = display;
-                    container.appendChild(span);
-                    container.appendChild(pencilBtn);
+                    container.innerHTML = "";
+                    container.appendChild(newSpan);
+                    container.appendChild(editBtn);
                 })
                 .catch(() => {
-                    container.innerHTML = '';
-                    const span = document.createElement('span');
-                    span.className = 'date-text text-danger';
-                    span.textContent = 'pogreška';
+                    alert("Greška kod spremanja datuma.");
+                    container.innerHTML = "";
                     container.appendChild(span);
-                    container.appendChild(pencilBtn);
-                    setTimeout(() => resetToOld(), 2000);
+                    container.appendChild(editBtn);
                 });
             };
 
-            confirmBtn.addEventListener('click', confirmEdit);
-
-            // enter key
-            dtInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') confirmEdit();
-                else if (e.key === 'Escape') resetToOld();
+            confirmBtn.addEventListener("click", () => finishEdit(input.value));
+            input.addEventListener("keydown", e => {
+                if (e.key === "Enter") finishEdit(input.value);
+                if (e.key === "Escape") {
+                    container.innerHTML = "";
+                    container.appendChild(span);
+                    container.appendChild(editBtn);
+                }
             });
-
-            // blur save
-            dtInput.addEventListener('blur', e => {
-                // check if focus moved to confirm or cancel, then ignore
-                setTimeout(() => {
-                    if (!container.contains(document.activeElement)) {
-                        confirmEdit();
-                    }
-                }, 100);
+            cancelBtn.addEventListener("click", () => {
+                container.innerHTML = "";
+                container.appendChild(span);
+                container.appendChild(editBtn);
             });
         });
     });
 });
-
-
 
 /*
 |--------------------------------------------------------------------------------------------
