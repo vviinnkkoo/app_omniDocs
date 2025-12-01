@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    // funkcija za formatiranje datuma iz YYYY-MM-DD u DD.MM.YYYY
+    const formatDateToDMY = (dateStr) => {
+        if (!dateStr) return "Nema";
+        const [year, month, day] = dateStr.split("-");
+        return `${day}.${month}.${year}`;
+    };
+
     document.querySelectorAll(".editable-date").forEach(container => {
         const startBtn = container.querySelector(".edit-start");
         const confirmBtn = container.querySelector(".edit-confirm");
@@ -41,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then(res => {
                     if (!res.ok) throw new Error();
-                    // Ako je response ok, odmah postavi input value u span
-                    span.textContent = rawValue || "Nema";
+                    // Ako je response ok, odmah postavi input value u span, formatirano
+                    span.textContent = formatDateToDMY(rawValue);
                     container.dataset.inputdate = rawValue || "";
                 })
                 .catch(() => {
