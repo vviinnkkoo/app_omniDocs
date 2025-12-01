@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".editable-date").forEach(container => {
-        const editBtn = container.querySelector(".edit-btn");
+        const startBtn = container.querySelector(".edit-start");
+        const confirmBtn = container.querySelector(".edit-confirm");
+        const cancelBtn = container.querySelector(".edit-cancel");
         const span = container.querySelector(".date-text");
 
-        if (!editBtn) return;
+        if (!startBtn) return;
 
-        editBtn.addEventListener("click", () => {
+        startBtn.addEventListener("click", () => {
             const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
@@ -13,27 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const input = document.createElement("input");
             input.type = "date";
-            input.className = "form-control form-control-sm d-inline-block me-2";
-            input.style.width = "160px";
+            input.className = "form-control form-control-sm";
             input.value = inputValue;
 
-            const btnWrapper = document.createElement("div");
-            btnWrapper.className = "d-inline-flex gap-1";
+            span.classList.add("d-none");
+            startBtn.classList.add("d-none");
+            confirmBtn.classList.remove("d-none");
+            cancelBtn.classList.remove("d-none");
 
-            const confirmBtn = document.createElement("button");
-            confirmBtn.className = "btn btn-sm btn-success";
-            confirmBtn.innerHTML = `<i class="bi bi-check-lg"></i>`;
-
-            const cancelBtn = document.createElement("button");
-            cancelBtn.className = "btn btn-sm btn-secondary";
-            cancelBtn.innerHTML = `<i class="bi bi-x-lg"></i>`;
-
-            btnWrapper.appendChild(confirmBtn);
-            btnWrapper.appendChild(cancelBtn);
-
-            container.innerHTML = "";
-            container.appendChild(input);
-            container.appendChild(btnWrapper);
+            container.insertBefore(input, confirmBtn);
             input.focus();
 
             const finishEdit = (rawValue) => {
@@ -46,48 +36,37 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Accept": "application/json",
                         "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
                     },
-                    body: JSON.stringify({ field: field, newValue: newValue || '' })
+                    body: JSON.stringify({ field, newValue: newValue || '' })
                 })
-                .then(async res => {
-                    if (!res.ok) throw new Error();
-                    return res.json();
-                })
+                .then(res => res.json())
                 .then(data => {
                     const formatted = data.formatted || "Nema";
                     container.dataset.inputdate = data.input_formatted || "";
-
-                    const newSpan = document.createElement("span");
-                    newSpan.className = "date-text me-2";
-                    newSpan.textContent = formatted;
-
-                    container.innerHTML = "";
-                    container.appendChild(newSpan);
-                    container.appendChild(editBtn);
+                    span.textContent = formatted;
                 })
-                .catch(() => {
-                    alert("Greška kod spremanja datuma.");
-                    container.innerHTML = "";
-                    container.appendChild(span);
-                    container.appendChild(editBtn);
+                .catch(() => alert("Greška kod spremanja datuma."))
+                .finally(() => {
+                    input.remove();
+                    span.classList.remove("d-none");
+                    startBtn.classList.remove("d-none");
+                    confirmBtn.classList.add("d-none");
+                    cancelBtn.classList.add("d-none");
                 });
             };
 
-            confirmBtn.addEventListener("click", () => finishEdit(input.value));
-            input.addEventListener("blur", () => finishEdit(input.value));
+            confirmBtn.addEventListener("click", () => finishEdit(input.value), { once: true });
+
+            cancelBtn.addEventListener("click", () => {
+                input.remove();
+                span.classList.remove("d-none");
+                startBtn.classList.remove("d-none");
+                confirmBtn.classList.add("d-none");
+                cancelBtn.classList.add("d-none");
+            }, { once: true });
 
             input.addEventListener("keydown", e => {
                 if (e.key === "Enter") finishEdit(input.value);
-                if (e.key === "Escape") {
-                    container.innerHTML = "";
-                    container.appendChild(span);
-                    container.appendChild(editBtn);
-                }
-            });
-
-            cancelBtn.addEventListener("click", () => {
-                container.innerHTML = "";
-                container.appendChild(span);
-                container.appendChild(editBtn);
+                if (e.key === "Escape") cancelBtn.click();
             });
         });
     });
