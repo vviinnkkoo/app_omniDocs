@@ -57,9 +57,10 @@
             </div>
 
             <div>
-                <span class="editable" data-id="{{ $order->id }}" data-field="delivery_address" data-model="narudzbe">
+                {{--<span class="editable" data-id="{{ $order->id }}" data-field="delivery_address" data-model="narudzbe">
                     {{ $order->delivery_address }}
-                </span>
+                </span>--}}
+                <x-editable.text :model="$order" field="delivery_address" modelName="narudzbe" :value="$order->delivery_address" leftIcon="geo-alt" simple="true"/>
             </div>
 
             <div>
