@@ -1,14 +1,3 @@
-@if($simple)
-    <span class="editable-text-simple editable"
-          data-id="{{ $model->id }}"
-          data-field="{{ $field }}"
-          data-model="{{ $modelName }}">
-        {{ $value }}
-    </span>
-    @php return; @endphp
-@endif
-
-
 @if($label && !$labelInline)
     <label class="editable-label">{{ $label }}</label>
 @endif
@@ -17,7 +6,6 @@
     <div class="d-flex align-items-center gap-2">
         <span class="editable-inline-label">{{ $label }}:</span>
 @endif
-
 
 <div class="editable-text-wrapper d-flex align-items-center gap-2"
      data-id="{{ $model->id }}"
