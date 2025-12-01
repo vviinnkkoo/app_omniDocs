@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = container.dataset.id;
             const field = container.dataset.field;
             const model = container.dataset.model;
+            const originalValue = span.textContent;
             const inputValue = container.dataset.inputdate || "";
 
             const input = document.createElement("input");
@@ -38,13 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     body: JSON.stringify({ field, newValue: newValue || '' })
                 })
-                .then(res => res.json())
-                .then(data => {
-                    const formatted = data.formatted || "Nema";
-                    container.dataset.inputdate = data.input_formatted || "";
-                    span.textContent = formatted;
+                .then(res => {
+                    if (!res.ok) throw new Error();
+                    // Ako je response ok, odmah postavi input value u span
+                    span.textContent = rawValue || "Nema";
+                    container.dataset.inputdate = rawValue || "";
                 })
-                .catch(() => alert("Greška kod spremanja datuma."))
+                .catch(() => {
+                    alert("Greška kod spremanja datuma.");
+                    span.textContent = originalValue;
+                })
                 .finally(() => {
                     input.remove();
                     span.classList.remove("d-none");
@@ -62,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 startBtn.classList.remove("d-none");
                 confirmBtn.classList.add("d-none");
                 cancelBtn.classList.add("d-none");
+                span.textContent = originalValue;
             }, { once: true });
 
             input.addEventListener("keydown", e => {
