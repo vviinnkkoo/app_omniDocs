@@ -4,7 +4,7 @@ namespace App\View\Components\Editable;
 
 use Illuminate\View\Component;
 
-class Base extends Component
+abstract class Base extends Component
 {
     public $label;
     public $labelInline;
