@@ -74,10 +74,11 @@
                 <x-editable.text :model="$order" field="delivery_postal" modelName="narudzbe" :value="$order->delivery_postal" leftIcon="bi bi-mailbox2" simple="true"/>
             </div>
 
+            {{--}}
             <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_country_id" data-model="narudzbe">
-                {{-- Display the selected value --}}
+                
                 <span>{{ $order->country->name }}</span>
-                {{-- Hidden select element with options --}}
+
                 <select class="edit-select form-select" style="display: none !important">
                     <option value="" selected>Odaberi državu...</option>
                     @foreach ($countries as $country)
@@ -85,6 +86,7 @@
                     @endforeach 
                 </select>
             </div>
+            --}}
 
             <div>
                 {{--<span class="editable" data-id="{{ $order->id }}" data-field="delivery_email" data-model="narudzbe">{{ $order->delivery_email }}</span>--}}
