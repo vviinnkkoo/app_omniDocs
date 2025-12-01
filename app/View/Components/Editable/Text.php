@@ -2,37 +2,21 @@
 
 namespace App\View\Components\Editable;
 
-use Illuminate\View\Component;
-
-class Text extends Component
+class Text extends Base
 {
-    public $label;
-    public $labelInline;
-    public $leftIcon;
-    public $model;
-    public $field;
-    public $modelName;
     public $value;
-    public $simple;
 
     public function __construct(
         $model,
         $field,
         $modelName,
-        $value,
+        $value = null,
         $label = null,
         $labelInline = false,
-        $leftIcon = null,
-        $simple = false
+        $leftIcon = null
     ) {
-        $this->label = $label;
-        $this->labelInline = filter_var($labelInline, FILTER_VALIDATE_BOOLEAN);
-        $this->leftIcon = $leftIcon;
-        $this->model = $model;
-        $this->field = $field;
-        $this->modelName = $modelName;
+        parent::__construct($model, $field, $modelName, $label, $labelInline, $leftIcon);
         $this->value = $value;
-        $this->simple = filter_var($simple, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function render()

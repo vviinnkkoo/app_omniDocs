@@ -2,21 +2,23 @@
 
 namespace App\View\Components\Editable;
 
-use Illuminate\View\Component;
-
-class Date extends Component
+class Date extends Base
 {
-    public $label;
-    public $model;
-    public $field;
-    public $modelName;
+    public $formattedValue;
+    public $inputValue;
 
-    public function __construct($label, $model, $field, $modelName)
-    {
-        $this->label = $label;
-        $this->model = $model;
-        $this->field = $field;
-        $this->modelName = $modelName;
+    public function __construct(
+        $model,
+        $field,
+        $modelName,
+        $label = null,
+        $labelInline = false,
+        $leftIcon = null
+    ) {
+        parent::__construct($model, $field, $modelName, $label, $labelInline, $leftIcon);
+
+        $this->formattedValue = $model->{'formated_' . $field} ?? 'Nema';
+        $this->inputValue = $model->{'input_formated_' . $field} ?? null;
     }
 
     public function render()
