@@ -173,9 +173,9 @@
                 <div>Kod za praćenje:</div>
                 <div>
                     {{--<span class="editable gray-mark" data-id="{{ $order->id }}" data-field="tracking_code" data-model="narudzbe">{{ $order->tracking_code }}</span>--}}
-                    <x-editable.text :model="$order" field="tracking_code" modelName="narudzbe" :value="$order->tracking_code" leftIcon="bi bi-telephone-fill" simple="true"/> &nbsp;
+                    <x-editable.text :model="$order" field="tracking_code" modelName="narudzbe" :value="$order->tracking_code" simple="true"/> &nbsp;
                     <span>
-                    @include("includes.tracking-code-condition")
+                        @include("includes.tracking-code-condition")
                     </span>
                 </div>
             </div>
