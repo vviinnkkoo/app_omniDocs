@@ -57,24 +57,26 @@
             </div>
 
             <div>
-                {{--<span class="editable" data-id="{{ $order->id }}" data-field="delivery_address" data-model="narudzbe">
-                    {{ $order->delivery_address }}
-                </span>--}}
                 <x-editable.text :model="$order" field="delivery_address" modelName="narudzbe" :value="$order->delivery_address" leftIcon="bi bi-geo-alt-fill" simple="true"/>
             </div>
 
             <div>
-                <span class="editable" data-id="{{ $order->id }}" data-field="delivery_postal" data-model="narudzbe">
+                {{--<span class="editable" data-id="{{ $order->id }}" data-field="delivery_postal" data-model="narudzbe">
                     {{ $order->delivery_postal }}
                 </span>, 
                 <span class="editable" data-id="{{ $order->id }}" data-field="delivery_city" data-model="narudzbe">
                     {{ $order->delivery_city }}
-                </span>
+                </span>--}}
+                <x-editable.text :model="$order" field="delivery_city" modelName="narudzbe" :value="$order->delivery_city" leftIcon="bi bi-signpost-fill" simple="true"/> 
+            </div>
+
+            <div>
+                <x-editable.text :model="$order" field="delivery_postal" modelName="narudzbe" :value="$order->delivery_postal" leftIcon="bi bi-mailbox2" simple="true"/>
             </div>
 
             <div class="editable-select" data-id="{{ $order->id }}" data-field="delivery_country_id" data-model="narudzbe">
                 {{-- Display the selected value --}}
-                <span>{{ $order->countryName }}</span>
+                <span>{{ $order->country->name }}</span>
                 {{-- Hidden select element with options --}}
                 <select class="edit-select form-select" style="display: none !important">
                     <option value="" selected>Odaberi državu...</option>
@@ -85,11 +87,13 @@
             </div>
 
             <div>
-                <span class="editable" data-id="{{ $order->id }}" data-field="delivery_email" data-model="narudzbe">{{ $order->delivery_email }}</span>
+                {{--<span class="editable" data-id="{{ $order->id }}" data-field="delivery_email" data-model="narudzbe">{{ $order->delivery_email }}</span>--}}
+                <x-editable.text :model="$order" field="delivery_email" modelName="narudzbe" :value="$order->delivery_email" leftIcon="bi bi-envelope-at-fill" simple="true"/>                
             </div>
 
             <div>
-                <span class="editable" data-id="{{ $order->id }}" data-field="delivery_phone" data-model="narudzbe">{{ $order->delivery_phone }}</span>
+                {{--<span class="editable" data-id="{{ $order->id }}" data-field="delivery_phone" data-model="narudzbe">{{ $order->delivery_phone }}</span>--}}
+                <x-editable.text :model="$order" field="delivery_phone" modelName="narudzbe" :value="$order->delivery_phone" leftIcon="bi bi-telephone-fill" simple="true"/>
             </div>
 
         </div>
@@ -166,7 +170,8 @@
             <div class="mb-3">
                 <div>Kod za praćenje:</div>
                 <div>
-                    <span class="editable gray-mark" data-id="{{ $order->id }}" data-field="tracking_code" data-model="narudzbe">{{ $order->tracking_code }}</span>&nbsp;
+                    {{--<span class="editable gray-mark" data-id="{{ $order->id }}" data-field="tracking_code" data-model="narudzbe">{{ $order->tracking_code }}</span>--}}
+                    <x-editable.text :model="$order" field="tracking_code" modelName="narudzbe" :value="$order->tracking_code" leftIcon="bi bi-telephone-fill" simple="true"/> &nbsp;
                     <span>
                     @include("includes.tracking-code-condition")
                     </span>
