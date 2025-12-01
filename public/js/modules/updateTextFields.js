@@ -1,26 +1,44 @@
-document.addEventListener("dblclick", function (event) {
-    const target = event.target.closest(".editable");
-    if (!target || target.classList.contains("editing")) return;
+document.addEventListener("click", function (e) {
+    const startBtn = e.target.closest(".edit-start");
+    if (!startBtn) return;
 
-    const id = target.dataset.id;
-    const field = target.dataset.field;
-    const model = target.dataset.model;
-    const originalValue = target.textContent;
+    const wrapper = startBtn.closest(".editable-text-wrapper");
+    if (!wrapper) return;
+
+    const valueSpan = wrapper.querySelector(".editable-text-value");
+    const confirmBtn = wrapper.querySelector(".edit-confirm");
+    const cancelBtn = wrapper.querySelector(".edit-cancel");
+
+    const originalValue = valueSpan.textContent.trim();
+    const id = wrapper.dataset.id;
+    const field = wrapper.dataset.field;
+    const model = wrapper.dataset.model;
+
+    startBtn.classList.add("d-none");
+    confirmBtn.classList.remove("d-none");
+    cancelBtn.classList.remove("d-none");
 
     const input = document.createElement("input");
     input.type = "text";
-    input.className = "edit-input";
+    input.className = "form-control form-control-sm";
     input.value = originalValue;
 
-    target.textContent = "";
-    target.appendChild(input);
+    valueSpan.replaceWith(input);
     input.focus();
-    target.classList.add("editing");
 
-    const finishEditing = (newValue, save = true) => {
-        if (!save || newValue === "") {
-            target.textContent = originalValue;
-            target.classList.remove("editing");
+    const finish = (save) => {
+        if (!save) {
+            input.replaceWith(valueSpan);
+            valueSpan.textContent = originalValue;
+            resetButtons();
+            return;
+        }
+
+        const newValue = input.value.trim();
+        if (newValue === "") {
+            input.replaceWith(valueSpan);
+            valueSpan.textContent = originalValue;
+            resetButtons();
             return;
         }
 
@@ -32,25 +50,31 @@ document.addEventListener("dblclick", function (event) {
             },
             body: JSON.stringify({ field, newValue })
         })
-        .then(response => {
-            if (!response.ok) throw new Error("Network response was not ok");
-            target.textContent = newValue;
+        .then(r => {
+            if (!r.ok) throw new Error();
+            valueSpan.textContent = newValue;
         })
         .catch(() => {
-            alert("Error updating the data.");
-            target.textContent = originalValue;
+            alert("Greška prilikom spremanja.");
+            valueSpan.textContent = originalValue;
         })
         .finally(() => {
-            target.classList.remove("editing");
+            input.replaceWith(valueSpan);
+            resetButtons();
         });
     };
 
-    input.addEventListener("blur", () => finishEditing(input.value));
-    input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            input.blur(); // okida fetch
-        } else if (e.key === "Escape") {
-            finishEditing(originalValue, false); // odustajanje
-        }
+    const resetButtons = () => {
+        startBtn.classList.remove("d-none");
+        confirmBtn.classList.add("d-none");
+        cancelBtn.classList.add("d-none");
+    };
+
+    confirmBtn.onclick = () => finish(true);
+    cancelBtn.onclick = () => finish(false);
+
+    input.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") finish(true);
+        if (ev.key === "Escape") finish(false);
     });
 });

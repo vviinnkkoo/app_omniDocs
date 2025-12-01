@@ -31,13 +31,7 @@
                   {{-- Color name --}}
                   <td class="align-middle">
                     {{--<span class="editable" data-id="{{ $color->id }}" data-field="name" data-model="opis">{{ $color->name }}</span>--}}
-                    <x-editable.text
-                        :model="$color"
-                        field="name"
-                        modelName="opis"
-                        :value="$color->name"
-                        simple="true"
-                    />
+                    <x-editable.text :model="$color" field="name" modelName="opis" :value="$color->name" simple="true"/>
                   </td>
 
                   {{-- Delete button --}}
