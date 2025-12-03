@@ -59,7 +59,7 @@ class Kpr extends Model
     */
     public function getFormatedAmountAttribute($value)
     {
-        return is_null($value) ? null : str_replace(',', '.', $value);
+        return is_null($value) ? null : str_replace('.', ',', $value);
     }
 
     public function getFormatedDateAttribute()
