@@ -6,12 +6,12 @@ use Illuminate\View\Component;
 
 abstract class Base extends Component
 {
-    public $label;
-    public $labelInline;
-    public $leftIcon;
     public $model;
     public $field;
     public $modelName;
+    public $label;
+    public $labelInline;
+    public $leftIcon;
 
     public function __construct(
         $model,
@@ -21,11 +21,11 @@ abstract class Base extends Component
         $labelInline = false,
         $leftIcon = null
     ) {
-        $this->label = $label;
-        $this->labelInline = filter_var($labelInline, FILTER_VALIDATE_BOOLEAN);
-        $this->leftIcon = $leftIcon;
         $this->model = $model;
         $this->field = $field;
         $this->modelName = $modelName;
+        $this->label = $label;
+        $this->labelInline = filter_var($labelInline, FILTER_VALIDATE_BOOLEAN);
+        $this->leftIcon = $leftIcon;
     }
 }
