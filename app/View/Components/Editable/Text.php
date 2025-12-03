@@ -13,9 +13,10 @@ class Text extends Base
         $value = null,
         $label = null,
         $labelInline = false,
-        $leftIcon = null
+        $leftIcon = null,
+        $suffix = null
     ) {
-        parent::__construct($model, $field, $modelName, $label, $labelInline, $leftIcon);
+        parent::__construct($model, $field, $modelName, $label, $labelInline, $leftIcon, $suffix);
         $this->value = $value;
     }
 

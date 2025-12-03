@@ -18,6 +18,10 @@
 
     <span class="editable-text-value">{{ $value }}</span>
 
+    @if($suffix)
+        <span class="text-secondary small"> {{ $suffix }} </span>
+    @endif
+
     <button type="button" class="btn btn-sm p-0 border-0 bg-transparent edit-start">
         <i class="bi bi-pencil-square"></i>
     </button>
