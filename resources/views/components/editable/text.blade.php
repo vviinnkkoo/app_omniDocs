@@ -13,7 +13,7 @@
      data-model="{{ $modelName }}">
 
     @if($leftIcon)
-        <i class="bi {{ $leftIcon }} text-secondary small"></i>
+        <i class="{{ $leftIcon }} text-secondary small"></i>
     @endif
 
     <span class="editable-text-value">{{ $value }}</span>
