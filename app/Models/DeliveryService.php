@@ -50,8 +50,9 @@ class DeliveryService extends Model
     | Accessors
     |--------------------------------------------------------------------------------------------
     */
-    public function getFormatedDefaultCostAttribute($value)
+    public function getFormatedDefaultCostAttribute()
     {
+        $value = $this->attributes['default_cost'];
         return is_null($value) ? null : str_replace('.', ',', $value);
     }
 }
