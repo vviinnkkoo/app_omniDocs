@@ -57,7 +57,7 @@
 
                     {{-- Cost --}}
                     <td class="align-middle text-right">                    
-                      <x-editable.text :model="$deliveryService" field="name" modelName="dostavne-usluge" :value="$deliveryService->name" simple="true" suffix=" €"/>
+                      <x-editable.text :model="$deliveryService" field="name" modelName="dostavne-usluge" :value="$deliveryService->default_price" simple="true" suffix=" €"/>
                     </td>
 
                     {{-- Visibility selector --}}
