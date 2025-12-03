@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const input = document.createElement("input");
             input.type = "date";
             input.className = "form-control form-control-sm";
+            input.style.maxWidth = "400px"; // Limit input width
             input.value = inputValue;
 
             span.classList.add("d-none");
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .then(res => {
                     if (!res.ok) throw new Error();
-                    // Ako je response ok, odmah postavi input value u span, formatirano
+                    // If response is ok, return the formatted date
                     span.textContent = formatDateToDMY(rawValue);
                     container.dataset.inputdate = rawValue || "";
                 })

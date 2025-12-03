@@ -21,6 +21,7 @@ document.addEventListener("click", function (e) {
     const input = document.createElement("input");
     input.type = "text";
     input.className = "form-control form-control-sm";
+    input.style.maxWidth = "400px"; // Limit input width
     input.value = originalValue;
 
     valueSpan.replaceWith(input);
