@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const input = document.createElement("input");
             input.type = "date";
             input.className = "form-control form-control-sm";
-            input.style.maxWidth = "300px"; // Limit input width
+            input.style.maxWidth = "150px"; // Limit input width
             input.value = inputValue;
 
             span.classList.add("d-none");
