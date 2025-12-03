@@ -40,32 +40,38 @@
 
                   {{-- Name --}}
                   <td class="align-middle">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="name" data-model="kupci">{{ $customer->name }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="name" data-model="kupci">{{ $customer->name }}</span> --}}
+                    <x-editable.text :model="$customer" field="name" modelName="kupci" :value="$customer->name" simple="true"/>
                   </td>
 
                   {{-- Email --}}
                   <td class="align-middle">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="email" data-model="kupci">{{ $customer->email }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="email" data-model="kupci">{{ $customer->email }}</span> --}}
+                    <x-editable.text :model="$customer" field="email" modelName="kupci" :value="$customer->email" simple="true"/>
                   </td>
 
                   {{-- Phone --}}
                   <td class="align-middle">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="phone" data-model="kupci">{{ $customer->phone }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="phone" data-model="kupci">{{ $customer->phone }}</span> --}}
+                    <x-editable.text :model="$customer" field="phone" modelName="kupci" :value="$customer->phone" simple="true"/>
                   </td>
 
                   {{-- Address --}}
                   <td class="align-middle text-end">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="address" data-model="kupci">{{ $customer->address }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="address" data-model="kupci">{{ $customer->address }}</span> --}}
+                    <x-editable.text :model="$customer" field="address" modelName="kupci" :value="$customer->address" simple="true"/>
                   </td>
 
                   {{-- House number --}}
                   <td class="align-middle">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="house_number" data-model="kupci">{{ $customer->house_number }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="house_number" data-model="kupci">{{ $customer->house_number }}</span> --}}
+                    <x-editable.text :model="$customer" field="house_number" modelName="kupci" :value="$customer->house_number" simple="true"/>
                   </td>
 
                   {{-- City --}}
                   <td class="align-middle">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="city" data-model="kupci">{{ $customer->city }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="city" data-model="kupci">{{ $customer->city }}</span> --}}
+                    <x-editable.text :model="$customer" field="city" modelName="kupci" :value="$customer->city" simple="true"/>
                   </td>
 
                   {{-- Country --}}
@@ -85,7 +91,8 @@
 
                   {{-- Postal code --}}
                   <td class="align-middle">
-                    <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span>
+                    {{-- <span class="editable" data-id="{{ $customer->id }}" data-field="postal" data-model="kupci">{{ $customer->postal }}</span> --}}
+                    <x-editable.text :model="$customer" field="postal" modelName="kupci" :value="$customer->postal" simple="true"/>
                   </td>
 
                   {{-- Total ordered amount --}}

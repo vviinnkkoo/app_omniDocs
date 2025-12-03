@@ -34,7 +34,8 @@
 
                     {{-- Delivery service name --}}
                     <td class="align-middle text-right">                      
-                      <span class="editable" data-id="{{ $deliveryService->id }}" data-field="name" data-model="dostavne-usluge">{{ $deliveryService->name }}</span>
+                      {{-- <span class="editable" data-id="{{ $deliveryService->id }}" data-field="name" data-model="dostavne-usluge">{{ $deliveryService->name }}</span> --}}
+                      <x-editable.text :model="$deliveryService" field="name" modelName="dostavne-usluge" :value="$customer->name" simple="true"/>
                     </td>
 
                     {{-- Delivery company selector --}}
@@ -56,7 +57,7 @@
 
                     {{-- Cost --}}
                     <td class="align-middle text-right">                    
-                      <span class="editable" data-id="{{ $deliveryService->id }}" data-field="default_cost" data-model="dostavne-usluge">{{ $deliveryService->default_cost }}</span> €
+                      <x-editable.text :model="$deliveryService" field="name" modelName="dostavne-usluge" :value="$customer->name" simple="true" suffix=" €"/>
                     </td>
 
                     {{-- Visibility selector --}}

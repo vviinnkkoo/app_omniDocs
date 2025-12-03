@@ -30,7 +30,7 @@
 
                   {{-- Country name --}}
                   <td class="align-middle text-right">
-                    <span class="editable" data-id="{{ $country->id }}" data-field="name" data-model="drzave-poslovanja">{{ $country->name }}</span>
+                    <x-editable.text :model="$country" field="name" modelName="drzave-poslovanja" :value="$country->name" simple="true"/>
                   </td>
 
                   {{-- Delete button --}}
