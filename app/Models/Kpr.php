@@ -59,6 +59,7 @@ class Kpr extends Model
     */
     public function getFormatedAmountAttribute($value)
     {
+        $value = $this->attributes['amount'];
         return is_null($value) ? null : str_replace('.', ',', $value);
     }
 
