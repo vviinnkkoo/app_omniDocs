@@ -44,7 +44,7 @@ class Kpr extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | SET accessors
+    | Mutators
     |--------------------------------------------------------------------------------------------
     */
     public function setAmountAttribute($value)
@@ -54,19 +54,19 @@ class Kpr extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Date formatters for display only
+    | Accessors
     |--------------------------------------------------------------------------------------------
     */
+    public function getAmountAttribute()
+    {
+        return is_null($value) ? null : str_replace(',', '.', $value);
+    }
+
     public function getFormatedDateAttribute()
     {
         return $this->date ? $this->date->format('d.m.Y.') : null;
     }
 
-    /*
-    |--------------------------------------------------------------------------------------------
-    | Date formatters for date input value
-    |--------------------------------------------------------------------------------------------
-    */
     public function getInputFormatedDateAttribute()
     {
         return $this->date ? $this->date->format('Y-m-d') : null;

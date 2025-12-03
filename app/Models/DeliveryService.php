@@ -37,11 +37,21 @@ class DeliveryService extends Model
     
     /*
     |--------------------------------------------------------------------------------------------
-    | SET accessors
+    | Mutators
     |--------------------------------------------------------------------------------------------
     */
     public function setDefaultCostAttribute($value)
     {
         $this->attributes['default_cost'] = is_null($value) ? null : str_replace(',', '.', $value);
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------------------------
+    */
+    public function getDefaultCostAttribute($value)
+    {
+        return is_null($value) ? null : str_replace(',', '.', $value);
     }
 }
