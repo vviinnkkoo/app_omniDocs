@@ -57,7 +57,7 @@ class Kpr extends Model
     | Accessors
     |--------------------------------------------------------------------------------------------
     */
-    public function getAmountAttribute()
+    public function getAmountAttribute($value)
     {
         return is_null($value) ? null : str_replace(',', '.', $value);
     }

@@ -52,6 +52,6 @@ class DeliveryService extends Model
     */
     public function getDefaultCostAttribute($value)
     {
-        return is_null($value) ? null : str_replace(',', '.', $value);
+        return is_null($value) ? null : str_replace('.', ',', $value);
     }
 }
