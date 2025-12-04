@@ -27,10 +27,10 @@
                             <tr>
 
                                 {{-- Number --}}
-                                <td class="align-middle text-end">{{ $loop->iteration }}</td>
+                                <td class="align-middle">{{ $loop->iteration }}</td>
 
                                 {{-- Product name --}}
-                                <td class="align-middle text-end">
+                                <td class="align-middle">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
                                     <span>{{ $item->productName }}</span>                                    
@@ -45,7 +45,7 @@
                                 </td>
 
                                 {{-- Color --}}
-                                <td class="align-middle text-end">
+                                <td class="align-middle">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
                                     <span>{{ $item->colorName }}</span>                                    
