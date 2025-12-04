@@ -61,7 +61,8 @@
 
                                 {{-- Amount --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="narudzbe-proizvodi">{{ $item->formattedAmount }}</span> {{ $item->unit }}
+                                    {{-- <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="narudzbe-proizvodi">{{ $item->formattedAmount }}</span> {{ $item->unit }} --}}
+                                    <x-editable.text :model="$item" field="amount" modelName="narudzbe-proizvodi" :value="$item->formattedAmount" simple="true" :suffix=" $item->unit"/>
                                 </td>
 
                                 {{-- Price --}}
