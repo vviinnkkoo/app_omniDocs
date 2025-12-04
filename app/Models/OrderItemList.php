@@ -89,6 +89,6 @@ class OrderItemList extends Model
 
         $decimals = ($this->unit === 'kom') ? 0 : 2;
 
-        return number_format($amount, $decimals, '.', ',');
+        return number_format($amount, $decimals, ',', '.');
     }
 }
