@@ -62,22 +62,25 @@
                                 {{-- Amount --}}
                                 <td class="align-middle text-right">
                                     {{-- <span class="editable" data-id="{{ $item->id }}" data-field="amount" data-model="narudzbe-proizvodi">{{ $item->formattedAmount }}</span> {{ $item->unit }} --}}
-                                    <x-editable.text :model="$item" field="amount" modelName="narudzbe-proizvodi" :value="$item->formattedAmount" simple="true" :suffix=" $item->unit"/>
+                                    <x-editable.text :model="$item" field="amount" modelName="narudzbe-proizvodi" :value="$item->formattedAmount" simple="true" :suffix="$item->unit" />
                                 </td>
 
                                 {{-- Price --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="narudzbe-proizvodi">{{ $item->price }}</span> €
+                                    {{-- <span class="editable" data-id="{{ $item->id }}" data-field="price" data-model="narudzbe-proizvodi">{{ $item->price }}</span> € --}}
+                                    <x-editable.text :model="$item" field="price" modelName="narudzbe-proizvodi" :value="$item->price" simple="true" suffix="€" />
                                 </td>
 
                                 {{-- Discount percentage --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="narudzbe-proizvodi">{{ $item->discount }}</span> %
+                                    {{-- <span class="editable" data-id="{{ $item->id }}" data-field="discount" data-model="narudzbe-proizvodi">{{ $item->discount }}</span> % --}}
+                                    <x-editable.text :model="$item" field="discount" modelName="narudzbe-proizvodi" :value="$item->discount" simple="true" suffix="%" />
                                 </td>
 
                                 {{-- Info --}}
                                 <td class="align-middle text-right">
-                                    <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="narudzbe-proizvodi">{{ $item->note }}</span>
+                                    {{-- <span class="editable" data-id="{{ $item->id }}" data-field="note" data-model="narudzbe-proizvodi">{{ $item->note }}</span> --}}
+                                    <x-editable.text :model="$item" field="note" modelName="narudzbe-proizvodi" :value="$item->note" simple="true" />
                                 </td>
 
                                 {{-- Show info on invoice checkbox --}}
