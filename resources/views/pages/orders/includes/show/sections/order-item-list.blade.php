@@ -27,10 +27,10 @@
                             <tr>
 
                                 {{-- Number --}}
-                                <td class="align-middle text-right">{{ $loop->iteration }}</td>
+                                <td class="align-middle text-end">{{ $loop->iteration }}</td>
 
                                 {{-- Product name --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="product_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
                                     <span>{{ $item->productName }}</span>                                    
@@ -45,7 +45,7 @@
                                 </td>
 
                                 {{-- Color --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
                                     <span>{{ $item->colorName }}</span>                                    
@@ -60,34 +60,34 @@
                                 </td>
 
                                 {{-- Amount --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <x-editable.text :model="$item" field="amount" modelName="narudzbe-proizvodi" :value="$item->formattedAmount" simple="true" :suffix="$item->unit" />
                                 </td>
 
                                 {{-- Price --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <x-editable.text :model="$item" field="price" modelName="narudzbe-proizvodi" :value="$item->price" simple="true" suffix="€" />
                                 </td>
 
                                 {{-- Discount percentage --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <x-editable.text :model="$item" field="discount" modelName="narudzbe-proizvodi" :value="$item->discount" simple="true" suffix="%" />
                                 </td>
 
                                 {{-- Info --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <x-editable.text :model="$item" field="note" modelName="narudzbe-proizvodi" :value="$item->note" simple="true" />
                                 </td>
 
                                 {{-- Show info on invoice checkbox --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="napomena">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="note_on_invoice" id="flexSwitchCheckDefault" {{ $item->note_on_invoice ? 'checked' : '' }}>
                                     </div>
                                 </td>
 
                                 {{-- Production status --}}
-                                <td class="align-middle text-right">
+                                <td class="align-middle text-end">
                                     <div class="form-check form-switch order-item" data-id="{{ $item->id }}" data-model="izrada">
                                     <input class="form-check-input edit-checkbox" type="checkbox" name="is_done" id="flexSwitchCheckDefault" {{ $item->is_done ? 'checked' : '' }}>
                                     </div>
