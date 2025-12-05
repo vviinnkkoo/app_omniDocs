@@ -17,7 +17,7 @@ use App\Services\GlobalService;
 
 use App\Traits\RecordManagement;
 
-class InvoicecController extends Controller
+class InvoiceController extends Controller
 {
     use RecordManagement;
     protected $modelClass = Invoice::class;
