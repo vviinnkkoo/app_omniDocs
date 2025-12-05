@@ -31,7 +31,7 @@
               <tbody>
 
                 @foreach ($kprs as $item)
-                  <tr class="{{ $item->exists ? 'kpr-has-receipt' : 'kpr-no-receipt' }}">
+                  <tr class="{{ $item->exists ? 'kpr-has-invoice' : 'kpr-no-invoice' }}">
 
                     {{-- Index --}}
                     <td class="align-middle text-start">
@@ -68,9 +68,9 @@
                       <div class="date-display">{{ $item->formated_amount }} €</div>
                     </td>
 
-                    {{-- Related receipts total --}}
+                    {{-- Related invoices total --}}
                     <td class="align-middle text-start">
-                      <div class="date-display">{{ $item->formated_receipts_total }} €</div>
+                      <div class="date-display">{{ $item->formated_invoices_total }} €</div>
                     </td>
 
                     {{-- Edit button --}}

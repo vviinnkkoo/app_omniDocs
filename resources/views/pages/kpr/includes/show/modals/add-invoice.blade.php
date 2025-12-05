@@ -14,10 +14,10 @@
 
                 {{-- Invoice select --}}
                 <div class="mb-3">
-                  <label for="receipt_id">Odaberi račun:</label><br>
-                  <select class="form-select searchable-select-modal" id="receipt_id" name="receipt_id">
+                  <label for="invoice_id">Odaberi račun:</label><br>
+                  <select class="form-select searchable-select-modal" id="invoice_id" name="invoice_id">
                       <option selected>Odaberi račun za povezivanje...</option>
-                      @foreach($receiptOptions as $item)
+                      @foreach($invoiceOptions as $item)
                         <option value="{{ $item['id'] }}">
                             {{ $item['number'] }} - {{ $item['customerName'] }} - {{ $item['total'] }} € - {{ $item['trackingCode'] }}
                         </option>

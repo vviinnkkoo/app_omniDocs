@@ -95,9 +95,9 @@
                     
                     {{-- Has invoice --}}
                     <td class="align-middle text-right">
-                        @isset($order->receipt_id)
+                        @isset($order->invoice_id)
                         
-                        <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->receipt_id]) }}" target="_blank" 
+                        <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->invoice_id]) }}" target="_blank" 
                             class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }}">
                             <i class="bi bi-filetype-pdf"></i></a>
                         @else

@@ -1,4 +1,4 @@
-{{-- Receipt modal --}}
+{{-- Invoice modal --}}
 <div class="modal fade" id="addInvoiceModal" tabindex="-1" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -8,7 +8,7 @@
         </div>
         <div class="modal-body">
             {{-- Popup content --}}
-            <form method="POST" action="{{ route('racuni.store') }}" id="receiptSubmission">
+            <form method="POST" action="{{ route('racuni.store') }}" id="invoiceSubmission">
                 @csrf
                 <div class="form-group">
 
@@ -52,7 +52,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-            <button type="submit" class="btn btn-primary" form="receiptSubmission">Spremi</button>
+            <button type="submit" class="btn btn-primary" form="invoiceSubmission">Spremi</button>
         </div>
     </div>
   </div>

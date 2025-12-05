@@ -74,7 +74,7 @@ class DeliveryServiceController extends Controller
     */
     public function updateVisibility(Request $request, $id)
     {
-        $receipt = DeliveryService::findOrFail($id);
-        $receipt->update(['in_use' => !$receipt->in_use]);
+        $invoice = DeliveryService::findOrFail($id);
+        $invoice->update(['in_use' => !$invoice->in_use]);
     }
 }

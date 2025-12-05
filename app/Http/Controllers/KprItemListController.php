@@ -26,7 +26,7 @@ class KprItemListController extends Controller
     public function store(Request $request, $kprId)
     {
         $data = $request->validate([
-            'receipt_id' => 'required',
+            'invoice_id' => 'required',
         ]);
 
         $data['kpr_id'] = $kprId;

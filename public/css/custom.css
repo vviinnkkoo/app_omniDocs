@@ -190,11 +190,11 @@
     background-color:rgb(255, 223, 223);
 }
 
-.kpr-has-receipt td {
+.kpr-has-invoice td {
     background-color:rgb(216, 255, 219);
 }
 
-.kpr-no-receipt td {
+.kpr-no-invoice td {
     background-color:rgb(255, 250, 208);
 }
 

@@ -32,9 +32,9 @@ class Kpr extends Model
         return $this->belongsTo(PaymentType::class);
     }
 
-    public function receipt()
+    public function invoice()
     {
-        return $this->hasMany(Receipt::class);
+        return $this->hasMany(Invoice::class);
     }
 
     public function kprItemList()

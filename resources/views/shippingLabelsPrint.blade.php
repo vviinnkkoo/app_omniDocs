@@ -34,7 +34,7 @@
                   </td>
 
                   <td class="align-middle text-right">
-                    <div class="editable-select" data-id="{{ $item->id }}" data-field="order_id" data-model="receipt">
+                    <div class="editable-select" data-id="{{ $item->id }}" data-field="order_id" data-model="invoice">
                       <!-- Display the selected value -->
                       <span>{{ App\Models\Customer::find(App\Models\Order::find($item->order_id)->customer_id)->name }} - Narudžba [{{ $item->order_id }}]</span>
                       

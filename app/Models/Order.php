@@ -39,9 +39,9 @@ class Order extends Model
     | Relationships
     |--------------------------------------------------------------------------------------------
     */
-    public function receipt(): HasOne
+    public function invoice(): HasOne
     {
-        return $this->hasOne(Receipt::class);
+        return $this->hasOne(Invoice::class);
     }
 
     public function orderItemList()

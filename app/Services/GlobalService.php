@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Receipt;
+use App\Models\Invoice;
 use App\Models\OrderItemList;
 use App\Models\WorkYears;
 use App\Models\Kpr;
@@ -25,20 +25,20 @@ class GlobalService
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Get the latest receipt number for the given year
+    | Get the latest Invoice number for the given year
     |--------------------------------------------------------------------------------------------
     */
-    public static function getLatestReceiptNumber($year)
+    public static function getLatestInvoiceNumber($year)
     {
-        return (Receipt::where('year', $year)->orderBy('number', 'desc')->value('number')) + 1;
+        return (Invoice::where('year', $year)->orderBy('number', 'desc')->value('number')) + 1;
     }
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Calculate the total amount for a given receipt by its order ID
+    | Calculate the total amount for a given Invoice by its order ID
     |--------------------------------------------------------------------------------------------
     */
-    public static function calculateReceiptTotal($id)
+    public static function calculateInvoiceTotal($id)
     {
         $order = Order::with(['deliveryService'])->findOrFail($id);
         $deliveryCost = $order->deliveryService->default_cost;
@@ -48,28 +48,28 @@ class GlobalService
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Calculate the total amount for all receipts in a given year
+    | Calculate the total amount for all Invoices in a given year
     |--------------------------------------------------------------------------------------------
     */
-    public static function calculateTotalForAllReceiptsInYear(int $year): float
+    public static function calculateTotalForAllInvoicesInYear(int $year): float
     {
-        return DB::table('receipts')
-            ->join('orders', 'receipts.order_id', '=', 'orders.id')
+        return DB::table('Invoices')
+            ->join('orders', 'Invoices.order_id', '=', 'orders.id')
             ->join('order_item_lists', 'orders.id', '=', 'order_item_lists.order_id')
-            ->where('receipts.is_cancelled', 0)
-            ->where('receipts.year', $year)
+            ->where('Invoices.is_cancelled', 0)
+            ->where('Invoices.year', $year)
             ->selectRaw('SUM(' . self::itemSumFormula() . ') as items_total')
             ->value('items_total') ?? 0;
     }
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Count all non-cancelled receipts in a given year
+    | Count all non-cancelled Invoices in a given year
     |--------------------------------------------------------------------------------------------
     */
-    public static function countReceipts($year)
+    public static function countInvoices($year)
     {
-        return Receipt::where('is_cancelled', 0)->where('year', $year)->count();
+        return Invoice::where('is_cancelled', 0)->where('year', $year)->count();
     }
 
     /*
@@ -117,13 +117,13 @@ class GlobalService
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Sum all receipts associated with a specific KPR entry by its ID
+    | Sum all Invoices associated with a specific KPR entry by its ID
     |--------------------------------------------------------------------------------------------
     */
-    public static function sumAllReciepesFromKpr(int $kprId): float
+    public static function sumAllInvoicesFromKpr(int $kprId): float
     {
         return KprItemList::where('kpr_id', $kprId)
             ->get()
-            ->sum(fn($item) => self::calculateReceiptTotal($item->receipt->order_id));
+            ->sum(fn($item) => self::calculateInvoiceTotal($item->invoice->order_id));
     }
 }

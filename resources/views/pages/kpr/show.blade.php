@@ -99,7 +99,7 @@
 
                   {{-- Invoice Number --}}
                   <td class="align-middle text-right">
-                    {{ $invoiceItem->receiptNumber }}
+                    {{ $invoiceItem->invoiceNumber }}
                   </td>
 
                   {{-- Customer Name --}}
@@ -119,17 +119,17 @@
 
                   {{-- Issue Date --}}
                   <td class="align-middle text-right">
-                    <div class="date-display">{{ $invoiceItem->receiptDate }}</div>
+                    <div class="date-display">{{ $invoiceItem->invoiceDate }}</div>
                   </td>
 
                   {{-- Total Amount --}}
                   <td class="align-middle text-right">
-                    {{ $invoiceItem->receiptsTotal }} €
+                    {{ $invoiceItem->invoicesTotal }} €
                   </td>
 
                   {{-- Generate PDF document button --}}
                   <td>
-                    <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $invoiceItem->receiptID]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                    <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $invoiceItem->invoiceID]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                     </button>
                   </td>
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasSearch;
 
-class Receipt extends Model
+class Invoice extends Model
 {
     use HasSearch;
     
@@ -52,7 +52,7 @@ class Receipt extends Model
 
     //public function getIsCancellingAttribute(): bool
     //{
-    //    return self::where('cancelled_receipt_id', $this->id)->exists();
+    //    return self::where('cancelled_invoice_id', $this->id)->exists();
     //}
 
     public function getHasPaymentAttribute(): bool

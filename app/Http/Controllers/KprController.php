@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 use App\Models\Kpr;
 use App\Models\KprItemList;
-use App\Models\Receipt;
+use App\Models\Invoice;
 use App\Models\PaymentType;
 
 use App\Services\GlobalService;
@@ -49,7 +49,7 @@ class KprController extends Controller
                     $i->date = Carbon::parse($i->date)->format('d.m.Y');
                     $i->payment_type_name = $i->paymentType->name ?? '';
                     $i->formated_amount = number_format($i->amount, 2, ',', '.');
-                    $i->formated_receipts_total = number_format(GlobalService::sumAllReciepesFromKpr($i->id), 2, ',', '.');
+                    $i->formated_invoices_total = number_format(GlobalService::sumAllInvoicesFromKpr($i->id), 2, ',', '.');
                 });
             });
 
@@ -61,29 +61,29 @@ class KprController extends Controller
     public function show($id)
     {
         $kprInstance = Kpr::with([
-            'kprItemList.receipt.order.customer'
+            'kprItemList.invoice.order.customer'
         ])->findOrFail($id);
 
         $invoiceList = $kprInstance->kprItemList;
         $year = Carbon::parse($kprInstance->date)->year;
 
         // ID-jevi računa koji su već dodani u KPR
-        $existingReceiptIds = KprItemList::whereNotNull('receipt_id')
+        $existingInvoiceIds = KprItemList::whereNotNull('invoice_id')
             ->distinct()
-            ->pluck('receipt_id')
+            ->pluck('invoice_id')
             ->toArray();
 
         // Dohvat recepata koji nisu dodani u KPR
-        $receipts = Receipt::with('order.customer')
+        $invoices = Invoice::with('order.customer')
             ->where('year', $year)
             ->where('is_cancelled', 0)
-            ->whereNotIn('id', $existingReceiptIds)
+            ->whereNotIn('id', $existingInvoiceIds)
             ->orderBy('number')
             ->get();
 
         // Batch dohvat total-a za sve order_id (iz recepata i invoiceList)
-        $orderIds = $receipts->pluck('order_id')->merge(
-            $invoiceList->pluck('receipt.order_id')->filter()
+        $orderIds = $invoices->pluck('order_id')->merge(
+            $invoiceList->pluck('invoice.order_id')->filter()
         )->unique();
 
         $totals = DB::table('order_item_lists')
@@ -96,29 +96,29 @@ class KprController extends Controller
             ->pluck('total', 'order_id');
 
         // Formiranje opcija računa
-        $receiptOptions = [];
-        foreach ($receipts as $receipt) {
-            $receiptOptions[] = [
-                'id' => $receipt->id,
-                'number' => $receipt->number,
-                'customerName' => $receipt->order->customer->name,
-                'total' => number_format($totals[$receipt->order_id] ?? 0, 2, ',', '.'),
-                'trackingCode' => $receipt->order->tracking_code
+        $invoiceOptions = [];
+        foreach ($invoices as $invoice) {
+            $invoiceOptions[] = [
+                'id' => $invoice->id,
+                'number' => $invoice->number,
+                'customerName' => $invoice->order->customer->name,
+                'total' => number_format($totals[$invoice->order_id] ?? 0, 2, ',', '.'),
+                'trackingCode' => $invoice->order->tracking_code
             ];
         }
 
         $invoiceList = $kprInstance->kprItemList->map(function ($item) use ($totals) {
-            $item->receiptNumber = $item->receipt->number;
-            $item->customerName = $item->receipt->order->customer->name;
-            $item->orderId = $item->receipt->order_id;
-            $item->trackingCode = $item->receipt->order->tracking_code;
-            $item->receiptDate = Carbon::parse($item->receipt->created_at)->format('d.m.Y - H:i:s');
-            $item->receiptsTotal = number_format(
-                ($totals[$item->receipt->order_id] ?? 0)
-                + ($item->receipt->order->deliveryService->default_cost ?? 0),
+            $item->invoiceNumber = $item->invoice->number;
+            $item->customerName = $item->invoice->order->customer->name;
+            $item->orderId = $item->invoice->order_id;
+            $item->trackingCode = $item->invoice->order->tracking_code;
+            $item->invoiceDate = Carbon::parse($item->invoice->created_at)->format('d.m.Y - H:i:s');
+            $item->invoicesTotal = number_format(
+                ($totals[$item->invoice->order_id] ?? 0)
+                + ($item->invoice->order->deliveryService->default_cost ?? 0),
                 2, ',', '.'
             );
-            $item->receiptID = $item->receipt->id;
+            $item->invoiceID = $item->invoice->id;
 
             return $item;
         });
@@ -127,8 +127,8 @@ class KprController extends Controller
             'kprInstance',
             'year',
             'invoiceList',
-            'receipts',
-            'receiptOptions'
+            'invoices',
+            'invoiceOptions'
         ));
     }    
 

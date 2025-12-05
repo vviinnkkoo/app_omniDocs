@@ -27,8 +27,8 @@
     {{-- Header right side --}}
     {{-- Invoice check START --}}
     <span class="ms-auto">Račun:
-    @isset($order->receipt_id)
-        <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->receipt_id]) }}" target="_blank"
+    @isset($order->invoice_id)
+        <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $order->invoice_id]) }}" target="_blank"
         class="btn {{ $order->is_paid ? 'btn-success' : 'btn-danger' }} btn-sm"><i class="bi bi-filetype-pdf"></i> {{ $order->is_paid ? 'Plaćen' : 'Nenaplaćen' }}</a>
     @else
         <x-buttons.open-modal extraClass="btn-sm" target="#addInvoiceModal" text="Izradi"/>

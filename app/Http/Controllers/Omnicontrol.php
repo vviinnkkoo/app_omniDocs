@@ -40,8 +40,8 @@ class Omnicontrol extends Controller
         $yearData = [];
 
         foreach ($workYears as $year) {
-            $invoiceCount = GlobalService::countReceipts($year);
-            $invoiceSum = GlobalService::calculateTotalForAllReceiptsInYear($year);
+            $invoiceCount = GlobalService::countInvoices($year);
+            $invoiceSum = GlobalService::calculateTotalForAllInvoicesInYear($year);
 
             $paymentCount = GlobalService::countAllPaymentsInYear($year);
             $paymentSum = GlobalService::sumAllPaymentsInYear($year);

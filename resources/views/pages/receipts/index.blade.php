@@ -29,33 +29,33 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($receipts as $receipt)
-                  <tr @class(['cancelled-order' => $receipt->is_cancelled])>
+                @foreach ($invoices as $invoice)
+                  <tr @class(['cancelled-order' => $invoice->is_cancelled])>
 
-                    {{-- Receipt number --}}
+                    {{-- Invoice number --}}
                     <td class="align-middle text-right">
-                      {{ $receipt->number }}
+                      {{ $invoice->number }}
                     </td>
 
                     {{-- Customer name --}}
                     <td class="align-middle text-right">
-                      <span>{{ $receipt->customerName }}</span>                                    
+                      <span>{{ $invoice->customerName }}</span>                                    
                     </td>
 
                     {{-- Order link --}}
                     <td class="align-middle text-right">
-                      <a href="{{ route('narudzbe.show', $receipt->order_id) }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $receipt->order_id }}</span></a>                                    
+                      <a href="{{ route('narudzbe.show', $invoice->order_id) }}" class="btn btn-primary btn-sm">Narudžba <span class="badge badge-secondary" style="background-color:darkred">{{ $invoice->order_id }}</span></a>                                    
                     </td>
 
                     {{-- Payment type --}}
                     <td class="align-middle text-right">
-                      {{ $receipt->paymentTypeName }}
+                      {{ $invoice->paymentTypeName }}
                     </td>
 
                     {{-- Created at --}}
                     <td class="align-middle text-right">
-                      <div class="editable-date-invoice" data-id="{{ $receipt->id }}" data-field="created_at" data-model="racuni" data-raw-date="{{ $receipt->created_at }}">
-                        <div class="date-display">{{ $receipt->formatedDateCreatedAt }}</div>
+                      <div class="editable-date-invoice" data-id="{{ $invoice->id }}" data-field="created_at" data-model="racuni" data-raw-date="{{ $invoice->created_at }}">
+                        <div class="date-display">{{ $invoice->formatedDateCreatedAt }}</div>
                       </div>
                     </td>
 
@@ -66,33 +66,33 @@
 
                     {{-- Total amount --}}
                     <td class="align-middle text-right">
-                      {{ $receipt->totalAmount }} €
+                      {{ $invoice->totalAmount }} €
                     </td>
 
                     {{-- Is cancelled, this needs to be chaged --}}
                     <td class="align-middle text-right">
-                      <div class="form-check form-switch order-item" data-id="{{ $receipt->id }}" data-model="storno">
-                        <input class="form-check-input edit-checkbox" type="checkbox" name="is_cancelled" id="flexSwitchCheckDefault" {{ $receipt->is_cancelled ? 'checked' : '' }}>
+                      <div class="form-check form-switch order-item" data-id="{{ $invoice->id }}" data-model="storno">
+                        <input class="form-check-input edit-checkbox" type="checkbox" name="is_cancelled" id="flexSwitchCheckDefault" {{ $invoice->is_cancelled ? 'checked' : '' }}>
                       </div>
                     </td>
 
                     {{-- Linked payment --}}
                     <td>
-                      @if ( $receipt->hasPayment )
-                        <a href="{{ route('knjiga-prometa.show', $receipt->paymentId) }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
-                          </i> Uplata <span class="badge badge-secondary" style="background-color:darkred">ID: {{ $receipt->paymentId }}</span>
+                      @if ( $invoice->hasPayment )
+                        <a href="{{ route('knjiga-prometa.show', $invoice->paymentId) }}" class="btn btn-warning" target="_blank"><i class="bi bi-filetype-pdf">
+                          </i> Uplata <span class="badge badge-secondary" style="background-color:darkred">ID: {{ $invoice->paymentId }}</span>
                         </a>
                       @endif
                     </td>
                     
                     {{-- Generate PDF document buttons --}}
                     <td>
-                      <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $receipt->id]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
+                      <a href="{{ route('generate.document', ['mode' => 'racun', 'id' => $invoice->id]) }}" class="btn btn-primary" target="_blank"><i class="bi bi-filetype-pdf"></i> Račun</a>
                     </td>
 
                     {{-- Delete button --}}
                     <td class="align-middle text-center px-4">
-                      <x-buttons.delete-item :id="$receipt->id" model="racuni" />
+                      <x-buttons.delete-item :id="$invoice->id" model="racuni" />
                     </td>
 
                   </tr>
@@ -100,7 +100,7 @@
               </tbody>
             </table>
 
-            <x-misc.table-pagination :items="$receipts" />
+            <x-misc.table-pagination :items="$invoices" />
             
         </div>
       </div>
@@ -108,7 +108,7 @@
   </div>
 </div>
 
-@include('pages.receipts.includes.index.modals.add-invoice')
+@include('pages.invoices.includes.index.modals.add-invoice')
 @include('includes.shared.modals.delete-confirmation')
 
 @endsection

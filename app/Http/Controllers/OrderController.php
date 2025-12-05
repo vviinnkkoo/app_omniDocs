@@ -18,7 +18,7 @@ use App\Models\Country;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Color;
-use App\Models\Receipt;
+use App\Models\Invoice;
 use App\Models\KprItemList;
 use App\Models\WorkYears;
 
@@ -55,8 +55,8 @@ class OrderController extends Controller
 
         $orders = $query->orderBy('id')->paginate(25);
 
-        $data = $this->getReceiptAndKprData($orders);
-        $receipts = $data['receiptIds'];
+        $data = $this->getInvoiceAndKprData($orders);
+        $invoices = $data['invoiceIds'];
         $kprIds = $data['kprIds'];
 
         [
@@ -71,10 +71,10 @@ class OrderController extends Controller
         $today = now();
         $currentUrl = url()->current();
 
-        $orders->getCollection()->transform(function ($order) use ($receipts, $kprIds) {
+        $orders->getCollection()->transform(function ($order) use ($invoices, $kprIds) {
             $order->total_amount = GlobalService::sumOrderItems(orderId: $order->id);
-            $order->receipt_id = $receipts[$order->id] ?? null;
-            $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
+            $order->invoice_id = $invoices[$order->id] ?? null;
+            $order->is_paid = isset($order->invoice_id) && isset($kprIds[$order->invoice_id]);
             return $order;
         });
 
@@ -90,15 +90,15 @@ class OrderController extends Controller
 
         $this->calculateOrderTotals($order);
 
-        $this->attachReceiptsAndKpr($order);
+        $this->attachInvoicesAndKpr($order);
 
         $orderData = $this->getOrderData($order);
 
-        $latestReceiptNumber = GlobalService::getLatestReceiptNumber(date('Y'));
+        $latestInvoiceNumber = GlobalService::getLatestInvoiceNumber(date('Y'));
 
         return view('pages.orders.show', compact(
             'order',
-            'latestReceiptNumber'
+            'latestInvoiceNumber'
         ))->with($orderData);
     }
 
@@ -150,19 +150,19 @@ class OrderController extends Controller
     | Custom methods used by this controller
     |--------------------------------------------------------------------------------------------
     */
-    private function getReceiptAndKprData($orders)
+    private function getInvoiceAndKprData($orders)
     {
         $orderIds = $orders->pluck('id');
 
-        $receiptIds = Receipt::whereIn('order_id', $orderIds)
+        $invoiceIds = Invoice::whereIn('order_id', $orderIds)
             ->where('is_cancelled', 0)
             ->pluck('id', 'order_id');
 
-        $kprIds = KprItemList::whereIn('receipt_id', $receiptIds->values())
-            ->pluck('receipt_id')
+        $kprIds = KprItemList::whereIn('invoice_id', $invoiceIds->values())
+            ->pluck('invoice_id')
             ->flip();
 
-        return compact('receiptIds', 'kprIds');
+        return compact('invoiceIds', 'kprIds');
     }
 
     private function buildBaseQuery($search)
@@ -229,14 +229,14 @@ class OrderController extends Controller
         $order->total = $order->subtotal + $order->delivery_cost;
     }
 
-    private function attachReceiptsAndKpr($order)
+    private function attachInvoicesAndKpr($order)
     {
-        $data = $this->getReceiptAndKprData($order);
-        $receipts = $data['receiptIds'];
+        $data = $this->getInvoiceAndKprData($order);
+        $invoices = $data['invoiceIds'];
         $kprIds = $data['kprIds'];
 
-        $order->receipt_id = $receipts[$order->id] ?? null;
-        $order->is_paid = isset($order->receipt_id) && isset($kprIds[$order->receipt_id]);
+        $order->invoice_id = $invoices[$order->id] ?? null;
+        $order->is_paid = isset($order->invoice_id) && isset($kprIds[$order->invoice_id]);
     }
 
     private function getOrderData($order)

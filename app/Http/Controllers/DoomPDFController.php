@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Receipt;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItemList;
 use App\Models\DeliveryService;
@@ -41,7 +41,7 @@ class DoomPDFController extends Controller
 
     private function generateInvoice($mode, $invoiceID)
     {
-        $invoice = Receipt::where('id', $invoiceID)->firstOrFail();
+        $invoice = Invoice::where('id', $invoiceID)->firstOrFail();
         $orderID = $invoice->order->id;
         $invoiceData = [
             'number' => $invoice->number,
@@ -124,7 +124,7 @@ class DoomPDFController extends Controller
             'deliveryPostal' => $order->delivery_postal ?? '',
             'deliveryServiceName' => $order->deliveryService->name ?? '',
             'deliveryCompanyName' => $order->deliveryService->deliveryCompany->name ?? '',
-            'total' => GlobalService::calculateReceiptTotal($id),
+            'total' => GlobalService::calculateInvoiceTotal($id),
             'deliveryCost' => $order->deliveryService->default_cost ?? 0
         ];
 

@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
         {{-- Popup content --}}
-        <form method="POST" action="{{ route('racuni.store') }}" id="receiptSubmission">
+        <form method="POST" action="{{ route('racuni.store') }}" id="invoiceSubmission">
           @csrf
           <div class="form-group">
 
@@ -16,7 +16,7 @@
             <div class="mb-3">
               <label for="number">Redni broj računa:</label>
               <div class="input-group">
-                <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestReceiptNumber }}" required>
+                <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestInvoiceNumber }}" required>
                 <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" id="refresh-number-btn">
                   🔄
                   <div id="numberLoader" class="spinner-border spinner-border-sm text-primary d-none" role="status">
@@ -44,7 +44,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-        <button type="submit" class="btn btn-primary" form="receiptSubmission">Spremi</button>
+        <button type="submit" class="btn btn-primary" form="invoiceSubmission">Spremi</button>
       </div>
     </div>
   </div>

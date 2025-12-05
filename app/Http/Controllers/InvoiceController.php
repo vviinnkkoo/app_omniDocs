@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 
-use App\Models\Receipt;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\DeliveryService;
 use App\Models\OrderItemList;
@@ -17,10 +17,10 @@ use App\Services\GlobalService;
 
 use App\Traits\RecordManagement;
 
-class ReceiptController extends Controller
+class InvoicecController extends Controller
 {
     use RecordManagement;
-    protected $modelClass = Receipt::class;
+    protected $modelClass = Invoice::class;
 
     public function __construct()
     {
@@ -38,7 +38,7 @@ class ReceiptController extends Controller
 
         $search = $request->input('search');
 
-        $receipts = Receipt::search($search, 
+        $invoices = Invoice::search($search, 
             ['number', 'year', 'is_cancelled'], 
             ['order.customer' => ['name'], 'order.paymentType' => ['name']]
         )
@@ -46,30 +46,30 @@ class ReceiptController extends Controller
         ->with(['order.customer', 'order.paymentType', 'kprItem'])
         ->orderBy('number')
         ->paginate(25)
-        ->through(function ($receipt) {
-            $receipt->customerName = $receipt->order->customer->name ?? '';
-            $receipt->paymentTypeName = $receipt->order->paymentType->name ?? '';
-            $receipt->formatedDateCreatedAt = $receipt->created_at->format('d.m.Y - H:i:s');
+        ->through(function ($invoice) {
+            $invoice->customerName = $invoice->order->customer->name ?? '';
+            $invoice->paymentTypeName = $invoice->order->paymentType->name ?? '';
+            $invoice->formatedDateCreatedAt = $invoice->created_at->format('d.m.Y - H:i:s');
 
-            $total = GlobalService::calculateReceiptTotal($receipt->order_id);
-            if ($receipt->cancelled_receipt_id) {
+            $total = GlobalService::calculateInvoiceTotal($invoice->order_id);
+            if ($invoice->cancelled_invoice_id) {
                 $total *= -1;
             }
 
-            $receipt->totalAmount = number_format($total, 2, ',');
+            $invoice->totalAmount = number_format($total, 2, ',');
 
-            return $receipt;
+            return $invoice;
         });
 
-        $orderIdsWithReceipts = Receipt::where('is_cancelled', 0)->pluck('order_id');
+        $orderIdsWithInvoices = Invoice::where('is_cancelled', 0)->pluck('order_id');
 
-        $orders = Order::whereNotIn('id', $orderIdsWithReceipts)
+        $orders = Order::whereNotIn('id', $orderIdsWithInvoices)
             ->with('customer:id,name')
             ->get();
 
-        $latest = GlobalService::getLatestReceiptNumber($year);
+        $latest = GlobalService::getLatestInvoiceNumber($year);
 
-        return view('pages.receipts.index', compact('receipts', 'orders', 'latest'));
+        return view('pages.invoices.index', compact('invoices', 'orders', 'latest'));
     }
 
     public function store(Request $request)
@@ -80,7 +80,7 @@ class ReceiptController extends Controller
             'number' => 'required|integer'
         ]);
 
-        $exists = Receipt::where('year', $data['year'])
+        $exists = Invoice::where('year', $data['year'])
                         ->where('number', $data['number'])
                         ->exists();
 
@@ -112,13 +112,13 @@ class ReceiptController extends Controller
     */
     public function updateIsCancelledStatus(Request $request, $id)
     {
-        $receipt = Receipt::findOrFail($id);
-        $receipt->update(['is_cancelled' => !$receipt->is_cancelled]);
+        $invoice = Invoice::findOrFail($id);
+        $invoice->update(['is_cancelled' => !$invoice->is_cancelled]);
     }
 
     public function getLatestNumber($year)
     {
-        return response()->json(['latest' => GlobalService::getLatestReceiptNumber($year)]);
+        return response()->json(['latest' => GlobalService::getLatestInvoiceNumber($year)]);
     }
 
 }

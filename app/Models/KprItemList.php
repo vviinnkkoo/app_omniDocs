@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class KprItemList extends Model
 {
     protected $fillable = [
-        'receipt_id',
+        'invoice_id',
         'kpr_id'
     ];
 
@@ -16,8 +16,8 @@ class KprItemList extends Model
     | Relationships
     |--------------------------------------------------------------------------------------------
     */
-    public function receipt()
+    public function invoice()
     {
-        return $this->belongsTo(Receipt::class);
+        return $this->belongsTo(Invoice::class);
     }
 }
