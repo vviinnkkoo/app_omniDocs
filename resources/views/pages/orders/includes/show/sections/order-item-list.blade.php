@@ -16,8 +16,8 @@
                         <th scope="col">Količina</th>
                         <th scope="col">Cijena</th>
                         <th scope="col">Popust</th>
-                        <th scope="col">Opis</th>
-                        <th scope="col">Opis na računu</th>
+                        <th scope="col">Napomena</th>
+                        <th scope="col">Napomena na računu</th>
                         <th scope="col">Status izrade</th>
                         <th></th>
                     </tr>
