@@ -53,18 +53,18 @@ class GlobalService
     */
     public static function calculateTotalForAllInvoicesInYear(int $year): float
     {
-        return DB::table('Invoices')
-            ->join('orders', 'Invoices.order_id', '=', 'orders.id')
+        return DB::table('invoices')
+            ->join('orders', 'invoices.order_id', '=', 'orders.id')
             ->join('order_item_lists', 'orders.id', '=', 'order_item_lists.order_id')
-            ->where('Invoices.is_cancelled', 0)
-            ->where('Invoices.year', $year)
+            ->where('invoices.is_cancelled', 0)
+            ->where('invoices.year', $year)
             ->selectRaw('SUM(' . self::itemSumFormula() . ') as items_total')
             ->value('items_total') ?? 0;
     }
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Count all non-cancelled Invoices in a given year
+    | Count all non-cancelled invoices in a given year
     |--------------------------------------------------------------------------------------------
     */
     public static function countInvoices($year)
