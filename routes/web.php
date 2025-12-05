@@ -16,7 +16,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemListController;
 use App\Http\Controllers\DoomPDFController;
-use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PrintLabelController;
 use App\Http\Controllers\KprController;
 use App\Http\Controllers\KprItemListController;
@@ -43,7 +43,7 @@ Route::get('/', [Omnicontrol::class, 'index']);
 | Custom routes
 |--------------------------------------------------------------------------------------------
 */
-Route::get('/racuni/godina/{year}', [ReceiptController::class, 'index'])->name('racuni.indexByYear'); // Index override for the invoice view
+Route::get('/racuni/godina/{year}', [InvoiceController::class, 'index'])->name('racuni.indexByYear'); // Index override for the invoice view
 Route::get('/knjiga-prometa/godina/{year}', [KprController::class, 'index'])->name('knjiga-prometa.indexByYear'); // Index override for the KPR view
 Route::get('/narudzbe/prikaz/{type}/{customerId?}', [OrderController::class, 'index'])->name('narudzbe.indexByType'); // Filter orders by type or customer
 Route::get('/proizvodi/prikaz/{mode}', [OrderItemListController::class, 'showProductionItems'])->name('proizvodi.inProduction'); // Production items view
@@ -57,7 +57,7 @@ Route::get('/u-izradi-po-proizvodu', [OrderItemListController::class, 'productio
 */
 Route::put('/promjena-statusa/napomena/{id}', [OrderItemListController::class, 'updateNoteOnInvoiceStatus']); // Izmjeni rute i u java scriptu
 Route::put('/promjena-statusa/izrada/{id}', [OrderItemListController::class, 'updateIsDoneStatus']); // Izmjeni rute i u java scriptu
-Route::put('/promjena-statusa/storno/{id}', [ReceiptController::class, 'updateIsCancelledStatus']); // Izmjeni rute i u java scriptu
+Route::put('/promjena-statusa/storno/{id}', [InvoiceController::class, 'updateIsCancelledStatus']); // Izmjeni rute i u java scriptu
 Route::put('promjena-statusa/vidljivost-dostave/{id}', [DeliveryServiceController::class, 'updateVisibility']); // Izmjeni rute i u java scriptu
 
 /*
@@ -65,7 +65,7 @@ Route::put('promjena-statusa/vidljivost-dostave/{id}', [DeliveryServiceControlle
 | JSON data routes for AJAX calls
 |--------------------------------------------------------------------------------------------
 */
-Route::get('/racuni/zadnji-broj/{year}', [ReceiptController::class, 'getLatestNumber'])->name('racuni.getLatestNumber');
+Route::get('/racuni/zadnji-broj/{year}', [InvoiceController::class, 'getLatestNumber'])->name('racuni.getLatestNumber');
 
 /*
 |--------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Route::get('/racuni/zadnji-broj/{year}', [ReceiptController::class, 'getLatestNu
 Route::resources([
     'dostavne-usluge' => DeliveryServiceController::class,
     'kupci' => CustomerController::class,
-    'racuni' => ReceiptController::class,
+    'racuni' => InvoiceController::class,
     'knjiga-prometa' => KprController::class,
     'drzave-poslovanja' => CountryController::class,
     'narudzbe' => OrderController::class,
