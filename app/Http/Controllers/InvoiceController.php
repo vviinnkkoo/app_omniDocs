@@ -76,18 +76,31 @@ class InvoiceController extends Controller
     {
         $data = $request->validate([
             'order_id' => 'required|exists:orders,id',
+            'business_space_id' => 'nullable|exists:business_spaces,id',
+            'business_device_id' => 'nullable|exists:business_devices,id',
             'year' => 'required|integer',
-            'number' => 'required|integer'
+            'number' => 'required|integer',
+            'customer_name' => 'nullable|string|max:255',
+            'customer_oib' => 'nullable|string|max:255',
+            'customer_address' => 'nullable|string|max:255',
+            'customer_postal' => 'nullable|string|max:255',
+            'customer_city' => 'nullable|string|max:255',
+            'customer_phone' => 'nullable|string|max:255',
+            'customer_email' => 'nullable|string|max:255',
+            'issued_by' => 'nullable|string|max:255',
+            'issued_at' => 'nullable|date',
+            'due_at' => 'nullable|date'
         ]);
 
         $exists = Invoice::where('year', $data['year'])
+                        ->where('business_space_id', $data['business_space_id'])
                         ->where('number', $data['number'])
                         ->exists();
 
         if ($exists) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', "Račun s brojem {$data['number']} već postoji u {$data['year']}. godini.");
+                ->with('error', "Račun s brojem {$data['number']} već postoji u {$data['year']}. godini za odabrani poslovni prostor.");
         }
 
         return $this->createRecord(
