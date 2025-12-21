@@ -16,15 +16,18 @@ return [
         'database' => 'beatoaiw_app_omnius_art',
         'username' => 'beatoaiw_production_omnius_app_1932913',
         'password' => '-m._xfoi.JE0',
+        'host' => 'localhost',
     ],
     'app.svijetdekoracija.hr' => [
         'database' => 'beatoaiw_app_svijet_dekoracija',
         'username' => 'beatoaiw_production_omnius_app_1932913',
         'password' => '-m._xfoi.JE0',
+        'host' => 'localhost',
     ],
     'localhost' => [
-        'database' => 'accounting_app',
+        'database' => 'omnidocs',
         'username' => 'root',
         'password' => '',
+        'host' => '127.0.0.1',
     ]
 ];

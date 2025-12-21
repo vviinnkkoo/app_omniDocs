@@ -32,15 +32,17 @@ class AppServiceProvider extends ServiceProvider
 
         if (isset($domains[$hostname])) {
             $config = $domains[$hostname];
+
+            // Set database host, username, password, database
+            Config::set('database.connections.mysql.host', $config['host'] ?? config('database.connections.mysql.host'));
             Config::set('database.connections.mysql.database', $config['database']);
             Config::set('database.connections.mysql.username', $config['username']);
             Config::set('database.connections.mysql.password', $config['password']);
-        }
 
-        // Set default connection and reconnect
-        Config::set('database.default', 'mysql');
-        DB::purge('mysql');
-        DB::reconnect('mysql');
+            // Refresh connection
+            DB::purge('mysql');
+            DB::reconnect('mysql');
+        }
 
         // Pagination
         Paginator::useBootstrap();
