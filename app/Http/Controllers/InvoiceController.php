@@ -79,6 +79,7 @@ class InvoiceController extends Controller
             'business_space_id' => 'required|exists:business_spaces,id',
             'business_device_id' => 'required|exists:business_devices,id',
             'year' => 'required|integer',
+            'type' => 'required|in:invoice,credit,advance,cancellation',
             'number' => 'required|integer',
             'customer_name' => 'nullable|string|max:255',
             'customer_oib' => 'nullable|string|max:255',

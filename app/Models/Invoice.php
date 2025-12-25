@@ -16,6 +16,7 @@ class Invoice extends Model
         'number',
         'order_id',
         'year',
+        'type',
         'business_space_id',
         'business_device_id',
         'customer_name',
@@ -115,6 +116,17 @@ class Invoice extends Model
     public function getPaymentIdAttribute(): ?int
     {
         return $this->kprItem()->value('kpr_id');
+    }
+
+    public function getTypeTextAttribute()
+    {
+        return match($this->type) {
+            'invoice' => 'Račun',
+            'credit' => 'Odobrenje',
+            'advance' => 'Avansni račun',
+            'cancellation' => 'Storno račun',
+            default => $this->type,
+        };
     }
 
     /*
