@@ -1,61 +1,81 @@
 <!doctype html>
-<html lang="en">
+<html lang="hr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Račun {{ $invoiceData['number'] }}-1-1</title>
+    <title>Račun {{ $invoice->number }}-{{ $invoice->businessSpace->name }}-{{ $invoice->businessDevice->name }}</title>
 
     @include('includes.pdf.style')
-
 </head>
 <body>
 
-    @include('includes.pdf.invoice-header')
+@include('includes.pdf.invoice-header')
 
-    {{-- PDF content - START --}}
+{{-- PDF content - START --}}
 
-    <div class="margin-first">
-        <table class="w-full info">
-            <tr>
-                <td class="w-tri">
-                    <div><h4>Kupac:</h4></div>
-                    <div>{{ $orderData['customerName'] }}</div>
-                    <div>{{ $orderData['deliveryAddress'] }}</div>
-                    <div>{{ $orderData['deliveryCity'] }}, {{ $orderData['deliveryPostal'] }}</div>
-                    <div>{{ $orderData['countryName'] }}</div>
-                    <div style="margin-top:10px"><b>OIB: </b>{{ $orderData['customerOib'] }}</div>
-                </td>
-                <td class="w-tri">
-                    <div><h4>Datum i vrijeme izdavanja:</h4></div>
-                    <div>{{ $appSettings['address_city'] }}</div>
-                    <div>{{ $invoiceData['date'] }}</div>
-                    <div>u {{ $invoiceData['time'] }}</div>
-                    <div style="margin-top:10px"><b>Datum isporuke: </b>{{ $orderData['dateSent'] }}</div>
-                    <div><b>Datum dospijeća: </b>{{ $invoiceData['eta'] }}</div>
-                </td>
-                <td class="w-tri">
-                    <div><h4>Kontakt:</h4></div>
-                    <div><b>Email:</b> {{ $appSettings['contact_email'] }}</div>
-                    <div><b>Mob:</b> {{ $appSettings['contact_phone'] }}</div>
-                </td>
-                
-            </tr>
-        </table>
-    </div>
+<div class="margin-first">
+    <table class="w-full info">
+        <tr>
+            <td class="w-tri">
+                <div><h4>Kupac:</h4></div>
+                <div>{{ $invoice->customer_name }}</div>
+                <div>{{ $invoice->customer_address }}</div>
+                <div>{{ $invoice->customer_city }}, {{ $invoice->customer_postal }}</div>
+                <div style="margin-top:10px">
+                    <b>OIB:</b> {{ $invoice->customer_oib }}
+                </div>
+            </td>
 
-    @include('includes.pdf.shared.order-items')
+            <td class="w-tri">
+                <div><h4>Datum i vrijeme izdavanja:</h4></div>
+                <div>{{ $invoice->businessSpace->city }}</div>
+                <div>{{ $invoice->formatted_issued_date }}</div>
+                <div>u {{ $invoice->formatted_issued_time }}</div>
 
-    <div class="notes">
-        <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
-        <p><b>Način plaćanja:</b> {{ $orderData['paymentTypeName'] }} &nbsp;&nbsp; <b>Račun izdaje:</b> {{ $appSettings['invoice_issuer_01'] }}</p>
-        <p><b>Poziv na broj:</b> 1512-{{ $orderData['id'] }}</p>
-        <p><b>Broj narudžbe:</b> {{ $orderData['id'] }}</p>
-    </div>
+                @if($invoice->delivery_date)
+                    <div style="margin-top:10px">
+                        <b>Datum isporuke:</b>
+                        {{ $invoice->formatted_delivery_date }}
+                    </div>
+                @endif
 
-    {{-- PDF content - END --}}
-    {{-- @include('includes.pdf.shared.signature-stamp') Slows rendering, removed for now --}}
+                <div>
+                    <b>Datum dospijeća:</b>
+                    {{ $invoice->formatted_due_date }}
+                </div>
+            </td>
+
+            <td class="w-tri">
+                <div><h4>Kontakt:</h4></div>
+                <div><b>Email:</b> {{ $appSettings['contact_email'] }}</div>
+                <div><b>Mob:</b> {{ $appSettings['contact_phone'] }}</div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{{-- Stavke (privremeno još orderItemList) --}}
+@include('includes.pdf.shared.order-items')
+
+<div class="notes">
+    <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
+
+    <p>
+        <b>Račun izdaje:</b> {{ $invoice->issued_by }}
+    </p>
+
+    <p>
+        <b>Poziv na broj:</b> {{ $invoice->number }}-{{ $invoice->year }}
+    </p>
+
+    <p>
+        <b>Broj narudžbe:</b> {{ $invoice->order_id }}
+    </p>
+</div>
+
+{{-- PDF content - END --}}
+{{-- @include('includes.pdf.shared.signature-stamp') --}}
 
 </body>
 </html>

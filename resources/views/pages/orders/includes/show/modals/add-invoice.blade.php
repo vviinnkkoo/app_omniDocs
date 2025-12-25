@@ -1,36 +1,48 @@
 {{-- Invoice modal --}}
 <div class="modal fade" id="addInvoiceModal" tabindex="-1" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addInvoiceModalLabel">Novi račun</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{-- Popup content --}}
         <form method="POST" action="{{ route('racuni.store') }}" id="invoiceSubmission">
           @csrf
-          <div class="form-group">
+          <div class="row g-3">
 
-            {{-- Invoice number --}}
-            <div class="mb-3">
+            {{-- Business place i device --}}
+            <div class="col-6">
+              <label for="business_space_id">Poslovni prostor:</label>
+              <select class="form-select searchable-select-modal" id="business_space_id" name="business_space_id" required>
+                @foreach ($businessSpaces as $space)
+                  <option value="{{ $space->id }}">{{ $space->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col-6">
+              <label for="business_device_id">Uređaj:</label>
+              <select class="form-select searchable-select-modal" id="business_device_id" name="business_device_id" required>
+                @foreach ($businessDevices as $device)
+                  <option value="{{ $device->id }}">{{ $device->name }}</option>
+                @endforeach
+              </select>
+            </div>
+
+            {{-- Redni broj i godina --}}
+            <div class="col-6">
               <label for="number">Redni broj računa:</label>
               <div class="input-group">
                 <input type="number" class="form-control" placeholder="Unesi redni broj računa..." id="number" name="number" value="{{ $latestInvoiceNumber }}" required>
-                <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" id="refresh-number-btn">
-                  🔄
-                  <div id="numberLoader" class="spinner-border spinner-border-sm text-primary d-none" role="status">
-                    <span class="visually-hidden">Učitavanje...</span>
-                  </div>
+                <button type="button" class="btn btn-light d-flex align-items-center gap-2 border" id="refresh-number-btn">
+                    <i class="bi bi-arrow-clockwise" id="refresh-icon"></i>
+                    <div id="numberLoader" class="spinner-border spinner-border-sm text-primary d-none" role="status">
+                        <span class="visually-hidden">Učitavanje...</span>
+                    </div>
                 </button>
               </div>
             </div>
-
-            {{-- Hidden order ID --}}
-            <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" required>
-
-            {{-- Invoice year --}}
-            <div class="mb-3">
+            <div class="col-6">
               <label for="year">Godina računa:</label>
               <select class="form-select searchable-select-modal" id="year" name="year" required>
                 @foreach ($workYears as $workYear)
@@ -38,6 +50,87 @@
                 @endforeach
               </select>
             </div>
+
+            {{-- Checkbox za izmjenu podataka kupca --}}
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="editCustomerData">
+                <label class="form-check-label" for="editCustomerData">Izmjeni podatke kupca</label>
+              </div>
+            </div>
+
+            {{-- Customer polja (hidden by default) --}}
+            <div class="col-12 d-none border-start border-3 border-secondary p-3 bg-light shadow-sm" id="customerFields">
+              <div class="row g-2">
+
+                {{-- Ime i prezime --}}
+                <div class="col-md-6">
+                  <label for="customer_name">Ime i prezime:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_name" name="customer_name" data-hidden-id="hidden_customer_name">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_name" value="{{ $customer->name ?? '' }}">
+                </div>
+
+                {{-- OIB --}}
+                <div class="col-md-6">
+                  <label for="customer_oib">OIB:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_oib" name="customer_oib" data-hidden-id="hidden_customer_oib">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_oib" value="{{ $customer->oib ?? '' }}">
+                </div>
+
+                {{-- Adresa --}}
+                <div class="col-md-6">
+                  <label for="customer_address">Adresa:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_address" name="customer_address" data-hidden-id="hidden_customer_address">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_address" value="{{ $customer->address ?? '' }} {{ $customer->house_number ?? '' }}">
+                </div>
+
+                {{-- Poštanski broj --}}
+                <div class="col-md-6">
+                  <label for="customer_postal">Poštanski broj:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_postal" name="customer_postal" data-hidden-id="hidden_customer_postal">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_postal" value="{{ $customer->postal ?? '' }}">
+                </div>
+
+                {{-- Grad --}}
+                <div class="col-md-6">
+                  <label for="customer_city">Grad:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_city" name="customer_city" data-hidden-id="hidden_customer_city">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_city" value="{{ $customer->city ?? '' }}">
+                </div>
+
+                {{-- Telefon --}}
+                <div class="col-md-6">
+                  <label for="customer_phone">Telefon:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_phone" name="customer_phone" data-hidden-id="hidden_customer_phone">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_phone" value="{{ $customer->phone ?? '' }}">
+                </div>
+
+                {{-- Email --}}
+                <div class="col-md-12">
+                  <label for="customer_email">Email:</label>
+                  <input type="email" class="form-control customer-visible" id="customer_email" name="customer_email" data-hidden-id="hidden_customer_email">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_email" value="{{ $customer->email ?? '' }}">
+                </div>
+
+              </div>
+            </div>
+
+            {{-- Issued by / issued at / due at --}}
+            <div class="mb-3">
+              <label for="issued_by">Račun izdaje:</label>
+              <input type="text" class="form-control" id="issued_by" name="issued_by" value="{{ auth()->user()->name ?? '' }}">
+            </div>
+            <div class="mb-3">
+              <label for="issued_at">Datum izdavanja:</label>
+              <input type="datetime-local" class="form-control" id="issued_at" name="issued_at" value="{{ now()->format('Y-m-d\TH:i') }}">
+            </div>
+            <div class="mb-3">
+              <label for="due_at">Datum dospijeća:</label>
+              <input type="date" class="form-control" id="due_at" name="due_at" value="{{ now()->addDays(7)->format('Y-m-d') }}">
+            </div>
+
+            {{-- Hidden order ID --}}
+            <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" required>
 
           </div>
         </form>
@@ -49,3 +142,28 @@
     </div>
   </div>
 </div>
+
+{{-- JS za toggle customer polja --}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const editCheckbox = document.getElementById('editCustomerData');
+      const customerFieldsWrapper = document.getElementById('customerFields');
+      const hiddenFields = document.querySelectorAll('.customer-hidden');
+      const visibleFields = document.querySelectorAll('.customer-visible');
+
+      // Postavi default vrijednosti iz hidden inputa u visible input
+      visibleFields.forEach((field, i) => field.value = hiddenFields[i].value);
+
+      editCheckbox.addEventListener('change', () => {
+          if(editCheckbox.checked) {
+              customerFieldsWrapper.classList.remove('d-none');
+              // Kad se aktivira, visible inputi dobiju vrijednosti iz hidden
+              visibleFields.forEach((field, i) => field.value = hiddenFields[i].value);
+          } else {
+              customerFieldsWrapper.classList.add('d-none');
+              // Kad se deaktivira, visible inputi resetiraju na hidden vrijednosti
+              visibleFields.forEach((field, i) => field.value = hiddenFields[i].value);
+          }
+      });
+  });
+</script>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\GlobalService;
 
 class OrderItemList extends Model
 {
@@ -90,5 +91,10 @@ class OrderItemList extends Model
         $decimals = ($this->unit === 'kom') ? 0 : 2;
 
         return number_format($amount, $decimals, ',', '.');
+    }
+
+    public function getItemTotalAttribute()
+    {
+        return GlobalService::sumOrderItems(itemId: $this->id);
     }
 }

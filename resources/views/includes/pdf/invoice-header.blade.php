@@ -6,7 +6,7 @@
                 <img src="{{ public_path($appSettings['invoice_logo']) }}" height="54" />
             </td>
             <td class="w-half">
-                <h2>RAČUN br: <span class="gray-overlay">{{ $invoiceData['number'] }}-1-1</span></h2>
+                <h2>RAČUN br: <span class="gray-overlay">{{ $invoice->number }}-{{ $invoice->businessSpace->name }}-{{ $invoice->businessDevice->name }}</span></h2>
             </td>
         </tr>
     </table>

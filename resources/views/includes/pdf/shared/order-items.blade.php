@@ -13,7 +13,7 @@
         @foreach ($orderItemList as $item)
             <tr class="items">
 
-                <td style="center">{{$item->productID}}-{{$item->colorID}}</td>
+                <td style="center">{{$item->product->id}}-{{$item->color->id}}</td>
 
                 <td>
                     {{ $item->productName }}<br>

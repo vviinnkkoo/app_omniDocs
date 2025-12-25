@@ -41,19 +41,36 @@ class DoomPDFController extends Controller
 
     private function generateInvoice($mode, $invoiceID)
     {
-        $invoice = Invoice::where('id', $invoiceID)->firstOrFail();
-        $orderID = $invoice->order->id;
-        $invoiceData = [
-            'number' => $invoice->number,
-            'date' => Carbon::parse($invoice->created_at)->format('d.m.Y'),
-            'time' => Carbon::parse($invoice->created_at)->format('H:i'),            
-            'eta' => Carbon::parse($invoice->created_at)->addDays(14)->format('d.m.Y'),
+        $invoice = Invoice::with([
+            'order.deliveryService.deliveryCompany',
+            'order.paymentType',
+        ])->findOrFail($invoiceID);
+
+        // trenutno još koristiš orderItemList, kasnije ide invoiceItemList
+        $orderItemList = $invoice->order->orderItemList;
+
+        $order = $invoice->order;
+
+        // SAMO ono što PDF još koristi
+        $orderData = [
+            'deliveryCompanyName' => $order->deliveryService?->deliveryCompany?->name,
+            'deliveryServiceName' => $order->deliveryService?->name,
+            'deliveryCost'        => $order->deliveryService?->default_cost ?? 0,
+            'total'               => GlobalService::calculateInvoiceTotal($order->id),
+            'paymentTypeName'     => $order->paymentType?->name,
+            'id'                  => $order->id,
         ];
-        [$order, $orderData, $orderItemList] = $this->getOrderData($orderID);
-        [$view, $filename] = $this->getTemplate($mode, $orderID, $invoice->number);
-        
-        return Pdf::loadView($view, compact('invoiceData', 'orderData', 'orderItemList'))
-            ->stream($filename);
+
+        [$view, $filename] = $this->getTemplate(
+            $mode,
+            $invoice->order_id,
+            $invoice->number
+        );
+
+        return Pdf::loadView(
+            $view,
+            compact('invoice', 'orderItemList', 'orderData')
+        )->stream($filename);
     }
 
     private function generateQuotation($mode, $orderID)

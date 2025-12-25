@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 use App\Traits\HasSearch;
 
 class Invoice extends Model
@@ -13,7 +15,19 @@ class Invoice extends Model
         'is_cancelled',
         'number',
         'order_id',
-        'year'
+        'year',
+        'business_space_id',
+        'business_device_id',
+        'customer_name',
+        'customer_oib',
+        'customer_address',
+        'customer_postal',
+        'customer_city',
+        'customer_phone',
+        'customer_email',
+        'issued_by',
+        'issued_at',
+        'due_at'
     ];
 
     protected $casts = [
@@ -40,6 +54,16 @@ class Invoice extends Model
         return $this->hasOne(KprItemList::class);
     }
 
+    public function businessSpace()
+    {
+        return $this->belongsTo(BusinessSpace::class);
+    }
+
+    public function businessDevice()
+    {
+        return $this->belongsTo(BusinessDevice::class);
+    }
+
     /*
     |--------------------------------------------------------------------------------------------
     | Accessors
@@ -54,6 +78,34 @@ class Invoice extends Model
     //{
     //    return self::where('cancelled_invoice_id', $this->id)->exists();
     //}
+
+    public function getFormattedIssuedDateAttribute()
+    {
+        return $this->issued_at
+            ? Carbon::parse($this->issued_at)->format('d.m.Y')
+            : null;
+    }
+
+    public function getFormattedIssuedTimeAttribute()
+    {
+        return $this->issued_at
+            ? Carbon::parse($this->issued_at)->format('H:i')
+            : null;
+    }
+
+    public function getFormattedDeliveryDateAttribute()
+    {
+        return $this->delivery_date
+            ? Carbon::parse($this->delivery_date)->format('d.m.Y')
+            : null;
+    }
+
+    public function getFormattedDueDateAttribute()
+    {
+        return $this->due_at
+            ? Carbon::parse($this->due_at)->format('d.m.Y')
+            : null;
+    }
 
     public function getHasPaymentAttribute(): bool
     {

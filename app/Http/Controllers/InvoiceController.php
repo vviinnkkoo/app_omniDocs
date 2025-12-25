@@ -76,8 +76,8 @@ class InvoiceController extends Controller
     {
         $data = $request->validate([
             'order_id' => 'required|exists:orders,id',
-            'business_space_id' => 'nullable|exists:business_spaces,id',
-            'business_device_id' => 'nullable|exists:business_devices,id',
+            'business_space_id' => 'required|exists:business_spaces,id',
+            'business_device_id' => 'required|exists:business_devices,id',
             'year' => 'required|integer',
             'number' => 'required|integer',
             'customer_name' => 'nullable|string|max:255',
@@ -87,9 +87,9 @@ class InvoiceController extends Controller
             'customer_city' => 'nullable|string|max:255',
             'customer_phone' => 'nullable|string|max:255',
             'customer_email' => 'nullable|string|max:255',
-            'issued_by' => 'nullable|string|max:255',
-            'issued_at' => 'nullable|date',
-            'due_at' => 'nullable|date'
+            'issued_by' => 'required|string|max:255',
+            'issued_at' => 'required|date',
+            'due_at' => 'required|date'
         ]);
 
         $exists = Invoice::where('year', $data['year'])

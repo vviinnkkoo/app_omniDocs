@@ -21,6 +21,8 @@ use App\Models\Color;
 use App\Models\Invoice;
 use App\Models\KprItemList;
 use App\Models\WorkYears;
+use App\Models\BusinessSpace;
+use App\Models\BusinessDevice;
 
 use App\Services\GlobalService;
 
@@ -93,12 +95,13 @@ class OrderController extends Controller
         $this->attachInvoicesAndKpr($order);
 
         $orderData = $this->getOrderData($order);
-
         $latestInvoiceNumber = GlobalService::getLatestInvoiceNumber(date('Y'));
+        $customer = $order->customer ?? null;
 
         return view('pages.orders.show', compact(
             'order',
-            'latestInvoiceNumber'
+            'latestInvoiceNumber',
+            'customer'
         ))->with($orderData);
     }
 
@@ -252,6 +255,8 @@ class OrderController extends Controller
             'colors' => Color::orderBy('id')->get(),
             'orderItemList' => $order->orderItemList,
             'orderNotes' => $order->orderNote,
+            'businessSpaces' => BusinessSpace::orderBy('id')->get(),
+            'businessDevices' => BusinessDevice::orderBy('id')->get()
         ];
     }
 }
