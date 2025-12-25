@@ -11,7 +11,7 @@
           @csrf
           <div class="row g-3">
 
-            {{-- Business place i device --}}
+            {{-- Business place and device --}}
             <div class="col-6">
               <label for="business_space_id">Poslovni prostor:</label>
               <select class="form-select searchable-select-modal" id="business_space_id" name="business_space_id" required>
@@ -29,7 +29,7 @@
               </select>
             </div>
 
-            {{-- Redni broj i godina --}}
+            {{-- Invoice number and year --}}
             <div class="col-6">
               <label for="number">Redni broj računa:</label>
               <div class="input-group">
@@ -51,7 +51,7 @@
               </select>
             </div>
 
-            {{-- Checkbox za izmjenu podataka kupca --}}
+            {{-- Checkbox for editing customer data --}}
             <div class="col-12">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="editCustomerData">
@@ -59,11 +59,11 @@
               </div>
             </div>
 
-            {{-- Customer polja (hidden by default) --}}
+            {{-- Customer fields (hidden by default) --}}
             <div class="col-12 d-none border-start border-3 border-secondary p-3 bg-light shadow-sm" id="customerFields">
               <div class="row g-2">
 
-                {{-- Ime i prezime --}}
+                {{-- Name --}}
                 <div class="col-md-6">
                   <label for="customer_name">Ime i prezime:</label>
                   <input type="text" class="form-control customer-visible" id="customer_name" name="customer_name" data-hidden-id="hidden_customer_name">
@@ -77,28 +77,28 @@
                   <input type="hidden" class="customer-hidden" id="hidden_customer_oib" value="{{ $customer->oib ?? '' }}">
                 </div>
 
-                {{-- Adresa --}}
+                {{-- Address --}}
                 <div class="col-md-6">
                   <label for="customer_address">Adresa:</label>
                   <input type="text" class="form-control customer-visible" id="customer_address" name="customer_address" data-hidden-id="hidden_customer_address">
                   <input type="hidden" class="customer-hidden" id="hidden_customer_address" value="{{ $customer->address ?? '' }} {{ $customer->house_number ?? '' }}">
                 </div>
 
-                {{-- Poštanski broj --}}
+                {{-- Postal number --}}
                 <div class="col-md-6">
                   <label for="customer_postal">Poštanski broj:</label>
                   <input type="text" class="form-control customer-visible" id="customer_postal" name="customer_postal" data-hidden-id="hidden_customer_postal">
                   <input type="hidden" class="customer-hidden" id="hidden_customer_postal" value="{{ $customer->postal ?? '' }}">
                 </div>
 
-                {{-- Grad --}}
+                {{-- City --}}
                 <div class="col-md-6">
                   <label for="customer_city">Grad:</label>
                   <input type="text" class="form-control customer-visible" id="customer_city" name="customer_city" data-hidden-id="hidden_customer_city">
                   <input type="hidden" class="customer-hidden" id="hidden_customer_city" value="{{ $customer->city ?? '' }}">
                 </div>
 
-                {{-- Telefon --}}
+                {{-- Phone --}}
                 <div class="col-md-6">
                   <label for="customer_phone">Telefon:</label>
                   <input type="text" class="form-control customer-visible" id="customer_phone" name="customer_phone" data-hidden-id="hidden_customer_phone">
@@ -115,22 +115,28 @@
               </div>
             </div>
 
-            {{-- Issued by / issued at / due at --}}
-            <div class="mb-3">
+            {{-- Issued by / Dates --}}
+            <div class="col-12">
               <label for="issued_by">Račun izdaje:</label>
-              <input type="text" class="form-control" id="issued_by" name="issued_by" value="{{ auth()->user()->name ?? '' }}">
+              <input type="text" class="form-control" id="issued_by" name="issued_by" value="{{ auth()->user()->name ?? '' }}" required>
             </div>
-            <div class="mb-3">
+
+            <div class="col-4">
               <label for="issued_at">Datum izdavanja:</label>
-              <input type="datetime-local" class="form-control" id="issued_at" name="issued_at" value="{{ now()->format('Y-m-d\TH:i') }}">
+              <input type="datetime-local" class="form-control" id="issued_at" name="issued_at" value="{{ now()->format('Y-m-d\TH:i') }}" required>
             </div>
-            <div class="mb-3">
+            <div class="col-4">
               <label for="due_at">Datum dospijeća:</label>
               <input type="date" class="form-control" id="due_at" name="due_at" value="{{ now()->addDays(7)->format('Y-m-d') }}">
             </div>
+            <div class="col-4">
+              <label for="shipping_date">Datum isporuke:</label>
+              <input type="date" class="form-control" id="shipping_date" name="shipping_date" value="{{ now()->format('Y-m-d') }}" required>
+            </div>
 
-            {{-- Hidden order ID --}}
+            {{-- Hidden order ID and Type --}}
             <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" required>
+            <input type="hidden" id="type" name="type" value="invoice" required>
 
           </div>
         </form>

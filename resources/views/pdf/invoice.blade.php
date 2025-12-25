@@ -33,10 +33,10 @@
                 <div>{{ $invoice->formatted_issued_date }}</div>
                 <div>u {{ $invoice->formatted_issued_time }}</div>
 
-                @if($invoice->delivery_date)
+                @if($invoice->shipping_date)
                     <div style="margin-top:10px">
                         <b>Datum isporuke:</b>
-                        {{ $invoice->formatted_delivery_date }}
+                        {{ $invoice->formatted_shipping_date }}
                     </div>
                 @endif
 

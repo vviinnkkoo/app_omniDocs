@@ -28,7 +28,8 @@ class Invoice extends Model
         'customer_email',
         'issued_by',
         'issued_at',
-        'due_at'
+        'due_at',
+        'shipping_date'
     ];
 
     protected $casts = [
@@ -94,10 +95,10 @@ class Invoice extends Model
             : null;
     }
 
-    public function getFormattedDeliveryDateAttribute()
+    public function getFormattedShippingDateAttribute()
     {
-        return $this->delivery_date
-            ? Carbon::parse($this->delivery_date)->format('d.m.Y')
+        return $this->shipping_date
+            ? Carbon::parse($this->shipping_date)->format('d.m.Y')
             : null;
     }
 
