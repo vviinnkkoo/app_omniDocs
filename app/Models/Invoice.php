@@ -16,8 +16,8 @@ class Invoice extends Model
         'number',
         'order_id',
         'year',
-        'type',
-        'item_group',
+        'type_key',
+        'item_group_key',
         'business_space_id',
         'business_device_id',
         'customer_name',
@@ -112,12 +112,12 @@ class Invoice extends Model
     
     public function getTypeTextAttribute(): string
     {
-        return config('mappings.invoice_types')[$this->type] ?? $this->type;
+        return config('mappings.invoice_types')[$this->type_key] ?? $this->type_key;
     }
 
     public function getItemGroupTextAttribute(): string
     {
-        return config('mappings.item_groups')[$this->item_group] ?? $this->item_group;
+        return config('mappings.item_groups')[$this->item_group_key] ?? $this->item_group_key;
     }
 
     /*

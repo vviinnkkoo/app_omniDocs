@@ -39,13 +39,13 @@
 
                   {{-- Group --}}
                   <td class="align-middle text-right">
-                    <div class="editable-select" data-id="{{ $product->id }}" data-field="group" data-model="proizvodi">
+                    <div class="editable-select" data-id="{{ $product->id }}" data-field="item_group_key" data-model="proizvodi">
                       <span>{{ $product->group_text }}</span>
                       <select class="edit-select form-select" style="display: none !important">
-                        <option value="" selected>Odaberi grupu...</option>
-                        @foreach($groups as $key => $label)
-                          <option value="{{ $key }}" {{ $product->group == $key ? 'selected' : '' }}>{{ $label }}</option>
-                        @endforeach
+                          <option value="" selected>Odaberi grupu...</option>
+                          @foreach($groups as $key => $label)
+                              <option value="{{ $key }}" {{ $product->item_group_key == $key ? 'selected' : '' }}>{{ $label }}</option>
+                          @endforeach
                       </select>
                     </div>
                   </td>

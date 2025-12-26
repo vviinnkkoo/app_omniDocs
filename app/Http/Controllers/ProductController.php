@@ -64,7 +64,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->updateRecord($request, $id, ['name', 'group', 'product_type_id', 'default_price']);
+        return $this->updateRecord($request, $id, ['name', 'item_group_key', 'product_type_id', 'default_price']);
     }
 
     public function destroy($id)

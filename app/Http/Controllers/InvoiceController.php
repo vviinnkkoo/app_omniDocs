@@ -80,7 +80,7 @@ class InvoiceController extends Controller
             'business_space_id' => 'required|exists:business_spaces,id',
             'business_device_id' => 'required|exists:business_devices,id',
             'year' => 'required|integer',
-            'type' => 'required|in:invoice,credit,advance,cancellation',
+            'type_key' => 'required|in:' . implode(',', Invoice::typeKeys()),
             'number' => 'required|integer',
             'customer_name' => 'nullable|string|max:255',
             'customer_oib' => 'nullable|string|max:255',
@@ -118,6 +118,7 @@ class InvoiceController extends Controller
                 InvoiceItemList::create([
                     'invoice_id' => $invoice->id,
                     'name' => $item->product->name,
+                    'item_group_key' => $item->product->item_group_key,
                     'description' => $item->color->name,
                     'note' => $item->note,
                     'price' => $item->price,
@@ -130,7 +131,7 @@ class InvoiceController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', "Račun broj {$invoice->number} uspješno je dodan.");
+        return redirect()->back()->with('success', "Račun broj {$invoice->number} uspješno je dodan u {$invoice->year}. godinu.");
 
     }
     

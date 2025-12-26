@@ -148,7 +148,7 @@
 
             {{-- Hidden order ID and Type --}}
             <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" required>
-            <input type="hidden" id="type" name="type" value="invoice" required>
+            <input type="hidden" id="type" name="type_key" value="invoice" required>
 
           </div>
         </form>

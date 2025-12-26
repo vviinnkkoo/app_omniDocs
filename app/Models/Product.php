@@ -11,7 +11,7 @@ class Product extends Model
     
     protected $fillable = [
         'name',
-        'group',
+        'item_group_key',
         'product_type_id',
         'default_price'
     ];
@@ -33,7 +33,7 @@ class Product extends Model
     */
     public function getGroupTextAttribute(): string
     {
-        return config('mappings.item_groups')[$this->group] ?? $this->group;
+        return config('mappings.item_groups')[$this->item_group_key] ?? $this->item_group_key;
     }
 
     /*
