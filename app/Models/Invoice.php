@@ -25,6 +25,7 @@ class Invoice extends Model
         'customer_address',
         'customer_postal',
         'customer_city',
+        'customer_country',
         'customer_phone',
         'customer_email',
         'issued_by',
@@ -65,6 +66,11 @@ class Invoice extends Model
     public function businessDevice()
     {
         return $this->belongsTo(BusinessDevice::class);
+    }
+
+    public function invoiceItemList()
+    {
+        return $this->hasMany(InvoiceItemList::class);
     }
 
     /*

@@ -117,6 +117,7 @@ class InvoiceController extends Controller
             foreach ($invoice->order->orderItemList as $item) {
                 InvoiceItemList::create([
                     'invoice_id' => $invoice->id,
+                    'item_id' => $item->product->id,
                     'name' => $item->product->name,
                     'item_group_key' => $item->product->item_group_key,
                     'description' => $item->color->name,

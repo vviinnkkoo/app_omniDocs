@@ -42,16 +42,15 @@ class DoomPDFController extends Controller
     private function generateInvoice($mode, $invoiceID)
     {
         $invoice = Invoice::with([
+            'invoiceItemList', // direktno učitaj stavke računa
             'order.deliveryService.deliveryCompany',
             'order.paymentType',
         ])->findOrFail($invoiceID);
 
-        // trenutno još koristiš orderItemList, kasnije ide invoiceItemList
-        $orderItemList = $invoice->order->orderItemList;
+        $invoiceItemList = $invoice->invoiceItemList; // ovo šalješ view-u
 
         $order = $invoice->order;
 
-        // SAMO ono što PDF još koristi
         $orderData = [
             'deliveryCompanyName' => $order->deliveryService?->deliveryCompany?->name,
             'deliveryServiceName' => $order->deliveryService?->name,
@@ -69,9 +68,9 @@ class DoomPDFController extends Controller
 
         return Pdf::loadView(
             $view,
-            compact('invoice', 'orderItemList', 'orderData')
+            compact('invoice', 'invoiceItemList', 'orderData')
         )->stream($filename);
-    }
+}
 
     private function generateQuotation($mode, $orderID)
     {

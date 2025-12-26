@@ -22,9 +22,25 @@
                 <div>{{ $invoice->customer_name }}</div>
                 <div>{{ $invoice->customer_address }}</div>
                 <div>{{ $invoice->customer_city }}, {{ $invoice->customer_postal }}</div>
-                <div style="margin-top:10px">
-                    <b>OIB:</b> {{ $invoice->customer_oib }}
-                </div>
+                <div>{{ $invoice->customer_country }}</div>
+
+                @if($invoice->customer_phone || $invoice->customer_email)
+                    <div style="margin-top:5px">
+                        @if($invoice->customer_phone)
+                            <div><b>T:</b> {{ $invoice->customer_phone }}</div>
+                        @endif
+
+                        @if($invoice->customer_email)
+                            <div><b>E:</b> {{ $invoice->customer_email }}</div>
+                        @endif
+                    </div>
+                @endif
+
+                @if($invoice->customer_oib)
+                    <div style="margin-top:5px">
+                        <b>OIB:</b> {{ $invoice->customer_oib }}
+                    </div>
+                @endif
             </td>
 
             <td class="w-tri">
@@ -55,8 +71,7 @@
     </table>
 </div>
 
-{{-- Stavke (privremeno još orderItemList) --}}
-@include('includes.pdf.shared.order-items')
+@include('includes.pdf.shared.invoice-items')
 
 <div class="notes">
     <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
@@ -70,12 +85,11 @@
     </p>
 
     <p>
-        <b>Broj narudžbe:</b> {{ $invoice->order_id }}
+        <b>Interni broj narudžbe:</b> {{ $invoice->order_id }}
     </p>
 </div>
 
 {{-- PDF content - END --}}
-{{-- @include('includes.pdf.shared.signature-stamp') --}}
 
 </body>
 </html>

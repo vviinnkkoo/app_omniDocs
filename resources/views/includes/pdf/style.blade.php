@@ -131,4 +131,8 @@
         left: 50%;
         transform: translateX(-50%); /* Center within the cell */
     }
+    .small-text {
+        font-size: 70%;
+        color: #333;
+    }
 </style>
