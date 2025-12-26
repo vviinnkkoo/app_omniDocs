@@ -17,6 +17,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Naziv proizvoda</th>
+                <th scope="col">Grupa</th> {{-- Nova kolona --}}
                 <th scope="col">Vrsta</th>
                 <th scope="col">Standardna cijena</th>
                 <th class="delete-column"></th>
@@ -36,18 +37,28 @@
                     <span class="editable" data-id="{{ $product->id }}" data-field="name" data-model="proizvodi">{{ $product->name }}</span>
                   </td>
 
+                  {{-- Group --}}
+                  <td class="align-middle text-right">
+                    <div class="editable-select" data-id="{{ $product->id }}" data-field="group" data-model="proizvodi">
+                      <span>{{ $product->group_text }}</span>
+                      <select class="edit-select form-select" style="display: none !important">
+                        <option value="" selected>Odaberi grupu...</option>
+                        @foreach($groups as $key => $label)
+                          <option value="{{ $key }}" {{ $product->group == $key ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </td>
+
                   {{-- Product type select --}}
                   <td class="align-middle text-right">
                     <div class="editable-select" data-id="{{ $product->id }}" data-field="product_type_id" data-model="proizvodi">
-                      {{-- Display the selected value --}}
                       <span>{{ $product->productType->name ?? 'Nije definirano' }}</span>
-                      
-                      {{-- Hidden select element with options --}}
                       <select class="edit-select form-select" style="display: none !important">
                         <option value="" selected>Odaberi vrstu proizvoda...</option>
-                          @foreach ($productTypes as $productType)
+                        @foreach ($productTypes as $productType)
                           <option value="{{ $productType->id }}">{{ $productType->name }}</option>
-                          @endforeach 
+                        @endforeach 
                       </select>
                     </div>
                   </td>

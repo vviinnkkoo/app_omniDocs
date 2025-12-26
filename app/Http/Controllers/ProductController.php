@@ -28,23 +28,33 @@ class ProductController extends Controller
     {
         $search = $request->input('search');
 
+        if ($search) {
+            $group = Product::groupFromSearch($search);
+
+            if ($group) {
+                $search = $group;
+            }
+        }
+
         $query = Product::with('productType')
             ->search(
                 $search,
-                ['name'],
+                ['name', 'group'],
                 ['productType' => ['name']]
             );
 
         $products = $query->orderBy('name')->paginate(25);
         $productTypes = ProductType::orderBy('id')->get();
+        $groups = Product::groups();
 
-        return view('pages.products.index', compact('products', 'productTypes', 'search'));
+        return view('pages.products.index', compact('products', 'productTypes', 'search', 'groups'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required',
+            'group' => 'required|in:' . implode(',', Product::groupKeys()),
             'product_type_id' => 'required|exists:product_types,id',
             'default_price' => 'required|numeric',
         ]);
@@ -54,7 +64,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->updateRecord($request, $id, ['name', 'product_type_id', 'default_price']);
+        return $this->updateRecord($request, $id, ['name', 'group', 'product_type_id', 'default_price']);
     }
 
     public function destroy($id)

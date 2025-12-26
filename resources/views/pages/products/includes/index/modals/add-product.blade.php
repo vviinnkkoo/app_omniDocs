@@ -17,6 +17,15 @@
             <label for="name">Naziv proizvoda:</label>
             <input type="text" class="form-control" placeholder="Unesi naziv novog proizvoda..." id="name" name="name">
 
+            {{-- Product name --}}
+            <label for="name">Grupa:</label>
+            <select class="form-select searchable-select-modal" id="group" name="group">
+              <option selected>Odaberi grupu proizvoda...</option>
+              @foreach($groups as $key => $label)
+                <option value="{{ $key }}" {{ $product->group == $key}}>{{ $label }}</option>
+              @endforeach
+            </select>
+
             {{-- Product type --}}
             <label for="product_type_id">Vrsta proizvoda:</label>
             <select class="form-select searchable-select-modal" id="product_type_id" name="product_type_id">

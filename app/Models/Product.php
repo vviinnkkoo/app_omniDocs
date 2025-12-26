@@ -11,6 +11,7 @@ class Product extends Model
     
     protected $fillable = [
         'name',
+        'group',
         'product_type_id',
         'default_price'
     ];
@@ -23,6 +24,42 @@ class Product extends Model
     public function productType()
     {
         return $this->belongsTo(ProductType::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------------------------
+    */
+    public function getGroupTextAttribute(): string
+    {
+        return config('mappings.item_groups')[$this->group] ?? $this->group;
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------------------------
+    */
+    public static function groups(): array
+    {
+        return config('mappings.item_groups');
+    }
+
+    public static function groupKeys(): array
+    {
+        return array_keys(self::groups());
+    }
+
+    public static function groupFromSearch(string $search): ?string
+    {
+        $search = mb_strtolower(trim($search));
+        $reversed = array_change_key_case(
+            array_flip(self::groups()),
+            CASE_LOWER
+        );
+
+        return $reversed[$search] ?? null;
     }
 
     /*

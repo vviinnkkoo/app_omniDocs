@@ -17,6 +17,7 @@ class Invoice extends Model
         'order_id',
         'year',
         'type',
+        'item_group',
         'business_space_id',
         'business_device_id',
         'customer_name',
@@ -35,7 +36,7 @@ class Invoice extends Model
     protected $casts = [
         'is_cancelled' => 'boolean'
     ];
-    
+
     /*
     |--------------------------------------------------------------------------------------------
     | Relationships
@@ -71,16 +72,6 @@ class Invoice extends Model
     | Accessors
     |--------------------------------------------------------------------------------------------
     */
-    //public function getIsCancelledAttribute(): bool
-    //{
-    //    return $this->canceller()->exists();
-    //}
-
-    //public function getIsCancellingAttribute(): bool
-    //{
-    //    return self::where('cancelled_invoice_id', $this->id)->exists();
-    //}
-
     public function getFormattedIssuedDateAttribute()
     {
         return $this->issued_at
@@ -118,16 +109,40 @@ class Invoice extends Model
     {
         return $this->kprItem()->value('kpr_id');
     }
-
-    public function getTypeTextAttribute()
+    
+    public function getTypeTextAttribute(): string
     {
-        return match($this->type) {
-            'invoice' => 'Račun',
-            'credit' => 'Odobrenje',
-            'advance' => 'Avansni račun',
-            'cancellation' => 'Storno račun',
-            default => $this->type,
-        };
+        return config('mappings.invoice_types')[$this->type] ?? $this->type;
+    }
+
+    public function getItemGroupTextAttribute(): string
+    {
+        return config('mappings.item_groups')[$this->item_group] ?? $this->item_group;
+    }
+
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------------------------
+    */
+    public static function types(): array
+    {
+        return config('mappings.invoice_types');
+    }
+
+    public static function typeKeys(): array
+    {
+        return array_keys(self::types());
+    }
+
+    public static function itemGroups(): array
+    {
+        return config('mappings.item_groups');
+    }
+
+    public static function itemGroupKeys(): array
+    {
+        return array_keys(self::itemGroups());
     }
 
     /*
