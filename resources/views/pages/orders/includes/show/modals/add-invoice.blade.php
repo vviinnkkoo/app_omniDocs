@@ -51,6 +51,18 @@
               </select>
             </div>
 
+            {{-- Copy order items --}}
+            <div class="col-12 d-flex align-items-center gap-3">
+                <label class="mb-0">Kopiraj stavke narudžbe u račun:</label>
+                <div class="btn-group" role="group" aria-label="Copy items">
+                    <input type="radio" class="btn-check" name="copy_order_items" id="copyYes" value="1" autocomplete="off" checked>
+                    <label class="btn btn-primary btn-sm" for="copyYes">Da</label>
+
+                    <input type="radio" class="btn-check" name="copy_order_items" id="copyNo" value="0" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="copyNo">Ne</label>
+                </div>
+            </div>
+
             {{-- Checkbox for editing customer data --}}
             <div class="col-12">
               <div class="form-check">

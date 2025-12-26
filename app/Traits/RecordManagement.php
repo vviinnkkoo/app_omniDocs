@@ -12,10 +12,13 @@ trait RecordManagement
     | Create a new record.
     |--------------------------------------------------------------------------------------------
     */
-    public function createRecord(array $data, string $successMsg = 'Uspješno dodano.')
+    public function createRecord(array $data, string $successMsg = 'Uspješno dodano.', bool $returnModel = false)
     {
         try {
-            $this->modelClass::create($data);
+            $model = $this->modelClass::create($data);
+            if ($returnModel) {
+                return $model;
+            }
             return redirect()->back()->with('success', $successMsg);
         } catch (\Throwable $e) {
             \Log::error('Greška prilikom kreiranja zapisa: ' . $e->getMessage());

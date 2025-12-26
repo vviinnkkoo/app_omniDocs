@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Models\Invoice;
+use App\Models\InvoiceItemList;
 use App\Models\Order;
 use App\Models\DeliveryService;
 use App\Models\OrderItemList;
@@ -92,6 +93,7 @@ class InvoiceController extends Controller
             'issued_at' => 'required|date',
             'due_at' => 'required|date',
             'shipping_date' => 'required|date',
+            'copy_order_items' => 'required|boolean'
         ]);
 
         $exists = Invoice::where('year', $data['year'])
@@ -105,9 +107,31 @@ class InvoiceController extends Controller
                 ->with('error', "Račun s brojem {$data['number']} već postoji u {$data['year']}. godini za odabrani poslovni prostor.");
         }
 
-        return $this->createRecord(
+        /*return $this->createRecord(
             $data, "Račun broj {$data['number']} uspješno je dodan u {$data['year']}. godinu!"
-        );
+        );*/
+
+        $invoice = $this->createRecord($data, "Račun uspješno dodan!", true);
+
+        if ($invoice && $data['copy_order_items']) {
+            foreach ($invoice->order->orderItemList as $item) {
+                InvoiceItemList::create([
+                    'invoice_id' => $invoice->id,
+                    'name' => $item->product->name,
+                    'description' => $item->color->name,
+                    'note' => $item->note,
+                    'price' => $item->price,
+                    'amount' => $item->amount,
+                    'discount_amount' => $item->price * $item->amount * ($item->discount / 100),
+                    'discount_percentage' => $item->discount,
+                    'subtotal' => $item->amount * $item->price,
+                    'total' => GlobalService::sumOrderItems(itemId: $item->id)
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', "Račun broj {$invoice->number} uspješno je dodan.");
+
     }
     
     public function update(Request $request, $id)
