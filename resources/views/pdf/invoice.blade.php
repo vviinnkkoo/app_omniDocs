@@ -74,19 +74,22 @@
 @include('includes.pdf.shared.invoice-items')
 
 <div class="notes">
-    <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
+    <div style="mt-10px">
+        <b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.
+    </div>
 
-    <p>
+    <div class="mt-10px">
         <b>Račun izdaje:</b> {{ $invoice->issued_by }}
-    </p>
+    </div>
 
-    <p>
-        <b>Poziv na broj:</b> {{ $invoice->number }}-{{ $invoice->year }}
-    </p>
+    <div class="mt-10px">
+        <div><b>Poziv na broj:</b> {{ $invoice->number }}-{{ $invoice->year }}</div>
+        <div><b>Interni broj narudžbe:</b> {{ $invoice->order_id }}</div>
+    </div>
 
-    <p>
-        <b>Interni broj narudžbe:</b> {{ $invoice->order_id }}
-    </p>
+    <div class="mt-10px">
+        <div><b>Način plaćanja:</b> {{ $invoice->payment_type_name }}</div>
+    </div>
 </div>
 
 {{-- PDF content - END --}}

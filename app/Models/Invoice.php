@@ -17,7 +17,7 @@ class Invoice extends Model
         'order_id',
         'year',
         'type_key',
-        'item_group_key',
+        'payment_type_name',
         'business_space_id',
         'business_device_id',
         'customer_name',

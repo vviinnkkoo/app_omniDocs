@@ -42,33 +42,18 @@ class DoomPDFController extends Controller
     private function generateInvoice($mode, $invoiceID)
     {
         $invoice = Invoice::with([
-            'invoiceItemList', // direktno učitaj stavke računa
+            'invoiceItemList',
             'order.deliveryService.deliveryCompany',
             'order.paymentType',
         ])->findOrFail($invoiceID);
 
-        $invoiceItemList = $invoice->invoiceItemList; // ovo šalješ view-u
+        $invoiceItemList = $invoice->invoiceItemList;
 
-        $order = $invoice->order;
-
-        $orderData = [
-            'deliveryCompanyName' => $order->deliveryService?->deliveryCompany?->name,
-            'deliveryServiceName' => $order->deliveryService?->name,
-            'deliveryCost'        => $order->deliveryService?->default_cost ?? 0,
-            'total'               => GlobalService::calculateInvoiceTotal($order->id),
-            'paymentTypeName'     => $order->paymentType?->name,
-            'id'                  => $order->id,
-        ];
-
-        [$view, $filename] = $this->getTemplate(
-            $mode,
-            $invoice->order_id,
-            $invoice->number
-        );
+        [$view, $filename] = $this->getTemplate($mode, $invoice->number);
 
         return Pdf::loadView(
             $view,
-            compact('invoice', 'invoiceItemList', 'orderData')
+            compact('invoice', 'invoiceItemList')
         )->stream($filename);
 }
 
@@ -170,14 +155,14 @@ class DoomPDFController extends Controller
         return [$order, $orderData, $orderItemList];
     }
 
-    private function getTemplate($mode, $id, $invoiceNumber = null)
+    private function getTemplate($mode, $label)
     {
         $currentDateTime = $this->getCurrentDateTime();
 
         $templates = [
-            'otpremnica' => ['pdf.dispatch', "otpremnica-{$id}-{$currentDateTime}.pdf"],
-            'ponuda' => ['pdf.quotation', "ponuda-{$id}-{$currentDateTime}.pdf"],
-            'racun' => ['pdf.invoice', "racun-{$invoiceNumber}-{$currentDateTime}.pdf"]
+            'otpremnica' => ['pdf.dispatch', "otpremnica-{$label}-{$currentDateTime}.pdf"],
+            'ponuda' => ['pdf.quotation', "ponuda-{$label}-{$currentDateTime}.pdf"],
+            'racun' => ['pdf.invoice', "racun-{$label}-{$currentDateTime}.pdf"]
         ];
 
         return $templates[$mode] ?? null;

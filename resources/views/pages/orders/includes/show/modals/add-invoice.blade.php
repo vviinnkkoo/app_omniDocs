@@ -110,6 +110,13 @@
                   <input type="hidden" class="customer-hidden" id="hidden_customer_city" value="{{ $customer->city ?? '' }}">
                 </div>
 
+                {{-- Country --}}
+                <div class="col-md-6">
+                  <label for="customer_country">Država:</label>
+                  <input type="text" class="form-control customer-visible" id="customer_country" name="customer_country" data-hidden-id="hidden_customer_country">
+                  <input type="hidden" class="customer-hidden" id="hidden_customer_country" value="{{ $customer->country->name ?? '' }}">
+                </div>
+
                 {{-- Phone --}}
                 <div class="col-md-6">
                   <label for="customer_phone">Telefon:</label>
@@ -148,6 +155,7 @@
 
             {{-- Hidden order ID and Type --}}
             <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" required>
+            <input type="hidden" id="payment_type_name" name="payment_type_name" value="{{ $order->paymentType->name }}" required>
             <input type="hidden" id="type" name="type_key" value="invoice" required>
 
           </div>
