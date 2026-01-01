@@ -18,6 +18,17 @@
               <input type="text" class="form-control" placeholder="Unesi naziv..." id="name" name="name">
             </div>
 
+            {{-- Fiscal code key --}}
+            <div class="mb-3">
+              <label for="fiscal_code_key">Fiskalni kod:</label>
+              <select class="form-control" id="fiscal_code_key" name="fiscal_code_key" required>
+                <option value="" disabled selected>Odaberi kod...</option>
+                @foreach($fiscalCodes as $key => $label)
+                  <option value="{{ $key }}">{{ $label }} ({{ $key }})</option>
+                @endforeach
+              </select>
+            </div>
+
           </div>
         </form>
       </div>

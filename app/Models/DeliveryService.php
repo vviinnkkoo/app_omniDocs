@@ -47,7 +47,7 @@ class DeliveryService extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Accessors
+    | General accessors
     |--------------------------------------------------------------------------------------------
     */
     public function getFormatedDefaultCostAttribute()

@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
+use App\Enums\InvoiceType;
+use App\Enums\ItemGroup;
+
 use App\Traits\HasSearch;
 
 class Invoice extends Model
@@ -75,35 +78,27 @@ class Invoice extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Accessors
+    | General accessors
     |--------------------------------------------------------------------------------------------
     */
     public function getFormattedIssuedDateAttribute()
     {
-        return $this->issued_at
-            ? Carbon::parse($this->issued_at)->format('d.m.Y')
-            : null;
+        return $this->issued_at ? Carbon::parse($this->issued_at)->format('d.m.Y') : null;
     }
 
     public function getFormattedIssuedTimeAttribute()
     {
-        return $this->issued_at
-            ? Carbon::parse($this->issued_at)->format('H:i')
-            : null;
+        return $this->issued_at ? Carbon::parse($this->issued_at)->format('H:i') : null;
     }
 
     public function getFormattedShippingDateAttribute()
     {
-        return $this->shipping_date
-            ? Carbon::parse($this->shipping_date)->format('d.m.Y')
-            : null;
+        return $this->shipping_date ? Carbon::parse($this->shipping_date)->format('d.m.Y') : null;
     }
 
     public function getFormattedDueDateAttribute()
     {
-        return $this->due_at
-            ? Carbon::parse($this->due_at)->format('d.m.Y')
-            : null;
+        return $this->due_at ? Carbon::parse($this->due_at)->format('d.m.Y') : null;
     }
 
     public function getHasPaymentAttribute(): bool
@@ -116,48 +111,33 @@ class Invoice extends Model
         return $this->kprItem()->value('kpr_id');
     }
     
+    /*
+    |--------------------------------------------------------------------------------------------
+    | Enum labels
+    |--------------------------------------------------------------------------------------------
+    */
     public function getTypeTextAttribute(): string
     {
-        return config('mappings.invoice_types')[$this->type_key] ?? $this->type_key;
+        return InvoiceType::label($this->type_key);
     }
 
     public function getItemGroupTextAttribute(): string
     {
-        return config('mappings.item_groups')[$this->item_group_key] ?? $this->item_group_key;
+        return ItemGroup::label($this->item_group_key);
     }
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Helpers
+    | Enum keys
     |--------------------------------------------------------------------------------------------
     */
-    public static function types(): array
+    public static function invoiceTypeKeys(): array
     {
-        return config('mappings.invoice_types');
-    }
-
-    public static function typeKeys(): array
-    {
-        return array_keys(self::types());
-    }
-
-    public static function itemGroups(): array
-    {
-        return config('mappings.item_groups');
+        return InvoiceType::keys();
     }
 
     public static function itemGroupKeys(): array
     {
-        return array_keys(self::itemGroups());
-    }
-
-    /*
-    |--------------------------------------------------------------------------------------------
-    | Mutators
-    |--------------------------------------------------------------------------------------------
-    */
-    public function setPaidAmountAttribute($value)
-    {
-        $this->attributes['paid_amount'] = is_null($value) ? null : str_replace(',', '.', $value);
+        return ItemGroup::keys();
     }
 }

@@ -39,7 +39,7 @@ class Customer extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Accessors
+    | General accessors
     |--------------------------------------------------------------------------------------------
     */
     public function getFormattedTotalOrderedAmountAttribute()

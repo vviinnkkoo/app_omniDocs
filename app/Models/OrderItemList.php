@@ -61,7 +61,7 @@ class OrderItemList extends Model
 
     /*
     |--------------------------------------------------------------------------------------------
-    | Accessors
+    | General accessors
     |--------------------------------------------------------------------------------------------
     */
     public function getProductNameAttribute()

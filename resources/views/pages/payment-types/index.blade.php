@@ -17,6 +17,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Način plaćanja</th>
+                <th scope="col">Vrsta</th>
                 <th class="delete-column"></th>
               </tr>
             </thead>
@@ -32,6 +33,11 @@
                   {{-- Payment type name --}}
                   <td class="align-middle text-right">
                     <span class="editable" data-id="{{ $paymentType->id }}" data-field="name" data-model="nacin-placanja">{{ $paymentType->name }}</span>
+                  </td>
+
+                  {{-- Payment type name --}}
+                  <td class="align-middle text-right">
+                    <span class="editable" data-id="{{ $paymentType->id }}" data-field="fiscal_code_key" data-model="nacin-placanja">{{ $paymentType->fiscal_code_text }}</span>
                   </td>
 
                   {{-- Delete button --}}

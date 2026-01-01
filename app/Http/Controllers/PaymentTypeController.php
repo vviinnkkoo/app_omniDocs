@@ -8,6 +8,8 @@ use App\Models\PaymentType;
 
 use App\Traits\RecordManagement;
 
+use App\Enums\FiscalCode;
+
 class PaymentTypeController extends Controller
 {
     use RecordManagement;
@@ -30,14 +32,16 @@ class PaymentTypeController extends Controller
         $query = PaymentType::search($search, ['name']);
 
         $paymentTypes = $query->orderBy('id')->paginate(25);
-
-        return view('pages.payment-types.index', compact('paymentTypes', 'search'));
+        $fiscalCodes = FiscalCode::options();
+    
+        return view('pages.payment-types.index', compact('paymentTypes', 'search', 'fiscalCodes'));
     }
 
      public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'fiscal_code_key' => 'required|in:' . implode(',', PaymentType::fiscalCodeKeys()),
         ]);
 
         return $this->createRecord($validated, 'Način plaćanja uspješno dodan!');
@@ -45,7 +49,7 @@ class PaymentTypeController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->updateRecord($request, $id, ['name']);
+        return $this->updateRecord($request, $id, ['name', 'fiscal_code_key']);
     }
 
     public function destroy($id)

@@ -80,7 +80,7 @@ class InvoiceController extends Controller
             'business_space_id' => 'required|exists:business_spaces,id',
             'business_device_id' => 'required|exists:business_devices,id',
             'year' => 'required|integer',
-            'type_key' => 'required|in:' . implode(',', Invoice::typeKeys()),
+            'type_key' => 'required|in:' . implode(',', Invoice::invoiceTypeKeys()),
             'payment_type_name' => 'required|string|max:50',
             'number' => 'required|integer',
             'customer_name' => 'nullable|string|max:255',
@@ -108,10 +108,6 @@ class InvoiceController extends Controller
                 ->withInput()
                 ->with('error', "Račun s brojem {$data['number']} već postoji u {$data['year']}. godini za odabrani poslovni prostor.");
         }
-
-        /*return $this->createRecord(
-            $data, "Račun broj {$data['number']} uspješno je dodan u {$data['year']}. godinu!"
-        );*/
 
         $invoice = $this->createRecord($data, "Račun uspješno dodan!", true);
 
