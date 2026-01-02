@@ -46,12 +46,12 @@
             </div>
             
             {{-- Product color --}}            
-            <x-inputs.advanced-radio name="color_id" label="Boja proizvoda" :items="$colors" :required="true"/>
+            <x-inputs.advanced-radio name="color_id" label="Boja proizvoda" :items="$colors" :required="false"/>
 
             {{-- Product note --}}
             <div class="mb-3">
               <label for="note">Komentar / opis:</label>
-              <textarea class="form-control" placeholder="Unesi dodatni opis..." id="note" name="note" rows="3">- - -</textarea>
+              <textarea class="form-control" placeholder="Unesi dodatni opis..." id="note" name="note" rows="3"></textarea>
             </div>
 
           </div>

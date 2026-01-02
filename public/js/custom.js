@@ -72,3 +72,10 @@ import './modules/updateInvoiceLastNumber.js';
 |
 */
 import './modules/searchableDropdown.js';
+
+/*
+|--------------------------------------------------------------------------------------------
+| Set a field to null via AJAX
+|--------------------------------------------------------------------------------------------
+*/
+import './modules/nullField.js';

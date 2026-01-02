@@ -22,9 +22,17 @@
         <span class="text-secondary small">{{ $suffix }}</span>
     @endif
 
-    <button type="button" class="btn btn-sm p-0 border-0 bg-transparent edit-start">
+    <button type="button" title="Uredi" class="btn btn-sm p-0 border-0 bg-transparent edit-start">
         <i class="bi bi-pencil-square"></i>
     </button>
+
+    @if($nullable)
+        <button type="button"
+                class="btn btn-sm p-0 border-0 bg-transparent edit-null"
+                title="Obriši vrijednost">
+            <i class="bi bi-trash3"></i>
+        </button>
+    @endif
 
     <button type="button" class="btn btn-sm p-0 border-0 bg-transparent edit-confirm d-none">
         <i class="bi bi-check-lg text-success"></i>

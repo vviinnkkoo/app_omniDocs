@@ -5,10 +5,10 @@ namespace App\Enums;
 final class ItemGroup extends BaseEnum
 {
     protected const DEFINITIONS = [
-        'product'  => 'Proizvod',
-        'service'  => 'Usluga',
+        'product'  => 'Proizvodi',
+        'service'  => 'Usluge',
         'shipping' => 'Dostava',
-        'discount' => 'Popust',
+        'discount' => 'Popusti',
         'fee'      => 'Trošak',
     ];
 }

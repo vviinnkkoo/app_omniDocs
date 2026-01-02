@@ -7,12 +7,12 @@
 
     <title>Ponuda br: {{ $orderData['id'] }}</title>
 
-    @include('includes.pdf.style')
+    @include('pdf.includes.style')
 
 </head>
 <body>
 
-    @include('includes.pdf.quotation-header')
+    @include('pdf.includes.quotation-header')
 
     {{-- PDF content - START --}}
 
@@ -44,7 +44,7 @@
         </table>
     </div>
 
-    @include('includes.pdf.shared.order-items')
+    @include('pdf.includes.shared.order-items')
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>
@@ -54,7 +54,7 @@
     </div>
 
     {{-- PDF content - END --}}
-    {{-- @include('includes.pdf.shared.signature-stamp') Slows rendering, removed for now --}}
+    {{-- @include('pdf.includes.shared.signature-stamp') Slows rendering, removed for now --}}
 
 </body>
 </html>

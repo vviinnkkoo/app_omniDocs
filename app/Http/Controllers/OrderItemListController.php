@@ -41,7 +41,7 @@ class OrderItemListController extends Controller
 
         $data = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'color_id'   => 'required|exists:colors,id',
+            'color_id'   => 'nullable|exists:colors,id',
             'amount'     => 'required',
             'price'      => 'required',
             'note'       => 'nullable|string',

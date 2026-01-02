@@ -118,7 +118,7 @@ class InvoiceController extends Controller
                     'item_id' => $item->product->id,
                     'name' => $item->product->name,
                     'item_group_key' => $item->product->item_group_key,
-                    'description' => $item->color->name,
+                    'description' => $item->color?->name,
                     'note' => $item->note,
                     'price' => $item->price,
                     'amount' => $item->amount,

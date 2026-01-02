@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Otpremnica kupcu br: {{ $orderData['id'] }}</title>
     
-    @include('includes.pdf.style')
+    @include('pdf.includes.style')
 
 </head>
 <body>
 
-    @include('includes.pdf.dispatch-header')
+    @include('pdf.includes.dispatch-header')
 
     {{-- PDF content - START --}}
 
@@ -39,7 +39,7 @@
         </table>
     </div>
 
-    @include('includes.pdf.shared.order-items')
+    @include('pdf.includes.shared.order-items')
 
     <div class="notes">
         <p><b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.</p>

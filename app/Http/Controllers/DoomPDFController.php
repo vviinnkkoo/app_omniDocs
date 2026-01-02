@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItemList;
 use App\Models\DeliveryService;
 use App\Models\PrintLabel;
+
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\GlobalService;
+use App\Enums\ItemGroup;
 
 class DoomPDFController extends Controller
 {
@@ -42,20 +45,26 @@ class DoomPDFController extends Controller
     private function generateInvoice($mode, $invoiceID)
     {
         $invoice = Invoice::with([
-            'invoiceItemList',
-            'order.deliveryService.deliveryCompany',
-            'order.paymentType',
+            'invoiceItemList'
         ])->findOrFail($invoiceID);
 
-        $invoiceItemList = $invoice->invoiceItemList;
+        $total = $invoice->invoiceItemList->sum('total');
+
+        $groupedItems = $invoice->invoiceItemList
+            ->groupBy('item_group_key');
+
+        $groupLabels = [];
+        foreach ($groupedItems as $key => $items) {
+            $groupLabels[$key] = ItemGroup::label($key);
+        }
 
         [$view, $filename] = $this->getTemplate($mode, $invoice->number);
 
         return Pdf::loadView(
             $view,
-            compact('invoice', 'invoiceItemList')
+            compact('invoice', 'groupedItems', 'groupLabels', 'total')
         )->stream($filename);
-}
+    }
 
     private function generateQuotation($mode, $orderID)
     {

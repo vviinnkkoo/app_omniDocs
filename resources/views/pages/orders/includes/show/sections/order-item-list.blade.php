@@ -48,7 +48,7 @@
                                 <td class="align-middle">
                                     <div class="editable-select" data-id="{{ $item->id }}" data-field="color_id" data-model="narudzbe-proizvodi">
                                     {{-- Display the selected value --}}
-                                    <span>{{ $item->colorName }}</span>                                    
+                                    <span>{{ $item->colorName ?? '- - -' }}</span>                                    
                                     {{-- Hidden select element with options --}}
                                     <select class="edit-select form-select" style="display: none !important">
                                         <option value="" selected>Odaberi boju...</option>
@@ -76,7 +76,7 @@
 
                                 {{-- Info --}}
                                 <td class="align-middle text-end">
-                                    <x-editable.text :model="$item" field="note" modelName="narudzbe-proizvodi" :value="$item->note" simple="true" />
+                                    <x-editable.text :model="$item" field="note" modelName="narudzbe-proizvodi" :value="$item->note ?? '- - -'" simple="true" nullable="true" />
                                 </td>
 
                                 {{-- Show info on invoice checkbox --}}

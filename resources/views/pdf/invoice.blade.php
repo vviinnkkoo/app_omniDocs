@@ -6,11 +6,11 @@
 
     <title>Račun {{ $invoice->number }}-{{ $invoice->businessSpace->name }}-{{ $invoice->businessDevice->name }}</title>
 
-    @include('includes.pdf.style')
+    @include('pdf.includes.style')
 </head>
 <body>
 
-@include('includes.pdf.invoice-header')
+@include('pdf.includes.invoice-header')
 
 {{-- PDF content - START --}}
 
@@ -71,23 +71,23 @@
     </table>
 </div>
 
-@include('includes.pdf.shared.invoice-items')
+@include('pdf.includes.shared.invoice-items')
 
 <div class="notes">
-    <div style="mt-10px">
+    <div style="mt-10">
         <b>Napomena:</b> Oslobođeno PDV-a temeljem članka 90. st. 1 Zakona o PDV-u.
     </div>
 
-    <div class="mt-10px">
+    <div class="mt-10">
         <b>Račun izdaje:</b> {{ $invoice->issued_by }}
     </div>
 
-    <div class="mt-10px">
+    <div class="mt-10">
         <div><b>Poziv na broj:</b> {{ $invoice->number }}-{{ $invoice->year }}</div>
         <div><b>Interni broj narudžbe:</b> {{ $invoice->order_id }}</div>
     </div>
 
-    <div class="mt-10px">
+    <div class="mt-10">
         <div><b>Način plaćanja:</b> {{ $invoice->payment_type_name }}</div>
     </div>
 </div>

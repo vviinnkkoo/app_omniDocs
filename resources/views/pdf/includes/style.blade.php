@@ -87,8 +87,12 @@
         padding: 0.2rem;
         font-weight: bold;
     }
+    table tr.items-header {
+        background-color: #d6dde4;
+        vertical-align: top;
+    }
     table tr.items {
-        background-color: rgb(241 245 249);
+        background-color: #f1f5f9;
         vertical-align: top;
     }
     table tr.items td {
@@ -135,7 +139,10 @@
         font-size: 70%;
         color: #333;
     }
-    .mt-10px {
+    .mt-10 {
         margin-top: 10px;
+    }
+    .pl-5 {
+        padding-left: 5px;
     }
 </style>
