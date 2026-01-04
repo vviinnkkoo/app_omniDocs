@@ -155,7 +155,7 @@
 
             {{-- Hidden order ID and Type --}}
             <input type="hidden" id="order_id" name="order_id" value="{{ $order->id }}" required>
-            <input type="hidden" id="payment_type_name" name="payment_type_name" value="{{ $order->paymentType->name }}" required>
+            <input type="hidden" id="payment_type_id" name="payment_type_id" value="{{ $order->payment_type_id }}" required>
             <input type="hidden" id="type" name="type_key" value="invoice" required>
 
           </div>

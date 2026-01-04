@@ -3,10 +3,13 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+
 use Illuminate\Pagination\Paginator;
 
 use App\Models\WorkYears;
@@ -33,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
         if (isset($domains[$hostname])) {
             $config = $domains[$hostname];
 
-            // Set database host, username, password, database
+            // Set database connection dynamically
             Config::set('database.connections.mysql.host', $config['host'] ?? config('database.connections.mysql.host'));
             Config::set('database.connections.mysql.database', $config['database']);
             Config::set('database.connections.mysql.username', $config['username']);
@@ -47,13 +50,26 @@ class AppServiceProvider extends ServiceProvider
         // Pagination
         Paginator::useBootstrap();
 
-        // Share data with all views
-        View::composer('*', function ($view) {
-            $workYears = WorkYears::orderBy('id')->get();
-            $appSettings = Settings::pluck('setting_value', 'setting_name')->toArray();
+        // Share data only with main layout
+        View::composer('*', function ($view) use ($hostname) {
+
+            // Add hostname to cache key to separate per domain
+            $cacheKeyWorkYears = 'work_years_' . $hostname;
+            $cacheKeySettings = 'app_settings_' . $hostname;
+
+            // Cache work years 1h per domain
+            $workYears = Cache::remember($cacheKeyWorkYears, 3600, function () {
+                return WorkYears::orderBy('id')->get();
+            });
+
+            // Cache app settings 1h per domain
+            $appSettings = Cache::remember($cacheKeySettings, 3600, function () {
+                return Settings::pluck('setting_value', 'setting_name')->toArray();
+            });
 
             $view->with('workYears', $workYears)
-                 ->with('appSettings', $appSettings);
+                 ->with('appSettings', $appSettings)
+                 ->with('appHostname', $hostname);
         });
     }
 }

@@ -84,11 +84,13 @@
 
     <div class="mt-10">
         <div><b>Poziv na broj:</b> {{ $invoice->number }}-{{ $invoice->year }}</div>
-        <div><b>Interni broj narudžbe:</b> {{ $invoice->order_id }}</div>
+        @if($invoice->order_id)
+            <div><b>Interni broj narudžbe:</b> {{ $invoice->order_id }}</div>
+        @endif
     </div>
 
     <div class="mt-10">
-        <div><b>Način plaćanja:</b> {{ $invoice->payment_type_name }}</div>
+        <div><b>Način plaćanja:</b> {{ $invoice->paymentType->name }}</div>
     </div>
 </div>
 

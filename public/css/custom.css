@@ -186,7 +186,7 @@
     opacity: 0.7;
 }
 
-.cancelled-order td {
+.cancelled-row td {
     background-color:rgb(255, 223, 223);
 }
 

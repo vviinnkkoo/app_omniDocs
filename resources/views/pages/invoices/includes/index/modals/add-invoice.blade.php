@@ -26,17 +26,6 @@
                         </div>
                     </div>
 
-                    {{-- Order for invoice --}}
-                    <div class="mb-3">
-                        <label for="order_id">Povezana narudžba:</label><br>
-                        <select class="form-select searchable-select-modal" id="order_id" name="order_id" required>
-                            <option disabled selected>Odaberi narudžbu...</option>
-                            @foreach ($orders as $order)
-                                <option value="{{ $order->id }}">{{ $order->id }} - {{ $order->customer->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     {{-- Invoice year --}}
                     <div class="mb-3">
                         <label for="year">Godina računa:</label>

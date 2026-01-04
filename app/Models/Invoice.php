@@ -7,6 +7,7 @@ use Carbon\Carbon;
 
 use App\Enums\InvoiceType;
 use App\Enums\ItemGroup;
+use App\Enums\FiscalCode;
 
 use App\Traits\HasSearch;
 
@@ -20,7 +21,7 @@ class Invoice extends Model
         'order_id',
         'year',
         'type_key',
-        'payment_type_name',
+        'payment_type_id',
         'business_space_id',
         'business_device_id',
         'customer_name',
@@ -76,6 +77,11 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItemList::class);
     }
 
+    public function paymentType()
+    {
+        return $this->belongsTo(PaymentType::class);
+    }
+
     /*
     |--------------------------------------------------------------------------------------------
     | General accessors
@@ -103,12 +109,12 @@ class Invoice extends Model
 
     public function getHasPaymentAttribute(): bool
     {
-        return $this->kprItem()->exists();
+        return $this->relationLoaded('kprItem') && $this->kprItem !== null;
     }
 
     public function getPaymentIdAttribute(): ?int
     {
-        return $this->kprItem()->value('kpr_id');
+        return $this->kprItem?->kpr_id;
     }
     
     /*
@@ -126,6 +132,11 @@ class Invoice extends Model
         return ItemGroup::label($this->item_group_key);
     }
 
+    public function getFiscalCodeTextAttribute(): string
+    {
+        return FiscalCode::label($this->paymentType->fiscal_code_key);
+    }
+
     /*
     |--------------------------------------------------------------------------------------------
     | Enum keys
@@ -139,5 +150,10 @@ class Invoice extends Model
     public static function itemGroupKeys(): array
     {
         return ItemGroup::keys();
+    }
+
+    public static function fiscalCodeKeys(): array
+    {
+        return FiscalCode::keys();
     }
 }

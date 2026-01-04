@@ -20,7 +20,7 @@
             @foreach ($orders as $order)
                     
                 @if (isset($order->date_cancelled))
-                    <tr class="cancelled-order">
+                    <tr class="cancelled-row">
                 @else
                     <tr>
                 @endif

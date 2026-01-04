@@ -36,41 +36,34 @@ class InvoiceController extends Controller
     public function index(Request $request, $year = null)
     {
         $year = $year ?? now()->year;
-
         $search = $request->input('search');
 
-        $invoices = Invoice::search($search, 
-            ['number', 'year', 'is_cancelled'], 
-            ['order.customer' => ['name'], 'order.paymentType' => ['name']]
-        )
-        ->where('year', $year)
-        ->with(['order.customer', 'order.paymentType', 'kprItem'])
-        ->orderBy('number')
-        ->paginate(25)
-        ->through(function ($invoice) {
-            $invoice->customerName = $invoice->order->customer->name ?? '';
-            $invoice->paymentTypeName = $invoice->order->paymentType->name ?? '';
-            $invoice->formatedDateCreatedAt = $invoice->created_at->format('d.m.Y - H:i:s');
-
-            $total = GlobalService::calculateInvoiceTotal($invoice->order_id);
-            if ($invoice->cancelled_invoice_id) {
-                $total *= -1;
-            }
-
-            $invoice->totalAmount = number_format($total, 2, ',');
-
-            return $invoice;
-        });
-
-        $orderIdsWithInvoices = Invoice::where('is_cancelled', 0)->pluck('order_id');
-
-        $orders = Order::whereNotIn('id', $orderIdsWithInvoices)
-            ->with('customer:id,name')
-            ->get();
+        $invoices = Invoice::search(
+                $search,
+                ['number', 'year', 'is_cancelled', 'customer_name', 'customer_oib'],
+                ['paymentType' => ['name']]
+            )
+            ->where('year', $year)
+            ->with([
+                'paymentType',
+                'invoiceItemList',
+                'kprItem'
+            ])
+            ->withSum('invoiceItemList as item_total', 'total')
+            ->orderBy('number')
+            ->paginate(25)
+            ->through(function ($invoice) {
+                $invoice->item_total = number_format($invoice->item_total ?? 0, 2, ',');
+                return $invoice;
+            });
 
         $latest = GlobalService::getLatestInvoiceNumber($year);
 
-        return view('pages.invoices.index', compact('invoices', 'orders', 'latest'));
+        return view('pages.invoices.index', compact('invoices', 'latest'));
+    }
+
+    public function show($id) {
+        return view('pages.invoices.show');
     }
 
     public function store(Request $request)
@@ -81,7 +74,7 @@ class InvoiceController extends Controller
             'business_device_id' => 'required|exists:business_devices,id',
             'year' => 'required|integer',
             'type_key' => 'required|in:' . implode(',', Invoice::invoiceTypeKeys()),
-            'payment_type_name' => 'required|string|max:50',
+            'payment_type_id' => 'required|exists:payment_types,id',
             'number' => 'required|integer',
             'customer_name' => 'nullable|string|max:255',
             'customer_oib' => 'nullable|string|max:255',
