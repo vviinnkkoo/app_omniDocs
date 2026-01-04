@@ -39,7 +39,8 @@ class Invoice extends Model
     ];
 
     protected $casts = [
-        'is_cancelled' => 'boolean'
+        'is_cancelled' => 'boolean',
+        'issued_at' => 'datetime'
     ];
 
     /*

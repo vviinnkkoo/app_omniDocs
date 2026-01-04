@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Invoice;
+use App\Models\Settings;
+
 use Illuminate\Support\Str;
 
 class FiscalizationService
@@ -13,89 +15,108 @@ class FiscalizationService
 
     public function __construct()
     {
-        // FINA endpoint (provjera test/prod)
-        //$this->endpoint = 'https://cis.porezna-uprava.hr:8449/FiskalizacijaService';
+        // TEST endpoint
         $this->endpoint = 'https://cistest.apis.porezna-uprava.hr:8449/FiskalizacijaService';
-
-        $this->certPath = storage_path('certs/fina.p12');
-        $this->certPass = env('FISCAL_CERT_PASS');
+        $this->certPath = storage_path('app/domains/localhost/cert/69219061360.F1.2.p12');
+        $this->certPass = 'Xsy6rXFdbusffye';
     }
 
-    /**
-     * Fiscalize an invoice
-     */
     public function fiscalize(int $invoiceId): array
     {
         $invoice = Invoice::findOrFail($invoiceId);
 
-        // 1. Generate ZKI
-        $zki = $this->generateZKI($invoice);
+        $companyOib = Settings::where('setting_name', 'company_oib')->value('setting_value');
+        $total = $invoice->invoiceItemList->sum('total');
 
-        // 2. Generate minimal XML
-        $xml = $this->generateXML($invoice, $zki);
+        $zki = $this->generateZKI($invoice, $companyOib, $total);
+        $xml = $this->generateXML($invoice, $zki, $companyOib, $total);
 
-        // 3. Send SOAP request
         $response = $this->sendSOAP($xml);
 
-        // 4. Save JIR and ZKI to invoice
-        if (isset($response->JIR)) {
-            $invoice->jir = $response->JIR;
+        if (isset($response->Jir)) {
+            $invoice->jir = (string) $response->Jir;
             $invoice->zki = $zki;
             $invoice->save();
         }
 
         return [
             'zki' => $zki,
-            'jir' => $response->JIR ?? null,
+            'jir' => $response->Jir ?? null,
+            'raw_response' => $response,
         ];
     }
 
-    /**
-     * Generate ZKI hash
-     */
-    protected function generateZKI(Invoice $invoice): string
+    protected function generateZKI(Invoice $invoice, string $companyOib, float $total): string
     {
-        $data = $invoice->id .
-                $invoice->oib .
-                $invoice->issue_date->format('Y-m-d\TH:i:s') .
-                $invoice->total;
+        if (!file_exists($this->certPath)) {
+            throw new \Exception("Certificate not found: {$this->certPath}");
+        }
 
-        $cert = file_get_contents($this->certPath);
-        openssl_pkcs12_read($cert, $certs, $this->certPass);
-        $privateKey = $certs['pkey'];
+        dd($this->certPath, file_exists($this->certPath));
 
-        openssl_sign($data, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+        $data =
+            $companyOib .
+            $invoice->issued_at->format('d.m.Y H:i:s') .
+            $invoice->number .
+            $invoice->businessSpace->label .
+            $invoice->businessDevice->label .
+            number_format($total, 2, '.', '');
 
-        return strtoupper(bin2hex($signature));
-    }
+        $certContent = file_get_contents($this->certPath);
 
-    /**
-     * Generate minimal XML for FINA
-     */
+            if (!openssl_pkcs12_read($certContent, $certs, $this->certPass)) {
+                throw new \Exception("Cannot read PKCS#12 certificate");
+            }
+
+            openssl_sign($data, $signature, $certs['pkey'], OPENSSL_ALGO_SHA1);
+
+            return strtoupper(bin2hex($signature));
+        }
+
     protected function generateXML(Invoice $invoice, string $zki): string
     {
-        $xml = new \SimpleXMLElement('<Invoice></Invoice>');
-        $xml->addChild('OIB', $invoice->oib);
-        $xml->addChild('MessageID', Str::uuid()->toString());
-        $xml->addChild('DateTime', $invoice->issue_date->format('c'));
-        $xml->addChild('ZKI', $zki);
-        $xml->addChild('Total', $invoice->total);
+        $xml = new \SimpleXMLElement(
+            '<?xml version="1.0" encoding="UTF-8"?>
+            <tns:RacunZahtjev xmlns:tns="http://www.apis-it.hr/fin/2012/types/f73">
+                <tns:Zaglavlje/>
+                <tns:Racun/>
+            </tns:RacunZahtjev>'
+        );
+
+        $xml->Zaglavlje->addChild('tns:IdPoruke', Str::uuid()->toString(), $xml->getNamespaces(true)['tns']);
+        $xml->Zaglavlje->addChild('tns:DatumVrijeme', now()->format('d.m.Y\TH:i:s'), $xml->getNamespaces(true)['tns']);
+
+        $racun = $xml->Racun;
+        $racun->addChild('tns:Oib', $invoice->oib, $xml->getNamespaces(true)['tns']);
+        $racun->addChild('tns:DatVrijeme', $invoice->issue_date->format('d.m.Y\TH:i:s'), $xml->getNamespaces(true)['tns']);
+
+        $brRac = $racun->addChild('tns:BrRac', null, $xml->getNamespaces(true)['tns']);
+        $brRac->addChild('tns:BrOznRac', $invoice->number, $xml->getNamespaces(true)['tns']);
+        $brRac->addChild('tns:OznPosPr', $invoice->business_unit_code, $xml->getNamespaces(true)['tns']);
+        $brRac->addChild('tns:OznNapUr', $invoice->cash_register_code, $xml->getNamespaces(true)['tns']);
+
+        $racun->addChild('tns:IznosUkupno', number_format($invoice->total, 2, '.', ''), $xml->getNamespaces(true)['tns']);
+        $racun->addChild('tns:NacinPlac', 'G', $xml->getNamespaces(true)['tns']);
+        $racun->addChild('tns:OibOper', $invoice->oib, $xml->getNamespaces(true)['tns']);
+        $racun->addChild('tns:ZastKod', $zki, $xml->getNamespaces(true)['tns']);
+        $racun->addChild('tns:NakDost', 'false', $xml->getNamespaces(true)['tns']);
 
         return $xml->asXML();
     }
 
-    /**
-     * Send SOAP request
-     */
     protected function sendSOAP(string $xml): object
     {
-        $client = new \SoapClient($this->endpoint, [
-            'local_cert' => $this->certPath,
-            'passphrase' => $this->certPass,
-            'trace' => 1,
+        $client = new \SoapClient(null, [
+            'location'      => $this->endpoint,
+            'uri'           => 'http://www.apis-it.hr/fin/2012/types/f73',
+            'local_cert'    => $this->certPath,
+            'passphrase'    => $this->certPass,
+            'trace'         => 1,
+            'exceptions'    => true,
         ]);
 
-        $params = ['InvoiceRequest' => $xml];
-        return $client->__soapCall('SubmitInvoice', [$params]);
+        return $client->__soapCall('RacunZahtjev', [
+            new \SoapVar($xml, XSD_ANYXML),
+        ]);
     }
 }

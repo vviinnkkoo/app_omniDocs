@@ -22,6 +22,8 @@ use App\Http\Controllers\KprController;
 use App\Http\Controllers\KprItemListController;
 use App\Http\Controllers\OrderNoteController;
 
+use App\Services\FiscalizationService;
+
 /*
 |--------------------------------------------------------------------------------------------
 | Auth routes
@@ -86,8 +88,7 @@ Route::resources([
     'opis' => ColorController::class,
     'nacin-placanja' => PaymentTypeController::class,
     'vrste-proizvoda' => ProductTypeController::class,
-    'kanali-prodaje' => SourceController::class,
-    'paketi' => PackageController::class
+    'kanali-prodaje' => SourceController::class
 ]);
 
 /*
@@ -117,3 +118,8 @@ Route::get('/dostavne-etikete', [PrintLabelController::class, 'showShippingLabel
 Route::post('/dostavne-etikete', [PrintLabelController::class, 'saveShippingLabel']);
 Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('shipping_label.delete');
 Route::get('/obrisi-etikete', [PrintLabelController::class, 'deleteAllLabels']);
+
+
+Route::get('/test-fiscal/{invoice}', function ($invoiceId) {
+    return app(FiscalizationService::class)->fiscalize($invoiceId);
+});

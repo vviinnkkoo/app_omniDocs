@@ -63,6 +63,8 @@ class InvoiceController extends Controller
     }
 
     public function show($id) {
+        $service = app(\App\Services\FiscalizationService::class);
+        dd($service->testConnection());
         return view('pages.invoices.show');
     }
 
