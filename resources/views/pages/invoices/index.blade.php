@@ -34,7 +34,7 @@
 
                     {{-- Invoice number --}}
                     <td class="align-middle text-right">
-                        {{ $item->number }}-{{ $item->business_space_id }}-{{ $item->business_device_id }}
+                        {{ $item->number }}-{{ $item->businessSpace->name }}-{{ $item->businessDevice->name }}
                     </td>
 
                     {{-- Customer name --}}

@@ -24,6 +24,12 @@ use App\Http\Controllers\OrderNoteController;
 
 use App\Services\FiscalizationService;
 
+use App\Services\Fiscalization\Fiskalizacija;
+use App\Services\Fiscalization\Generators\BrojRacunaType;
+use App\Services\Fiscalization\Generators\RacunType;
+use App\Services\Fiscalization\Generators\RacunZahtjev;
+use App\Services\Fiscalization\Generators\ZaglavljeType;
+
 /*
 |--------------------------------------------------------------------------------------------
 | Auth routes
@@ -119,7 +125,13 @@ Route::post('/dostavne-etikete', [PrintLabelController::class, 'saveShippingLabe
 Route::delete('/delete-shipping-label/{id}', [PrintLabelController::class, 'destroyShippingLabel'])->name('shipping_label.delete');
 Route::get('/obrisi-etikete', [PrintLabelController::class, 'deleteAllLabels']);
 
-
-Route::get('/test-fiscal/{invoice}', function ($invoiceId) {
-    return app(FiscalizationService::class)->fiscalize($invoiceId);
+/*
+|--------------------------------------------------------------------------------------------
+| TESTING ROUTES
+|--------------------------------------------------------------------------------------------
+*/
+Route::get('/test-100-inhouse', function() {
+    $service = new \App\Services\FiscalizationService();
+    $result = $service->fiscalize(2344);
+    dd($result);
 });
